@@ -78,7 +78,7 @@
   color:#005500;
 }
 
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
 
 
 
@@ -91,7 +91,6 @@
 }
 
 
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 .example-container2 {
  height: 105%;

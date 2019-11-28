@@ -49,9 +49,7 @@ mat-drawer-content {
   transition: 0.3s;
 }
 
-.sidenav:hover {
-/*  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);*/
-}
+
 .sidenav a {
   padding: 2px 2px 2px 2px;
   text-decoration: none;
@@ -167,7 +165,7 @@ img {
 }
 
 
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
 
 body {
   font-family: Roboto, Arial, sans-serif;
