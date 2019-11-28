@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style type="text/css">
+    .example-full-width{
+        width: 100%;
+    }
+    .example-button-row button,
+    .example-button-row a {
+      margin-right: 8px;
+       width: 50%;
+     }
+     .icon{
+          color:#00dd00;
+        }
+      .colors{
+          color:#dd0000;
+      }
+  </style>
+</head>
+
+<body>
+<img style="margin-left : 32%" src="http://www.ils.co.th/wp-content/themes/ils/images/logo.png" alt="ILS"/>
+<mat-form-field appearance="outline" style="width:100%;">
+  <mat-label>Enter your username</mat-label>
+  <input matInput placeholder="username">
+  <mat-icon class="icon" matSuffix>sentiment_very_satisfied</mat-icon>
+</mat-form-field>
+<mat-form-field appearance="outline" style="width:100%;">
+  <mat-label>Enter your password</mat-label>
+  <input matInput placeholder="password" [type]="hide ? 'text' : 'password'" >
+  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+    <mat-icon class="icon" >{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+  </button>
+</mat-form-field>
+
+<div class="example-button-row" align="center">
+  <button mat-raised-button color="primary" style="margin-left: 0px ; width: 220px ; font-size: 20px" (click)="closeDialog()">Login</button>
+</div>
+<div align="center">
+  <button mat-button color="warn"  class="colors" (click)="closeDialog()">Forgot your password?</button>
+</div>
+
+</body>
+</html>
+
+
+

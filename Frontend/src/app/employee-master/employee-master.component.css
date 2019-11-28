@@ -1,0 +1,189 @@
+.example-container {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+   left: 0px;
+    overflow-x: hidden;
+    padding-top: 20px;
+    color: #000000;
+    opacity: 0.9;
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidenav {
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  background-color: #000055;
+  overflow-x: hidden;
+  padding-top: 0px;
+  color: #00ff00;
+  opacity: 0.95;
+  transition: 0.3s;
+}
+
+.sidenav a {
+  padding: 2px 2px 2px 2px;
+  text-decoration: none;
+  font-size: 17px;
+  color: #000000;
+  display: block;
+}
+.stylebutom{
+  width:98%;
+  margin-left: 1%;
+   padding-top: 20px;
+}
+
+.sidenav a:hover {
+  color: #000099;
+}
+
+.dd{
+  font-size: 18px;
+  color: back;
+  text-shadow: white 0.1em 0em 0.3em;
+   font-weight: bold;
+}
+
+
+.bgimg{
+  background-image:url(src/app/image/hr.jpg);
+    margin: 0;
+    border: thin silver solid;
+     width: 99.8%;
+     height: 89.5%;
+}
+.logo{
+    background-image:url(src/app/image/ils-logo-01.png);
+     margin: right;
+       width: 100px;
+       height:100px;
+}
+
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
+}
+
+.icon{
+  color:#005500;
+}
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+
+
+/* Structure */
+
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+.example-container2 {
+ height: 105%;
+   width: 100%;
+   overflow: auto;
+}
+
+th.mat-column-select, td.mat-column-select {
+  width: 60px;
+  border-right: 1px;
+}
+th.mat-column-empCodeID, td.mat-column-empCodeID {
+  width: 200px;
+  border-right: 1px;
+}
+th.mat-column-empFristName, td.mat-column-empFristName {
+  width: 70px;
+  border-right: 1px;
+}
+th.mat-column-empLastName, td.mat-column-empLastName {
+  width: 150px;
+  border-right: 1px;
+}
+th.mat-column-NickName, td.mat-column-NickName {
+  width: 1000px;
+  border-right: 1px;
+}
+th.mat-column-Gender, td.mat-column-Gender {
+  width: 70px;
+  border-right: 1px;
+}
+th.mat-column-Status, td.mat-column-Status {
+  width: 100px;
+  border-right: 1px;
+}
+th.mat-column-BirthDate, td.mat-column-BirthDate {
+  width: 120px;
+  border-right: 1px;
+}
+th.mat-column-PersonID, td.mat-column-PersonID {
+  width: 140px;
+  border-right: 1px;
+}
+th.mat-column-Tel1, td.mat-column-Tel1 {
+  width: 130px;
+  border-right: 1px;
+}
+th.mat-column-Email, td.mat-column-Email {
+  width: 260px;
+  border-right: 1px;
+}
+th.mat-column-AddressReal, td.mat-column-AddressReal {
+  width: 90px;
+  border-right: 1px;
+}
+th.mat-column-AddressPerson, td.mat-column-AddressPerson {
+  width: 90px;
+  border-right: 1px;
+}
+th.mat-column-StartDate, td.mat-column-StartDate {
+  width: 140px;
+  border-right: 1px;
+}
+th.mat-column-Position, td.mat-column-Position {
+  width: 120px;
+  border-right: 1px;
+}
+th.mat-column-Department, td.mat-column-Department {
+  width: 80px;
+  border-right: 1px;
+}
+th.mat-column-empType, td.mat-column-empType {
+  width: 90px;
+  border-right: 1px;
+}
+th.mat-column-educations, td.mat-column-educations {
+  width: 90px;
+  border-right: 1px;
+}
+th.mat-column-bank, td.mat-column-bank {
+  width: 110px;
+  border-right: 1px;
+}
+th.mat-column-bankNumber, td.mat-column-bankNumber {
+  width: 260px;
+  border-right: 1px;
+}
+
+
+.mat-table-sticky:first-child {
+  border-right: 1px solid #e0e0e0;
+}
+.mat-table-sticky:last-child {
+  border-left: 1px solid #e0e0e0;
+}

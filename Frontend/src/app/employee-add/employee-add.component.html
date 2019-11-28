@@ -1,0 +1,338 @@
+<!-- Start Header From **********************************************************************************************************-->
+<body class="bgimg">
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="!side">
+    <!--  พนักงาน(Employee) --------------------------------------------------------------------------------->
+    <div class="sidenav">
+      <mat-accordion>
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>  <!--  เห็นเฉพาะ HR -->
+            <mat-label class="dd">
+              Employee
+            </mat-label>
+          </mat-expansion-panel-header>
+          <hr/>
+          <a routerLink="/employee-master">Employee Master</a>
+          <a routerLink="/employee-add">New Employee</a>
+          <a routerLink="/create-account" >Create new account</a>
+        </mat-expansion-panel>
+
+        <!--  การลา(leave) --------------------------------------------------------------------------------->
+
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-label class="dd">
+              Attendance
+            </mat-label>
+          </mat-expansion-panel-header>
+          <hr/>
+          <a routerLink="LeaveMain">Attendance</a> <!-- เห็นทุกคน ยกเว้น HR -->
+          <a routerLink="LeaveShow">Data Attendance</a>  <!-- เห็นทุกคน -->
+          <a routerLink="LeaveShowHR">Data Attendance For HR</a>   <!-- เห็นเฉพาะ HR -->
+          <a routerLink="LeaveApproveMan">Approve By MANAGER</a>   <!-- เห็นเฉพาะ MANAGER -->
+          <a routerLink="LeaveApproveSup">Approve By SUPERVISOR</a>   <!-- เห็นเฉพาะ SUPERVISOR -->
+        </mat-expansion-panel>
+
+        <!--  ขอล่วงเวลา(OT) --------------------------------------------------------------------------------->
+
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-label class="dd">
+              OverTime
+            </mat-label>
+          </mat-expansion-panel-header>
+          <hr/>
+          <a routerLink="OverTime">OverTime</a>
+          <a routerLink="OverTimeShow">Data OverTime</a>
+          <a routerLink="OverTimeApprove">Approve</a>
+        </mat-expansion-panel>
+
+        <!--  อบรม (Training) --------------------------------------------------------------------------------->
+
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-label class="dd">
+              Training
+            </mat-label>
+          </mat-expansion-panel-header>
+          <hr/>
+          <a routerLink="TrainAdd">Training</a>
+          <a routerLink="TrainShow">Data Training</a>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <button mat-raised-button color="primary" *ngIf="" routerLink="login" style="margin-right:10px ;color :#ffff">Login </button>
+      <button mat-raised-button color="primary" *ngIf="" routerLink="Logout" (click)="onLogout()" style="margin-right:10px ;color :#ffff">Logout </button>
+    </div> <!-- ข้างๆๆๆๆ -->
+    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+  </mat-drawer>
+  <!-- End Header From **********************************************************************************************************-->
+  <div class="example-sidenav-content">
+    <div class="card">
+      <button type="button"mat-button (click)="drawer.toggle()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">menu
+        </mat-icon><font class="icon">Menu</font>
+      </button>
+
+      <mat-horizontal-stepper>
+        <!------------------------------Start ข้อมูลส่วนตัว ------------------------------------------------------------------------------>
+        <mat-step>
+          <ng-template matStepLabel><b>Personal information</b></ng-template>
+          <div class="card2">
+            <mat-form-field style="width:100%">
+              <input matInput #x maxlength="6" placeholder="รหัสพนักงาน" required [(ngModel)]="employeeMasterCustomerCode">
+              <mat-hint align="end">{{x.value.length}} / 6</mat-hint>
+            </mat-form-field>
+            <!--F_NAME-->
+            <mat-form-field  style="width:100%" >
+              <input matInput placeholder="ชื่อ"  autocomplete="off" required [(ngModel)]="empMasterFirstName">
+            </mat-form-field>
+            <!--L_NAME-->
+            <mat-form-field style="width:100%">
+              <input matInput placeholder="นามสกุล"  autocomplete="off" required [(ngModel)]="empMasterLastName">
+            </mat-form-field>
+            <!--      N_NAME-->
+            <mat-form-field style="width:100%" >
+              <input matInput placeholder="ชื่อเล่น"  autocomplete="off"  required [(ngModel)]="empMasterNickName">
+            </mat-form-field>
+            <!--    Gender -->
+            <mat-form-field  style="width :100%" >
+              <mat-select placeholder="เพศ" required [(ngModel)]="genderSelect">
+                <mat-option value="ชาย" >ชาย</mat-option>
+                <mat-option value="หญิง">หญิง</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <!--      Marital status  -->
+            <mat-form-field  class="formcenter"  style="width :100%">
+              <mat-select placeholder="สถานะภาพ" required [(ngModel)]="MaritalStatusSelect">
+                <mat-option value="โสด" >โสด</mat-option>
+                <mat-option value="ไม่โสด" >ไม่โสด</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <!--  BirthDate  -->
+            <mat-form-field style="width :100%">
+              <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="วัน/เดือน/ปี เกิด" required [(ngModel)]="BirthDateSelect">
+              <mat-datepicker-toggle matSuffix [for]="BirthDate" ></mat-datepicker-toggle>
+              <mat-datepicker #BirthDate></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="buttonStyle">
+          <button   mat-button matStepperPrevious>
+            <mat-icon  class="icon">skip_previous</mat-icon>
+          </button>
+          <button  mat-button matStepperNext>
+            <mat-icon class="icon">skip_next</mat-icon>
+          </button>
+          </div>
+        </mat-step>
+        <!------------------------------End ข้อมูลส่วนตัว ------------------------------------------------------------------------------>
+        <!------------------------------Start ที่อยู่ ------------------------------------------------------------------------------>
+        <mat-step>
+              <ng-template matStepLabel><b>Addresses</b></ng-template>
+              <div class="card2">
+                <!--      personID-->
+                <mat-form-field style="width :100%" >
+                  <input matInput #message maxlength="13" placeholder="รหัสประจำตัวประชาชน หรือ หมายเลขหนังสือเดินทาง" required  [(ngModel)]="personID">
+                  <mat-hint align="end">{{message.value?.length || 0}}/13</mat-hint>
+                </mat-form-field>
+
+                <!--  call contact 1-->
+                <mat-form-field  style="width :100%" >
+                  <input matInput #input maxlength="10" placeholder="เบอร์โทร" required  [(ngModel)]="callContact">
+                  <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+                </mat-form-field>
+                <!--  Email -->
+                <mat-form-field style="width :100%">
+                  <input matInput placeholder="Enter your email" required [(ngModel)]="emails">
+                  <mat-error ></mat-error>
+                </mat-form-field>
+                <!--      Home No.  -->
+                <mat-form-field hintLabel="ที่อยู่ตามบัตรประจำตัวประชาชน" style="width :100% ;">
+                <textarea matInput placeholder="ที่อยู่"  autocomplete="off" required [(ngModel)]="homeNo"></textarea>
+                </mat-form-field>
+                <!--      Home Now Address.  -->
+                <mat-form-field hintLabel="ที่อยู่ปัจจุบัน" style="width :100%">
+                  <textarea matInput placeholder="ที่อยู่ที่ติดต่อได้" required [(ngModel)]="homeNowAddress" ></textarea>
+                </mat-form-field>
+
+              </div>
+              <div class="buttonStyle">
+                <button   mat-button matStepperPrevious>
+                  <mat-icon  class="icon">skip_previous</mat-icon>
+                </button>
+                <button  mat-button matStepperNext>
+                  <mat-icon class="icon">skip_next</mat-icon>
+                </button>
+              </div>
+            </mat-step>
+        <!------------------------------End ที่อยู่ ------------------------------------------------------------------------------>
+        <!------------------------------Start Job Details ------------------------------------------------------------------------------>
+        <mat-step>
+              <ng-template matStepLabel><b>Job details and bank</b></ng-template>
+              <div class="card2">
+                <!--StartWork-->
+                <mat-form-field style="width :100%">
+                  <input matInput [matDatepicker]="startwork" hintLabel="" placeholder="วันเริ่มงาน" required [(ngModel)]="startWorks">
+                  <mat-datepicker-toggle matSuffix [for]="startwork" ></mat-datepicker-toggle>
+                  <mat-datepicker #startwork></mat-datepicker>
+                </mat-form-field>
+                <!------ ตำแหน่ง ------>
+                <mat-form-field class="formcenter" hintLabel=""  style="width :100%" >
+                  <mat-select placeholder="ตำแหน่ง" required [(ngModel)]="positionSelect">
+                    <mat-option value="Forklift pgp,smtl" > Forklift pgp,smtl</mat-option>
+                    <mat-option value="Account Executive & CS" >Account Executive & CS</mat-option>
+                    <mat-option value="Account Executive Admin" > Account Executive Admin</mat-option>
+                    <mat-option value="ANALYST" > ANALYST</mat-option>
+                    <mat-option value="ANALYST TSP" >ANALYST TSP</mat-option>
+                    <mat-option value="Ast. IMC Manager L.2" >Ast. IMC Manager L.2</mat-option>
+                    <mat-option value="Ast. Opt. Manager L.1" > Ast. Opt. Manager L.1</mat-option>
+                    <mat-option value="Business Development" >Business Development</mat-option>
+                    <mat-option value="Checker" >Checker</mat-option>
+                    <mat-option value="Checker Forklift pgp,smtl" >Checker Forklift pgp,smtl</mat-option>
+                    <mat-option value="Daily Checker" >Daily Checker</mat-option>
+                    <mat-option value="Daily Checker Amazon" >Daily Checker Amazon</mat-option>
+                    <mat-option value="Daily Checker TSP" >Daily Checker TSP</mat-option>
+                    <mat-option value="Daily FL Driver" >Daily FL Driver</mat-option>
+                    <mat-option value="Daily Forklift Driver" >Daily Forklift Driver</mat-option>
+                    <mat-option value="Daily Picker" >Daily Picker</mat-option>
+                    <mat-option value="Daily Picker  TSP" > Daily Picker  TSP</mat-option>
+                    <mat-option value="Daily Picker Amazon" >Daily Picker Amazon</mat-option>
+                    <mat-option value="Daily Picker Chester" >Daily Picker Chester</mat-option>
+                    <mat-option value="Daily Picker PTT" >Daily Picker PTT</mat-option>
+                    <mat-option value="Daily Picker Receiving" > Daily Picker Receiving</mat-option>
+                    <mat-option value="Daily Picker STL" >Daily Picker STL</mat-option>
+                    <mat-option value="Daily Picker TKNR" >Daily Picker TKNR</mat-option>
+                    <mat-option value="Daily Picker Vcan" >Daily Picker Vcan</mat-option>
+                    <mat-option value="Daily Receiving" > Daily Receiving</mat-option>
+                    <mat-option value="Daily TSP Checker" > Daily TSP Checker</mat-option>
+                    <mat-option value="Daily คนพิการ" >Daily คนพิการ</mat-option>
+                    <mat-option value="Driver" >Driver</mat-option>
+                    <mat-option value="HR and Admin Officer">HR and Admin Officer</mat-option>
+                    <mat-option value="Inventory Admin">Inventory Admin</mat-option>
+                    <mat-option value="IT Programmer"> IT Programmer</mat-option>
+                    <mat-option value="Leader" >Leader</mat-option>
+                    <mat-option value="Leader Transport" >Leader Transport</mat-option>
+                    <mat-option value="Leader TSP Operation" > Leader TSP Operation</mat-option>
+                    <mat-option value="Manager" >Manager</mat-option>
+                    <mat-option value="Manager Transport" >Manager Transport</mat-option>
+                    <mat-option value="Monthly  Checker" >Monthly  Checker</mat-option>
+                    <mat-option value="Monthly Checker" >Monthly Checker</mat-option>
+                    <mat-option value="Monthly Driver" >Monthly Driver</mat-option>
+                    <mat-option value="Monthly Forklift Drivers" >Monthly Forklift Drivers</mat-option>
+                    <mat-option value="Monthly IT" >Monthly IT</mat-option>
+                    <mat-option value="Monthly IT Suppervisor" >Monthly IT Suppervisor</mat-option>
+                    <mat-option value="Monthly Receiving Checker" >Monthly Receiving Checker</mat-option>
+                    <mat-option value="Monthly TSP Admin" >Monthly TSP Admin</mat-option>
+                    <mat-option value="MonthlyForklift Driver,Checker PZ Loscam" >MonthlyForklift Driver,Checker PZ Loscam</mat-option>
+                    <mat-option value="Supervisor" >Supervisor</mat-option>
+                    <mat-option value="Supervisor Operation Level 2" >Supervisor Operation Level 2</mat-option>
+                    <mat-option value="Supervisor Transport" >Supervisor Transport</mat-option>
+                    <mat-option value="เจ้าหน้าที่ความปลอดภัยในการทำงานระดับวิชาชีพ" >เจ้าหน้าที่ความปลอดภัยในการทำงานระดับวิชาชีพ</mat-option>
+                    <mat-option value="แม่บ้าน" >แม่บ้าน</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- แผนก -->
+                <mat-form-field class="formcenter" hintLabel="" style="width :20%" style="width :100%" >
+                  <mat-select placeholder="แผนก" required [(ngModel)]="departmentSelect">
+                    <mat-option value="IT" >IT</mat-option>
+                    <mat-option value="AE" >AE</mat-option>
+                    <mat-option value="IMC" >IMC</mat-option>
+                    <mat-option value="Inventory" >Inventory</mat-option>
+                    <mat-option value="OPT" >OPT</mat-option>
+                    <mat-option value="TSP" >TSP</mat-option>
+                    <mat-option value="ANALYST" >ANALYST</mat-option>
+                    <mat-option value="HR" >HR</mat-option>
+                    <mat-option value="Safety" >Safety</mat-option>
+                    <mat-option value="BD" >BD</mat-option>
+                    <mat-option value="แม่บ้าน" >แม่บ้าน</mat-option>
+                    <mat-option value="Trainee" >Trainee</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- ประเภทการทำงาน -->
+                <mat-form-field class="formcenter" hintLabel="" style="width :100%">
+                  <mat-select placeholder="ประเภทการทำงาน" required [(ngModel)]="typeNameSelect">
+                    <mat-option value="นักศึกษาฝึกงาน" >นักศึกษาฝึกงาน</mat-option>
+                    <mat-option value="รายเดือน" >รายเดือน</mat-option>
+                    <mat-option value="รายวัน" >รายวัน</mat-option>
+                    <mat-option value="รายวันชั่วคราว" >รายวันชั่วคราว</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- วุฒิการศึกษา -->
+                <mat-form-field hintLabel="" style="width :100%">
+                  <mat-select placeholder="วุฒิการศึกษา" required [(ngModel)]="educationSelect">
+                    <mat-option value="ม.3" >ม.3</mat-option>
+                    <mat-option value="ม.6" >ม.6</mat-option>
+                    <mat-option value="ป.ตรี" >ป.ตรี</mat-option>
+                    <mat-option value="ป.โท" >ป.โท</mat-option>
+                    <mat-option value="ป.เอก" >ป.เอก</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!--      Bank -->
+                <mat-form-field class="formcenter" hintLabel="" style="width :100%">
+                  <mat-select placeholder="ธนาคาร" required [(ngModel)]="bankSelect">
+                    <mat-option value="ธนาคารกรุงศรีอยุธยา">ธนาคารกรุงศรีอยุธยา จำกัด(มหาชน)</mat-option>
+                    <mat-option value="ธนาคารไทยพาณิชย์" >ธนาคารไทยพาณิชย์ จำกัด(มหาชน)</mat-option>
+                    <mat-option value="ธนาคารทหารไทย" >ธนาคารทหารไทย จำกัด(มหาชน)</mat-option>
+                    <mat-option value="ธนาคารกรุงเทพ" > ธนาคารกรุงเทพ จำกัด(มหาชน)</mat-option>
+                    <mat-option value="ธนาคารออมสิน" >ธนาคารออมสิน</mat-option>
+                    <mat-option value="ธนาคารกสิกรไทย" >ธนาคารกสิกรไทย จำกัด(มหาชน)</mat-option>
+                    <mat-option value="ธนาคารกรุงไทย" >ธนาคารกรุงไทย จำกัด(มหาชน)</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!--        AccountNo.-->
+                <mat-form-field style="width:100%">
+                  <input matInput #AccountNo maxlength="10" placeholder="เลขบัญชี" required [(ngModel)]="bankNumbers">
+                  <mat-hint align="end">{{AccountNo.value?.length || 0}}/10</mat-hint>
+                </mat-form-field>
+
+                </div>
+                <div class="buttonStyle">
+                  <button   mat-button matStepperPrevious>
+                    <mat-icon  class="icon">skip_previous</mat-icon>
+                  </button>
+                  <button  mat-button matStepperNext>
+                    <mat-icon class="icon">skip_next</mat-icon>
+                  </button>
+                </div>
+              </mat-step>
+        <!------------------------------End Job Details ------------------------------------------------------------------------------>
+        <!------------------------------Start Save ------------------------------------------------------------------------------>
+        <mat-step>
+            <ng-template matStepLabel><b>Save</b></ng-template>
+
+                <div  align="center" style="opacity: 0.99;">
+                 <!-- <button mat-raised-button color="primary">Primary</button> -->
+                  <font color="red"><p>*โปรดตรวจสอบข้อมูลอีกรอบก่อนกดบันทึก*</p></font>
+                  <button mat-raised-button color="accent"
+                          style="width:35%;
+                          height:50px;
+                          font-size:18px;
+                          margin-top: 0;
+                          margin-right: auto;
+                          margin-left: auto;
+                          margin-bottom: auto;"
+                          (click) = "SubmitData()">
+                    <b>บันทึกข้อมูลทั้งหมด</b>
+                  </button>
+                </div>
+            </mat-step>
+        <!------------------------------End Save ------------------------------------------------------------------------------>
+      </mat-horizontal-stepper>
+
+        </div>
+      </div>
+    </mat-drawer-container>
+
+    </body>
+
+
+
+
+

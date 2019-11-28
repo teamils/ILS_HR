@@ -1,0 +1,233 @@
+<!-- Start Header From **********************************************************************************************************-->
+<body class="bgimg">
+<mat-drawer-container class="example-container">
+  <mat-drawer #drawer class="example-sidenav" mode="!side">
+    <!--  พนักงาน(Employee) --------------------------------------------------------------------------------->
+    <div class="sidenav">
+      <mat-accordion>
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>  <!--  เห็นเฉพาะ HR -->
+            <mat-label class="dd">
+              Employee
+            </mat-label>
+          </mat-expansion-panel-header>
+          <hr/>
+          <a routerLink="/employee-master">Employee Master</a>
+          <a routerLink="/employee-add">New Employee</a>
+          <a routerLink="/create-account" >Create new account</a>
+        </mat-expansion-panel>
+
+        <!--  การลา(leave) --------------------------------------------------------------------------------->
+
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-label class="dd">
+              Attendance
+            </mat-label>
+          </mat-expansion-panel-header>
+          <hr/>
+          <a routerLink="LeaveMain">Attendance</a> <!-- เห็นทุกคน ยกเว้น HR -->
+          <a routerLink="LeaveShow">Data Attendance</a>  <!-- เห็นทุกคน -->
+          <a routerLink="LeaveShowHR">Data Attendance For HR</a>   <!-- เห็นเฉพาะ HR -->
+          <a routerLink="LeaveApproveMan">Approve By MANAGER</a>   <!-- เห็นเฉพาะ MANAGER -->
+          <a routerLink="LeaveApproveSup">Approve By SUPERVISOR</a>   <!-- เห็นเฉพาะ SUPERVISOR -->
+        </mat-expansion-panel>
+
+        <!--  ขอล่วงเวลา(OT) --------------------------------------------------------------------------------->
+
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-label class="dd">
+              OverTime
+            </mat-label>
+          </mat-expansion-panel-header>
+          <hr/>
+          <a routerLink="OverTime">OverTime</a>
+          <a routerLink="OverTimeShow">Data OverTime</a>
+          <a routerLink="OverTimeApprove">Approve</a>
+        </mat-expansion-panel>
+
+        <!--  อบรม (Training) --------------------------------------------------------------------------------->
+
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-label class="dd">
+              Training
+            </mat-label>
+          </mat-expansion-panel-header>
+          <hr/>
+          <a routerLink="TrainAdd">Training</a>
+          <a routerLink="TrainShow">Data Training</a>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <button mat-raised-button color="primary" *ngIf="" routerLink="login" style="margin-right:10px ;color :#ffff">Login </button>
+      <button mat-raised-button color="primary" *ngIf="" routerLink="Logout" (click)="onLogout()" style="margin-right:10px ;color :#ffff">Logout </button>
+    </div> <!-- ข้างๆๆๆๆ -->
+    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+  </mat-drawer>
+  <!-- End Header From **********************************************************************************************************-->
+
+
+      <!--------Start Menu --------->
+      <button type="button"mat-button (click)="drawer.toggle()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">menu
+        </mat-icon><font class="icon">Menu</font>
+      </button><br>
+      <!-------- End Menu --------->
+
+  <div class="example-container2 mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()"
+                            [aria-label]="checkboxLabel()">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)"
+                            [aria-label]="checkboxLabel(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+         <ng-container matColumnDef="empCodeID" sticky>
+           <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>รหัสพนักงาน</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.employeeMasterCustomerCode}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="empFristName">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>First name</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.employeeMasterFirstName}}&nbsp;{{element.employeeMasterLastName}}  </td>
+          </ng-container>
+
+          <ng-container matColumnDef="NickName">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Nick name</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.employeeMasterNickName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Gender">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Gender</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.employeeMasterGender}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Status</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.maritalStatus}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="BirthDate">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Birth date</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.employeeMasterBirthDate}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="PersonID">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>PersonID</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.employeeMasterPersonID}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Tel1">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Tel1</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.employeeMasterTel1}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Email">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Email</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.empEmail}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="AddressReal">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Address real</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.empAddressReal}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="AddressPerson">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Address person</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.empAddressPerson}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="StartDate">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Start work</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.employeeMasterStartDate}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Position">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Position</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.employeePosition}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Department">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Department</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.employeeDepartment}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="empType">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Emp type</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.employeeType}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="educations">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>educations</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.education}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="bank">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Bank name</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.bank}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="bankNumber">
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>Bank number</b></font></th>
+            <td mat-cell *matCellDef="let element"> {{element.bankNumber}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="del" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>ลบข้อมูล</b></font></th>
+            <td mat-cell *matCellDef="let row" >
+              <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="onHide(row)" #ckeckEdit>
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Edit" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef><font size="3" color="black"><b>แก้ไข</b></font></th>
+            <td mat-cell *matCellDef="let row" >
+              <button mat-icon-button matTooltip="แก้ไข" matTooltipPosition="right" (click)="onEdit(row)" #ckeckEdit>
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons ></mat-paginator>
+  </div>
+
+</mat-drawer-container>
+
+</body>
+
+
+
+
+
+
+
+
+
