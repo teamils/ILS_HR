@@ -17,6 +17,11 @@
   justify-content: center;
 }
 
+.example-sidenav {
+  padding: 3px;
+  background-color: #000033;
+}
+
 .sidenav {
   height: 100%;
   width: 100%;
@@ -69,7 +74,27 @@
        height:100px;
 }
 
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.);
+  transition: 0.3s;
+  width: 90%;
+  height: 95%;
+   margin-top: 0;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+    background-color: #ffffff;
 
+}
+.card2 {
+  width: 35%;
+  height: 35%;
+   margin-top: 0;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+    background-color: white;
+}
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
 }
@@ -90,94 +115,35 @@
   width: 100%;
 }
 
-
-
 .example-container2 {
- height: 105%;
+ height: 95%;
    width: 100%;
    overflow: auto;
 }
 
-th.mat-column-select, td.mat-column-select {
-  width: 60px;
-  border-right: 1px;
-}
-th.mat-column-empCodeID, td.mat-column-empCodeID {
-  width: 200px;
-  border-right: 1px;
-}
-th.mat-column-empFristName, td.mat-column-empFristName {
-  width: 70px;
-  border-right: 1px;
-}
-th.mat-column-empLastName, td.mat-column-empLastName {
-  width: 150px;
-  border-right: 1px;
-}
-th.mat-column-NickName, td.mat-column-NickName {
-  width: 1000px;
-  border-right: 1px;
-}
-th.mat-column-Gender, td.mat-column-Gender {
-  width: 70px;
-  border-right: 1px;
-}
-th.mat-column-Status, td.mat-column-Status {
-  width: 100px;
-  border-right: 1px;
-}
-th.mat-column-BirthDate, td.mat-column-BirthDate {
-  width: 120px;
-  border-right: 1px;
-}
-th.mat-column-PersonID, td.mat-column-PersonID {
-  width: 140px;
-  border-right: 1px;
-}
-th.mat-column-Tel1, td.mat-column-Tel1 {
-  width: 130px;
-  border-right: 1px;
-}
-th.mat-column-Email, td.mat-column-Email {
-  width: 260px;
-  border-right: 1px;
-}
-th.mat-column-AddressReal, td.mat-column-AddressReal {
-  width: 90px;
-  border-right: 1px;
-}
-th.mat-column-AddressPerson, td.mat-column-AddressPerson {
-  width: 90px;
-  border-right: 1px;
-}
-th.mat-column-StartDate, td.mat-column-StartDate {
-  width: 140px;
-  border-right: 1px;
-}
-th.mat-column-Position, td.mat-column-Position {
-  width: 120px;
-  border-right: 1px;
-}
-th.mat-column-Department, td.mat-column-Department {
-  width: 80px;
-  border-right: 1px;
-}
-th.mat-column-empType, td.mat-column-empType {
-  width: 90px;
-  border-right: 1px;
-}
-th.mat-column-educations, td.mat-column-educations {
-  width: 90px;
-  border-right: 1px;
-}
-th.mat-column-bank, td.mat-column-bank {
-  width: 110px;
-  border-right: 1px;
-}
-th.mat-column-bankNumber, td.mat-column-bankNumber {
-  width: 260px;
-  border-right: 1px;
-}
+  th.mat-column-select, td.mat-column-select {
+    padding-right: 20px;
+    padding-lift: 1px;
+    border-right: 1px solid #e0e0e0;
+    font-size: 15px;
+  }
+  th.mat-column-empCodeID, td.mat-column-empCodeID {
+      padding: 20px;
+      border-right: 1px double #e0e0e0;
+      font-size: 15px;
+  }
+  th.mat-column-empFristName, td.mat-column-empFristName {
+      border-right: 1px double #e0e0e0;
+      font-size: 15px;
+      padding: 15px;
+      width:auto;
+  }
+   th.mat-column, td.mat-column{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+    }
 
 
 .mat-table-sticky:first-child {

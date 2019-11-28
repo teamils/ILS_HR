@@ -29,8 +29,6 @@ export class HeaderComponent implements OnInit {
 
         }
 
-
-
 }
 
 
@@ -42,7 +40,7 @@ export class LoginDialog {
 
   constructor(
     public dialogRef: MatDialogRef<LoginDialog>
-    ) {}
+    ) {dialogRef.disableClose = true;}
 
   closeDialog(): void {
     this.dialogRef.close();
