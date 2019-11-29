@@ -16,6 +16,7 @@ export class EmployeeAddComponent implements OnInit {
 data:any={}
 
 employeeMasterCustomerCode : null;
+prefixSelect : String = '' ;
 empMasterFirstName : null;
 empMasterLastName : null;
 empMasterNickName : null;
@@ -55,7 +56,7 @@ constructor(private router:Router,
 
 
     SubmitData(){
-     if(this.employeeMasterCustomerCode == null || this.empMasterFirstName == null
+     if(this.employeeMasterCustomerCode == null || this.prefixSelect == null || this.empMasterFirstName == null
       || this.empMasterLastName == null || this.empMasterNickName == null
        || this.genderSelect == null || this.MaritalStatusSelect == null
         || this.BirthDateSelect == null || this.personID == null
@@ -68,7 +69,7 @@ constructor(private router:Router,
                             alert("กรุณากรอกข้อมูลให้ครบ");
       }
       else{
-     this.http.post(this.API + '/'+this.employeeMasterCustomerCode + '/' + this.empMasterFirstName +'/' + this.empMasterLastName
+     this.http.post(this.API + '/'+this.employeeMasterCustomerCode + '/' + this.prefixSelect + '/' + this.empMasterFirstName +'/' + this.empMasterLastName
      +'/' + this.empMasterNickName +'/' + this.genderSelect +'/' + this.MaritalStatusSelect +'/' + this.BirthDateSelect
      +'/' + this.personID +'/' + this.callContact +'/' + this.emails +'/' + this.homeNo +'/' + this.homeNowAddress
      +'/' + this.startWorks +'/' + this.positionSelect +'/' + this.departmentSelect +'/' + this.typeNameSelect

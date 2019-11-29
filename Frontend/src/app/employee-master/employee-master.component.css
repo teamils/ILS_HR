@@ -78,8 +78,8 @@
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.);
   transition: 0.3s;
   width: 90%;
-  height: 95%;
-   margin-top: 0;
+  height: 90%;
+   margin-top: 0px;
     margin-right: auto;
     margin-left: auto;
     margin-bottom: auto;
@@ -89,7 +89,7 @@
 .card2 {
   width: 35%;
   height: 35%;
-   margin-top: 0;
+   margin-top: 0px;
     margin-right: auto;
     margin-left: auto;
     margin-bottom: auto;
@@ -115,22 +115,48 @@
   width: 100%;
 }
 
+
+.searchStyle{
+  width:300px;
+}
+/* ******************************  TABLE ********************************************** */
 .example-container2 {
- height: 95%;
+   height: 95%;
    width: 100%;
    overflow: auto;
 }
 
-  th.mat-column-select, td.mat-column-select {
+  th {
+    background-color: #C0C0f0;
+    width:30px;
+  }
+  td{
+      height:30px;
+  }
+   th.mat-column-select,td.mat-column-select {
     padding-right: 20px;
     padding-lift: 1px;
     border-right: 1px solid #e0e0e0;
     font-size: 15px;
   }
-  th.mat-column-empCodeID, td.mat-column-empCodeID {
+  td.mat-column-empCodeID{
+    padding: 20px;
+    border-right: 1px double #e0e0e0;
+    font-size: 15px;
+
+  }
+  th.mat-column-empCodeID {
       padding: 20px;
       border-right: 1px double #e0e0e0;
       font-size: 15px;
+       background-color: #C0C0f0;
+
+  }
+  th.mat-column-prefix, td.mat-column-prefix {
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
   }
   th.mat-column-empFristName, td.mat-column-empFristName {
       border-right: 1px double #e0e0e0;
@@ -138,17 +164,119 @@
       padding: 15px;
       width:auto;
   }
-   th.mat-column, td.mat-column{
+  th.mat-column-empLastName, td.mat-column-empLastName {
+      border-right: 1px double #e0e0e0;
+      font-size: 15px;
+      padding: 15px;
+      width:auto;
+  }
+   th.mat-column-NickName, td.mat-column-NickName{
         border-right: 1px double #e0e0e0;
         font-size: 15px;
         padding: 15px;
         width:auto;
-    }
+   }
+   th.mat-column-Gender, td.mat-column-Gender{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-Status, td.mat-column-Status{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-BirthDate, td.mat-column-BirthDate{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-PersonID, td.mat-column-PersonID{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-Tel1, td.mat-column-Tel1{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-Email, td.mat-column-Email{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-AddressReal, td.mat-column-AddressReal{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-AddressPerson, td.mat-column-AddressPerson{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-StartDate, td.mat-column-StartDate{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-Position, td.mat-column-Position{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-Department, td.mat-column-Department{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-empType, td.mat-column-empType{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-educations, td.mat-column-educations{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-bank, td.mat-column-bank{
+        border-right: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+   th.mat-column-bankNumber, td.mat-column-bankNumber{
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
 
+   th.mat-column-del, td.mat-column-del{
+        border-left: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
 
-.mat-table-sticky:first-child {
-  border-right: 1px solid #e0e0e0;
-}
-.mat-table-sticky:last-child {
-  border-left: 1px solid #e0e0e0;
-}
+   }
+   th.mat-column-Edit, td.mat-column-Edit{
+        border-left: 1px double #e0e0e0;
+        font-size: 15px;
+        padding: 15px;
+        width:auto;
+   }
+

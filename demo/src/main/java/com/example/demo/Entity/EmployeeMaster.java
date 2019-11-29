@@ -22,6 +22,7 @@ public class EmployeeMaster {
     private Long employeeMasterID;
 
     private String employeeMasterCustomerCode;
+    private String prefix;
     private String employeeMasterFirstName;
     private String employeeMasterLastName;
     private String employeeMasterNickName;
@@ -43,6 +44,15 @@ public class EmployeeMaster {
     private String bank;
     private String bankNumber;
     private String IsActive;
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
 
     public  EmployeeMaster (){ }
     public Date getEmployeeMasterBirthDate() {

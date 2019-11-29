@@ -90,6 +90,14 @@
               <input matInput #x maxlength="6" placeholder="รหัสพนักงาน" required [(ngModel)]="employeeMasterCustomerCode">
               <mat-hint align="end">{{x.value.length}} / 6</mat-hint>
             </mat-form-field>
+            <!--Prefix-->
+            <mat-form-field hintLabel="" style="width :100%">
+              <mat-select placeholder="คำนำหน้า" required [(ngModel)]="prefixSelect">
+                <mat-option value="นาย" >นาย</mat-option>
+                <mat-option value="นาง" >นาง</mat-option>
+                <mat-option value="นางสาว" >นางสาว</mat-option>
+              </mat-select>
+            </mat-form-field>
             <!--F_NAME-->
             <mat-form-field  style="width:100%" >
               <input matInput placeholder="ชื่อ"  autocomplete="off" required [(ngModel)]="empMasterFirstName">
@@ -112,8 +120,8 @@
             <!--      Marital status  -->
             <mat-form-field  class="formcenter"  style="width :100%">
               <mat-select placeholder="สถานะภาพ" required [(ngModel)]="MaritalStatusSelect">
-                <mat-option value="โสด" >โสด</mat-option>
-                <mat-option value="ไม่โสด" >ไม่โสด</mat-option>
+                <mat-option value="ยังปฏิบัติงานอยู่">ยังปฏิบัติงานอยู่</mat-option>
+                <mat-option value="พ้นสภาพพนักงาน">พ้นสภาพพนักงาน</mat-option>
               </mat-select>
             </mat-form-field>
             <!--  BirthDate  -->

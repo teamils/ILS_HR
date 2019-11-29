@@ -34,8 +34,8 @@
   </button>
 </mat-form-field>
 
-<div class="example-button-row" align="center">
-  <button mat-raised-button color="primary" style="margin-left: 0px ; width: 220px ; font-size: 20px" (click)="closeDialog()">Login</button>
+<div class="example-button-row" align="center" (keydown.enter)="closeDialog()">
+  <button mat-raised-button color="primary" style="margin-left: 0px ; width: 220px ; font-size: 20px" (click)="closeDialog()" (keydown.enter)="closeDialog()">Login</button>
 </div>
 <div align="center">
   <button mat-button color="warn"  class="colors" (click)="closeDialog()">Forgot your password?</button>

@@ -25,10 +25,10 @@ public class EmployeeMasterController {
     }
 
 
-    @PostMapping("/ILS_HR/{employeeMasterCustomerCode}/{employeeMasterFirstName}/{employeeMasterLastName}/{employeeMasterNickName}" +
+    @PostMapping("/ILS_HR/{employeeMasterCustomerCode}/{prefixSelect}/{employeeMasterFirstName}/{employeeMasterLastName}/{employeeMasterNickName}" +
             "/{employeeMasterGender}/{maritalStatus}/{employeeMasterBirthDate}/{employeeMasterPersonID}/{employeeMasterTel1}/{empEmail}" +
             "/{empAddressReal}/{empAddressPerson}/{employeeMasterStartDate}/{employeePosition}/{employeeDepartment}/{employeeType}/{education}/{bank}/{bankNumber}")
-    public EmployeeMaster employeeMaster(@PathVariable String employeeMasterCustomerCode , @PathVariable String employeeMasterFirstName
+    public EmployeeMaster employeeMaster(@PathVariable String employeeMasterCustomerCode , @PathVariable String prefixSelect ,@PathVariable String employeeMasterFirstName
             , @PathVariable String employeeMasterLastName , @PathVariable String employeeMasterNickName , @PathVariable String employeeMasterGender
             , @PathVariable String maritalStatus , @PathVariable Date employeeMasterBirthDate , @PathVariable String employeeMasterPersonID
             , @PathVariable String employeeMasterTel1, @PathVariable String empEmail , @PathVariable String empAddressReal
@@ -38,6 +38,7 @@ public class EmployeeMasterController {
 
         EmployeeMaster employeeMaster1 = new EmployeeMaster();
         employeeMaster1.setEmployeeMasterCustomerCode(employeeMasterCustomerCode);
+        employeeMaster1.setPrefix(prefixSelect);
         employeeMaster1.setEmployeeMasterFirstName(employeeMasterFirstName);
         employeeMaster1.setEmployeeMasterLastName(employeeMasterLastName);
         employeeMaster1.setEmployeeMasterNickName(employeeMasterNickName);

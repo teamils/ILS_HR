@@ -10,6 +10,7 @@ import { ServiceService } from '../service/service.service';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import {MatBottomSheet,MatBottomSheetRef} from '@angular/material';
 import {  SelectionModel } from '@angular/cdk/collections';
+import {  DatePipe} from '@angular/common';
 
 export interface Apps{
   empCodeIDxx : number;
@@ -27,8 +28,11 @@ data:any={}
 employee : Array<any>;
 employeeSelect : '';
 accountuser : Array<any>;
+pipe = new DatePipe('en-TH');
+CurrentDateTime = new Date();
 
-displayedColumns: string[] = ['select','empCodeID','empFristName','NickName','Gender','Status','BirthDate','PersonID','Tel1','Email','AddressReal','AddressPerson','StartDate','Position','Department','empType','educations','bank','bankNumber','del','Edit'];
+
+displayedColumns: string[] = ['select','empCodeID','prefix','empFristName','empLastName','NickName','Gender','Status','BirthDate','PersonID','Tel1','Email','AddressReal','AddressPerson','StartDate','Position','Department','empType','educations','bank','bankNumber','del','Edit'];
 dataSource = new MatTableDataSource<Apps>(this.employee);
 selection = new SelectionModel<Apps>(true, []);
 @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
@@ -56,6 +60,10 @@ public API = '//localhost:8080/ILS_HR';   //for test
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.empCodeIDxx + 1}`;
   }
 
+ applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
 constructor(private router:Router,
             private route:ActivatedRoute ,
             public dialog: MatDialog,
@@ -65,9 +73,11 @@ constructor(private router:Router,
 
     ngOnInit() {
         this.service.getemployee().subscribe(data => {
+                console.log(this.CurrentDateTime);
                this.employee = data;
                 this.dataSource.data = data;
                console.log(this.employee);
+
           });
         this.service.getaccountUsers().subscribe(data => {
                this.accountuser = data;
