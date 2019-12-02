@@ -1,0 +1,24 @@
+<font size="5px"><b>NEW Edit Employee Master</b></font>
+<div style="float:right" >
+  <button mat-icon-button (click)="closeDialog()">
+    <mat-icon>cancel</mat-icon>
+  </button>
+</div>
+
+
+<table class="table">
+  <th>ลำดับที่</th>
+  <th>ชื่อผู้ใช้</th>
+  <ng-container *ngFor="let re of employee">
+    <tr>
+      <td>{{re.employeeMasterID}}</td>
+      <td>{{re.employeeMasterCustomerCode}}</td>
+      <td>{{re.employeeMasterFirstName}}</td>
+
+    </tr>
+  </ng-container>
+</table>
+
+<ng-container *ngFor="let re of employee">
+  {{re.employeeMasterID}}
+</ng-container>

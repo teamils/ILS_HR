@@ -11,8 +11,10 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import {MatBottomSheet,MatBottomSheetRef} from '@angular/material';
 import {  SelectionModel } from '@angular/cdk/collections';
 import {  DatePipe} from '@angular/common';
+import { EmployeeEditComponent } from '../employee-edit/employee-edit.component';
+import { NewheaderComponent } from '../newheader/newheader.component';
 
-export interface Apps{
+export interface Emp{
   empCodeIDxx : number;
   employeeMasterCustomerCode : String;
 }
@@ -24,69 +26,80 @@ export interface Apps{
 })
 
 export class EmployeeMasterComponent implements OnInit {
-data:any={}
-employee : Array<any>;
-employeeSelect : '';
-accountuser : Array<any>;
-pipe = new DatePipe('en-TH');
-CurrentDateTime = new Date();
+    public API = '//localhost:8080/ILS_HR';   //for test
+    data:any={}
+    employee : Array<any>;
+    employeeSelect : '';
+    accountuser : Array<any>;
+    pipe = new DatePipe('en-TH');
+    CurrentDateTime = new Date();
 
 
-displayedColumns: string[] = ['select','empCodeID','prefix','empFristName','empLastName','NickName','Gender','Status','BirthDate','PersonID','Tel1','Email','AddressReal','AddressPerson','StartDate','Position','Department','empType','educations','bank','bankNumber','del','Edit'];
-dataSource = new MatTableDataSource<Apps>(this.employee);
-selection = new SelectionModel<Apps>(true, []);
-@ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
-@ViewChild(MatSort, {static : true}) sort: MatSort;
+    displayedColumns: string[] = ['select','empCodeID','prefix','empFristName','empLastName','NickName','Gender','Status','BirthDate','PersonID','Tel1','Email','AddressReal','AddressPerson','StartDate','Position','Department','empType','educations','bank','bankNumber','del','Edit'];
+    dataSource = new MatTableDataSource<Emp>(this.employee);
+    selection = new SelectionModel<Emp>(true, []);
+    @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
+    @ViewChild(MatSort, {static : true}) sort: MatSort;
 
-isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
+    isAllSelected() {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dataSource.data.length;
+        return numSelected === numRows;
+      }
 
-public API = '//localhost:8080/ILS_HR';   //for test
-/** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
 
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Apps): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.empCodeIDxx + 1}`;
-  }
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+      masterToggle() {
+        this.isAllSelected() ?
+            this.selection.clear() :
+            this.dataSource.data.forEach(row => this.selection.select(row));
+      }
 
- applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+      /** The label for the checkbox on the passed row */
+      checkboxLabel(row?: Emp): string {
+        if (!row) {
+          return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+        }
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.empCodeIDxx + 1}`;
+      }
 
-constructor(private router:Router,
-            private route:ActivatedRoute ,
-            public dialog: MatDialog,
-             private http: HttpClient,
-            private service:ServiceService,
-           ) { }
+     applyFilter(filterValue: string) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+      }
 
-    ngOnInit() {
-        this.service.getemployee().subscribe(data => {
-                console.log(this.CurrentDateTime);
-               this.employee = data;
-                this.dataSource.data = data;
-               console.log(this.employee);
+      constructor(private router:Router,
+                private route:ActivatedRoute ,
+                public dialog: MatDialog,
+                 private http: HttpClient,
+                private service:ServiceService,
+               ) { }
 
-          });
-        this.service.getaccountUsers().subscribe(data => {
-               this.accountuser = data;
-               console.log(this.accountuser);
-          });
+        ngOnInit() {
+            this.service.getemployee().subscribe(data => {
+                    console.log(this.CurrentDateTime);
+                   this.employee = data;
+                    this.dataSource.data = data;
+                   console.log(this.employee);
 
-         this.dataSource.paginator = this.paginator;
-         this.dataSource.sort = this.sort;
-    }
+              });
+
+            this.service.getaccountUsers().subscribe(data => {
+                   this.accountuser = data;
+                   console.log(this.accountuser);
+              });
+
+             this.dataSource.paginator = this.paginator;
+             this.dataSource.sort = this.sort;
+        }
+
+          OpenEditDialogComponent(): void {
+                       const dialogRef = this.dialog.open(EmployeeEditComponent, {
+                         width: '80%' , height:'80%'
+                       });
+
+          }
 
 
 }
+
+

@@ -146,24 +146,47 @@ img {
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.);
   transition: 0.3s;
-  width: 75%;
-  height: 80%;
-   margin-top: 0;
+  width: 90%;
+  height: 90%;
+   margin-top: 5px;
     margin-right: auto;
     margin-left: auto;
     margin-bottom: auto;
     background-color: #ffffff;
 
 }
-
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
 }
-
+.card3 {
+  width: 80%;
+  height: 50%;
+  margin-top: 2px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: auto;
+  background-color: white;
+}
+.card2 {
+  width: 35%;
+  height: 50%;
+  margin-top: 2px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: auto;
+  background-color: white;
+}
+.cardHeader{
+   width: 90%;
+   height: 50px;
+   margin-top: 2px;
+   margin-right: auto;
+   margin-left: auto;
+   margin-bottom: auto;
+}
 .container {
   padding: 2px 16px;
 }
-
 
 
 
@@ -203,15 +226,6 @@ body {
   color:#005500;
 }
 
-.card2 {
-  width: 35%;
-  height: 35%;
-   margin-top: 0;
-    margin-right: auto;
-    margin-left: auto;
-    margin-bottom: auto;
-    background-color: white;
-}
 
 .button{
   width:10%%;

@@ -1,0 +1,92 @@
+/*_________________________________________THIS HOME___________________________________________________________ */
+.example-container { /* Main */
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+}
+/*----------------------------หน้า menu ด้านซ่าย--------------------------------------------*/
+.sidenav {
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  /*background-color: #000099;*/
+  overflow-x: hidden;
+  padding-top: 0px;
+  background-image:url(src/app/image/hr.jpg);
+  opacity: 0.85;
+}
+.sidenav a {
+  padding: 2px 2px 2px 2px;
+  text-decoration: none;
+  font-size: 17px;
+  color: #000000;
+  display: block;
+}
+.sidenav a:hover {
+  color: #0000ff;
+}
+
+.dd{
+  font-size: 18px;
+  color: back;
+  text-shadow: white 0.1em 0em 0.3em;
+  font-weight: bold;
+}
+.opacity{
+     opacity: 0.90;
+     color:#00ff00;
+}
+.BG_Sidenav{
+  background-image:url(src/app/image/hr.jpg);
+}
+/*----------------------------หน้า menu ด้านซ่าย--------------------------------------------*/
+.example-sidenav-container { /* หน้าใหญ่สุด #3 */
+  display: flex;
+   background-image:url(src/app/image/hr.jpg);
+   height: 100%;
+   width: 100%;
+   flex: 1;
+}
+.example-is-mobile .example-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+.font{ /* ILS HUMEN RESOURCES  */
+  font-family:Verdana;
+ /* text-shadow: 0 0 0.2em #F87, 0 0 0.2em #F87;*/
+  text-shadow: 0 0 0.2em #87F, 0 0 0.2em #87F,0 0 0.2em #87F;
+}
+.loginStyle{
+     max-width: 400px;
+     margin-left: auto;
+     margin-right: 0;
+}
+.toolbarStyle{
+  background-color: #000088;
+  box-shadow: rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+.toolbarStyle:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
+}
+/*_________________________________________THIS HOME___________________________________________________________ */
+
+
+.card {
+  width: 100%;
+  height: 100%;
+   margin-top: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+    background-color: #ffffff;
+    opacity: 0.85;
+}
+

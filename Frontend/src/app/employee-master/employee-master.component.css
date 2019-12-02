@@ -77,8 +77,8 @@
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.);
   transition: 0.3s;
-  width: 90%;
-  height: 90%;
+  width: 93%;
+  height: 80%;
    margin-top: 0px;
     margin-right: auto;
     margin-left: auto;
@@ -95,20 +95,21 @@
     margin-bottom: auto;
     background-color: white;
 }
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
-}
+
 
 .icon{
   color:#005500;
 }
 
 
-
-
-
-/* Structure */
-
+.cardHeader{
+   width: 90%;
+   height: 50px;
+   margin-top: 2px;
+   margin-right: auto;
+   margin-left: auto;
+   margin-bottom: auto;
+}
 
 .mat-form-field {
   font-size: 14px;
@@ -121,9 +122,10 @@
 }
 /* ******************************  TABLE ********************************************** */
 .example-container2 {
-   height: 95%;
+   height: 100%;
    width: 100%;
    overflow: auto;
+   margin-top: 3px;
 }
 
   th {

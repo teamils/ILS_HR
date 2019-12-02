@@ -68,8 +68,6 @@
           <a routerLink="TrainShow">Data Training</a>
         </mat-expansion-panel>
       </mat-accordion>
-      <button mat-raised-button color="primary" *ngIf="" routerLink="login" style="margin-right:10px ;color :#ffff">Login </button>
-      <button mat-raised-button color="primary" *ngIf="" routerLink="Logout" (click)="onLogout()" style="margin-right:10px ;color :#ffff">Logout </button>
     </div> <!-- ข้างๆๆๆๆ -->
     <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
   </mat-drawer>
@@ -81,7 +79,9 @@
         </mat-icon><font class="icon">Menu</font>
       </button>
       <h1 align="center">Welcome to human resourcse system</h1>
-
+      <div class="lo">
+        <button mat-raised-button color="primary" (click)="openDialog()" width="50px">LOGIN</button>
+      </div>
       <mat-horizontal-stepper>
         <mat-step>
           <ng-template matStepLabel><b>ข้อมูลส่วนตัว</b></ng-template>

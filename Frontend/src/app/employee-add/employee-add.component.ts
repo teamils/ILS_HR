@@ -78,7 +78,8 @@ constructor(private router:Router,
                                data => {
                                    console.log('PUT Request is successful', data);
                                    alert("บันทึกสำเร็จ");
-                                   this.router.navigate(['employee-master',{first:this.data.first}]);
+                                   this.router.navigate(['newheader',{first:this.data.first}]);
+
                                },
                                error => {
                                    console.log('Error', error);
