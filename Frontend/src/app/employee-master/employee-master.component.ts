@@ -26,6 +26,7 @@ export interface Emp{
 })
 
 export class EmployeeMasterComponent implements OnInit {
+    onHide : boolean;
     public API = '//localhost:8080/ILS_HR';   //for test
     data:any={}
     employee : Array<any>;
@@ -35,7 +36,7 @@ export class EmployeeMasterComponent implements OnInit {
     CurrentDateTime = new Date();
 
 
-    displayedColumns: string[] = ['select','empCodeID','prefix','empFristName','empLastName','NickName','Gender','Status','BirthDate','PersonID','Tel1','Email','AddressReal','AddressPerson','StartDate','Position','Department','empType','educations','bank','bankNumber','del','Edit'];
+    displayedColumns: string[] = ['select','id','empCodeID','prefix','empFristName','empLastName','NickName','Gender','Status','BirthDate','PersonID','Tel1','Email','AddressReal','AddressPerson','StartDate','Position','Department','empType','educations','bank','bankNumber','del','Edit'];
     dataSource = new MatTableDataSource<Emp>(this.employee);
     selection = new SelectionModel<Emp>(true, []);
     @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
@@ -92,12 +93,14 @@ export class EmployeeMasterComponent implements OnInit {
              this.dataSource.sort = this.sort;
         }
 
-          OpenEditDialogComponent(): void {
-                       const dialogRef = this.dialog.open(EmployeeEditComponent, {
-                         width: '80%' , height:'80%'
-                       });
-
+          OpenEditDialogComponent(row : any){
+               const dialogRef = this.dialog.open(EmployeeEditComponent, {
+                   width: '90%'
+                   , height:'90%'
+                    , data: row,
+              });
           }
+
 
 
 }

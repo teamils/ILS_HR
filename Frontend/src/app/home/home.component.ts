@@ -13,7 +13,8 @@ import {LoginDialog} from '../newheader/newheader.component';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+panelOpenState : boolean;
+showFiller : boolean;
 data:any={}
 user : null ;
 password : null;

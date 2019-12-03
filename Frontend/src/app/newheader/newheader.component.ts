@@ -79,7 +79,8 @@ private _mobileQueryListener: () => void;
   templateUrl: 'login-dialog.html',
 })
 export class LoginDialog {
-
+  hide : boolean;
+  panelOpenState : boolean=true;
   constructor(
     public dialogRef: MatDialogRef<LoginDialog>
     ) {dialogRef.disableClose = true;}

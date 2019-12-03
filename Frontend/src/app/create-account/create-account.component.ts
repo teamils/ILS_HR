@@ -12,7 +12,7 @@ import { ServiceService } from '../service/service.service';
 })
 
 export class CreateAccountComponent implements OnInit {
-
+  hide : boolean;
   data:any={}
 
   employee : Array<any>;
@@ -47,7 +47,7 @@ export class CreateAccountComponent implements OnInit {
                                data => {
                                    console.log('PUT Request is successful', data);
                                    alert("บันทึกสำเร็จ");
-                                  this.router.navigate(['employee-master',{first:this.data.first}]);
+                                  this.router.navigate(['newheader',{first:this.data.first}]);
                                },
                                error => {
                                    console.log('Error', error);

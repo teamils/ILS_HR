@@ -5,12 +5,13 @@
         <!------------------------------Start ข้อมูลส่วนตัว ------------------------------------------------------------------------------>
         <mat-step>
           <ng-template matStepLabel><b>Personal information</b></ng-template>
-          <mat-grid-list cols="2" rowHeight="2:1">
+          <mat-grid-list cols="2" rowHeight="2:1" class="mat_grid_list_Style">
             <mat-grid-tile>
                <div class="card3">
                  <mat-form-field style="width:100%">
                    <input matInput #x maxlength="6" placeholder="รหัสพนักงาน" required [(ngModel)]="employeeMasterCustomerCode">
                    <mat-hint align="end">{{x.value.length}} / 6</mat-hint>
+                   <mat-icon matSuffix>perm_identity</mat-icon>
                  </mat-form-field>
                  <!--Prefix-->
                  <mat-form-field hintLabel="" style="width :100%">
@@ -19,14 +20,17 @@
                      <mat-option value="นาง" >นาง</mat-option>
                      <mat-option value="นางสาว" >นางสาว</mat-option>
                    </mat-select>
+                   <mat-icon matSuffix>perm_identity</mat-icon>
                  </mat-form-field>
                  <!--F_NAME-->
                  <mat-form-field  style="width:100%" >
                    <input matInput placeholder="ชื่อ"  autocomplete="off" required [(ngModel)]="empMasterFirstName">
+                   <mat-icon matSuffix>perm_identity</mat-icon>
                  </mat-form-field>
                  <!--L_NAME-->
                  <mat-form-field style="width:100%">
                    <input matInput placeholder="นามสกุล"  autocomplete="off" required [(ngModel)]="empMasterLastName">
+                   <mat-icon matSuffix>perm_identity</mat-icon>
                  </mat-form-field>
                </div>
             </mat-grid-tile>
@@ -35,6 +39,7 @@
                 <!--      N_NAME-->
                 <mat-form-field style="width:100%" >
                   <input matInput placeholder="ชื่อเล่น"  autocomplete="off"  required [(ngModel)]="empMasterNickName">
+                  <mat-icon matSuffix>perm_identity</mat-icon>
                 </mat-form-field>
                 <!--    Gender -->
                 <mat-form-field  style="width :100%" >
@@ -42,6 +47,7 @@
                     <mat-option value="ชาย" >ชาย</mat-option>
                     <mat-option value="หญิง">หญิง</mat-option>
                   </mat-select>
+                  <mat-icon matSuffix>perm_identity</mat-icon>
                 </mat-form-field>
                 <!--      Marital status  -->
                 <mat-form-field  class="formcenter"  style="width :100%">
@@ -49,6 +55,7 @@
                     <mat-option value="ยังปฏิบัติงานอยู่">ยังปฏิบัติงานอยู่</mat-option>
                     <mat-option value="พ้นสภาพพนักงาน">พ้นสภาพพนักงาน</mat-option>
                   </mat-select>
+                  <mat-icon matSuffix>perm_identity</mat-icon>
                 </mat-form-field>
                 <!--  BirthDate  -->
                 <mat-form-field style="width :100%">
@@ -78,30 +85,34 @@
                 <mat-form-field style="width :100%" >
                   <input matInput #message maxlength="13" placeholder="รหัสประจำตัวประชาชน หรือ หมายเลขหนังสือเดินทาง" required  [(ngModel)]="personID">
                   <mat-hint align="end">{{message.value?.length || 0}}/13</mat-hint>
+                  <mat-icon matSuffix>perm_identity</mat-icon>
                 </mat-form-field>
 
                 <!--  call contact 1-->
                 <mat-form-field  style="width :100%" >
                   <input matInput #input maxlength="10" placeholder="เบอร์โทร" required  [(ngModel)]="callContact">
                   <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+                  <mat-icon matSuffix>phone_iphone</mat-icon>
                 </mat-form-field>
                 <!--  Email -->
                 <mat-form-field style="width :100%">
                   <input matInput placeholder="Enter your email" required [(ngModel)]="emails">
-                  <mat-error ></mat-error>
+                  <mat-icon matSuffix>email</mat-icon>
                 </mat-form-field>
                 <!--      Home No.  -->
                 <mat-form-field hintLabel="ที่อยู่ตามบัตรประจำตัวประชาชน" style="width :100% ;">
-                <textarea matInput placeholder="ที่อยู่"  autocomplete="off" required [(ngModel)]="homeNo"></textarea>
+                  <textarea matInput placeholder="ที่อยู่"  autocomplete="off" required [(ngModel)]="homeNo"></textarea>
+                  <mat-icon matSuffix>location_city</mat-icon>
                 </mat-form-field>
                 <!--      Home Now Address.  -->
                 <mat-form-field hintLabel="ที่อยู่ปัจจุบัน" style="width :100%">
                   <textarea matInput placeholder="ที่อยู่ที่ติดต่อได้" required [(ngModel)]="homeNowAddress" ></textarea>
+                  <mat-icon matSuffix>location_city</mat-icon>
                 </mat-form-field>
                 <!--StartWork-->
                 <mat-form-field style="width :100%">
                   <input matInput [matDatepicker]="startwork" hintLabel="" placeholder="วันเริ่มงาน" required [(ngModel)]="startWorks">
-                  <mat-datepicker-toggle matSuffix [for]="startwork" ></mat-datepicker-toggle>
+                  <mat-datepicker-toggle matSuffix [for]="startwork"></mat-datepicker-toggle>
                   <mat-datepicker #startwork></mat-datepicker>
                 </mat-form-field>
               </div>
@@ -173,6 +184,7 @@
                     <mat-option value="เจ้าหน้าที่ความปลอดภัยในการทำงานระดับวิชาชีพ" >เจ้าหน้าที่ความปลอดภัยในการทำงานระดับวิชาชีพ</mat-option>
                     <mat-option value="แม่บ้าน" >แม่บ้าน</mat-option>
                   </mat-select>
+                  <mat-icon matSuffix>work</mat-icon>
                 </mat-form-field>
                 <!-- แผนก -->
                 <mat-form-field class="formcenter" hintLabel="" style="width :20%" style="width :100%" >
@@ -190,6 +202,7 @@
                     <mat-option value="แม่บ้าน" >แม่บ้าน</mat-option>
                     <mat-option value="Trainee" >Trainee</mat-option>
                   </mat-select>
+                  <mat-icon matSuffix>work</mat-icon>
                 </mat-form-field>
                 <!-- ประเภทการทำงาน -->
                 <mat-form-field class="formcenter" hintLabel="" style="width :100%">
@@ -199,6 +212,7 @@
                     <mat-option value="รายวัน" >รายวัน</mat-option>
                     <mat-option value="รายวันชั่วคราว" >รายวันชั่วคราว</mat-option>
                   </mat-select>
+                  <mat-icon matSuffix>work</mat-icon>
                 </mat-form-field>
                 <!-- วุฒิการศึกษา -->
                 <mat-form-field hintLabel="" style="width :100%">
@@ -209,6 +223,7 @@
                     <mat-option value="ป.โท" >ป.โท</mat-option>
                     <mat-option value="ป.เอก" >ป.เอก</mat-option>
                   </mat-select>
+                  <mat-icon matSuffix>school</mat-icon>
                 </mat-form-field>
                 <!--      Bank -->
                 <mat-form-field class="formcenter" hintLabel="" style="width :100%">
@@ -221,10 +236,12 @@
                     <mat-option value="ธนาคารกสิกรไทย" >ธนาคารกสิกรไทย จำกัด(มหาชน)</mat-option>
                     <mat-option value="ธนาคารกรุงไทย" >ธนาคารกรุงไทย จำกัด(มหาชน)</mat-option>
                   </mat-select>
+                  <mat-icon matSuffix>account_balance</mat-icon>
                 </mat-form-field>
                 <!--        AccountNo.-->
                 <mat-form-field style="width:100%">
                   <input matInput #AccountNo maxlength="10" placeholder="เลขบัญชี" required [(ngModel)]="bankNumbers">
+                  <mat-icon matSuffix>monetization_on</mat-icon>
                   <mat-hint align="end">{{AccountNo.value?.length || 0}}/10</mat-hint>
                 </mat-form-field>
 
@@ -246,7 +263,8 @@
                 <div  align="center" style="opacity: 0.99;">
                  <!-- <button mat-raised-button color="primary">Primary</button> -->
                   <font color="red"><p>*โปรดตรวจสอบข้อมูลอีกรอบก่อนกดบันทึก*</p></font>
-                  <button mat-raised-button color="accent"
+
+                  <!--<button mat-raised-button color="accent"
                           style="width:35%;
                           height:50px;
                           font-size:18px;
@@ -255,8 +273,11 @@
                           margin-left: auto;
                           margin-bottom: auto;"
                           (click) = "SubmitData()">
-                    <b>บันทึกข้อมูลทั้งหมด</b>
-                  </button>
+                    <b><mat-icon matSuffix>save</mat-icon>บันทึกข้อมูลทั้งหมด<mat-icon matSuffix>save</mat-icon></b> -->
+
+                      <mat-chip style="width:250px;height:50px;font-size:25px;"color="accent"(click) = "SubmitData()" selected>
+                        <mat-icon matSuffix>save</mat-icon>บันทึกข้อมูลทั้งหมด
+                      </mat-chip>
                 </div>
             </mat-step>
         <!------------------------------End Save ------------------------------------------------------------------------------>

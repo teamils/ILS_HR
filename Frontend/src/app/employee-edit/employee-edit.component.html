@@ -1,24 +1,237 @@
-<font size="5px"><b>NEW Edit Employee Master</b></font>
-<div style="float:right" >
-  <button mat-icon-button (click)="closeDialog()">
-    <mat-icon>cancel</mat-icon>
-  </button>
+<div class="bgimg">
+    <font size="5px" color="#000088"><b>Edit Employee Master</b></font>
+    <div style="float:right" >
+      <button mat-icon-button (click)="closeDialog()">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
+    <br><br>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>รหัสพนักงาน</mat-label>
+        <input matInput #x maxlength="6"  [(ngModel)]="NewemployeeMasterCustomerCode">
+        <mat-hint align="end">{{x.value.length}} / 6</mat-hint>
+        <mat-icon matSuffix>perm_identity</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>คำนำหน้า</mat-label>
+        <mat-select  [(ngModel)]="Newprefix">
+          <mat-option value="นาย" >นาย</mat-option>
+          <mat-option value="นาง" >นาง</mat-option>
+          <mat-option value="นางสาว" >นางสาว</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>perm_identity</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>ชื่อ</mat-label>
+        <input matInput [(ngModel)]="NewemployeeMasterFirstName">
+        <mat-icon matSuffix>perm_identity</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>สกุล</mat-label>
+        <input matInput [(ngModel)]="NewemployeeMasterLastName">
+        <mat-icon matSuffix>perm_identity</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>ชื่อเล่น</mat-label>
+        <input matInput [(ngModel)]="NewemployeeMasterNickName">
+        <mat-icon matSuffix>perm_identity</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>เพศ</mat-label>
+        <mat-select  [(ngModel)]="NewemployeeMasterGender">
+          <mat-option value="ชาย" >ชาย</mat-option>
+          <mat-option value="หญิง">หญิง</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>perm_identity</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>วันเกิด</mat-label>
+        <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="วัน/เดือน/ปี เกิด"  [(ngModel)]="NewemployeeMasterBirthDate">
+        <mat-datepicker-toggle matSuffix [for]="BirthDate" ></mat-datepicker-toggle>
+        <mat-datepicker #BirthDate></mat-datepicker>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field  appearance="outline">
+        <mat-label>สถานะภาพ</mat-label>
+        <mat-select  [(ngModel)]="NewmaritalStatus">
+          <mat-option value="ยังปฏิบัติงานอยู่">ยังปฏิบัติงานอยู่</mat-option>
+          <mat-option value="พ้นสภาพพนักงาน">พ้นสภาพพนักงาน</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>perm_identity</mat-icon>
+      </mat-form-field>
+
+    <hr>
+      <mat-form-field  appearance="outline">
+        <mat-label>รหัสประจำตัวประชาชน</mat-label>
+        <input matInput #message maxlength="13"   [(ngModel)]="NewemployeeMasterPersonID">
+        <mat-hint align="end">{{message.value?.length || 0}}/13</mat-hint>
+        <mat-icon matSuffix>perm_identity</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field  appearance="outline" >
+        <mat-label>เบอร์โทร</mat-label>
+        <input matInput #input maxlength="10"  [(ngModel)]="NewemployeeMasterTel1">
+        <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+        <mat-icon matSuffix>phone_iphone</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field  appearance="outline">
+        <mat-label>email</mat-label>
+        <input matInput [(ngModel)]="NewempEmail">
+        <mat-icon matSuffix>email</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>วันเริ่มงาน</mat-label>
+        <input matInput [matDatepicker]="startwork"  [(ngModel)]="NewemployeeMasterStartDate">
+        <mat-datepicker-toggle matSuffix [for]="startwork" ></mat-datepicker-toggle>
+        <mat-datepicker #startwork></mat-datepicker>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>ที่อยู่</mat-label>
+        <textarea matInput [(ngModel)]="NewempAddressReal"></textarea>
+        <mat-icon matSuffix>location_city</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>ที่อยู่ปัจจุบัน</mat-label>
+        <textarea matInput [(ngModel)]="NewempAddressPerson" ></textarea>
+        <mat-icon matSuffix>location_city</mat-icon>
+      </mat-form-field>
+      <hr>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>ที่อยู่ปัจจุบัน</mat-label>
+        <mat-select [(ngModel)]="NewemployeePosition">
+          <mat-option value="Forklift pgp,smtl" > Forklift pgp,smtl</mat-option>
+          <mat-option value="Account Executive & CS" >Account Executive & CS</mat-option>
+          <mat-option value="Account Executive Admin" > Account Executive Admin</mat-option>
+          <mat-option value="ANALYST" > ANALYST</mat-option>
+          <mat-option value="ANALYST TSP" >ANALYST TSP</mat-option>
+          <mat-option value="Ast. IMC Manager L.2" >Ast. IMC Manager L.2</mat-option>
+          <mat-option value="Ast. Opt. Manager L.1" > Ast. Opt. Manager L.1</mat-option>
+          <mat-option value="Business Development" >Business Development</mat-option>
+          <mat-option value="Checker" >Checker</mat-option>
+          <mat-option value="Checker Forklift pgp,smtl" >Checker Forklift pgp,smtl</mat-option>
+          <mat-option value="Daily Checker" >Daily Checker</mat-option>
+          <mat-option value="Daily Checker Amazon" >Daily Checker Amazon</mat-option>
+          <mat-option value="Daily Checker TSP" >Daily Checker TSP</mat-option>
+          <mat-option value="Daily FL Driver" >Daily FL Driver</mat-option>
+          <mat-option value="Daily Forklift Driver" >Daily Forklift Driver</mat-option>
+          <mat-option value="Daily Picker" >Daily Picker</mat-option>
+          <mat-option value="Daily Picker  TSP" > Daily Picker  TSP</mat-option>
+          <mat-option value="Daily Picker Amazon" >Daily Picker Amazon</mat-option>
+          <mat-option value="Daily Picker Chester" >Daily Picker Chester</mat-option>
+          <mat-option value="Daily Picker PTT" >Daily Picker PTT</mat-option>
+          <mat-option value="Daily Picker Receiving" > Daily Picker Receiving</mat-option>
+          <mat-option value="Daily Picker STL" >Daily Picker STL</mat-option>
+          <mat-option value="Daily Picker TKNR" >Daily Picker TKNR</mat-option>
+          <mat-option value="Daily Picker Vcan" >Daily Picker Vcan</mat-option>
+          <mat-option value="Daily Receiving" > Daily Receiving</mat-option>
+          <mat-option value="Daily TSP Checker" > Daily TSP Checker</mat-option>
+          <mat-option value="Daily คนพิการ" >Daily คนพิการ</mat-option>
+          <mat-option value="Driver" >Driver</mat-option>
+          <mat-option value="HR and Admin Officer">HR and Admin Officer</mat-option>
+          <mat-option value="Inventory Admin">Inventory Admin</mat-option>
+          <mat-option value="IT Programmer"> IT Programmer</mat-option>
+          <mat-option value="Leader" >Leader</mat-option>
+          <mat-option value="Leader Transport" >Leader Transport</mat-option>
+          <mat-option value="Leader TSP Operation" > Leader TSP Operation</mat-option>
+          <mat-option value="Manager" >Manager</mat-option>
+          <mat-option value="Manager Transport" >Manager Transport</mat-option>
+          <mat-option value="Monthly  Checker" >Monthly  Checker</mat-option>
+          <mat-option value="Monthly Checker" >Monthly Checker</mat-option>
+          <mat-option value="Monthly Driver" >Monthly Driver</mat-option>
+          <mat-option value="Monthly Forklift Drivers" >Monthly Forklift Drivers</mat-option>
+          <mat-option value="Monthly IT" >Monthly IT</mat-option>
+          <mat-option value="Monthly IT Suppervisor" >Monthly IT Suppervisor</mat-option>
+          <mat-option value="Monthly Receiving Checker" >Monthly Receiving Checker</mat-option>
+          <mat-option value="Monthly TSP Admin" >Monthly TSP Admin</mat-option>
+          <mat-option value="MonthlyForklift Driver,Checker PZ Loscam" >MonthlyForklift Driver,Checker PZ Loscam</mat-option>
+          <mat-option value="Supervisor" >Supervisor</mat-option>
+          <mat-option value="Supervisor Operation Level 2" >Supervisor Operation Level 2</mat-option>
+          <mat-option value="Supervisor Transport" >Supervisor Transport</mat-option>
+          <mat-option value="เจ้าหน้าที่ความปลอดภัยในการทำงานระดับวิชาชีพ" >เจ้าหน้าที่ความปลอดภัยในการทำงานระดับวิชาชีพ</mat-option>
+          <mat-option value="แม่บ้าน" >แม่บ้าน</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>work</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>แผนก</mat-label>
+        <mat-select [(ngModel)]="NewemployeeDepartment">
+          <mat-option value="IT" >IT</mat-option>
+          <mat-option value="AE" >AE</mat-option>
+          <mat-option value="IMC" >IMC</mat-option>
+          <mat-option value="Inventory" >Inventory</mat-option>
+          <mat-option value="OPT" >OPT</mat-option>
+          <mat-option value="TSP" >TSP</mat-option>
+          <mat-option value="ANALYST" >ANALYST</mat-option>
+          <mat-option value="HR" >HR</mat-option>
+          <mat-option value="Safety" >Safety</mat-option>
+          <mat-option value="BD" >BD</mat-option>
+          <mat-option value="แม่บ้าน" >แม่บ้าน</mat-option>
+          <mat-option value="Trainee" >Trainee</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>work</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>ประเภทการทำงาน</mat-label>
+        <mat-select [(ngModel)]="NewemployeeType">
+          <mat-option value="นักศึกษาฝึกงาน" >นักศึกษาฝึกงาน</mat-option>
+          <mat-option value="รายเดือน" >รายเดือน</mat-option>
+          <mat-option value="รายวัน" >รายวัน</mat-option>
+          <mat-option value="รายวันชั่วคราว" >รายวันชั่วคราว</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>work</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>วุฒิการศึกษา</mat-label>
+        <mat-select  [(ngModel)]="Neweducation">
+          <mat-option value="ม.3" >ม.3</mat-option>
+          <mat-option value="ม.6" >ม.6</mat-option>
+          <mat-option value="ป.ตรี" >ป.ตรี</mat-option>
+          <mat-option value="ป.โท" >ป.โท</mat-option>
+          <mat-option value="ป.เอก" >ป.เอก</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>school</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>ธนาคาร</mat-label>
+        <mat-select  [(ngModel)]="Newbank">
+          <mat-option value="ธนาคารกรุงศรีอยุธยา">ธนาคารกรุงศรีอยุธยา จำกัด(มหาชน)</mat-option>
+          <mat-option value="ธนาคารไทยพาณิชย์" >ธนาคารไทยพาณิชย์ จำกัด(มหาชน)</mat-option>
+          <mat-option value="ธนาคารทหารไทย" >ธนาคารทหารไทย จำกัด(มหาชน)</mat-option>
+          <mat-option value="ธนาคารกรุงเทพ" > ธนาคารกรุงเทพ จำกัด(มหาชน)</mat-option>
+          <mat-option value="ธนาคารออมสิน" >ธนาคารออมสิน</mat-option>
+          <mat-option value="ธนาคารกสิกรไทย" >ธนาคารกสิกรไทย จำกัด(มหาชน)</mat-option>
+          <mat-option value="ธนาคารกรุงไทย" >ธนาคารกรุงไทย จำกัด(มหาชน)</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>account_balance</mat-icon>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>เลขบัญชี</mat-label>
+        <input matInput #AccountNo maxlength="10" [(ngModel)]="NewbankNumber">
+        <mat-hint align="end">{{AccountNo.value?.length || 0}}/10</mat-hint>
+        <mat-icon matSuffix>monetization_on</mat-icon>
+      </mat-form-field>
+    </div>
+    <hr>
+    <div align="center">
+    <button  mat-fab color="accent" matTooltip="บันทึก" matTooltipPosition="right">
+      <mat-icon matSuffix>save</mat-icon>
+    </button>
+    </div>
 </div>
-
-
-<table class="table">
-  <th>ลำดับที่</th>
-  <th>ชื่อผู้ใช้</th>
-  <ng-container *ngFor="let re of employee">
-    <tr>
-      <td>{{re.employeeMasterID}}</td>
-      <td>{{re.employeeMasterCustomerCode}}</td>
-      <td>{{re.employeeMasterFirstName}}</td>
-
-    </tr>
-  </ng-container>
-</table>
-
-<ng-container *ngFor="let re of employee">
-  {{re.employeeMasterID}}
-</ng-container>

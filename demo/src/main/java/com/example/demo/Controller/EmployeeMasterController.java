@@ -64,4 +64,24 @@ public class EmployeeMasterController {
 
     }
 
+
+   /* @PostMapping(path = "/editemployee/{NewemployeeMasterCustomerCode}/{Newprefix}/{NewemployeeMasterFirstName}" +
+            "/{NewemployeeMasterLastName}/{NewemployeeMasterNickName}/{NewemployeeMasterGender}/{NewmaritalStatus}" +
+            "/{NewemployeeMasterBirthDate}/{NewemployeeMasterPersonID}/{NewemployeeMasterTel1}/{NewempEmail}/{NewempAddressReal}" +
+            "/{NewempAddressPerson}/{NewemployeeMasterStartDate}/{NewemployeePosition}/{NewemployeeDepartment}/{NewemployeeType}" +
+            "/{Neweducation}/{Newbank}/{NewbankNumber}/{NewIsActive}")
+    public EmployeeMaster employeeMaster(@PathVariable String firstname, @PathVariable String lastname, @PathVariable String department, @PathVariable String position,
+                          @PathVariable String username,@PathVariable String password,@PathVariable String status) {
+
+        Users users = usersRepository.findByUsernameAndIsActive(username,"1");
+        users.setFirstname(firstname);
+        users.setStatus(status);
+        users.setPassword(password);
+        users.setPosition(position);
+        users.setLastname(lastname);
+        users.setDepartment(department);
+        usersRepository.save(users);
+        return users;
+    }*/
+
 }

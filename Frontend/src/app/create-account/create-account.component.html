@@ -3,7 +3,7 @@
 
       <h1 align="center"><font color="green">Create a new account</font></h1>
       <p align="center">
-        <mat-form-field style="width:30%;">
+        <mat-form-field appearance="outline" style="width:30%;">
           <mat-select  placeholder="Select your customer name" [(ngModel)]="employeeSelect">
             <mat-option *ngFor="let emp of employee" [value]="emp.employeeMasterID">
               {{emp.employeeMasterCustomerCode}}
@@ -13,20 +13,22 @@
           </mat-select>
         </mat-form-field>
         <br>
-        <mat-form-field style="width:30%;">
+        <mat-form-field appearance="outline" style="width:30%;">
           <mat-label>Select your status</mat-label>
           <mat-select [(ngModel)]="statusSelect">
-            <mat-option value="USERS">USERS</mat-option>
-            <mat-option value="ADMIN">ADMIN</mat-option>
-            <mat-option value="HR">HR</mat-option>
-            <mat-option value="IT">IT</mat-option>
+            <mat-option value="user">USERS</mat-option>
+            <mat-option value="admin">ADMIN</mat-option>
+            <mat-option value="hr">HR</mat-option>
+            <mat-option value="it">IT</mat-option>
+            <mat-option value="supervisor">SUPERVISOR</mat-option>
+            <mat-option value="manager">MANAGER</mat-option>
           </mat-select>
         </mat-form-field>
         <br>
         <mat-form-field appearance="outline" style="width:30%;">
           <mat-label>Create your user id</mat-label>
           <input matInput placeholder="username" [(ngModel)]="userCreate">
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-icon matSuffix>perm_identity</mat-icon>
         </mat-form-field>
         <br>
         <mat-form-field appearance="outline" style="width:30%;" >

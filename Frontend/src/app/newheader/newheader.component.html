@@ -1,39 +1,49 @@
 
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches" >
-  <mat-toolbar color="primary" class="toolbarStyle">
-    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+  <mat-toolbar class="toolbarStyle">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon class="iconColor">menu</mat-icon></button>
     &nbsp;&nbsp;
     <h1><font color="white" class="font">ILS HUMAN RESOURCES</font></h1>
     <!--<h1 class="example-app-name">ILS HUMAN RESOURCES</h1>-->
-    <div class="loginStyle">
-      <button mat-raised-button color="primary" (click)="openDialog()" width="50px">LOGIN</button>
-    </div>
+
+      <mat-chip-list aria-label="Fish selection" class="loginStyle">
+        <mat-chip (click)="openDialog()" height="100px" selected><mat-icon matSuffix>fingerprint</mat-icon>LOGIN</mat-chip>
+      </mat-chip-list>
+
   </mat-toolbar>
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="10" class="BG_Sidenav">
       <mat-nav-list>
+
+        <mat-card-header class="align">
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Diki kawasaki</mat-card-title>
+          <mat-card-subtitle>Admin</mat-card-subtitle>
+        </mat-card-header>
+
         <div class="sidenav">
           <mat-accordion>
-            <mat-expansion-panel
+            <mat-expansion-panel class="BG_Sidenav"
               (opened)="panelOpenState = true"
               (closed)="panelOpenState = false">
               <mat-expansion-panel-header>  <!--  เห็นเฉพาะ HR -->
                 <mat-label class="dd">
+                  <mat-icon matSuffix>supervised_user_circle</mat-icon>
                   Employee
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a (click)="callEmployeeMaster()">Employee Master</a>
-              <a (click)="callEmployeeAdd()">New Employee</a>
-              <a (click)="callCreateAccount()">Create new account</a>
+              <a routerLink="" (click)="callEmployeeMaster()">Employee Master<mat-icon matSuffix>account_circle</mat-icon></a>
+              <a routerLink="" (click)="callEmployeeAdd()">New Employee<mat-icon matSuffix>person_add</mat-icon></a>
+              <a routerLink="" (click)="callCreateAccount()">Create new account<mat-icon matSuffix>person_add</mat-icon></a>
             </mat-expansion-panel>
 
             <!--  การลา(leave) --------------------------------------------------------------------------------->
 
-            <mat-expansion-panel
+            <mat-expansion-panel class="BG_Sidenav"
               (opened)="panelOpenState = true"
-              (closed)="panelOpenState = false">
+              (closed)="panelOpenState = false" >
               <mat-expansion-panel-header>
                 <mat-label class="dd">
                   Attendance
@@ -49,7 +59,7 @@
 
             <!--  ขอล่วงเวลา(OT) --------------------------------------------------------------------------------->
 
-            <mat-expansion-panel
+            <mat-expansion-panel class="BG_Sidenav"
               (opened)="panelOpenState = true"
               (closed)="panelOpenState = false">
               <mat-expansion-panel-header>
@@ -65,7 +75,7 @@
 
             <!--  อบรม (Training) --------------------------------------------------------------------------------->
 
-            <mat-expansion-panel
+            <mat-expansion-panel class="BG_Sidenav"
               (opened)="panelOpenState = true"
               (closed)="panelOpenState = false">
               <mat-expansion-panel-header>
@@ -79,6 +89,11 @@
             </mat-expansion-panel>
           </mat-accordion>
         </div> <!-- ข้างๆๆๆๆ -->
+
+        <div  align="center">
+          <button mat-raised-button (click)="openDialog()" color="warn" class="logoutStyle" selected>LOGOUT</button>
+        </div>
+
       </mat-nav-list>
     </mat-sidenav>
 

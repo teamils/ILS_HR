@@ -16,11 +16,11 @@ import java.util.Date;
 @ToString
 @Table(name = "EmployeeMaster")
 public class EmployeeMaster {
-    @Id
+    /*@Id
     @SequenceGenerator(name = "Emp_seq", sequenceName = "Emp_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Emp_seq")
-    private Long employeeMasterID;
-
+    private Long employeeMasterID;*/
+    @Id @GeneratedValue(strategy=GenerationType.AUTO) private long employeeMasterID;
     private String employeeMasterCustomerCode;
     private String prefix;
     private String employeeMasterFirstName;
