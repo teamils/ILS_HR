@@ -7,11 +7,23 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ServiceService } from '../service/service.service';
 import { HttpClient} from '@angular/common/http';
 
+import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+
 @Component({
   selector: 'app-employee-add',
   templateUrl: './employee-add.component.html',
-  styleUrls: ['./employee-add.component.css']
+  styleUrls: ['./employee-add.component.css'],
+  providers: [
+  {
+    provide: DateAdapter, useClass: AppDateAdapter
+  },
+  {
+    provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+  }
+  ]
 })
+
 export class EmployeeAddComponent implements OnInit {
 data:any={}
 
@@ -78,7 +90,7 @@ constructor(private router:Router,
                                data => {
                                    console.log('PUT Request is successful', data);
                                    alert("บันทึกสำเร็จ");
-                                   this.router.navigate(['newheader',{first:this.data.first}]);
+                                   window.location.reload(true);
 
                                },
                                error => {

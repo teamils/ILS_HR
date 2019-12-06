@@ -13,6 +13,9 @@ import {  SelectionModel } from '@angular/cdk/collections';
 import {  DatePipe} from '@angular/common';
 import { EmployeeEditComponent } from '../employee-edit/employee-edit.component';
 import { NewheaderComponent } from '../newheader/newheader.component';
+import { EmployeeDeleteComponent } from '../employee-delete/employee-delete.component';
+
+
 
 export interface Emp{
   empCodeIDxx : number;
@@ -24,6 +27,7 @@ export interface Emp{
   templateUrl: './employee-master.component.html',
   styleUrls: ['./employee-master.component.css']
 })
+
 
 export class EmployeeMasterComponent implements OnInit {
     onHide : boolean;
@@ -84,20 +88,28 @@ export class EmployeeMasterComponent implements OnInit {
 
               });
 
-            this.service.getaccountUsers().subscribe(data => {
+            /*this.service.getaccountUsers().subscribe(data => {
                    this.accountuser = data;
                    console.log(this.accountuser);
-              });
+              });*/
 
              this.dataSource.paginator = this.paginator;
              this.dataSource.sort = this.sort;
         }
 
+          DeleteEmployeeMaster(row : any){
+            const dialogRef = this.dialog.open(EmployeeDeleteComponent, {
+                  width: '300px',
+                  height:'200px',
+                  data: row,
+            });
+
+          }
           OpenEditDialogComponent(row : any){
                const dialogRef = this.dialog.open(EmployeeEditComponent, {
-                   width: '90%'
-                   , height:'90%'
-                    , data: row,
+                   width: '90%',
+                   height:'90%',
+                   data: row,
               });
           }
 

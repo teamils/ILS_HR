@@ -59,7 +59,7 @@
                 </mat-form-field>
                 <!--  BirthDate  -->
                 <mat-form-field style="width :100%">
-                  <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="วัน/เดือน/ปี เกิด" required [(ngModel)]="BirthDateSelect">
+                  <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="วัน/เดือน/ปี เกิด" required autocomplete="off" [(ngModel)]="BirthDateSelect">
                   <mat-datepicker-toggle matSuffix [for]="BirthDate" ></mat-datepicker-toggle>
                   <mat-datepicker #BirthDate></mat-datepicker>
                 </mat-form-field>
@@ -275,7 +275,7 @@
                           (click) = "SubmitData()">
                     <b><mat-icon matSuffix>save</mat-icon>บันทึกข้อมูลทั้งหมด<mat-icon matSuffix>save</mat-icon></b> -->
 
-                      <mat-chip style="width:250px;height:50px;font-size:25px;"color="accent"(click) = "SubmitData()" selected>
+                      <mat-chip style="width:250px;height:50px;font-size:25px;"color="accent"(click) = "SubmitData()"  selected>
                         <mat-icon matSuffix>save</mat-icon>บันทึกข้อมูลทั้งหมด
                       </mat-chip>
                 </div>

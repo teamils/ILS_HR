@@ -16,10 +16,10 @@ public class AccountUserController {
     @Autowired private AccountUserRepository accountUserRepository;
     @Autowired private EmployeeMasterRepository employeeMasterRepository;
 
-    @GetMapping(path = "ILS_HR/accountUsers", produces = MediaType.APPLICATION_JSON_VALUE)
+    /*@GetMapping(path = "ILS_HR/accountUsers", produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<AccountUsers> accountUsers() {
         return accountUserRepository.findAll().stream().collect(Collectors.toList());
-    }
+    }*/
 
     @PostMapping("/ILS_HR/{employeeid}/{statusSelect}/{userCreate}/{passwordCreate}")
     public AccountUsers accountUsers( @PathVariable Long employeeid , @PathVariable String statusSelect

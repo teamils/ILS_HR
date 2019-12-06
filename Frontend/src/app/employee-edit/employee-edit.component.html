@@ -6,7 +6,7 @@
       </button>
     </div>
     <br><br>
-    <div>
+    <div (keydown.enter)="EditEmployee()">
       <mat-form-field appearance="outline">
         <mat-label>รหัสพนักงาน</mat-label>
         <input matInput #x maxlength="6"  [(ngModel)]="NewemployeeMasterCustomerCode">
@@ -230,7 +230,7 @@
     </div>
     <hr>
     <div align="center">
-    <button  mat-fab color="accent" matTooltip="บันทึก" matTooltipPosition="right">
+    <button  mat-fab color="accent" matTooltip="บันทึก" matTooltipPosition="right" (click)="EditEmployee()">
       <mat-icon matSuffix>save</mat-icon>
     </button>
     </div>

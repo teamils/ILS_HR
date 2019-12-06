@@ -20,7 +20,9 @@ public class EmployeeMaster {
     @SequenceGenerator(name = "Emp_seq", sequenceName = "Emp_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Emp_seq")
     private Long employeeMasterID;*/
-    @Id @GeneratedValue(strategy=GenerationType.AUTO) private long employeeMasterID;
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    private long employeeMasterID;
+
     private String employeeMasterCustomerCode;
     private String prefix;
     private String employeeMasterFirstName;
@@ -28,15 +30,19 @@ public class EmployeeMaster {
     private String employeeMasterNickName;
     private String employeeMasterGender;
     private String maritalStatus;
+
     @Temporal(TemporalType.DATE)
     private Date employeeMasterBirthDate;
+
     private String employeeMasterPersonID;
     private String employeeMasterTel1;
     private String empEmail;
     private String empAddressReal;
     private String empAddressPerson;
+
     @Temporal(TemporalType.DATE)
     private Date employeeMasterStartDate;
+
     private String employeePosition;
     private String employeeDepartment;
     private String employeeType;
@@ -226,7 +232,7 @@ public class EmployeeMaster {
     }
 
     public void setIsActive(String isActive) {
-        IsActive = isActive;
+        this.IsActive = isActive;
     }
 
 

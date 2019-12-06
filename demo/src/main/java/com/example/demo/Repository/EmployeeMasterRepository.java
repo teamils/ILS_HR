@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @EnableJpaRepositories
 public interface EmployeeMasterRepository extends JpaRepository<EmployeeMaster,Long> {
 
-    EmployeeMaster findByEmployeeMasterID(String employeeMasterID);
+    EmployeeMaster findByemployeeMasterCustomerCode(String employeeMasterCustomerCode);
 
 
 }

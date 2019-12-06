@@ -8,24 +8,26 @@ import { Observable } from 'rxjs';
 
 export class ServiceService {
 
-  public API = '//localhost:8080/ILS_HR';
+  public API = '//localhost:8080';
 
 
   constructor( private http: HttpClient ) { }
 
   getemployee(): Observable<any>{
-      return this.http.get(this.API+'/employee',{})
+      return this.http.get(this.API+'/ILS_HR'+'/employee',{})
 
   }
-  getaccountUsers(): Observable<any>{
+  /*getaccountUsers(): Observable<any>{
       return this.http.get(this.API+'/accountUsers',{})
-  }
+  }*/
 
   getUserPassword(id: String , password : String): Observable<any>{
       return this.http.post(this.API+'/Users/'+id+/Password/+password,{})
   }
 
+   getSearchEmployeeForAttendance(employeeCode:String): Observable<any>{
+      return this.http.get(this.API+'/SearchEmployeeForAttendance/'+employeeCode,{})
 
-
+  }
 
 }

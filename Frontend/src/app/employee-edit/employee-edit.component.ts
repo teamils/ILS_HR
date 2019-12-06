@@ -7,6 +7,8 @@ import {ChangeDetectorRef,  OnDestroy} from '@angular/core';
 import { ServiceService } from '../service/service.service';
 import { HttpClient} from '@angular/common/http';
 
+import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 
 export interface DialogData {
     employeeMasterID : null;
@@ -17,13 +19,13 @@ export interface DialogData {
     employeeMasterNickName: string;
     employeeMasterGender: string;
     maritalStatus: string;
-    employeeMasterBirthDate: null;
+    employeeMasterBirthDate: string;
     employeeMasterPersonID: string;
     employeeMasterTel1: string;
     empEmail: string;
     empAddressReal: string;
     empAddressPerson: string;
-    employeeMasterStartDate: null;
+    employeeMasterStartDate: string;
     employeePosition: string;
     employeeDepartment: string;
     employeeType: string;
@@ -36,8 +38,17 @@ export interface DialogData {
 @Component({
   selector: 'app-employee-edit',
   templateUrl: './employee-edit.component.html',
-  styleUrls: ['./employee-edit.component.css']
+  styleUrls: ['./employee-edit.component.css'],
+    providers: [
+    {
+      provide: DateAdapter, useClass: AppDateAdapter
+    },
+    {
+      provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+    }
+    ]
 })
+
 export class EmployeeEditComponent implements OnInit {
         public API = '//localhost:8080/';
         CurrentDateTime = new Date();
@@ -49,13 +60,13 @@ export class EmployeeEditComponent implements OnInit {
         NewemployeeMasterNickName: string;
         NewemployeeMasterGender: string;
         NewmaritalStatus: string;
-        NewemployeeMasterBirthDate: null;
+        NewemployeeMasterBirthDate: string;
         NewemployeeMasterPersonID: string;
         NewemployeeMasterTel1: string;
         NewempEmail: string;
         NewempAddressReal: string;
         NewempAddressPerson: string;
-        NewemployeeMasterStartDate: null;
+        NewemployeeMasterStartDate: string;
         NewemployeePosition: string;
         NewemployeeDepartment: string;
         NewemployeeType: string;
@@ -107,14 +118,12 @@ export class EmployeeEditComponent implements OnInit {
       }
 
       EditEmployee(){
-
-             this.http.post(this.API + '/editemployee/' + this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
+              this.http.post(this.API + '/editemployee/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
                                                     +'/'+ this.NewemployeeMasterLastName +'/'+ this.NewemployeeMasterNickName +'/'+ this.NewemployeeMasterGender
                                                     +'/'+ this.NewmaritalStatus +'/'+ this.NewemployeeMasterBirthDate +'/'+ this.NewemployeeMasterPersonID
                                                     +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewempEmail +'/'+ this.NewempAddressReal +'/'+ this.NewempAddressPerson
                                                     +'/'+ this.NewemployeeMasterStartDate +'/'+ this.NewemployeePosition +'/'+ this.NewemployeeDepartment
-                                                    +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber
-                                                    +'/'+ this.NewIsActive   ,{})
+                                                    +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber ,{})
                                    .subscribe(
                                        data => {
                                            console.log('PUT Request is successful');
@@ -125,8 +134,8 @@ export class EmployeeEditComponent implements OnInit {
                                            console.log('Error', error);
                                        }
                                     );
-
-
       }
 
 }
+
+

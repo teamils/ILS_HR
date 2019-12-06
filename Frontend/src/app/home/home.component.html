@@ -1,87 +1,14 @@
 <!-- Start Header From **********************************************************************************************************-->
-<body class="bgimg">
+
 <mat-drawer-container class="example-container" autosize>
   <mat-drawer #drawer class="example-sidenav" mode="!side">
     <!--  พนักงาน(Employee) --------------------------------------------------------------------------------->
-    <div class="sidenav">
-      <mat-accordion>
-        <mat-expansion-panel
-          (opened)="panelOpenState = true"
-          (closed)="panelOpenState = false">
-          <mat-expansion-panel-header>  <!--  เห็นเฉพาะ HR -->
-            <mat-label class="dd">
-              Employee
-            </mat-label>
-          </mat-expansion-panel-header>
-          <hr/>
-          <a routerLink="/employee-master">Employee Master</a>
-          <a routerLink="/employee-add">New Employee</a>
-          <a routerLink="/create-account" >Create new account</a>
-        </mat-expansion-panel>
-
-        <!--  การลา(leave) --------------------------------------------------------------------------------->
-
-        <mat-expansion-panel
-          (opened)="panelOpenState = true"
-          (closed)="panelOpenState = false">
-          <mat-expansion-panel-header>
-            <mat-label class="dd">
-              Attendance
-            </mat-label>
-          </mat-expansion-panel-header>
-          <hr/>
-          <a routerLink="LeaveMain">Attendance</a> <!-- เห็นทุกคน ยกเว้น HR -->
-          <a routerLink="LeaveShow">Data Attendance</a>  <!-- เห็นทุกคน -->
-          <a routerLink="LeaveShowHR">Data Attendance For HR</a>   <!-- เห็นเฉพาะ HR -->
-          <a routerLink="LeaveApproveMan">Approve By MANAGER</a>   <!-- เห็นเฉพาะ MANAGER -->
-          <a routerLink="LeaveApproveSup">Approve By SUPERVISOR</a>   <!-- เห็นเฉพาะ SUPERVISOR -->
-        </mat-expansion-panel>
-
-        <!--  ขอล่วงเวลา(OT) --------------------------------------------------------------------------------->
-
-        <mat-expansion-panel
-          (opened)="panelOpenState = true"
-          (closed)="panelOpenState = false">
-          <mat-expansion-panel-header>
-            <mat-label class="dd">
-              OverTime
-            </mat-label>
-          </mat-expansion-panel-header>
-          <hr/>
-          <a routerLink="OverTime">OverTime</a>
-          <a routerLink="OverTimeShow">Data OverTime</a>
-          <a routerLink="OverTimeApprove">Approve</a>
-        </mat-expansion-panel>
-
-        <!--  อบรม (Training) --------------------------------------------------------------------------------->
-
-        <mat-expansion-panel
-          (opened)="panelOpenState = true"
-          (closed)="panelOpenState = false">
-          <mat-expansion-panel-header>
-            <mat-label class="dd">
-              Training
-            </mat-label>
-          </mat-expansion-panel-header>
-          <hr/>
-          <a routerLink="TrainAdd">Training</a>
-          <a routerLink="TrainShow">Data Training</a>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div> <!-- ข้างๆๆๆๆ -->
     <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
   </mat-drawer>
 
   <div class="example-sidenav-content">
     <div class="card">
-      <button type="button"mat-button (click)="drawer.toggle()">
-        <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">menu
-        </mat-icon><font class="icon">Menu</font>
-      </button>
       <h1 align="center">Welcome to human resourcse system</h1>
-      <div class="lo">
-        <button mat-raised-button color="primary" (click)="openDialog()" width="50px">LOGIN</button>
-      </div>
       <mat-horizontal-stepper>
         <mat-step>
           <ng-template matStepLabel><b>ข้อมูลส่วนตัว</b></ng-template>
@@ -141,7 +68,7 @@
   </div>
 </mat-drawer-container>
 
-</body>
+
 
 
 

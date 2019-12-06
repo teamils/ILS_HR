@@ -50,6 +50,11 @@ import {LoginDialog} from './newheader/newheader.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { NewheaderComponent } from './newheader/newheader.component';
 import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
+import { EmployeeDeleteComponent } from './employee-delete/employee-delete.component';
+import { AttendanceComponent } from './attendance/attendance.component';
+
+
+
 
 
 
@@ -63,6 +68,12 @@ import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
     CreateAccountComponent,
     NewheaderComponent,
     EmployeeEditComponent,
+    EmployeeDeleteComponent,
+    AttendanceComponent,
+
+
+
+
 
   ],
       imports: [
@@ -118,7 +129,7 @@ import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
 
        ],
 
-   entryComponents: [LoginDialog , EmployeeEditComponent],
+   entryComponents: [LoginDialog, EmployeeEditComponent,EmployeeDeleteComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

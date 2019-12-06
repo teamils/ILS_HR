@@ -50,11 +50,11 @@
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="LeaveMain">Attendance</a> <!-- เห็นทุกคน ยกเว้น HR -->
-              <a routerLink="LeaveShow">Data Attendance</a>  <!-- เห็นทุกคน -->
-              <a routerLink="LeaveShowHR">Data Attendance For HR</a>   <!-- เห็นเฉพาะ HR -->
-              <a routerLink="LeaveApproveMan">Approve By MANAGER</a>   <!-- เห็นเฉพาะ MANAGER -->
-              <a routerLink="LeaveApproveSup">Approve By SUPERVISOR</a>   <!-- เห็นเฉพาะ SUPERVISOR -->
+              <a routerLink="" (click)="callAttendance()">Attendance<mat-icon matSuffix>home</mat-icon></a> <!-- เห็นทุกคน ยกเว้น HR -->
+              <a routerLink="">Data Attendance</a>  <!-- เห็นทุกคน -->
+              <a routerLink="">Data Attendance For HR</a>   <!-- เห็นเฉพาะ HR -->
+              <a routerLink="">Approve By MANAGER</a>   <!-- เห็นเฉพาะ MANAGER -->
+              <a routerLink="">Approve By SUPERVISOR</a>   <!-- เห็นเฉพาะ SUPERVISOR -->
             </mat-expansion-panel>
 
             <!--  ขอล่วงเวลา(OT) --------------------------------------------------------------------------------->
@@ -99,9 +99,11 @@
 
     <mat-sidenav-content class="example-sidenav-container">
       <div class="card">
+          <app-home *ngIf="selectHome == 'true' ? true : false"></app-home>
           <app-employee-master *ngIf="selectEmployeemaster == 'true' ? true : false"></app-employee-master>
           <app-employee-add *ngIf="selectEmployeeAdd == 'true' ? true : false"></app-employee-add>
           <app-create-account *ngIf="selectCreateAccount == 'true' ? true : false"></app-create-account>
+          <app-attendance *ngIf="selectAttendance == 'true' ? true : false"></app-attendance>
       </div>
     </mat-sidenav-content>
 
