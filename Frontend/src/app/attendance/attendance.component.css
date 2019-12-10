@@ -6,3 +6,17 @@
    margin-left: auto;
    margin-bottom: auto;
 }
+
+td, th {
+  border: 1px solid #ffffff;
+  text-align: center;
+  padding: 8px;
+}
+tr:nth-child(even) {
+  background-color: #E6E6FA;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}

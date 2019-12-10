@@ -16,12 +16,11 @@ import java.util.Date;
 @ToString
 @Table(name = "EmployeeMaster")
 public class EmployeeMaster {
-    /*@Id
+    @Id
     @SequenceGenerator(name = "Emp_seq", sequenceName = "Emp_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Emp_seq")
-    private Long employeeMasterID;*/
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private long employeeMasterID;
+    //@Id @GeneratedValue(strategy=GenerationType.AUTO)
 
     private String employeeMasterCustomerCode;
     private String prefix;
@@ -50,6 +49,29 @@ public class EmployeeMaster {
     private String bank;
     private String bankNumber;
     private String IsActive;
+    private String roleStatus;
+    private String password;
+
+
+    public void setEmployeeMasterID(long employeeMasterID) {
+        this.employeeMasterID = employeeMasterID;
+    }
+
+    public String getRoleStatus() {
+        return roleStatus;
+    }
+
+    public void setRoleStatus(String roleStatus) {
+        this.roleStatus = roleStatus;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getPrefix() {
         return prefix;

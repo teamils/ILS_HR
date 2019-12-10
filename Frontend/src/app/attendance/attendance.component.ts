@@ -8,31 +8,6 @@ import { ServiceService } from '../service/service.service';
 import {  MatPaginator, MatTableDataSource } from '@angular/material';
 
 
-export interface DialogData {
-    employeeMasterID : null;
-    employeeMasterCustomerCode: string;
-    prefix : string;
-    employeeMasterFirstName : string;
-    employeeMasterLastName : string;
-    employeeMasterNickName: string;
-    employeeMasterGender: string;
-    maritalStatus: string;
-    employeeMasterBirthDate: string;
-    employeeMasterPersonID: string;
-    employeeMasterTel1: string;
-    empEmail: string;
-    empAddressReal: string;
-    empAddressPerson: string;
-    employeeMasterStartDate: string;
-    employeePosition: string;
-    employeeDepartment: string;
-    employeeType: string;
-    education: string;
-    bank: string;
-    bankNumber: string;
-    IsActive: string;
-}
-
 export interface employeeMasters{
     Fname : String;
     Lname : String;
@@ -46,6 +21,7 @@ export interface employeeMasters{
   styleUrls: ['./attendance.component.css']
 })
 export class AttendanceComponent implements OnInit {
+
   public API = '//localhost:8080/';
   employeeMasterCustomerCode : String;
   empID : Array<any>;
@@ -78,6 +54,7 @@ export class AttendanceComponent implements OnInit {
 
     NewSearchData(empID){
         this.service.getSearchEmployeeForAttendance(empID).subscribe(data1 => {
+            if(data1 != null){
               console.log('data1->',data1);
               this.table.leaID = data1.employeeMasterID;
               this.table.empCode = data1.employeeMasterCustomerCode;
@@ -94,6 +71,10 @@ export class AttendanceComponent implements OnInit {
               console.log(parseInt(this.startDateToString[0]));
               this.table.sumDate = parseInt(this.nowDateToString[3]) - parseInt(this.startDateToString[0]);
               console.log(this.table.sumDate);
+            }
+            else{
+                alert("ไม่มีรหัสพนักงานนี้ในระบบ");
+            }
         });
     }
 

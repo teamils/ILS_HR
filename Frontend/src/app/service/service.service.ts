@@ -15,11 +15,19 @@ export class ServiceService {
 
   getemployee(): Observable<any>{
       return this.http.get(this.API+'/ILS_HR'+'/employee',{})
-
   }
-  /*getaccountUsers(): Observable<any>{
-      return this.http.get(this.API+'/accountUsers',{})
-  }*/
+  getBank():Observable<any>{
+      return this.http.get(this.API+'/bank',{})
+  }
+  getDepartment():Observable<any>{
+      return this.http.get(this.API+'/department',{})
+  }
+  getPosition():Observable<any>{
+      return this.http.get(this.API+'/position',{})
+  }
+  getRoleStatus():Observable<any>{
+      return this.http.get(this.API+'/roleStatus',{})
+  }
 
   getUserPassword(id: String , password : String): Observable<any>{
       return this.http.post(this.API+'/Users/'+id+/Password/+password,{})

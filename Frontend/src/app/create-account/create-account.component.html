@@ -3,6 +3,8 @@
 
       <h1 align="center"><font color="green">Create a new account</font></h1>
       <p align="center">
+
+
         <mat-form-field appearance="outline" style="width:30%;">
           <mat-select  placeholder="Select your customer name" [(ngModel)]="employeeSelect">
             <mat-option *ngFor="let emp of employee" [value]="emp.employeeMasterID">
@@ -14,13 +16,11 @@
         </mat-form-field>
         <br>
         <mat-form-field appearance="outline" style="width:30%;">
-          <mat-label>Select your status</mat-label>
+          <mat-label>Select your role</mat-label>
           <mat-select [(ngModel)]="statusSelect">
-            <mat-option value="user">USERS</mat-option>
-            <mat-option value="admin">ADMIN</mat-option>
-            <mat-option value="hr">HR</mat-option>
-            <mat-option value="supervisor">SUPERVISOR</mat-option>
-            <mat-option value="manager">MANAGER</mat-option>
+            <mat-option *ngFor="let role of role_status" [value]="role.roleStatusName">
+              {{role.roleStatusName}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
         <br>

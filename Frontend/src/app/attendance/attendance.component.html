@@ -6,21 +6,28 @@
         <mat-icon matSuffix>search</mat-icon>
         <mat-hint align="end">{{code.value?.length || 0}}/6</mat-hint>
       </mat-form-field>
-<br><br><br>
-  <section>
-    <mat-grid-list cols="11" rowHeight="3:1" style="margin-bottom:10px" border="1">
-      <mat-grid-tile [colspan]="1">รหัสพนักงาน : </mat-grid-tile>
-      <mat-grid-tile [colspan]="1"><b class="left">{{table.empCode}}</b></mat-grid-tile>
+<br><br>
+  <table class="table">
+    <tr bgcolor="#c0c0c0">
+      <th>รหัสพนักงาน</th>
+      <th>ชื่อ - สกุล</th>
+      <th>แผนก</th>
+      <th>ตำแหน่ง</th>
+      <th>ลากิจคงเหลือ(วัน)</th>
+      <th>ลาพักร้อนคงเหลือ(วัน)</th>
+    </tr>
+    <ng-container>
+      <tr>
+        <td>{{table.empCode}}</td>
+        <td>{{table.fName}}&nbsp;&nbsp;{{table.lName}}</td>
+        <td>{{table.empDep}}</td>
+        <td>{{table.empPos}}</td>
+        <td>{{table.sumDate}}</td>
+        <td>{{table.sumDate}}</td>
+      </tr>
+    </ng-container>
+  </table>
+</mat-card>
 
-      <mat-grid-tile [colspan]="1">ชื่อ - สกุล : </mat-grid-tile>
-      <mat-grid-tile [colspan]="2"><b class="left">{{table.fName}}&nbsp;&nbsp;{{table.lName}}</b></mat-grid-tile>
-
-      <mat-grid-tile [colspan]="1">แผนก : </mat-grid-tile>
-      <mat-grid-tile [colspan]="1"><b class="left">{{table.empDep}}</b></mat-grid-tile>
-
-      <mat-grid-tile [colspan]="1">ตำแหน่ง : </mat-grid-tile>
-      <mat-grid-tile [colspan]="1"><b class="left">{{table.empPos}}</b></mat-grid-tile>
-    </mat-grid-list>
-  </section>
-
+<mat-card class="cardHeader">
 </mat-card>

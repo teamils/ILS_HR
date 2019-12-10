@@ -33,6 +33,7 @@ export interface DialogData {
     bank: string;
     bankNumber: string;
     IsActive: string;
+    password : string;
 }
 
 @Component({
@@ -67,13 +68,17 @@ export class EmployeeEditComponent implements OnInit {
         NewempAddressReal: string;
         NewempAddressPerson: string;
         NewemployeeMasterStartDate: string;
+        position: Array<any>;
         NewemployeePosition: string;
+        department: Array<any>;
         NewemployeeDepartment: string;
         NewemployeeType: string;
         Neweducation: string;
+        NewBank: Array<any>;
         Newbank: string;
         NewbankNumber: string;
         NewIsActive: string;
+        Newpassword: string;
 
       constructor(public dialogRef: MatDialogRef<EmployeeEditComponent>
                       ,hangeDetectorRef: ChangeDetectorRef
@@ -92,7 +97,20 @@ export class EmployeeEditComponent implements OnInit {
       }
 
       ngOnInit() {
-         console.log(this.data);
+        this.service.getBank().subscribe(data => {
+               this.NewBank = data;
+               //console.log('NewBank >>> ',this.NewBank);
+                 });
+        this.service.getDepartment().subscribe(data => {
+               this.department = data;
+              // console.log('department == ',this.department);
+                 });
+        this.service.getPosition().subscribe(data => {
+               this.position = data;
+               //console.log('position == ',this.position);
+                 });
+
+         // console.log(this.data);
           this.NewemployeeMasterID = this.data.employeeMasterID;
           this.NewemployeeMasterCustomerCode = this.data.employeeMasterCustomerCode;
           this.Newprefix = this.data.prefix;
@@ -115,6 +133,7 @@ export class EmployeeEditComponent implements OnInit {
           this.Newbank = this.data.bank;
           this.NewbankNumber = this.data.bankNumber;
           this.NewIsActive = this.data.IsActive;
+          this.Newpassword = this.data.password;
       }
 
       EditEmployee(){
@@ -123,7 +142,7 @@ export class EmployeeEditComponent implements OnInit {
                                                     +'/'+ this.NewmaritalStatus +'/'+ this.NewemployeeMasterBirthDate +'/'+ this.NewemployeeMasterPersonID
                                                     +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewempEmail +'/'+ this.NewempAddressReal +'/'+ this.NewempAddressPerson
                                                     +'/'+ this.NewemployeeMasterStartDate +'/'+ this.NewemployeePosition +'/'+ this.NewemployeeDepartment
-                                                    +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber ,{})
+                                                    +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber +'/'+ this.Newpassword ,{})
                                    .subscribe(
                                        data => {
                                            console.log('PUT Request is successful');

@@ -142,7 +142,7 @@
     border-right: 1px solid #e0e0e0;
     font-size: 15px;
   }
-   th.mat-column-id, td.mat-column-id {
+   th.mat-column-number, td.mat-column-number {
           border-right: 1px double #e0e0e0;
           font-size: 15px;
           padding: 15px;
@@ -204,6 +204,12 @@
         padding: 15px;
         width:auto;
    }
+   th.mat-column-Age, td.mat-column-Age{
+           border-right: 1px double #e0e0e0;
+           font-size: 15px;
+           padding: 15px;
+           width:auto;
+      }
    th.mat-column-PersonID, td.mat-column-PersonID{
         border-right: 1px double #e0e0e0;
         font-size: 15px;

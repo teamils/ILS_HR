@@ -30,8 +30,8 @@ private _mobileQueryListener: () => void;
                           this._mobileQueryListener = () => changeDetectorRef.detectChanges();
                           this.mobileQuery.addListener(this._mobileQueryListener);
 
-                          localStorage.setItem('selectAttendance', 'true');
-                          this.selectAttendance =  localStorage.getItem('selectAttendance');
+                          localStorage.setItem('selectEmployeemaster', 'true');
+                          this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
       }
 
       ngOnInit() : void {

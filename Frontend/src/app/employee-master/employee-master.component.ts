@@ -14,7 +14,9 @@ import {  DatePipe} from '@angular/common';
 import { EmployeeEditComponent } from '../employee-edit/employee-edit.component';
 import { NewheaderComponent } from '../newheader/newheader.component';
 import { EmployeeDeleteComponent } from '../employee-delete/employee-delete.component';
-
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 
 export interface Emp{
@@ -37,10 +39,7 @@ export class EmployeeMasterComponent implements OnInit {
     employeeSelect : '';
     accountuser : Array<any>;
     pipe = new DatePipe('en-TH');
-    CurrentDateTime = new Date();
-
-
-    displayedColumns: string[] = ['select','id','empCodeID','prefix','empFristName','empLastName','NickName','Gender','Status','BirthDate','PersonID','Tel1','Email','AddressReal','AddressPerson','StartDate','Position','Department','empType','educations','bank','bankNumber','del','Edit'];
+    displayedColumns: string[] = ['select','number','empCodeID'/*,'prefix'*/,'empFristName','empLastName','NickName','Gender','Status'/*,'BirthDate'*/ /*,'Age'*/ ,'PersonID','Tel1','Email'/*,'AddressReal','AddressPerson'*/,'StartDate','Position','Department','empType'/*,'educations'*/,'bank','bankNumber','del','Edit'];
     dataSource = new MatTableDataSource<Emp>(this.employee);
     selection = new SelectionModel<Emp>(true, []);
     @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
@@ -81,11 +80,9 @@ export class EmployeeMasterComponent implements OnInit {
 
         ngOnInit() {
             this.service.getemployee().subscribe(data => {
-                    console.log(this.CurrentDateTime);
                    this.employee = data;
-                    this.dataSource.data = data;
-                   console.log(this.employee);
-
+                    this.dataSource.data = this.employee;
+                    console.log('employee->',this.employee);
               });
 
             /*this.service.getaccountUsers().subscribe(data => {
@@ -95,6 +92,7 @@ export class EmployeeMasterComponent implements OnInit {
 
              this.dataSource.paginator = this.paginator;
              this.dataSource.sort = this.sort;
+
         }
 
           DeleteEmployeeMaster(row : any){

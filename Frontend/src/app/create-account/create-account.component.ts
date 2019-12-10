@@ -22,6 +22,8 @@ export class CreateAccountComponent implements OnInit {
   userCreate : null;
   passwordCreate : null;
 
+  role_status : Array<any>;
+
   public API = '//localhost:8080/ILS_HR';   //for test
   constructor(private service:ServiceService,
             private router:Router,
@@ -32,7 +34,11 @@ export class CreateAccountComponent implements OnInit {
   ngOnInit() {
         this.service.getemployee().subscribe(data => {
                this.employee = data;
-               console.log(this.employee);
+               //console.log(this.employee);
+          });
+        this.service.getRoleStatus().subscribe(data => {
+               this.role_status = data;
+               //console.log(this.role_status);
           });
 
   }

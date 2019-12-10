@@ -40,15 +40,15 @@ public class EmployeeMasterController {
     }
 
     @PostMapping("/ILS_HR/{employeeMasterCustomerCode}/{prefixSelect}/{employeeMasterFirstName}/{employeeMasterLastName}/{employeeMasterNickName}" +
-            "/{employeeMasterGender}/{maritalStatus}/{employeeMasterBirthDate}/{employeeMasterPersonID}/{employeeMasterTel1}/{empEmail}" +
-            "/{empAddressReal}/{empAddressPerson}/{employeeMasterStartDate}/{employeePosition}/{employeeDepartment}/{employeeType}/{education}/{bank}/{bankNumber}") //Employee ADD
+            "/{employeeMasterGender}/{employeeMasterBirthDate}/{employeeMasterPersonID}/{employeeMasterTel1}/{empEmail}" +
+            "/{empAddressReal}/{empAddressPerson}/{employeeMasterStartDate}/{employeePosition}/{employeeDepartment}/{employeeType}/{education}/{bank}/{bankNumber}/{role_statusSelect}/{passwordCreate}") //Employee ADD
     public EmployeeMaster employeeMaster(@PathVariable String employeeMasterCustomerCode , @PathVariable String prefixSelect ,@PathVariable String employeeMasterFirstName
             , @PathVariable String employeeMasterLastName , @PathVariable String employeeMasterNickName , @PathVariable String employeeMasterGender
-            , @PathVariable String maritalStatus , @PathVariable Date employeeMasterBirthDate , @PathVariable String employeeMasterPersonID
+            , @PathVariable Date employeeMasterBirthDate , @PathVariable String employeeMasterPersonID
             , @PathVariable String employeeMasterTel1, @PathVariable String empEmail , @PathVariable String empAddressReal
             , @PathVariable String empAddressPerson , @PathVariable Date employeeMasterStartDate , @PathVariable String employeePosition
-            , @PathVariable String employeeDepartment , @PathVariable String employeeType , @PathVariable String education
-            , @PathVariable String bank , @PathVariable String bankNumber ) throws ParseException {
+            , @PathVariable String employeeDepartment , @PathVariable String employeeType  , @PathVariable String education
+            , @PathVariable String bank , @PathVariable String bankNumber ,@PathVariable String role_statusSelect ,@PathVariable String passwordCreate) throws ParseException {
 
         EmployeeMaster employeeMaster1 = new EmployeeMaster();
 
@@ -63,14 +63,14 @@ public class EmployeeMasterController {
         employeeMaster1.setEmployeeMasterLastName(employeeMasterLastName);
         employeeMaster1.setEmployeeMasterNickName(employeeMasterNickName);
         employeeMaster1.setEmployeeMasterGender(employeeMasterGender);
-        employeeMaster1.setMaritalStatus(maritalStatus);
+        employeeMaster1.setMaritalStatus("ยังปฏิบัติงานอยู่");
 
        /* SimpleDateFormat formatter2=new SimpleDateFormat("dd-MM-yyyy");
         String[] dateSplit;
         dateSplit = employeeMasterBirthDate.split("-");
         String fullPatternyear = dateSplit[0] + '-' + dateSplit[1] + '-' +dateSplit[2];//dateSplit[2];
         Date date2=formatter2.parse(fullPatternyear);*/
-        employeeMaster1.setEmployeeMasterBirthDate(employeeMasterBirthDate); // BirthDate
+        employeeMaster1.setEmployeeMasterBirthDate(employeeMasterBirthDate); // BirthDate */
 
         employeeMaster1.setEmployeeMasterPersonID(employeeMasterPersonID);
         employeeMaster1.setEmployeeMasterTel1(employeeMasterTel1);
@@ -84,18 +84,18 @@ public class EmployeeMasterController {
         employeeMaster1.setEducation(education);
         employeeMaster1.setBank(bank);
         employeeMaster1.setBankNumber(bankNumber);
-
         employeeMaster1.setIsActive("1");
+        employeeMaster1.setRoleStatus(role_statusSelect);
+        employeeMaster1.setPassword(employeeMasterCustomerCode);
         employeeMasterRepository.save(employeeMaster1);
         return employeeMaster1;
-
     }
 
     @PostMapping(path = "/editemployee/{NewemployeeMasterID}/{NewemployeeMasterCustomerCode}/{Newprefix}/{NewemployeeMasterFirstName}" +
             "/{NewemployeeMasterLastName}/{NewemployeeMasterNickName}/{NewemployeeMasterGender}/{NewmaritalStatus}" +
             "/{NewemployeeMasterBirthDate}/{NewemployeeMasterPersonID}/{NewemployeeMasterTel1}/{NewempEmail}/{NewempAddressReal}" +
             "/{NewempAddressPerson}/{NewemployeeMasterStartDate}/{NewemployeePosition}/{NewemployeeDepartment}/{NewemployeeType}" +
-            "/{Neweducation}/{Newbank}/{NewbankNumber}") // Edit Employee
+            "/{Neweducation}/{Newbank}/{NewbankNumber}/{Newpassword}") // Edit Employee
     public EmployeeMaster employeeMaster(@PathVariable Long NewemployeeMasterID, @PathVariable String NewemployeeMasterCustomerCode,
                                          @PathVariable String Newprefix, @PathVariable String NewemployeeMasterFirstName,
                                          @PathVariable String NewemployeeMasterLastName, @PathVariable String NewemployeeMasterNickName,
@@ -106,7 +106,7 @@ public class EmployeeMasterController {
                                          /*@PathVariable Date NewemployeeMasterStartDate,*/ @PathVariable String NewemployeePosition,
                                          @PathVariable String NewemployeeDepartment, @PathVariable String NewemployeeType,
                                          @PathVariable String Neweducation, @PathVariable String Newbank,
-                                         @PathVariable String NewbankNumber){
+                                         @PathVariable String NewbankNumber,@PathVariable String Newpassword){
 
         EmployeeMaster employeeMaster2 = employeeMasterRepository.findById(NewemployeeMasterID).get();
 
@@ -134,6 +134,7 @@ public class EmployeeMasterController {
         employeeMaster2.setEducation(Neweducation);
         employeeMaster2.setBank(Newbank);
         employeeMaster2.setBankNumber(NewbankNumber);
+        employeeMaster2.setPassword(Newpassword);
         employeeMasterRepository.save(employeeMaster2);
         return employeeMaster2;
     }

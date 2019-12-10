@@ -10,12 +10,14 @@
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <mat-chip color="primary" matTooltip="นำข้อมูลเข้า" selected>Import Data &nbsp;<mat-icon matSuffix>cloud_download</mat-icon></mat-chip>&nbsp;
       <mat-chip color="accent" matTooltip="นำข้อมูลออก" selected>Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></mat-chip>&nbsp;
-      <mat-chip color="accent" matTooltip="นำข้อมูลออก ทั้งหมด" selected>Export Data All&nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></mat-chip>
+     <!-- <mat-chip color="accent" matTooltip="นำข้อมูลออก ทั้งหมด" selected>Export Data All&nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></mat-chip> -->
+
 
   </div>
 </mat-card>
 
 <div class="card">
+
     <div class="example-container2 mat-elevation-z8" >
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <!-- Checkbox Column -->
@@ -36,22 +38,22 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="id" >
+        <ng-container matColumnDef="number" >
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>
-          <td mat-cell *matCellDef="let element"> {{element.employeeMasterID}}</td>
+          <td mat-cell *matCellDef="let element ; let i = index">{{i+1}}.</td>
         </ng-container>
 
-        <ng-container matColumnDef="empCodeID" class="example-detail-row">
+        <ng-container matColumnDef="empCodeID" class="example-detail-row" >
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Customer Code</b></font></th>
           <td mat-cell *matCellDef="let element"  [attr.ngIf]="element.isActive == '1' ? true : false ">
-              {{element.employeeMasterCustomerCode}}
+               {{element.employeeMasterCustomerCode}}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="prefix" >
+        <!--<ng-container matColumnDef="prefix" >
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Prefix</b></font></th>
           <td mat-cell *matCellDef="let element"> {{element.prefix}}</td>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="empFristName" >
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>FirstName</b></font></th>
@@ -77,11 +79,16 @@
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Status</b></font></th>
           <td mat-cell *matCellDef="let element"> {{element.maritalStatus}} </td>
         </ng-container>
-
+        <!--
         <ng-container matColumnDef="BirthDate">
           <th mat-header-cell *matHeaderCellDef><font color="black"><b>Birth date</b></font></th>
           <td mat-cell *matCellDef="let element"> {{element.employeeMasterBirthDate}} </td>
-        </ng-container>
+        </ng-container> -->
+
+       <!-- <ng-container matColumnDef="Age">
+          <th mat-header-cell *matHeaderCellDef><font color="black"><b>Age.</b></font></th>
+          <td mat-cell *matCellDef="let element"> {{element.employeeMasterBirthDate}} </td>
+        </ng-container> -->
 
         <ng-container matColumnDef="PersonID">
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>PersonID</b></font></th>
@@ -98,7 +105,7 @@
           <td mat-cell *matCellDef="let element"> {{element.empEmail}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="AddressReal">
+       <!-- <ng-container matColumnDef="AddressReal">
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Address real</b></font></th>
           <td mat-cell *matCellDef="let element"> {{element.empAddressReal}} </td>
         </ng-container>
@@ -106,7 +113,7 @@
         <ng-container matColumnDef="AddressPerson">
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Address person</b></font></th>
           <td mat-cell *matCellDef="let element"> {{element.empAddressPerson}} </td>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="StartDate">
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Start work</b></font></th>
@@ -128,11 +135,11 @@
           <th mat-header-cell *matHeaderCellDef><font color="black"><b>Emp type</b></font></th>
           <td mat-cell *matCellDef="let element"> {{element.employeeType}} </td>
         </ng-container>
-
+      <!--
         <ng-container matColumnDef="educations">
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>educations</b></font></th>
           <td mat-cell *matCellDef="let element"> {{element.education}} </td>
-        </ng-container>
+        </ng-container>  -->
 
         <ng-container matColumnDef="bank">
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Bank name</b></font></th>
@@ -167,7 +174,7 @@
       </table>
     </div>
 </div>
-<mat-paginator [pageSizeOptions]="[4,5, 10, 20, 50, 100]" showFirstLastButtons ></mat-paginator>
+<mat-paginator [pageSizeOptions]="[15, 30, 50, 100]" showFirstLastButtons ></mat-paginator>
 
 
 
