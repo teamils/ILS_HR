@@ -3,7 +3,8 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef,  OnDestroy} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Router,ActivatedRoute} from "@angular/router";
-
+import { ServiceService } from '../service/service.service';
+import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 @Component({
   selector: 'app-newheader',
   templateUrl: './newheader.component.html',
@@ -39,11 +40,11 @@ private _mobileQueryListener: () => void;
       }
       shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
 
-      openDialog(): void {
-            const dialogRef = this.dialog.open(LoginDialog, {
-                width: '330px'
-            });
 
+      openLoginDialogComponent(){
+            const dialogRef = this.dialog.open(LoginDialogComponent, {
+                  width: '330px',
+            });
       }
 
       callEmployeeMaster(){
@@ -93,19 +94,3 @@ private _mobileQueryListener: () => void;
 }
 
 
-@Component({
-  selector: 'login-dialog',
-  templateUrl: 'login-dialog.html',
-})
-export class LoginDialog {
-  hide : boolean;
-  panelOpenState : boolean=true;
-  constructor(
-    public dialogRef: MatDialogRef<LoginDialog>
-    ) {dialogRef.disableClose = true;}
-
-  closeDialog(): void {
-    this.dialogRef.close();
-  }
-
-}

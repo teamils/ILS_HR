@@ -23,6 +23,7 @@ public class EmployeeMasterController {
     @Autowired
     private EmployeeMasterRepository employeeMasterRepository;
 
+
     @GetMapping(path = "ILS_HR/employee")
     public Collection<EmployeeMaster> employeeMaster() {
         return employeeMasterRepository.findAll().stream().filter(this::Active).collect(Collectors.toList());
@@ -36,6 +37,13 @@ public class EmployeeMasterController {
     public EmployeeMaster employeeMaster(@PathVariable String employeeMasterCustomerCode) {
         //System.out.println("employeeMasterCustomerCode = "+employeeMasterCustomerCode);
         EmployeeMaster employeeMaster = employeeMasterRepository.findByemployeeMasterCustomerCode(employeeMasterCustomerCode);
+        return employeeMaster;
+    }
+
+    @GetMapping(path = "/login/{employeeCode}/{password}") //login
+    public EmployeeMaster employeeMaster(@PathVariable String employeeCode , @PathVariable String password) {
+        //System.out.println("employeeMasterCustomerCode = "+employeeCode+"password = "+password);
+        EmployeeMaster employeeMaster = employeeMasterRepository.findByemployeeMasterCustomerCodeAndPasswordAndIsActive(employeeCode,password,"1");
         return employeeMaster;
     }
 

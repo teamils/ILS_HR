@@ -28,14 +28,12 @@ export class ServiceService {
   getRoleStatus():Observable<any>{
       return this.http.get(this.API+'/roleStatus',{})
   }
-
-  getUserPassword(id: String , password : String): Observable<any>{
-      return this.http.post(this.API+'/Users/'+id+/Password/+password,{})
-  }
-
-   getSearchEmployeeForAttendance(employeeCode:String): Observable<any>{
+  getSearchEmployeeForAttendance(employeeCode:String): Observable<any>{
       return this.http.get(this.API+'/SearchEmployeeForAttendance/'+employeeCode,{})
-
   }
+  getUserPassword(employeeCode: String, password : String): Observable<any>{
+      return this.http.get(this.API+'/login/'+employeeCode+'/'+password,{})
+  }
+
 
 }

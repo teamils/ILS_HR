@@ -6,7 +6,7 @@ import {Inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ServiceService } from '../service/service.service';
 import { HttpClient} from '@angular/common/http';
-import {LoginDialog} from '../newheader/newheader.component';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -34,12 +34,6 @@ constructor(private router:Router,
                  });
     }
 
-      openDialog(): void {
-                   const dialogRef = this.dialog.open(LoginDialog, {
-                     width: '330px'
-                   });
-
-        }
 
 
 

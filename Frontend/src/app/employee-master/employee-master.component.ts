@@ -82,13 +82,8 @@ export class EmployeeMasterComponent implements OnInit {
             this.service.getemployee().subscribe(data => {
                    this.employee = data;
                     this.dataSource.data = this.employee;
-                    console.log('employee->',this.employee);
+                    //console.log('employee->',this.employee);
               });
-
-            /*this.service.getaccountUsers().subscribe(data => {
-                   this.accountuser = data;
-                   console.log(this.accountuser);
-              });*/
 
              this.dataSource.paginator = this.paginator;
              this.dataSource.sort = this.sort;
@@ -101,7 +96,6 @@ export class EmployeeMasterComponent implements OnInit {
                   height:'200px',
                   data: row,
             });
-
           }
           OpenEditDialogComponent(row : any){
                const dialogRef = this.dialog.open(EmployeeEditComponent, {

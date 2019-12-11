@@ -46,22 +46,18 @@ import { EmployeeAddComponent } from './employee-add/employee-add.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EmployeeMasterComponent } from './employee-master/employee-master.component';
-import {LoginDialog} from './newheader/newheader.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { NewheaderComponent } from './newheader/newheader.component';
 import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
 import { EmployeeDeleteComponent } from './employee-delete/employee-delete.component';
 import { AttendanceComponent } from './attendance/attendance.component';
-
-
-
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginDialog,
     EmployeeAddComponent,
     HomeComponent,
     EmployeeMasterComponent,
@@ -70,6 +66,7 @@ import { AttendanceComponent } from './attendance/attendance.component';
     EmployeeEditComponent,
     EmployeeDeleteComponent,
     AttendanceComponent,
+    LoginDialogComponent,
 
 
 
@@ -129,7 +126,7 @@ import { AttendanceComponent } from './attendance/attendance.component';
 
        ],
 
-   entryComponents: [LoginDialog, EmployeeEditComponent,EmployeeDeleteComponent],
+   entryComponents: [EmployeeEditComponent,EmployeeDeleteComponent,LoginDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

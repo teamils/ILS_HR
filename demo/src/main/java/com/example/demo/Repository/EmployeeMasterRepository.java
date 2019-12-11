@@ -14,4 +14,6 @@ public interface EmployeeMasterRepository extends JpaRepository<EmployeeMaster,L
     EmployeeMaster findByemployeeMasterCustomerCode(String employeeMasterCustomerCode);
 
 
+    EmployeeMaster findByemployeeMasterCustomerCodeAndPasswordAndIsActive(String employeeMasterCustomerCode, String password,String isActive );
+
 }

@@ -48,7 +48,7 @@ public class EmployeeMaster {
     private String education;
     private String bank;
     private String bankNumber;
-    private String IsActive;
+    private String isActive;
     private String roleStatus;
     private String password;
 
@@ -250,11 +250,11 @@ public class EmployeeMaster {
     }
 
     public String getIsActive() {
-        return IsActive;
+        return isActive;
     }
 
     public void setIsActive(String isActive) {
-        this.IsActive = isActive;
+        this.isActive = isActive;
     }
 
 
