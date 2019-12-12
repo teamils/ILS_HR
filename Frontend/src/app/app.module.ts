@@ -52,7 +52,8 @@ import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
 import { EmployeeDeleteComponent } from './employee-delete/employee-delete.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
-
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { AttendanceDataComponent } from './attendance-data/attendance-data.component';
 
 
 @NgModule({
@@ -67,12 +68,11 @@ import { LoginDialogComponent } from './login-dialog/login-dialog.component';
     EmployeeDeleteComponent,
     AttendanceComponent,
     LoginDialogComponent,
-
-
-
+    AttendanceDataComponent,
 
 
   ],
+
       imports: [
           BrowserModule,
           AppRoutingModule,
@@ -115,8 +115,7 @@ import { LoginDialogComponent } from './login-dialog/login-dialog.component';
           FormsModule,
           HttpClientModule,
           MatFormFieldModule,
-
-
+          NgxMaterialTimepickerModule,
 
        ],
        exports: [

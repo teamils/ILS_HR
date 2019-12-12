@@ -7,7 +7,12 @@ import {ChangeDetectorRef,  OnDestroy} from '@angular/core';
 import { ServiceService } from '../service/service.service';
 import { HttpClient} from '@angular/common/http';
 
+export interface DialogData {
+  employee : Array<any>;
+  id : String ;
+  NewPassword : String ;
 
+}
 @Component({
   selector: 'app-login-dialog',
   templateUrl: './login-dialog.component.html',
@@ -29,7 +34,8 @@ export class LoginDialogComponent implements OnInit {
                       ,private router:Router
                       ,private route:ActivatedRoute
                       ,private service:ServiceService
-                      ,private http: HttpClient){
+                      ,private http: HttpClient
+                      ,@Inject(MAT_DIALOG_DATA) public data: DialogData){
                             dialogRef.disableClose = true;
       }
 
@@ -43,6 +49,9 @@ export class LoginDialogComponent implements OnInit {
                console.log('Employee In Login ->',data);
         if(data != null){
           this.dialogRef.close();
+          if(data.roleStatus == "EMPLOYEE"){
+                localStorage.setItem('role', 'employee')
+          }
         }
         else if(this.id == null){
           alert("Please enter username");

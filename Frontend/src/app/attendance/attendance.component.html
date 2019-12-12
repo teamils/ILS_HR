@@ -1,33 +1,80 @@
 <mat-card class="cardHeader">
 
-      <mat-form-field appearance="fill" hintLabel="กรอกรหัสพนักงานแล้วกด Enter" (keydown.enter)="NewSearchData(employeeMasterCustomerCode)">
-        <mat-label>ค้นหารหัสพนักงาน</mat-label>
-        <input matInput  #code maxlength="6" title="กรุณากรอกตัวเลข 6 ตัว" [(ngModel)]="employeeMasterCustomerCode">
+      <mat-form-field appearance="fill" hintLabel="พิมพ์รหัสพนักงานแล้วกด Enter" (keydown.enter)="NewSearchData(employeeMasterCustomerCode);">
+        <mat-label>พิมพ์รหัสพนักงาน</mat-label>
+        <input matInput   [(ngModel)]="employeeMasterCustomerCode">
         <mat-icon matSuffix>search</mat-icon>
-        <mat-hint align="end">{{code.value?.length || 0}}/6</mat-hint>
       </mat-form-field>
-<br><br>
-  <table class="table">
-    <tr bgcolor="#c0c0c0">
-      <th>รหัสพนักงาน</th>
-      <th>ชื่อ - สกุล</th>
-      <th>แผนก</th>
-      <th>ตำแหน่ง</th>
-      <th>ลากิจคงเหลือ(วัน)</th>
-      <th>ลาพักร้อนคงเหลือ(วัน)</th>
-    </tr>
-    <ng-container>
-      <tr>
-        <td>{{table.empCode}}</td>
-        <td>{{table.fName}}&nbsp;&nbsp;{{table.lName}}</td>
-        <td>{{table.empDep}}</td>
-        <td>{{table.empPos}}</td>
-        <td>{{table.sumDate}}</td>
-        <td>{{table.sumDate}}</td>
-      </tr>
-    </ng-container>
-  </table>
+  ชื่อ - สกุล:&nbsp;<b>{{table.fName}}&nbsp;&nbsp;{{table.lName}}</b>&nbsp;&nbsp; แผนก:&nbsp;<b>{{table.empDep}}</b> &nbsp;&nbsp; ตำแหน่ง:&nbsp;<b>{{table.empPos}}</b>
+  &nbsp;&nbsp;ลาพักร้อนคงเหลือ(วัน):&nbsp;<b>{{this.leave.totalAnnualLeave}}</b>
+  <div align="center">
+    <h2>กรอกข้อมูลการลา</h2>
+  </div>
+  <div align="center">
+    <mat-form-field>
+      <mat-select  placeholder="ประเภทการลา" [(ngModel)]="leaveTypeSelect" required>
+        <mat-option *ngFor="let value of leaveType" [value]="value.leaveTypeName" (click)="CalculateLeave(leaveTypeSelect)">
+          {{value.leaveTypeName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="เริ่มจากวันที่" [(ngModel)]="startDate" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker></mat-datepicker>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field>
+      <input matInput [matDatepicker]="pickers" placeholder="ถึงวันที่" [(ngModel)]="endDate" required>
+      <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #pickers></mat-datepicker>
+    </mat-form-field>
+    <br>
+    เวลาที่เริ่มลา :
+    <input placeholder="เวลาที่เริ่มลา"
+           [ngxTimepicker]="defaultGap" [(ngModel)]="startTime" readonly>
+    <ngx-material-timepicker #defaultGap></ngx-material-timepicker>
+    &nbsp;&nbsp;
+    ถึงเวลา :
+    <input placeholder="ถึงเวลา"
+           [ngxTimepicker]="defaultGaps" [(ngModel)]="endTime" readonly>
+    <ngx-material-timepicker #defaultGaps></ngx-material-timepicker>
+    &nbsp;&nbsp;
+    <mat-form-field>
+      <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason" ></textarea>
+    </mat-form-field>
+
+    <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;" (click)="SubmitData()">Save</button>
+  </div>
+
 </mat-card>
 
-<mat-card class="cardHeader">
+<mat-card class="card2">
+
+    <table class="table">
+      <tr bgcolor="#c0c0c0">
+        <th>ประเภทการลา</th>
+        <th>เริ่มจากวันที่</th>
+        <th>ถึงวันที่</th>
+        <th>เวลาที่เริ่มลา</th>
+        <th>ถึงเวลา</th>
+        <th>เหตุผล</th>
+        <th>approvedBySupervisor</th>
+        <th>approvedByManager</th>
+      </tr>
+      <ng-container>
+        <tr>
+          <td>{{this.leave.leaveType}}</td>
+          <td>{{this.leave.startDate}}</td>
+          <td>{{this.leave.endDate}}</td>
+          <td>{{this.leave.startTime}}</td>
+          <td>{{this.leave.endTime}}</td>
+          <td>{{this.leave.reason}}</td>
+          <td>{{this.leave.approvedBySupervisor}}</td>
+          <td>{{this.leave.approvedByManager}}</td>
+        </tr>
+      </ng-container>
+    </table>
+
 </mat-card>

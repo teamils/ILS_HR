@@ -5,6 +5,15 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import {Router,ActivatedRoute} from "@angular/router";
 import { ServiceService } from '../service/service.service';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
+import { Inject} from '@angular/core';
+
+export interface DialogData {
+  employee : Array<any>;
+  id : String ;
+  NewPassword : String ;
+
+}
+
 @Component({
   selector: 'app-newheader',
   templateUrl: './newheader.component.html',
@@ -19,6 +28,12 @@ export class NewheaderComponent implements OnInit {
   selectEmployeeAdd : String;
   selectCreateAccount : String;
   selectAttendance : String;
+  selectAttendanceDate : String;
+
+  employee : Array<any>;
+  id : String ;
+  NewPassword : String ;
+  NewemployeeMasterFirstName : string;
 
 private _mobileQueryListener: () => void;
 
@@ -26,17 +41,22 @@ private _mobileQueryListener: () => void;
                   ,media: MediaMatcher
                   ,public dialog: MatDialog
                   ,private router:Router
-                  ,private route:ActivatedRoute) {
+                  ,private route:ActivatedRoute
+                  ) {
                           this.mobileQuery = media.matchMedia('(max-width: 600px)');
                           this._mobileQueryListener = () => changeDetectorRef.detectChanges();
                           this.mobileQuery.addListener(this._mobileQueryListener);
 
-                          localStorage.setItem('selectEmployeemaster', 'true');
-                          this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+                          localStorage.setItem('selectAttendanceDate', 'true');
+                          this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
       }
 
+key : string;
+
       ngOnInit() : void {
+        this.key = localStorage.getItem('role');
         this.mobileQuery.removeListener(this._mobileQueryListener);
+
       }
       shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
 
@@ -44,6 +64,8 @@ private _mobileQueryListener: () => void;
       openLoginDialogComponent(){
             const dialogRef = this.dialog.open(LoginDialogComponent, {
                   width: '330px',
+                 data: {id: this.id, NewPassword: this.NewPassword, employee:this.employee}
+
             });
       }
 
@@ -56,6 +78,8 @@ private _mobileQueryListener: () => void;
           this.selectCreateAccount =  localStorage.getItem('selectCreateAccount');
           localStorage.setItem('selectAttendance', 'false');
           this.selectAttendance =  localStorage.getItem('selectAttendance');
+          localStorage.setItem('selectAttendanceDate', 'false');
+          this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
 
           /*console.log(this.selectEmployeemaster);*/
       }
@@ -68,6 +92,8 @@ private _mobileQueryListener: () => void;
           this.selectCreateAccount =  localStorage.getItem('selectCreateAccount');
           localStorage.setItem('selectAttendance', 'false');
           this.selectAttendance =  localStorage.getItem('selectAttendance');
+          localStorage.setItem('selectAttendanceDate', 'false');
+          this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
       }
       callCreateAccount(){
           localStorage.setItem('selectCreateAccount', 'true');
@@ -78,10 +104,26 @@ private _mobileQueryListener: () => void;
           this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
           localStorage.setItem('selectAttendance', 'false');
           this.selectAttendance =  localStorage.getItem('selectAttendance');
+          localStorage.setItem('selectAttendanceDate', 'false');
+          this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
       }
       callAttendance(){
           localStorage.setItem('selectAttendance', 'true');
           this.selectAttendance =  localStorage.getItem('selectAttendance');
+          localStorage.setItem('selectEmployeeAdd', 'false');
+          this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
+          localStorage.setItem('selectEmployeemaster', 'false');
+          this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+          localStorage.setItem('selectCreateAccount', 'false');
+          this.selectCreateAccount =  localStorage.getItem('selectCreateAccount');
+          localStorage.setItem('selectAttendanceDate', 'false');
+          this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+      }
+      callAttendanceData(){
+          localStorage.setItem('selectAttendanceDate', 'true');
+          this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+          localStorage.setItem('selectAttendance', 'false');
+          this.selectAttendance =  localStorage.getItem('selectAttendance')
           localStorage.setItem('selectEmployeeAdd', 'false');
           this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
           localStorage.setItem('selectEmployeemaster', 'false');

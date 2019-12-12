@@ -51,8 +51,8 @@
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="" (click)="callAttendance()">Attendance<mat-icon matSuffix>home</mat-icon></a> <!-- เห็นทุกคน ยกเว้น HR -->
-              <a routerLink="">Data Attendance</a>  <!-- เห็นทุกคน -->
+              <a routerLink="" (click)="callAttendance()">Attendance</a> <!-- เห็นทุกคน ยกเว้น HR -->
+              <a routerLink="" (click)="callAttendanceData()" *ngIf="(key == 'EMPLOYEE' ? false : true)">Data Attendance</a>  <!-- เห็นทุกคน -->
               <a routerLink="">Data Attendance For HR</a>   <!-- เห็นเฉพาะ HR -->
               <a routerLink="">Approve By MANAGER</a>   <!-- เห็นเฉพาะ MANAGER -->
               <a routerLink="">Approve By SUPERVISOR</a>   <!-- เห็นเฉพาะ SUPERVISOR -->
@@ -94,9 +94,8 @@
         </div> <!-- ข้างๆๆๆๆ -->
 
         <div  align="center">
-          <button mat-raised-button (click)="openDialog()" color="warn" class="logoutStyle" selected>LOGOUT</button>
+          <button mat-raised-button  color="warn" class="logoutStyle" selected>LOGOUT</button>
         </div>
-
       </mat-nav-list>
     </mat-sidenav>
 
@@ -107,6 +106,7 @@
           <app-employee-add *ngIf="selectEmployeeAdd == 'true' ? true : false"></app-employee-add>
           <app-create-account *ngIf="selectCreateAccount == 'true' ? true : false"></app-create-account>
           <app-attendance *ngIf="selectAttendance == 'true' ? true : false"></app-attendance>
+          <app-attendance-data *ngIf="selectAttendanceDate == 'true' ? true : false"></app-attendance-data>
       </div>
     </mat-sidenav-content>
 

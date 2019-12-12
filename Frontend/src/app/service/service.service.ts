@@ -28,9 +28,20 @@ export class ServiceService {
   getRoleStatus():Observable<any>{
       return this.http.get(this.API+'/roleStatus',{})
   }
-  getSearchEmployeeForAttendance(employeeCode:String): Observable<any>{
-      return this.http.get(this.API+'/SearchEmployeeForAttendance/'+employeeCode,{})
+  getLeaveType():Observable<any>{
+      return this.http.get(this.API+'/leaveType',{})
   }
+  getLeaves():Observable<any>{
+      return this.http.get(this.API+'/leaves',{})
+  }
+  getShowLeaves(leaID : String):Observable<any>{
+      return this.http.get(this.API+'/leave/'+leaID,{})
+  }
+
+  getSearchEmployeeForAttendance(employeeMasterID:String): Observable<any>{
+      return this.http.get(this.API+'/SearchEmployeeForAttendance/'+employeeMasterID,{})
+  }
+
   getUserPassword(employeeCode: String, password : String): Observable<any>{
       return this.http.get(this.API+'/login/'+employeeCode+'/'+password,{})
   }
