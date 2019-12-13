@@ -144,6 +144,7 @@ export class EmployeeEditComponent implements OnInit {
                                            console.log('PUT Request is successful');
                                            alert("Edit Success!");
                                            window.location.reload(true);
+                                          localStorage.setItem('links', 'employeeMaster');
                                        },
                                        error => {
                                            console.log('Error', error);

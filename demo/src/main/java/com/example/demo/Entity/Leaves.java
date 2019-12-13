@@ -13,7 +13,9 @@ public class Leaves {
     private long leavesID;
     private Date leavesDate;
     private String reason; // เหตุผล
+    @Temporal(TemporalType.DATE)
     private Date startDate;
+    @Temporal(TemporalType.DATE)
     private Date endDate;
     private String startTime;
     private String endTime;
@@ -131,7 +133,6 @@ public class Leaves {
     public void setEmployeeMasterid(EmployeeMaster employeeMasterid) {
         this.employeeMasterid = employeeMasterid;
     }
-
 
 
 }

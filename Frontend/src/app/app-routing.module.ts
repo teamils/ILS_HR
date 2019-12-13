@@ -7,6 +7,7 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { NewheaderComponent } from './newheader/newheader.component';
 import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
 import { AttendanceComponent } from './attendance/attendance.component';
+import { ApproveBySupervisorComponent } from './approve-by-supervisor/approve-by-supervisor.component';
 
     const routes: Routes = [
        { path: '', redirectTo: '/newheader', pathMatch: 'full' },
@@ -17,6 +18,7 @@ import { AttendanceComponent } from './attendance/attendance.component';
        { path: 'newheader', component: NewheaderComponent },
        { path: 'employee-edit', component: EmployeeEditComponent },
        { path: 'attendance', component: AttendanceComponent },
+       { path: 'approveBySupervisor', component: ApproveBySupervisorComponent },
 
     ];
 

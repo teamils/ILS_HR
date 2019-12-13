@@ -11,8 +11,9 @@ export interface DialogData {
   employee : Array<any>;
   id : String ;
   NewPassword : String ;
-
 }
+
+
 @Component({
   selector: 'app-login-dialog',
   templateUrl: './login-dialog.component.html',
@@ -26,8 +27,21 @@ export class LoginDialogComponent implements OnInit {
   id : String = null;
   NewPassword : String = null ;
 
-    constructor(
-      public dialogRef: MatDialogRef<LoginDialogComponent>
+  table : any = {
+    leaID : '',
+    empCode : '',
+    fName : '',
+    lName : '',
+    empDep : '',
+    empPos : '',
+    StartDate : '',
+    sumDate : '',
+    rolestatus : '',
+  };
+
+
+      constructor(
+          public dialogRef: MatDialogRef<LoginDialogComponent>
                       ,changeDetectorRef: ChangeDetectorRef
                       ,media: MediaMatcher
                       ,public dialog: MatDialog
@@ -47,10 +61,38 @@ export class LoginDialogComponent implements OnInit {
         this.service.getUserPassword(id,NewPassword).subscribe(data => {
                this.employee = data;
                console.log('Employee In Login ->',data);
+                window.location.reload(true);
+                this.table.leaID = data.employeeMasterID;
+                this.table.empCode = data.employeeMasterCustomerCode;
+                this.table.fName = data.employeeMasterFirstName;
+                this.table.lName = data.employeeMasterLastName;
+
+                localStorage.setItem('empCode', this.table.empCode);
+                localStorage.setItem('fName', this.table.fName);
+                localStorage.setItem('lName', this.table.lName);
+
+
         if(data != null){
-          this.dialogRef.close();
+          localStorage.setItem('logouts', 'false');
           if(data.roleStatus == "EMPLOYEE"){
-                localStorage.setItem('role', 'employee')
+                localStorage.setItem('role', 'EMPLOYEE');
+                console.log('role ->',localStorage.getItem('role'));
+          }
+          else if(data.roleStatus == "MANAGER"){
+                localStorage.setItem('role', 'MANAGER');
+                console.log('role ->',localStorage.getItem('role'));
+          }
+          else if(data.roleStatus == "HR"){
+                localStorage.setItem('role', 'HR');
+                console.log('role ->',localStorage.getItem('role'));
+          }
+          else if(data.roleStatus == "SUPERVISOR"){
+                localStorage.setItem('role', 'SUPERVISOR');
+                console.log('role ->',localStorage.getItem('role'));
+          }
+          else if(data.roleStatus == "ADMIN"){
+                localStorage.setItem('role', 'ADMIN');
+                console.log('role ->',localStorage.getItem('role'));
           }
         }
         else if(this.id == null){

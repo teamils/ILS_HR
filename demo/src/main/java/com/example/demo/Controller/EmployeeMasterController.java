@@ -40,6 +40,12 @@ public class EmployeeMasterController {
         return employeeMaster;
     }
 
+    @GetMapping(path = "/SearchEmployeeForAttendance2/{id}") //SearchEmployeeForAttendance2
+    public EmployeeMaster employeeMaster(@PathVariable Long id) {
+        return employeeMasterRepository.findById(id).get();
+
+    }
+
     @GetMapping(path = "/login/{employeeCode}/{password}") //login
     public EmployeeMaster employeeMaster(@PathVariable String employeeCode , @PathVariable String password) {
         //System.out.println("employeeMasterCustomerCode = "+employeeCode+"password = "+password);

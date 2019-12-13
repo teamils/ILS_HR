@@ -28,7 +28,7 @@ export interface employeeMasters{
 })
 export class AttendanceComponent implements OnInit {
 
-  public API = '//localhost:8080/leave';
+  public API = '//localhost:8080';
   employeeMasterCustomerCode : String;
   empID : Array<any>;
   dataLeave : Array<any>;
@@ -39,7 +39,7 @@ export class AttendanceComponent implements OnInit {
   leaveType : Array<any>;
   leaveTypeSelect : string;
   leaves : Array<any>;
-
+  empId = localStorage.getItem('empId');
 
   table : any = {
       leaID : '',
@@ -80,13 +80,11 @@ export class AttendanceComponent implements OnInit {
         //console.log('leaveType -> ',this.leaveType);
       });
       //console.log(new Date());
-  }
 
-    NewSearchData(empID){
 
-        this.service.getSearchEmployeeForAttendance(empID).subscribe(data1 => {
-            if(data1 != null){
-              //console.log('data1->',data1);
+
+            this.service.getSearchEmployeeForAttendance2(this.empId).subscribe(data1 => {
+              console.log('data1->',data1);
               this.table.leaID = data1.employeeMasterID;
               this.table.empCode = data1.employeeMasterCustomerCode;
               this.table.fName = data1.employeeMasterFirstName;
@@ -106,8 +104,7 @@ export class AttendanceComponent implements OnInit {
               this.service.getShowLeaves(this.table.leaID).subscribe(data => {
                   if(data!=null){
                     this.leaves = data;
-
-                    console.log('leaves -> ',this.leaves);
+                    //console.log('leaves -> ',this.leaves);
                     console.log('totalAnnualLeave -> ',data.totalAnnualLeave);
                     this.leave.leavesID = data.leavesID;
                     this.leave.leavesDate = data.leavesDate;
@@ -142,12 +139,23 @@ export class AttendanceComponent implements OnInit {
                       this.table.sumDate = 0;
                 }
 
-            }
-            else{
-                alert("ไม่มีรหัสพนักงานนี้ในระบบ");
-            }
+               this.http.post(this.API + '/savetotalAnnualLeave/' + this.table.leaID +'/'+ this.table.sumDate ,{}).subscribe(
+                                         data => {
+                                             console.log('PUT Request is successful');
+                                         },
+                                         error => {
+                                             console.log('Error', error);
+                                         }
+                );
+
+
+
         });
-    }
+  }
+
+
+
+
 
     startDate : '';
     endDate : '';
@@ -169,6 +177,8 @@ export class AttendanceComponent implements OnInit {
                                        dataLeave => {
                                            console.log('PUT Request is successful', dataLeave);
                                            alert("ลาสําเร็จ รอการอนุมัติ");
+                                            window.location.reload(true);
+                                            localStorage.setItem('links', 'attendanceData');
                                        },
                                        error => {
                                            console.log('Error', error);

@@ -6,9 +6,13 @@
     <h1><font color="white" class="font">ILS HUMAN RESOURCES</font></h1>
     <!--<h1 class="example-app-name">ILS HUMAN RESOURCES</h1>-->
 
-      <mat-chip-list aria-label="Fish selection" class="loginStyle">
+      <!--<mat-chip-list aria-label="Fish selection" class="loginStyle"  *ngIf="(logouts == 'false' ? false : true)">
         <mat-chip (click)="openLoginDialogComponent()" height="100px" selected><mat-icon matSuffix>fingerprint</mat-icon>LOGIN</mat-chip>
+      </mat-chip-list> -->
+      <mat-chip-list aria-label="Fish selection" class="loginStyle" *ngIf="(logouts == 'false' ? true : false)">
+        <mat-chip color="primary" (click)="logout()" height="100px" matTooltip="Logout" selected><mat-icon matSuffix>exit_to_app</mat-icon></mat-chip>
       </mat-chip-list>
+
 
   </mat-toolbar>
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
@@ -18,8 +22,8 @@
 
         <mat-card-header class="align">
           <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title>Diki kawasaki</mat-card-title>
-          <mat-card-subtitle>Admin</mat-card-subtitle>
+          <mat-card-title>{{this.NewemployeeMasterFirstName}}&nbsp;{{this.NewemployeeMasterLastName}}</mat-card-title>
+          <mat-card-subtitle>{{this.NewRoleStatus}}</mat-card-subtitle>
         </mat-card-header>
 
         <div class="sidenav">
@@ -34,8 +38,8 @@
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="" (click)="callEmployeeMaster()">Employee Master<mat-icon matSuffix>account_circle</mat-icon></a>
-              <a routerLink="" (click)="callEmployeeAdd()">New Employee<mat-icon matSuffix>person_add</mat-icon></a>
+              <a routerLink="" (click)="callEmployeeMaster()" *ngIf="(logouts == 'true' ? false : true)">Employee Master<mat-icon matSuffix>account_circle</mat-icon></a>
+              <a routerLink="" (click)="callEmployeeAdd()" *ngIf="(logouts == 'true' ? false : true)">New Employee<mat-icon matSuffix>person_add</mat-icon></a>
              <!-- <a routerLink="" (click)="callCreateAccount()">Create new account<mat-icon matSuffix>person_add</mat-icon></a> -->
             </mat-expansion-panel>
 
@@ -51,11 +55,11 @@
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="" (click)="callAttendance()">Attendance</a> <!-- เห็นทุกคน ยกเว้น HR -->
-              <a routerLink="" (click)="callAttendanceData()" *ngIf="(key == 'EMPLOYEE' ? false : true)">Data Attendance</a>  <!-- เห็นทุกคน -->
-              <a routerLink="">Data Attendance For HR</a>   <!-- เห็นเฉพาะ HR -->
-              <a routerLink="">Approve By MANAGER</a>   <!-- เห็นเฉพาะ MANAGER -->
-              <a routerLink="">Approve By SUPERVISOR</a>   <!-- เห็นเฉพาะ SUPERVISOR -->
+              <a routerLink="" (click)="callAttendance()" *ngIf="(role == 'HR' ? false : true)&&(logouts == 'true' ? false : true)">Attendance</a> <!-- เห็นทุกคน ยกเว้น HR -->
+              <a routerLink="" (click)="callAttendanceData()" *ngIf="(role == 'EMPLOYEE' ? false : true)&&(logouts == 'true' ? false : true)">Data Attendance</a>  <!-- เห็นทุกคน -->
+              <a routerLink="" *ngIf="(role == 'HR' ? true : false)||(role == 'ADMIN' ? true : false)&&(logouts == 'true' ? false : true)">Data Attendance For HR</a>   <!-- เห็นเฉพาะ HR -->
+              <a routerLink="" *ngIf="(role == 'MANAGER' ? true : false)||(role == 'ADMIN' ? true : false)&&(logouts == 'true' ? false : true)">Approve By MANAGER</a>   <!-- เห็นเฉพาะ MANAGER -->
+              <a routerLink="" (click)="callApproveBySupervisor()" *ngIf="(role == 'SUPERVISOR' ? true : false)||(role == 'ADMIN' ? true : false)&&(logouts == 'true' ? false : true)">Approve By SUPERVISOR</a>   <!-- เห็นเฉพาะ SUPERVISOR -->
             </mat-expansion-panel>
 
             <!--  ขอล่วงเวลา(OT) --------------------------------------------------------------------------------->
@@ -70,9 +74,9 @@
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="OverTime">OverTime</a>
-              <a routerLink="OverTimeShow">Data OverTime</a>
-              <a routerLink="OverTimeApprove">Approve</a>
+              <a routerLink="OverTime" *ngIf="(logouts == 'true' ? false : true)">OverTime</a>
+              <a routerLink="OverTimeShow" *ngIf="(logouts == 'true' ? false : true)">Data OverTime</a>
+              <a routerLink="OverTimeApprove" *ngIf="(logouts == 'true' ? false : true)">Approve</a>
             </mat-expansion-panel>
 
             <!--  อบรม (Training) --------------------------------------------------------------------------------->
@@ -87,15 +91,15 @@
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="TrainAdd">Training</a>
-              <a routerLink="TrainShow">Data Training</a>
+              <a routerLink="TrainAdd" *ngIf="(logouts == 'true' ? false : true)">Training</a>
+              <a routerLink="TrainShow" *ngIf="(logouts == 'true' ? false : true)">Data Training</a>
             </mat-expansion-panel>
           </mat-accordion>
         </div> <!-- ข้างๆๆๆๆ -->
 
-        <div  align="center">
-          <button mat-raised-button  color="warn" class="logoutStyle" selected>LOGOUT</button>
-        </div>
+        <!--<div  align="center">
+          <button mat-raised-button  color="warn" class="logoutStyle" (click)="logout()" selected>LOGOUT</button>
+        </div> -->
       </mat-nav-list>
     </mat-sidenav>
 
@@ -107,6 +111,7 @@
           <app-create-account *ngIf="selectCreateAccount == 'true' ? true : false"></app-create-account>
           <app-attendance *ngIf="selectAttendance == 'true' ? true : false"></app-attendance>
           <app-attendance-data *ngIf="selectAttendanceDate == 'true' ? true : false"></app-attendance-data>
+          <app-approve-by-supervisor *ngIf="selectApproveBySupervisor == 'true' ? true : false"></app-approve-by-supervisor>
       </div>
     </mat-sidenav-content>
 

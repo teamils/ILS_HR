@@ -41,6 +41,9 @@ export class ServiceService {
   getSearchEmployeeForAttendance(employeeMasterID:String): Observable<any>{
       return this.http.get(this.API+'/SearchEmployeeForAttendance/'+employeeMasterID,{})
   }
+  getSearchEmployeeForAttendance2(id:String): Observable<any>{
+      return this.http.get(this.API+'/SearchEmployeeForAttendance2/'+id,{})
+  }
 
   getUserPassword(employeeCode: String, password : String): Observable<any>{
       return this.http.get(this.API+'/login/'+employeeCode+'/'+password,{})

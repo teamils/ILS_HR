@@ -29,11 +29,19 @@ export class NewheaderComponent implements OnInit {
   selectCreateAccount : String;
   selectAttendance : String;
   selectAttendanceDate : String;
+  selectApproveBySupervisor : String;
 
   employee : Array<any>;
   id : String ;
   NewPassword : String ;
-  NewemployeeMasterFirstName : string;
+  role : string;
+
+  logouts = localStorage.getItem('logouts');
+
+  NewemployeeMasterFirstName =  localStorage.getItem('fName');
+  NewemployeeMasterLastName =  localStorage.getItem('lName');
+  NewRoleStatus =  localStorage.getItem('role');
+  links = localStorage.getItem('links');
 
 private _mobileQueryListener: () => void;
 
@@ -47,14 +55,29 @@ private _mobileQueryListener: () => void;
                           this._mobileQueryListener = () => changeDetectorRef.detectChanges();
                           this.mobileQuery.addListener(this._mobileQueryListener);
 
-                          localStorage.setItem('selectAttendanceDate', 'true');
-                          this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+                              localStorage.setItem('selectEmployeemaster', 'true');
+                              this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+                          if(this.links == 'employeeMaster'){
+                              localStorage.setItem('selectEmployeemaster', 'true');
+                              this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+                              localStorage.setItem('selectAttendanceDate', 'false');
+                              this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+
+                          }
+                          else if(this.links == 'attendanceData'){
+                              localStorage.setItem('selectAttendanceDate', 'true');
+                              this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+                              localStorage.setItem('selectEmployeemaster', 'false');
+                              this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+
+                          }
+
       }
 
-key : string;
+
 
       ngOnInit() : void {
-        this.key = localStorage.getItem('role');
+        this.role = localStorage.getItem('role');
         this.mobileQuery.removeListener(this._mobileQueryListener);
 
       }
@@ -68,7 +91,12 @@ key : string;
 
             });
       }
-
+      logout(){
+        localStorage.clear();
+        localStorage.setItem('logouts', 'true');
+        //window.location.reload(true);
+        this.router.navigate(['home']);
+      }
       callEmployeeMaster(){
           localStorage.setItem('selectEmployeemaster', 'true');
           this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
@@ -80,6 +108,8 @@ key : string;
           this.selectAttendance =  localStorage.getItem('selectAttendance');
           localStorage.setItem('selectAttendanceDate', 'false');
           this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+          localStorage.setItem('selectApproveBySupervisor', 'false');
+          this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
 
           /*console.log(this.selectEmployeemaster);*/
       }
@@ -94,6 +124,8 @@ key : string;
           this.selectAttendance =  localStorage.getItem('selectAttendance');
           localStorage.setItem('selectAttendanceDate', 'false');
           this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+          localStorage.setItem('selectApproveBySupervisor', 'false');
+          this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
       }
       callCreateAccount(){
           localStorage.setItem('selectCreateAccount', 'true');
@@ -106,6 +138,8 @@ key : string;
           this.selectAttendance =  localStorage.getItem('selectAttendance');
           localStorage.setItem('selectAttendanceDate', 'false');
           this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+          localStorage.setItem('selectApproveBySupervisor', 'false');
+          this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
       }
       callAttendance(){
           localStorage.setItem('selectAttendance', 'true');
@@ -118,9 +152,27 @@ key : string;
           this.selectCreateAccount =  localStorage.getItem('selectCreateAccount');
           localStorage.setItem('selectAttendanceDate', 'false');
           this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+          localStorage.setItem('selectApproveBySupervisor', 'false');
+          this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
       }
       callAttendanceData(){
           localStorage.setItem('selectAttendanceDate', 'true');
+          this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+          localStorage.setItem('selectAttendance', 'false');
+          this.selectAttendance =  localStorage.getItem('selectAttendance')
+          localStorage.setItem('selectEmployeeAdd', 'false');
+          this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
+          localStorage.setItem('selectEmployeemaster', 'false');
+          this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+          localStorage.setItem('selectCreateAccount', 'false');
+          this.selectCreateAccount =  localStorage.getItem('selectCreateAccount');
+          localStorage.setItem('selectApproveBySupervisor', 'false');
+          this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+      }
+      callApproveBySupervisor(){
+          localStorage.setItem('selectApproveBySupervisor', 'true');
+          this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+          localStorage.setItem('selectAttendanceDate', 'false');
           this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
           localStorage.setItem('selectAttendance', 'false');
           this.selectAttendance =  localStorage.getItem('selectAttendance')

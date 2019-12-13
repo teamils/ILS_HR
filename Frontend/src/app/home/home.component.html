@@ -1,80 +1,57 @@
-<!-- Start Header From **********************************************************************************************************-->
+<!DOCTYPE html>
+<div class="BG_Sidenav">
+  <html lang="en">
+    <head>
+      <style type="text/css">
+          .example-full-width{
+              width: 100%;
+          }
+          .example-button-row button,
+          .example-button-row a {
+            margin-right: 8px;
+             width: 50%;
+           }
+           .icon{
+                color:#00dd00;
+              }
+            .colors{
+                color:#dd0000;
+            }
+        </style>
+    </head>
 
-<mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="!side">
-    <!--  พนักงาน(Employee) --------------------------------------------------------------------------------->
-    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-  </mat-drawer>
+    <body (keydown.enter)="login(id,NewPassword)" class="center">
+      <div class="card">
+       <!-- <p align="center"><font color="black" class="font">ILS HUMAN RESOURCES</font></p> -->
+        <img style="margin-left : 32%" src="http://www.ils.co.th/wp-content/themes/ils/images/logo.png" alt="ILS"/>
 
-  <div class="example-sidenav-content">
-    <div class="card">
-      <h1 align="center">Welcome to human resourcse system</h1>
-      <mat-horizontal-stepper>
-        <mat-step>
-          <ng-template matStepLabel><b>ข้อมูลส่วนตัว</b></ng-template>
-          <div class="buttonStyle">
-            <button   mat-button matStepperPrevious>
-              <mat-icon  class="icon">skip_previous</mat-icon>
-            </button>
-            <button  mat-button matStepperNext>
-              <mat-icon class="icon">skip_next</mat-icon>
-            </button>
-          </div>
-        </mat-step>
+        <mat-form-field appearance="outline" style="width:100%;">
+          <mat-label>Enter your username</mat-label>
+          <input matInput placeholder="username" [(ngModel)]="id">
+          <mat-icon class="icon" matSuffix>account_circle</mat-icon>
+        </mat-form-field>
 
+        <mat-form-field appearance="outline" style="width:100%;">
+          <mat-label>Enter your password</mat-label>
+          <input matInput placeholder="password" [type]="hide ? 'text' : 'password'" [(ngModel)]="NewPassword">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon class="icon" >{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+          </button>
+        </mat-form-field>
 
-        <mat-step>
-          <ng-template matStepLabel><b> Name</b></ng-template>
-          <div class="buttonStyle">
-            <button   mat-button matStepperPrevious>
-              <mat-icon  class="icon">skip_previous</mat-icon>
-            </button>
-            <button  mat-button matStepperNext>
-              <mat-icon class="icon">skip_next</mat-icon>
-            </button>
-          </div>
-        </mat-step>
+        <div class="example-button-row" align="center" >
+          <button mat-raised-button color="primary" style="margin-left: 0px ; width: 220px ; font-size: 20px" (click)="login(id,NewPassword)">Login</button>
+        </div>
 
+        <div align="center">
+          <button mat-button color="warn"  class="colors">Forgot your password?</button>
+        </div>
+      </div>
 
-        <mat-step>
-          <ng-template matStepLabel><b>First Name</b></ng-template>
-          <div class="buttonStyle">
-            <button   mat-button matStepperPrevious>
-              <mat-icon  class="icon">skip_previous</mat-icon>
-            </button>
-            <button  mat-button matStepperNext>
-              <mat-icon class="icon">skip_next</mat-icon>
-            </button>
-          </div>
-        </mat-step>
+    </body>
 
-
-        <mat-step>
-          <ng-template matStepLabel><b>Save</b></ng-template>
-          <div class="buttonStyle">
-            <button   mat-button matStepperPrevious>
-              <mat-icon  class="icon">skip_previous</mat-icon>
-            </button>
-            <button  mat-button matStepperNext>
-              <mat-icon class="icon">skip_next</mat-icon>
-            </button>
-          </div>
-
-        </mat-step>
-
-      </mat-horizontal-stepper>
-
-    </div>
-  </div>
-</mat-drawer-container>
-
-
-
-
-
-
-
-
+  </html>
+</div>
 
 
 

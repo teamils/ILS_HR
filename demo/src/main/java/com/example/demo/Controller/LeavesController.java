@@ -34,6 +34,14 @@ public class LeavesController {
         return leaves.getIsActiveAttendance().equals("1");
     }
 
+    @PostMapping(path = "/savetotalAnnualLeave/{leaID}/{sumDate}") //Delete Attendance Data
+    public Leaves leaves(@PathVariable Long leaID,@PathVariable int sumDate) {
+        EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
+        Leaves leaves1 = new Leaves();
+        leaves1.setTotalAnnualLeave(sumDate);
+        leaves1.setEmployeeMasterid(employeeMaster);
+        return leavesRepository.save(leaves1);
+    }
     @PostMapping("/leave/{leaID}/{leaveTypeSelect}/{startDate}/{endDate}/{startTime}/{endTime}/{reason}/{sumDate}")
     public Leaves leaves( @PathVariable Long leaID , @PathVariable Date startDate ,@PathVariable String leaveTypeSelect
             , @PathVariable Date endDate , @PathVariable String startTime , @PathVariable String endTime
@@ -66,5 +74,13 @@ public class LeavesController {
         leaves1.setTotalAnnualLeave(sumDate);
         leavesRepository.save(leaves1);
         return leaves1;
+    }
+
+    @PostMapping(path = "/deleteAttendance/{leavesID}") //Delete Attendance Data
+    public Leaves leaves(@PathVariable Long leavesID) {
+        Leaves leaves = leavesRepository.findById(leavesID).get();
+        leaves.setIsActiveAttendance("0");
+        leavesRepository.save(leaves);
+        return leaves;
     }
 }

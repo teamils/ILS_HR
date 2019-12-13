@@ -61,6 +61,7 @@ role_status : Array<any>;
 role_statusSelect = '';
 passwordCreate : null;
 
+
 public API = '//localhost:8080/ILS_HR';   //for test
 
 constructor(private router:Router,
@@ -118,7 +119,7 @@ constructor(private router:Router,
                                    console.log('PUT Request is successful', data);
                                    alert("บันทึกสำเร็จ");
                                    window.location.reload(true);
-
+                                    localStorage.setItem('links', 'employeeMaster');
                                },
                                error => {
                                    console.log('Error', error);

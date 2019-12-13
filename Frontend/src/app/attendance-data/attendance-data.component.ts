@@ -34,7 +34,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AttendanceDataComponent implements OnInit {
   leaves  : Array<any>;
-  displayedColumns: string[] = ['number','employeeCode', 'name', 'leaveType', 'startDate', 'endDate', 'startTime', 'endTime', 'reason', 'approvedBySupervisor', 'approvedByManager'];
+  displayedColumns: string[] = ['number','employeeCode', 'name', 'leaveType', 'startDate', 'endDate', 'startTime', 'endTime', 'reason', 'approvedBySupervisor', 'approvedByManager','del'];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
   constructor(private service:ServiceService,
             private router:Router,
@@ -51,4 +51,58 @@ export class AttendanceDataComponent implements OnInit {
 
   }
 
+          DeleteAttendance(row : any){
+            const dialogRef = this.dialog.open(AttendanceDeleteDialog, {
+                  width: '300px',
+                  height:'200px',
+                  data: row,
+            });
+          }
+
 }
+
+
+//Dialog
+export interface DialogData {
+  leavesID : null;
+  isActiveAttendance: string;
+}
+@Component({
+    selector: 'attendanceDelete',
+    templateUrl: 'attendanceDelete.html',
+  })
+  export class AttendanceDeleteDialog {
+    public API = '//localhost:8080/';
+    leavesID: string;
+    isActiveAttendance:string;
+    selectAttendanceDate : String;
+
+    constructor(public dialogRef: MatDialogRef<AttendanceDeleteDialog> , public service:ServiceService,@Inject(MAT_DIALOG_DATA)  public date: DialogData,private http: HttpClient){
+          dialogRef.disableClose = true;
+        this.leavesID = this.date.leavesID;
+        this.isActiveAttendance = this.date.isActiveAttendance;
+    }
+
+    closeDialog(): void {
+      this.dialogRef.close();
+    }
+
+    DeleteAttendance(){
+               this.http.post(this.API + '/deleteAttendance/' + this.leavesID ,{})
+                                     .subscribe(
+                                         data => {
+                                             console.log('PUT Request is successful');
+                                             window.location.reload(true);
+                                              localStorage.setItem('links', 'attendanceData');
+                                         },
+                                         error => {
+                                             console.log('Error', error);
+                                         }
+                                      );
+
+        }
+
+
+
+
+  }

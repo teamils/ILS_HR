@@ -1,10 +1,10 @@
 <mat-card class="cardHeader">
 
-      <mat-form-field appearance="fill" hintLabel="พิมพ์รหัสพนักงานแล้วกด Enter" (keydown.enter)="NewSearchData(employeeMasterCustomerCode);">
+      <!--<mat-form-field appearance="fill" hintLabel="พิมพ์รหัสพนักงานแล้วกด Enter" (keydown.enter)="NewSearchData(employeeMasterCustomerCode);">
         <mat-label>พิมพ์รหัสพนักงาน</mat-label>
         <input matInput   [(ngModel)]="employeeMasterCustomerCode">
         <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
+      </mat-form-field> -->
   ชื่อ - สกุล:&nbsp;<b>{{table.fName}}&nbsp;&nbsp;{{table.lName}}</b>&nbsp;&nbsp; แผนก:&nbsp;<b>{{table.empDep}}</b> &nbsp;&nbsp; ตำแหน่ง:&nbsp;<b>{{table.empPos}}</b>
   &nbsp;&nbsp;ลาพักร้อนคงเหลือ(วัน):&nbsp;<b>{{this.leave.totalAnnualLeave}}</b>
   <div align="center">
