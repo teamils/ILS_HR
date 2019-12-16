@@ -35,18 +35,19 @@ export class ServiceService {
       return this.http.get(this.API+'/leaves',{})
   }
   getShowLeaves(leaID : String):Observable<any>{
-      return this.http.get(this.API+'/leave/'+leaID,{})
+      return this.http.get(this.API+'/showleave2/'+leaID,{})
   }
-
   getSearchEmployeeForAttendance(employeeMasterID:String): Observable<any>{
       return this.http.get(this.API+'/SearchEmployeeForAttendance/'+employeeMasterID,{})
   }
   getSearchEmployeeForAttendance2(id:String): Observable<any>{
       return this.http.get(this.API+'/SearchEmployeeForAttendance2/'+id,{})
   }
-
   getUserPassword(employeeCode: String, password : String): Observable<any>{
       return this.http.get(this.API+'/login/'+employeeCode+'/'+password,{})
+  }
+  getShowLeavesNumber(leaID : String):Observable<any>{
+      return this.http.get(this.API+'/showleaveNumber/'+leaID,{})
   }
 
 

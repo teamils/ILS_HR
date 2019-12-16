@@ -16,7 +16,7 @@
 
   </mat-toolbar>
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+    <mat-sidenav opened #snav  [mode]="mobileQuery.matches ? 'over' : 'side'"
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="10" class="BG_Sidenav">
       <mat-nav-list>
 
@@ -38,8 +38,8 @@
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="" (click)="callEmployeeMaster()" *ngIf="(logouts == 'true' ? false : true)">Employee Master<mat-icon matSuffix>account_circle</mat-icon></a>
-              <a routerLink="" (click)="callEmployeeAdd()" *ngIf="(logouts == 'true' ? false : true)">New Employee<mat-icon matSuffix>person_add</mat-icon></a>
+              <a routerLink="/newheader" (click)="callEmployeeMaster()" *ngIf="(role == 'EMPLOYEE' ? false : true)&&(logouts == 'true' ? false : true)">Employee Master<mat-icon matSuffix>account_circle</mat-icon></a>
+              <a routerLink="/newheader" (click)="callEmployeeAdd()" *ngIf="(role == 'EMPLOYEE' ? false : true)&&(logouts == 'true' ? false : true)">New Employee<mat-icon matSuffix>person_add</mat-icon></a>
              <!-- <a routerLink="" (click)="callCreateAccount()">Create new account<mat-icon matSuffix>person_add</mat-icon></a> -->
             </mat-expansion-panel>
 
@@ -55,11 +55,12 @@
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="" (click)="callAttendance()" *ngIf="(role == 'HR' ? false : true)&&(logouts == 'true' ? false : true)">Attendance</a> <!-- เห็นทุกคน ยกเว้น HR -->
-              <a routerLink="" (click)="callAttendanceData()" *ngIf="(role == 'EMPLOYEE' ? false : true)&&(logouts == 'true' ? false : true)">Data Attendance</a>  <!-- เห็นทุกคน -->
-              <a routerLink="" *ngIf="(role == 'HR' ? true : false)||(role == 'ADMIN' ? true : false)&&(logouts == 'true' ? false : true)">Data Attendance For HR</a>   <!-- เห็นเฉพาะ HR -->
-              <a routerLink="" *ngIf="(role == 'MANAGER' ? true : false)||(role == 'ADMIN' ? true : false)&&(logouts == 'true' ? false : true)">Approve By MANAGER</a>   <!-- เห็นเฉพาะ MANAGER -->
-              <a routerLink="" (click)="callApproveBySupervisor()" *ngIf="(role == 'SUPERVISOR' ? true : false)||(role == 'ADMIN' ? true : false)&&(logouts == 'true' ? false : true)">Approve By SUPERVISOR</a>   <!-- เห็นเฉพาะ SUPERVISOR -->
+              <a routerLink="/newheader" (click)="callAttendance()" *ngIf="(role == 'EMPLOYEE' ? true : false)||(role == 'SUPERVISOR' ? true : false)&&(logouts == 'true' ? false : true)||(role == 'ADMIN' ? true : false)">Attendance</a> <!-- เห็นทุกคน ยกเว้น HR -->
+              <a routerLink="/newheader" (click)="callAttendanceData()" *ngIf="(role == 'EMPLOYEE' ? false : true)&&(logouts == 'true' ? false : true)">Data Attendance</a>  <!-- เห็นทุกคน -->
+             <!--<a routerLink="" *ngIf="(role == 'HR' ? true : false)||(role == 'ADMIN' ? true : false)&&(logouts == 'true' ? false : true)">Data Attendance For HR</a>   <!-- เห็นเฉพาะ HR -->
+              <a routerLink="/newheader" (click)="callApproveBySupervisor()" *ngIf="(role == 'SUPERVISOR' ? true : false)||(role == 'ADMIN' ? true : false)&&(logouts == 'true' ? false : true)">Approve By SUPERVISOR</a>   <!-- เห็นเฉพาะ SUPERVISOR -->
+              <a routerLink="/newheader" *ngIf="(role == 'MANAGER' ? true : false)||(role == 'ADMIN' ? true : false)&&(logouts == 'true' ? false : true)">Approve By MANAGER</a>   <!-- เห็นเฉพาะ MANAGER -->
+
             </mat-expansion-panel>
 
             <!--  ขอล่วงเวลา(OT) --------------------------------------------------------------------------------->
@@ -74,9 +75,9 @@
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="OverTime" *ngIf="(logouts == 'true' ? false : true)">OverTime</a>
-              <a routerLink="OverTimeShow" *ngIf="(logouts == 'true' ? false : true)">Data OverTime</a>
-              <a routerLink="OverTimeApprove" *ngIf="(logouts == 'true' ? false : true)">Approve</a>
+              <a routerLink="/newheader" *ngIf="(logouts == 'true' ? false : true)">OverTime</a>
+              <a routerLink="/newheader" *ngIf="(logouts == 'true' ? false : true)">Data OverTime</a>
+              <a routerLink="/newheader" *ngIf="(logouts == 'true' ? false : true)">Approve</a>
             </mat-expansion-panel>
 
             <!--  อบรม (Training) --------------------------------------------------------------------------------->
@@ -91,8 +92,8 @@
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="TrainAdd" *ngIf="(logouts == 'true' ? false : true)">Training</a>
-              <a routerLink="TrainShow" *ngIf="(logouts == 'true' ? false : true)">Data Training</a>
+              <a routerLink="/newheader" *ngIf="(logouts == 'true' ? false : true)">Training</a>
+              <a routerLink="/newheader" *ngIf="(logouts == 'true' ? false : true)">Data Training</a>
             </mat-expansion-panel>
           </mat-accordion>
         </div> <!-- ข้างๆๆๆๆ -->
@@ -103,7 +104,7 @@
       </mat-nav-list>
     </mat-sidenav>
 
-    <mat-sidenav-content class="example-sidenav-container">
+    <mat-sidenav-content class="page-main">
       <div class="card">
           <app-home *ngIf="selectHome == 'true' ? true : false"></app-home>
           <app-employee-master *ngIf="selectEmployeemaster == 'true' ? true : false"></app-employee-master>

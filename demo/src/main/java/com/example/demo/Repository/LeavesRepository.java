@@ -9,13 +9,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
+
 @CrossOrigin(origins = "*")
 @EnableJpaRepositories
 public interface LeavesRepository extends JpaRepository<Leaves,Long>{
     Leaves findByemployeeMasterid(EmployeeMaster employeeMasterid);
 
-    /*@Query(value = "SELECT * " +
-                    "FROM leaves"
-                    ,nativeQuery = true)
-    Collection<Leaves> getLeaves(@Param("date_book_meeting_room") String date_book_meeting_room );*/
+    @Query(value = "SELECT * FROM leaves WHERE employee_masterid_employee_masterid = :employeeCode",nativeQuery = true)
+    Collection<Leaves> getLeaves(@Param("employeeCode") String employeeCode );
 }

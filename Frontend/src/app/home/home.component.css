@@ -1,8 +1,8 @@
 .card{
   width:330px;
   height:400px;
-   background-color: #ffffff;
    margin-top:80px;
+   opacity: 0.95;
 }
 
 
@@ -16,4 +16,5 @@
   width:100%;
   height:100%;
   background-image:url(src/app/image/Photos2.jpg);
+   background-size: auto;
 }

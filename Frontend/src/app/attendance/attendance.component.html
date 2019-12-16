@@ -6,7 +6,7 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field> -->
   ชื่อ - สกุล:&nbsp;<b>{{table.fName}}&nbsp;&nbsp;{{table.lName}}</b>&nbsp;&nbsp; แผนก:&nbsp;<b>{{table.empDep}}</b> &nbsp;&nbsp; ตำแหน่ง:&nbsp;<b>{{table.empPos}}</b>
-  &nbsp;&nbsp;ลาพักร้อนคงเหลือ(วัน):&nbsp;<b>{{this.leave.totalAnnualLeave}}</b>
+  &nbsp;&nbsp;ลาพักร้อนคงเหลือ(วัน):&nbsp;<b>{{this.leavetatelAll.totalAnnualLeave}}</b>&nbsp;&nbsp;ลาป่วยคงเหลือ(วัน)/ปี:&nbsp;<b>{{this.leavetatelAll.totalSickLeave}}</b>
   <div align="center">
     <h2>กรอกข้อมูลการลา</h2>
   </div>
@@ -42,7 +42,7 @@
     <ngx-material-timepicker #defaultGaps></ngx-material-timepicker>
     &nbsp;&nbsp;
     <mat-form-field>
-      <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason" ></textarea>
+      <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason" required></textarea>
     </mat-form-field>
 
     <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;" (click)="SubmitData()">Save</button>
@@ -51,8 +51,67 @@
 </mat-card>
 
 <mat-card class="card2">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="number" >
+      <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>
+      <td mat-cell *matCellDef="let element ; let i = index">{{i+1}}.</td>
+    </ng-container>
 
-    <table class="table">
+    <ng-container matColumnDef="leaveType">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>ประเภทการลา</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.leaveType}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>วันเริ่มจากวันที่</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="endDate">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>ถึงวันที่</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="startTime">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>เวลาที่เริ่มลา</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.startTime}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="endTime">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>ถึงเวลา</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.endTime}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="reason">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>เหตุผล</b></font></th>
+      <td mat-cell *matCellDef="let element"> {{element.reason}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="approvedBySupervisor">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>approvedBySupervisor</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.approvedBySupervisor}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="approvedByManager">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>approvedByManager</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.approvedByManager}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="del" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ลบข้อมูล</b></font></th>
+      <td mat-cell *matCellDef="let element" >
+        <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="DeleteAttendance(element);"  #ckeckEdit>
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+    <!--<table class="table">
       <tr bgcolor="#c0c0c0">
         <th>ประเภทการลา</th>
         <th>เริ่มจากวันที่</th>
@@ -75,6 +134,6 @@
           <td>{{this.leave.approvedByManager}}</td>
         </tr>
       </ng-container>
-    </table>
+    </table> -->
 
 </mat-card>

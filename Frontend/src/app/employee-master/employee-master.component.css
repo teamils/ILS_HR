@@ -6,7 +6,7 @@
     overflow-x: hidden;
     padding-top: 20px;
     color: #000000;
-    opacity: 0.9;
+    //opacity: 0.9;
 }
 
 .example-sidenav-content {
@@ -31,7 +31,7 @@
   overflow-x: hidden;
   padding-top: 0px;
   color: #00ff00;
-  opacity: 0.95;
+  //opacity: 0.95;
   transition: 0.3s;
 }
 
@@ -66,6 +66,8 @@
     border: thin silver solid;
      width: 99.8%;
      height: 89.5%;
+       background-repeat: no-repeat;
+       background-size: auto;
 }
 .logo{
     background-image:url(src/app/image/ils-logo-01.png);
@@ -83,7 +85,7 @@
     margin-right: auto;
     margin-left: auto;
     margin-bottom: auto;
-    background-color: #ffffff;
+    //background-color: #ffffff;
 
 }
 .card2 {
@@ -93,7 +95,7 @@
     margin-right: auto;
     margin-left: auto;
     margin-bottom: auto;
-    background-color: white;
+    //background-color: white;
 }
 
 

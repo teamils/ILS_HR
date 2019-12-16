@@ -39,7 +39,7 @@ export class EmployeeMasterComponent implements OnInit {
     employeeSelect : '';
     accountuser : Array<any>;
     pipe = new DatePipe('en-TH');
-    displayedColumns: string[] = ['select','number','empCodeID'/*,'prefix'*/,'empFristName','empLastName','NickName','Gender','Status'/*,'BirthDate'*/ /*,'Age'*/ ,'PersonID','Tel1','Email'/*,'AddressReal','AddressPerson'*/,'StartDate','Position','Department','empType'/*,'educations'*/,'bank','bankNumber','del','Edit'];
+    displayedColumns: string[] = ['select','number','empCodeID'/*,'prefix'*/,'empFristName','empLastName',/*'NickName',*/'Gender','Status'/*,'BirthDate'*/ /*,'Age'*/ ,'PersonID','Tel1','Email'/*,'AddressReal','AddressPerson'*/,'StartDate','Position','Department','empType'/*,'educations'*//*,'bank','bankNumber'*/,'del','Edit'];
     dataSource = new MatTableDataSource<Emp>(this.employee);
     selection = new SelectionModel<Emp>(true, []);
     @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;

@@ -52,7 +52,7 @@
 /*----------------------------หน้า menu ด้านซ่าย--------------------------------------------*/
 .example-sidenav-container { /* หน้าใหญ่สุด #3 */
   display: flex;
-   background-image:url(src/app/image/hr.jpg);
+   //background-image:url(src/app/image/hr.jpg);
    height: 100%;
    width: 100%;
    flex: 1;
@@ -61,6 +61,13 @@
   /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
      `<body>` to be our scrolling element for mobile layouts. */
   flex: 1 0 auto;
+}
+.page-main{
+      display: flex;
+     background-image:url(src/app/image/hr.jpg);
+     height: 100%;
+     width: 100%;
+     flex: 1;
 }
 .font{ /* ILS HUMEN RESOURCES  */
   font-family:Verdana;

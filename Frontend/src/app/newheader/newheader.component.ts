@@ -62,6 +62,8 @@ private _mobileQueryListener: () => void;
                               this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
                               localStorage.setItem('selectAttendanceDate', 'false');
                               this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+                              localStorage.setItem('selectAttendance', 'false');
+                              this.selectAttendance =  localStorage.getItem('selectAttendance');
 
                           }
                           else if(this.links == 'attendanceData'){
@@ -69,7 +71,16 @@ private _mobileQueryListener: () => void;
                               this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
                               localStorage.setItem('selectEmployeemaster', 'false');
                               this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
-
+                              localStorage.setItem('selectAttendance', 'false');
+                              this.selectAttendance =  localStorage.getItem('selectAttendance');
+                          }
+                          else if(this.links == 'attendance'){
+                              localStorage.setItem('selectAttendance', 'true');
+                              this.selectAttendance =  localStorage.getItem('selectAttendance');
+                              localStorage.setItem('selectAttendanceDate', 'false');
+                              this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+                              localStorage.setItem('selectEmployeemaster', 'false');
+                              this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
                           }
 
       }
@@ -95,7 +106,7 @@ private _mobileQueryListener: () => void;
         localStorage.clear();
         localStorage.setItem('logouts', 'true');
         //window.location.reload(true);
-        this.router.navigate(['home']);
+        this.router.navigate(['HR-ADMIN']);
       }
       callEmployeeMaster(){
           localStorage.setItem('selectEmployeemaster', 'true');

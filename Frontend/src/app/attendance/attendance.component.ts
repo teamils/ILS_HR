@@ -15,6 +15,9 @@ export interface employeeMasters{
     Dename : String;
     Poname : String;
 }
+export interface leave{
+    leavesID : String;
+}
 
 @Component({
   selector: 'app-attendance',
@@ -40,6 +43,9 @@ export class AttendanceComponent implements OnInit {
   leaveTypeSelect : string;
   leaves : Array<any>;
   empId = localStorage.getItem('empId');
+  displayedColumns: string[] = ['number','leaveType', 'startDate', 'endDate', 'startTime', 'endTime', 'reason', 'approvedBySupervisor', 'approvedByManager','del'];
+  dataSource = new MatTableDataSource<leave>(this.leaves);
+
 
   table : any = {
       leaID : '',
@@ -52,19 +58,12 @@ export class AttendanceComponent implements OnInit {
       sumDate : '',
   };
 
-  leave : any = {
-      leavesID : '',
-      leavesDate : '',
-      reason : '',
-      startDate : '',
-      endDate : '',
-      startTime : '',
-      endTime : '',
-      approvedBySupervisor : '',
-      approvedByManager : '',
-      isActiveAttendance : '',
-      leaveType : '',
+  leavetatelAll : any = {
+      leavesNumbersID : '',
       totalAnnualLeave : '',
+      totalSickLeave : '',
+      totalOthersLeave : '',
+      sumAllLeave : '',
   };
 
   constructor(private service:ServiceService,
@@ -80,12 +79,9 @@ export class AttendanceComponent implements OnInit {
         //console.log('leaveType -> ',this.leaveType);
       });
       //console.log(new Date());
-
-
-
             this.service.getSearchEmployeeForAttendance2(this.empId).subscribe(data1 => {
-              console.log('data1->',data1);
-              this.table.leaID = data1.employeeMasterID;
+              //console.log('data1->',data1);
+              this.table.leaID = this.empId;
               this.table.empCode = data1.employeeMasterCustomerCode;
               this.table.fName = data1.employeeMasterFirstName;
               this.table.lName = data1.employeeMasterLastName;
@@ -104,21 +100,8 @@ export class AttendanceComponent implements OnInit {
               this.service.getShowLeaves(this.table.leaID).subscribe(data => {
                   if(data!=null){
                     this.leaves = data;
-                    //console.log('leaves -> ',this.leaves);
-                    console.log('totalAnnualLeave -> ',data.totalAnnualLeave);
-                    this.leave.leavesID = data.leavesID;
-                    this.leave.leavesDate = data.leavesDate;
-                    this.leave.reason = data.reason;
-                    this.leave.startDate = data.startDate;
-                    this.leave.endDate = data.endDate;
-                    this.leave.startTime = data.startTime;
-                    this.leave.endTime = data.endTime;
-                    this.leave.approvedBySupervisor = data.approvedBySupervisor;
-                    this.leave.approvedByManager = data.approvedByManager;
-                    this.leave.isActiveAttendance = data.isActiveAttendance;
-                    this.leave.leaveType = data.leaveType;
-                    this.leave.totalAnnualLeave = data.totalAnnualLeave;
-
+                    this.dataSource.data = this.leaves;
+                    console.log('leaves -> ',this.leaves);
                   }
                   else console.log( this.table.fName,'--> ไม่มีการลาพักร้อน');
               });
@@ -138,23 +121,9 @@ export class AttendanceComponent implements OnInit {
                 else {
                       this.table.sumDate = 0;
                 }
-
-               this.http.post(this.API + '/savetotalAnnualLeave/' + this.table.leaID +'/'+ this.table.sumDate ,{}).subscribe(
-                                         data => {
-                                             console.log('PUT Request is successful');
-                                         },
-                                         error => {
-                                             console.log('Error', error);
-                                         }
-                );
-
-
-
+            this.SaveLeaveNumber();
         });
   }
-
-
-
 
 
     startDate : '';
@@ -163,22 +132,19 @@ export class AttendanceComponent implements OnInit {
     endTime : '';
     reason : '';
     SubmitData(){
-        //console.log('Sum Date = ',this.table.leaID);
-        if(this.employeeMasterCustomerCode == null) alert("กรุณาใส่รหัสพนักงาน");
-        else if(this.leaveTypeSelect == null)  alert("กรุณาเลือกประเภทการลา");
+        //console.log('Sum Date = ',this.endDate);
+         if(this.leaveTypeSelect == null)  alert("กรุณาเลือกประเภทการลา");
         else if(this.startDate == null) alert("กรุณาเลือกวันลา");
         else if(this.endDate == null) alert("กรุณาเลือกวันสิ้นสุดการลา");
         else if(this.reason == null) alert("กรุณากรอกหมายเหตุ");
         else{
-            console.log('startDate', this.startDate);
-                  console.log('startTime', this.startTime);
-             this.http.post(this.API  +'/'+ this.table.leaID +'/'+ this.leaveTypeSelect +'/'+ this.startDate +'/'+ this.endDate +'/'+ this.startTime +'/'+ this.endTime +'/'+ this.reason +'/'+ this.table.sumDate ,{})
+             this.http.post(this.API  +/leave/+ this.table.leaID +'/'+ this.leaveTypeSelect +'/'+ this.startDate +'/'+ this.endDate +'/'+ this.startTime +'/'+ this.endTime +'/'+ this.reason  ,{})
                         .subscribe(
                                        dataLeave => {
                                            console.log('PUT Request is successful', dataLeave);
                                            alert("ลาสําเร็จ รอการอนุมัติ");
                                             window.location.reload(true);
-                                            localStorage.setItem('links', 'attendanceData');
+                                            localStorage.setItem('links', 'attendance');
                                        },
                                        error => {
                                            console.log('Error', error);
@@ -187,14 +153,27 @@ export class AttendanceComponent implements OnInit {
         }
     }
 
+    leavecheck : Array<any>;
+    totalAnnualLeave;
+    SaveLeaveNumber(){
+                this.service.getShowLeavesNumber(this.empId).subscribe(data => {
+                        if(data==null){
+                            this.http.post(this.API  +/saveleaveNumber/+ this.empId +'/'+ this.table.sumDate ,{})
+                               .subscribe(dataleaveNumber => {console.log('PUT Request is successful');},error => {console.log('Error', error);});
+                        }
+                        else{
+                            this.leavecheck = data;
+                            this.leavetatelAll.leavesNumbersID = data.leavesNumbersID;
+                            this.leavetatelAll.totalAnnualLeave = data.totalAnnualLeave;
+                            this.leavetatelAll.totalSickLeave = data.totalSickLeave;
+                            this.leavetatelAll.totalOthersLeave = data.totalOthersLeave;
+                            this.leavetatelAll.sumAllLeave = data.sumAllLeave;
+                            //console.log('SaveLeaveNumber -> ',this.leavetatelAll.totalAnnualLeave);
+                        }
 
-    CalculateLeave(){
-      this.nowDateToString = new Date().toString().split(" ");
-      //this.splitStartDate = this.startDate.split(" ");
-      if(this.leaveTypeSelect == 'ลาครึ่งวัน'){
-          console.log(this.startDate);
-          console.log(parseInt(this.nowDateToString[2]));
-      }
+                      });
+
+
 
     }
 

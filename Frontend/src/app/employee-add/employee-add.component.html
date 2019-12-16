@@ -50,11 +50,14 @@
                   <mat-icon matSuffix>perm_identity</mat-icon>
                 </mat-form-field>
                 <!--  BirthDate  -->
+
+
                 <mat-form-field style="width :100%">
                   <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="วัน/เดือน/ปี เกิด" required autocomplete="off" [(ngModel)]="BirthDateSelect">
                   <mat-datepicker-toggle matSuffix [for]="BirthDate" ></mat-datepicker-toggle>
-                  <mat-datepicker #BirthDate></mat-datepicker>
+                  <mat-datepicker touchUi #BirthDate></mat-datepicker>
                 </mat-form-field>
+
               </div>
             </mat-grid-tile>
           </mat-grid-list>
@@ -105,7 +108,7 @@
                 <mat-form-field style="width :100%">
                   <input matInput [matDatepicker]="startwork" hintLabel="" placeholder="วันเริ่มงาน" required [(ngModel)]="startWorks">
                   <mat-datepicker-toggle matSuffix [for]="startwork"></mat-datepicker-toggle>
-                  <mat-datepicker #startwork></mat-datepicker>
+                  <mat-datepicker touchUi #startwork></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="buttonStyle">

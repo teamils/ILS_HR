@@ -24,15 +24,32 @@ public class Leaves {
     private String isActiveAttendance;
     private String leaveType;
     @ManyToOne private EmployeeMaster employeeMasterid;
-    private int  totalAnnualLeave; // เหลือลาพักร้อนเท่าไหร่
+    private Date updateLeave_date;
+    private String updateLeave_by;
+    private String createLeave_by;
 
-
-    public int getTotalAnnualLeave() {
-        return totalAnnualLeave;
+    public Date getUpdateLeave_date() {
+        return updateLeave_date;
     }
 
-    public void setTotalAnnualLeave(int totalAnnualLeave) {
-        this.totalAnnualLeave = totalAnnualLeave;
+    public void setUpdateLeave_date(Date updateLeave_date) {
+        this.updateLeave_date = updateLeave_date;
+    }
+
+    public String getUpdateLeave_by() {
+        return updateLeave_by;
+    }
+
+    public void setUpdateLeave_by(String updateLeave_by) {
+        this.updateLeave_by = updateLeave_by;
+    }
+
+    public String getCreateLeave_by() {
+        return createLeave_by;
+    }
+
+    public void setCreateLeave_by(String createLeave_by) {
+        this.createLeave_by = createLeave_by;
     }
 
     public String getLeaveType() {
@@ -91,8 +108,6 @@ public class Leaves {
         this.reason = reason;
     }
 
-
-
     public Date getEndDate() {
         return endDate;
     }
@@ -124,7 +139,6 @@ public class Leaves {
     public void setIsActiveAttendance(String isActiveAttendance) {
         this.isActiveAttendance = isActiveAttendance;
     }
-
 
     public EmployeeMaster getEmployeeMasterid() {
         return employeeMasterid;
