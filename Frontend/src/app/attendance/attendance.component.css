@@ -1,13 +1,13 @@
 .cardHeader{
-   width: 90%;
    height: auto;
-   margin-top: 2px;
+   height: auto;
+   margin-top: 0px;
    margin-right: auto;
    margin-left: auto;
    margin-bottom: auto;
 }
 .card2{
-   width: 90%;
+   wheight: auto;
    height: auto;
    margin-top: 2px;
    margin-right: auto;
@@ -27,5 +27,16 @@ table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  height: auto;
 }
+
+  th {
+    background-color: #C0C0f0;
+  }
+  th.mat-column-leaveType{
+              padding: 10px;
+              //width:auto;
+     }
+
+
 

@@ -27,6 +27,15 @@ public class Leaves {
     private Date updateLeave_date;
     private String updateLeave_by;
     private String createLeave_by;
+    private String leaveStatus;
+
+    public String getLeaveStatus() {
+        return leaveStatus;
+    }
+
+    public void setLeaveStatus(String leaveStatus) {
+        this.leaveStatus = leaveStatus;
+    }
 
     public Date getUpdateLeave_date() {
         return updateLeave_date;

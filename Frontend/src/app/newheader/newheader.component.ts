@@ -26,7 +26,6 @@ export class NewheaderComponent implements OnInit {
   selectHome : String;
   selectEmployeemaster : String;
   selectEmployeeAdd : String;
-  selectCreateAccount : String;
   selectAttendance : String;
   selectAttendanceDate : String;
   selectApproveBySupervisor : String;
@@ -57,6 +56,7 @@ private _mobileQueryListener: () => void;
 
                               localStorage.setItem('selectEmployeemaster', 'true');
                               this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+
                           if(this.links == 'employeeMaster'){
                               localStorage.setItem('selectEmployeemaster', 'true');
                               this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
@@ -64,7 +64,8 @@ private _mobileQueryListener: () => void;
                               this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
                               localStorage.setItem('selectAttendance', 'false');
                               this.selectAttendance =  localStorage.getItem('selectAttendance');
-
+                              localStorage.setItem('selectApproveBySupervisor', 'false');
+                              this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
                           }
                           else if(this.links == 'attendanceData'){
                               localStorage.setItem('selectAttendanceDate', 'true');
@@ -73,9 +74,23 @@ private _mobileQueryListener: () => void;
                               this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
                               localStorage.setItem('selectAttendance', 'false');
                               this.selectAttendance =  localStorage.getItem('selectAttendance');
+                              localStorage.setItem('selectApproveBySupervisor', 'false');
+                              this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
                           }
                           else if(this.links == 'attendance'){
                               localStorage.setItem('selectAttendance', 'true');
+                              this.selectAttendance =  localStorage.getItem('selectAttendance');
+                              localStorage.setItem('selectAttendanceDate', 'false');
+                              this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+                              localStorage.setItem('selectEmployeemaster', 'false');
+                              this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+                              localStorage.setItem('selectApproveBySupervisor', 'false');
+                              this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+                          }
+                          else if(this.links == 'approvebysupervisor'){
+                              localStorage.setItem('selectApproveBySupervisor', 'true');
+                              this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+                              localStorage.setItem('selectAttendance', 'false');
                               this.selectAttendance =  localStorage.getItem('selectAttendance');
                               localStorage.setItem('selectAttendanceDate', 'false');
                               this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
@@ -109,12 +124,11 @@ private _mobileQueryListener: () => void;
         this.router.navigate(['HR-ADMIN']);
       }
       callEmployeeMaster(){
+          localStorage.setItem('links', 'employeeMaster');
           localStorage.setItem('selectEmployeemaster', 'true');
           this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
           localStorage.setItem('selectEmployeeAdd', 'false');
           this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
-          localStorage.setItem('selectCreateAccount', 'false');
-          this.selectCreateAccount =  localStorage.getItem('selectCreateAccount');
           localStorage.setItem('selectAttendance', 'false');
           this.selectAttendance =  localStorage.getItem('selectAttendance');
           localStorage.setItem('selectAttendanceDate', 'false');
@@ -125,26 +139,11 @@ private _mobileQueryListener: () => void;
           /*console.log(this.selectEmployeemaster);*/
       }
       callEmployeeAdd(){
+          localStorage.setItem('links', 'employeeMaster');
           localStorage.setItem('selectEmployeeAdd', 'true');
           this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
           localStorage.setItem('selectEmployeemaster', 'false');
           this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
-          localStorage.setItem('selectCreateAccount', 'false');
-          this.selectCreateAccount =  localStorage.getItem('selectCreateAccount');
-          localStorage.setItem('selectAttendance', 'false');
-          this.selectAttendance =  localStorage.getItem('selectAttendance');
-          localStorage.setItem('selectAttendanceDate', 'false');
-          this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
-          localStorage.setItem('selectApproveBySupervisor', 'false');
-          this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
-      }
-      callCreateAccount(){
-          localStorage.setItem('selectCreateAccount', 'true');
-          this.selectCreateAccount =  localStorage.getItem('selectCreateAccount');
-          localStorage.setItem('selectEmployeemaster', 'false');
-          this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
-          localStorage.setItem('selectEmployeeAdd', 'false');
-          this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
           localStorage.setItem('selectAttendance', 'false');
           this.selectAttendance =  localStorage.getItem('selectAttendance');
           localStorage.setItem('selectAttendanceDate', 'false');
@@ -153,20 +152,20 @@ private _mobileQueryListener: () => void;
           this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
       }
       callAttendance(){
+          localStorage.setItem('links', 'attendance');
           localStorage.setItem('selectAttendance', 'true');
           this.selectAttendance =  localStorage.getItem('selectAttendance');
           localStorage.setItem('selectEmployeeAdd', 'false');
           this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
           localStorage.setItem('selectEmployeemaster', 'false');
           this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
-          localStorage.setItem('selectCreateAccount', 'false');
-          this.selectCreateAccount =  localStorage.getItem('selectCreateAccount');
           localStorage.setItem('selectAttendanceDate', 'false');
           this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
           localStorage.setItem('selectApproveBySupervisor', 'false');
           this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
       }
       callAttendanceData(){
+          localStorage.setItem('links', 'attendanceData');
           localStorage.setItem('selectAttendanceDate', 'true');
           this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
           localStorage.setItem('selectAttendance', 'false');
@@ -175,12 +174,11 @@ private _mobileQueryListener: () => void;
           this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
           localStorage.setItem('selectEmployeemaster', 'false');
           this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
-          localStorage.setItem('selectCreateAccount', 'false');
-          this.selectCreateAccount =  localStorage.getItem('selectCreateAccount');
           localStorage.setItem('selectApproveBySupervisor', 'false');
           this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
       }
       callApproveBySupervisor(){
+          localStorage.setItem('links', 'approvebysupervisor');
           localStorage.setItem('selectApproveBySupervisor', 'true');
           this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
           localStorage.setItem('selectAttendanceDate', 'false');
@@ -191,8 +189,6 @@ private _mobileQueryListener: () => void;
           this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
           localStorage.setItem('selectEmployeemaster', 'false');
           this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
-          localStorage.setItem('selectCreateAccount', 'false');
-          this.selectCreateAccount =  localStorage.getItem('selectCreateAccount');
 
       }
 

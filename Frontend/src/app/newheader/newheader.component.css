@@ -13,7 +13,7 @@
 }
 /*----------------------------หน้า menu ด้านซ่าย--------------------------------------------*/
 .sidenav {
-  height: 100%;
+  height: auto;
   width: 100%;
   top: 0px;
   left: 0px;
@@ -65,7 +65,7 @@
 .page-main{
       display: flex;
      background-image:url(src/app/image/hr.jpg);
-     height: 100%;
+     height: auto;
      width: 100%;
      flex: 1;
 }
@@ -109,7 +109,7 @@
     margin-right: auto;
     margin-left: auto;
     margin-bottom: auto;
-    background-color: #ffffff;
+    //background-color: #ffffff;
     opacity: 0.85;
 }
 

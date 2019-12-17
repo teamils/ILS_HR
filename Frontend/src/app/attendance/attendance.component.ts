@@ -43,9 +43,14 @@ export class AttendanceComponent implements OnInit {
   leaveTypeSelect : string;
   leaves : Array<any>;
   empId = localStorage.getItem('empId');
-  displayedColumns: string[] = ['number','leaveType', 'startDate', 'endDate', 'startTime', 'endTime', 'reason', 'approvedBySupervisor', 'approvedByManager','del'];
+  displayedColumns: string[] = ['number','leaveType', 'startDate', 'endDate', 'startTime', 'endTime', 'reason', 'approvedBySupervisor', 'approvedByManager','leaveStatus','del'];
   dataSource = new MatTableDataSource<leave>(this.leaves);
 
+  startDate : any;
+  endDate : any;
+  startTime : any;
+  endTime : any;
+  reason : any;
 
   table : any = {
       leaID : '',
@@ -74,6 +79,11 @@ export class AttendanceComponent implements OnInit {
          ) { }
 
   ngOnInit() {
+       setInterval(() => {
+          if(this.leaveTypeSelect == "ลาครึ่งวัน"){
+              this.xx = true;
+          }
+       }, 200);
       this.service.getLeaveType().subscribe(data => {
         this.leaveType = data;
         //console.log('leaveType -> ',this.leaveType);
@@ -121,16 +131,11 @@ export class AttendanceComponent implements OnInit {
                 else {
                       this.table.sumDate = 0;
                 }
-            this.SaveLeaveNumber();
+                 this.SaveLeaveNumber();
         });
+
   }
 
-
-    startDate : '';
-    endDate : '';
-    startTime : '';
-    endTime : '';
-    reason : '';
     SubmitData(){
         //console.log('Sum Date = ',this.endDate);
          if(this.leaveTypeSelect == null)  alert("กรุณาเลือกประเภทการลา");
@@ -155,7 +160,7 @@ export class AttendanceComponent implements OnInit {
 
     leavecheck : Array<any>;
     totalAnnualLeave;
-    SaveLeaveNumber(){
+    SaveLeaveNumber(){ //function
                 this.service.getShowLeavesNumber(this.empId).subscribe(data => {
                         if(data==null){
                             this.http.post(this.API  +/saveleaveNumber/+ this.empId +'/'+ this.table.sumDate ,{})
@@ -172,14 +177,74 @@ export class AttendanceComponent implements OnInit {
                         }
 
                       });
-
-
-
     }
 
 
-
-
+    CancelDataAttendance(row : any){
+            const dialogRef = this.dialog.open(AttendanceCancelDialog, {
+                  width: '320px',
+                  height:'200px',
+                  data: row,
+            });
+          }
+    xx;
+    SelectLeaveType(selectLeaveType:string){
+      console.log('SelectLeaveType ->',selectLeaveType);
+        if(selectLeaveType == "ลาครึ่งวัน"){
+              this.endDate = new Date();
+              this.startTime = "8:00 AM";
+              this.endTime = "12:00 AM";
+        }
+        else{
+            this.startTime = "8:00 AM";
+            this.endTime = "5:00 PM";
+        }
+    }
 
 
 }
+
+
+
+//Dialog
+export interface DialogData {
+  leavesID : null;
+  isActiveAttendance: string;
+}
+@Component({
+    selector: 'attendanceDelete',
+    templateUrl: 'attendanceDelete.html',
+  })
+  export class AttendanceCancelDialog {
+    public API = '//localhost:8080/';
+    leavesID: string;
+    isActiveAttendance:string;
+    selectAttendanceDate : String;
+
+    constructor(public dialogRef: MatDialogRef<AttendanceCancelDialog> , public service:ServiceService,@Inject(MAT_DIALOG_DATA)  public date: DialogData,private http: HttpClient){
+          dialogRef.disableClose = true;
+        this.leavesID = this.date.leavesID;
+        this.isActiveAttendance = this.date.isActiveAttendance;
+    }
+
+    closeDialog(): void {
+      this.dialogRef.close();
+    }
+
+    DeleteAttendance(){
+               this.http.post(this.API + '/CancelLeave/' + this.leavesID ,{})
+                                     .subscribe(
+                                         data => {
+                                             console.log('PUT Request is successful');
+                                             window.location.reload(true);
+                                              localStorage.setItem('links', 'attendance');
+                                         },
+                                         error => {
+                                             console.log('Error', error);
+                                         }
+                                      );
+
+        }
+
+
+  }

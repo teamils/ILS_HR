@@ -48,7 +48,7 @@ export interface DialogData {
 
 export class EmployeeEditComponent implements OnInit {
         public API = '//localhost:8080/';
-        CurrentDateTime = new Date();
+        nowDate = new Date();
         NewemployeeMasterID : null;
         NewemployeeMasterCustomerCode: string;
         Newprefix : string;

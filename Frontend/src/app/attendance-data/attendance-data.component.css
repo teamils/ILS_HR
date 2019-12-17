@@ -1,84 +1,22 @@
-table {
-  width: 100%;
+td, th {
+  border: 1px solid #ffffff;
+  text-align: center;
+  padding: 8px;
 }
+tr:nth-child(even) {
+  background-color: #E6E6FA;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  height: auto;
+}
+
   th {
     background-color: #C0C0f0;
-    width:30px;
   }
-th.mat-column-number, td.mat-column-number {
-            border-right: 1px double #e0e0e0;
-
-            /*font-size: 15px;
-            padding: 15px;
-            width:auto;*/
-   }
-th.mat-column-employeeCode, td.mat-column-employeeCode {
-        border-right: 1px double #e0e0e0;
-        padding: 5px;
-            /*font-size: 15px;
-            padding: 15px;
-            width:auto;*/
-  }
-  th.mat-column-name, td.mat-column-name {
-      border-right: 1px double #e0e0e0;
-      padding: 5px;
-      /*font-size: 15px;
-      padding: 15px;
-      width:auto;*/
-  }
-  th.mat-column-leaveType, td.mat-column-leaveType {
-      border-right: 1px double #e0e0e0;
-      padding: 15px;
-      /*font-size: 15px;
-      padding: 15px;
-      width:auto;*/
-  }
-   th.mat-column-startDate, td.mat-column-startDate{
-        border-right: 1px double #e0e0e0;
-        padding: 15px;
-      /*font-size: 15px;
-      padding: 15px;
-      width:auto;*/
-   }
-   th.mat-column-endDate, td.mat-column-endDate{
-        border-right: 1px double #e0e0e0;
-        padding: 15px;
-      /*font-size: 15px;
-      padding: 15px;
-      width:auto;*/
-   }
-   th.mat-column-startTime, td.mat-column-startTime{
-        border-right: 1px double #e0e0e0;
-
-      /*font-size: 15px;
-      padding: 15px;
-      width:auto;*/
-   }
-   th.mat-column-endTime, td.mat-column-endTime{
-        border-right: 1px double #e0e0e0;
-        padding: 15px;
-      /*font-size: 15px;
-      padding: 15px;
-      width:auto;*/
-   }
-   th.mat-column-reason, td.mat-column-reason{
-           border-right: 1px double #e0e0e0;
-           padding: 15px;
-      /*font-size: 15px;
-      padding: 15px;
-      width:auto;*/
-      }
-   th.mat-column-approvedBySupervisor, td.mat-column-approvedBySupervisor{
-           border-right: 1px double #e0e0e0;
-           padding: 15px;
-      /*font-size: 15px;
-      padding: 15px;
-      width:auto;*/
-      }
-   th.mat-column-approvedByManager, td.mat-column-approvedByManager{
-           border-right: 1px double #e0e0e0;
-      /*font-size: 15px;*/
-      padding: 15px;
-     /* width:auto;*/
-      }
-
+  th.mat-column-leaveType{
+              padding: 10px;
+              //width:auto;
+     }

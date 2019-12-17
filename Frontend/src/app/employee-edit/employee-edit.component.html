@@ -114,8 +114,8 @@
       <hr>
       &nbsp;
       <mat-form-field appearance="outline">
-        <mat-label>ที่อยู่ปัจจุบัน</mat-label>
-        <mat-select [(ngModel)]="NewemployeePosition">
+        <mat-label>ตำแหน่ง</mat-label>
+        <mat-select  [(ngModel)]="NewemployeePosition">
           <mat-option *ngFor="let pos of position" [value]="pos.positionName">
             {{pos.positionName}}
           </mat-option>
@@ -123,9 +123,9 @@
         <mat-icon matSuffix>work</mat-icon>
       </mat-form-field>
       &nbsp;
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" >
         <mat-label>แผนก</mat-label>
-        <mat-select [(ngModel)]="NewemployeeDepartment">
+        <mat-select  [(ngModel)]="NewemployeeDepartment">
           <mat-option *ngFor="let depart of department" [value]="depart.departmentName">
             {{depart.departmentName}}
           </mat-option>
@@ -147,6 +147,7 @@
       <mat-form-field appearance="outline">
         <mat-label>วุฒิการศึกษา</mat-label>
         <mat-select  [(ngModel)]="Neweducation">
+          <mat-option value="ป.6" >ม.3</mat-option>
           <mat-option value="ม.3" >ม.3</mat-option>
           <mat-option value="ม.6" >ม.6</mat-option>
           <mat-option value="ป.ตรี" >ป.ตรี</mat-option>

@@ -5,9 +5,9 @@ import {ActivatedRoute} from "@angular/router";
 import { HttpClient} from '@angular/common/http';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ServiceService } from '../service/service.service';
-import {  MatPaginator, MatTableDataSource } from '@angular/material';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 
 export interface PeriodicElement {
   name: string;
@@ -34,8 +34,9 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AttendanceDataComponent implements OnInit {
   leaves  : Array<any>;
-  displayedColumns: string[] = ['number','employeeCode', 'name', 'leaveType', 'startDate', 'endDate', 'startTime', 'endTime', 'reason', 'approvedBySupervisor', 'approvedByManager','del'];
+  displayedColumns: string[] = ['number','employeeCode', 'name', 'leaveType', 'startDate', 'endDate', 'startTime', 'endTime', 'reason', 'approvedBySupervisor', 'approvedByManager','leaveStatus','del'];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
+  @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
   constructor(private service:ServiceService,
             private router:Router,
             private route:ActivatedRoute ,
@@ -48,6 +49,7 @@ export class AttendanceDataComponent implements OnInit {
             this.dataSource.data = this.leaves;
             console.log('leaves -> ',this.leaves);
           });
+          this.dataSource.paginator = this.paginator;
 
   }
 

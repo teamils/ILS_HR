@@ -49,6 +49,9 @@ export class ServiceService {
   getShowLeavesNumber(leaID : String):Observable<any>{
       return this.http.get(this.API+'/showleaveNumber/'+leaID,{})
   }
+  getSearchEmployee(dataSearch:String):Observable<any>{
+      return this.http.get(this.API+'/SearchEmployee/'+dataSearch,{})
+  }
 
 
 }

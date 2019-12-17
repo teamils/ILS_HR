@@ -23,15 +23,23 @@ public class EmployeeMasterController {
     @Autowired
     private EmployeeMasterRepository employeeMasterRepository;
 
+    @GetMapping("/ILS_HR/{employee}")
+    public Iterable<EmployeeMaster> employeeMasters(@PathVariable String employee) {
+        return this.employeeMasterRepository.QueryEmployee();
+    }
 
-    @GetMapping(path = "ILS_HR/employee")
+   /* @GetMapping("/SearchEmployee/{dataSearch}")
+    public Iterable<EmployeeMaster> employeeMasters2(@PathVariable String dataSearch) {
+        return this.employeeMasterRepository.QueryEmployeeForCodeAndName();
+    }*/
+
+    /*@GetMapping(path = "ILS_HR/employee")
     public Collection<EmployeeMaster> employeeMaster() {
         return employeeMasterRepository.findAll().stream().filter(this::Active).collect(Collectors.toList());
     }
-
     private boolean Active(EmployeeMaster employeeMaster) {
         return employeeMaster.getIsActive().equals("1");
-    }
+    }*/
 
     @GetMapping(path = "/SearchEmployeeForAttendance/{employeeMasterCustomerCode}") //SearchEmployeeForAttendance
     public EmployeeMaster employeeMaster(@PathVariable String employeeMasterCustomerCode) {

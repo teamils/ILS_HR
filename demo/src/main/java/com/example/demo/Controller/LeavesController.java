@@ -54,7 +54,7 @@ public class LeavesController {
         leaves1.setEmployeeMasterid(employeeMaster);
         return leavesRepository.save(leaves1);
     }*/
-    @PostMapping("/leave/{leaID}/{leaveTypeSelect}/{startDate}/{endDate}/{startTime}/{endTime}/{reason}")
+    @PostMapping("/leave/{leaID}/{leaveTypeSelect}/{startDate}/{endDate}/{startTime}/{endTime}/{reason}") // saveLeave
     public Leaves leaves( @PathVariable Long leaID , @PathVariable Date startDate ,@PathVariable String leaveTypeSelect
             , @PathVariable Date endDate , @PathVariable String startTime , @PathVariable String endTime
             , @PathVariable String reason ){
@@ -83,6 +83,7 @@ public class LeavesController {
         leaves1.setApprovedBySupervisor("not approved");
         leaves1.setApprovedByManager("not approved");
         leaves1.setIsActiveAttendance("1");
+        leaves1.setLeaveStatus("Waiting");
         leavesRepository.save(leaves1);
         return leaves1;
     }
@@ -95,7 +96,7 @@ public class LeavesController {
         return leaves;
     }
 
-    @PostMapping(path = "/saveleaveNumber/{empId}/{sumDateime}") //Delete Attendance Data
+    @PostMapping(path = "/saveleaveNumber/{empId}/{sumDateime}") //saveleaveNumber
     public LeavesNumbers leavesNumbers(@PathVariable Long empId,@PathVariable int sumDateime) {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(empId).get();
         LeavesNumbers leavesNumbers = new LeavesNumbers();
@@ -104,5 +105,13 @@ public class LeavesController {
         leavesNumbers.setTotalSickLeave(30);
         leavesNumbersRepository.save(leavesNumbers);
         return leavesNumbers;
+    }
+
+    @PostMapping(path = "/CancelLeave/{leavesID}") //Cancel Leave
+    public Leaves leaves2(@PathVariable Long leavesID) {
+        Leaves leaves = leavesRepository.findById(leavesID).get();
+        leaves.setLeaveStatus("Cancel");
+        leavesRepository.save(leaves);
+        return leaves;
     }
 }

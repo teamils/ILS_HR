@@ -55,6 +55,7 @@ import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { AttendanceDataComponent } from './attendance-data/attendance-data.component';
 import { AttendanceDeleteDialog } from './attendance-data/attendance-data.component';
+import { AttendanceCancelDialog } from './attendance/attendance.component';
 import { ApproveBySupervisorComponent } from './approve-by-supervisor/approve-by-supervisor.component';
 
 
@@ -73,7 +74,7 @@ import { ApproveBySupervisorComponent } from './approve-by-supervisor/approve-by
     AttendanceDataComponent,
     AttendanceDeleteDialog,
     ApproveBySupervisorComponent,
-
+    AttendanceCancelDialog,
 
   ],
 
@@ -129,7 +130,7 @@ import { ApproveBySupervisorComponent } from './approve-by-supervisor/approve-by
 
        ],
 
-   entryComponents: [EmployeeEditComponent,EmployeeDeleteComponent,LoginDialogComponent,AttendanceDeleteDialog],
+   entryComponents: [EmployeeEditComponent,EmployeeDeleteComponent,LoginDialogComponent,AttendanceDeleteDialog,AttendanceCancelDialog],
   providers: [],
   bootstrap: [AppComponent]
 })

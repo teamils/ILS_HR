@@ -6,14 +6,14 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field> -->
   ชื่อ - สกุล:&nbsp;<b>{{table.fName}}&nbsp;&nbsp;{{table.lName}}</b>&nbsp;&nbsp; แผนก:&nbsp;<b>{{table.empDep}}</b> &nbsp;&nbsp; ตำแหน่ง:&nbsp;<b>{{table.empPos}}</b>
-  &nbsp;&nbsp;ลาพักร้อนคงเหลือ(วัน):&nbsp;<b>{{this.leavetatelAll.totalAnnualLeave}}</b>&nbsp;&nbsp;ลาป่วยคงเหลือ(วัน)/ปี:&nbsp;<b>{{this.leavetatelAll.totalSickLeave}}</b>
+  &nbsp;&nbsp;ลาพักร้อนคงเหลือ(วัน):&nbsp;<b>{{this.leavetatelAll.totalAnnualLeave}}</b>&nbsp;&nbsp;ลาป่วยคงเหลือ(วัน)/ปี:&nbsp;<b>{{this.leavetatelAll.totalSickLeave}}</b><hr>
   <div align="center">
     <h2>กรอกข้อมูลการลา</h2>
   </div>
   <div align="center">
     <mat-form-field>
-      <mat-select  placeholder="ประเภทการลา" [(ngModel)]="leaveTypeSelect" required>
-        <mat-option *ngFor="let value of leaveType" [value]="value.leaveTypeName" (click)="CalculateLeave(leaveTypeSelect)">
+      <mat-select  placeholder="ประเภทการลา" [(ngModel)]="leaveTypeSelect" #x required (click)="SelectLeaveType(x.value)">
+        <mat-option *ngFor="let value of leaveType" [value]="value.leaveTypeName">
           {{value.leaveTypeName}}
         </mat-option>
       </mat-select>
@@ -21,19 +21,19 @@
     &nbsp;&nbsp;
     <mat-form-field>
       <input matInput [matDatepicker]="picker" placeholder="เริ่มจากวันที่" [(ngModel)]="startDate" required>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
       <mat-datepicker touchUi #picker></mat-datepicker>
     </mat-form-field>
     &nbsp;&nbsp;
     <mat-form-field>
-      <input matInput [matDatepicker]="pickers" placeholder="ถึงวันที่" [(ngModel)]="endDate" required>
+      <input matInput [matDatepicker]="pickers" placeholder="ถึงวันที่" [(ngModel)]="endDate" required >
       <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
       <mat-datepicker touchUi #pickers></mat-datepicker>
     </mat-form-field>
     <br>
     เวลาที่เริ่มลา :
     <input placeholder="เวลาที่เริ่มลา"
-           [ngxTimepicker]="defaultGap" [(ngModel)]="startTime" readonly>
+           [ngxTimepicker]="defaultGap" [(ngModel)]="startTime" readonly [disabled]="xx">
     <ngx-material-timepicker #defaultGap></ngx-material-timepicker>
     &nbsp;&nbsp;
     ถึงเวลา :
@@ -53,7 +53,7 @@
 <mat-card class="card2">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="number" >
-      <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>
+      <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ลำดับที่</b></font></th>
       <td mat-cell *matCellDef="let element ; let i = index">{{i+1}}.</td>
     </ng-container>
 
@@ -89,20 +89,25 @@
     </ng-container>
 
     <ng-container matColumnDef="approvedBySupervisor">
-      <th mat-header-cell *matHeaderCellDef><font color="black"><b>approvedBySupervisor</b></font>  </th>
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>อนุมัติโดยSupervisor</b></font>  </th>
       <td mat-cell *matCellDef="let element"> {{element.approvedBySupervisor}} </td>
     </ng-container>
 
     <ng-container matColumnDef="approvedByManager">
-      <th mat-header-cell *matHeaderCellDef><font color="black"><b>approvedByManager</b></font>  </th>
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>อนุมัติโดยManager</b></font>  </th>
       <td mat-cell *matCellDef="let element"> {{element.approvedByManager}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="leaveStatus">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>สถานะ</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.leaveStatus}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="del" stickyEnd>
-      <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ลบข้อมูล</b></font></th>
+      <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ยกเลิก</b></font></th>
       <td mat-cell *matCellDef="let element" >
-        <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="DeleteAttendance(element);"  #ckeckEdit>
-          <mat-icon>delete_forever</mat-icon>
+        <button mat-icon-button matTooltip="ยกเลิกการลา" matTooltipPosition="right" (click)="CancelDataAttendance(element);"  #ckeckEdit>
+          <mat-icon>cancel_presentation</mat-icon>
         </button>
       </td>
     </ng-container>
@@ -110,30 +115,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-
-    <!--<table class="table">
-      <tr bgcolor="#c0c0c0">
-        <th>ประเภทการลา</th>
-        <th>เริ่มจากวันที่</th>
-        <th>ถึงวันที่</th>
-        <th>เวลาที่เริ่มลา</th>
-        <th>ถึงเวลา</th>
-        <th>เหตุผล</th>
-        <th>approvedBySupervisor</th>
-        <th>approvedByManager</th>
-      </tr>
-      <ng-container>
-        <tr>
-          <td>{{this.leave.leaveType}}</td>
-          <td>{{this.leave.startDate}}</td>
-          <td>{{this.leave.endDate}}</td>
-          <td>{{this.leave.startTime}}</td>
-          <td>{{this.leave.endTime}}</td>
-          <td>{{this.leave.reason}}</td>
-          <td>{{this.leave.approvedBySupervisor}}</td>
-          <td>{{this.leave.approvedByManager}}</td>
-        </tr>
-      </ng-container>
-    </table> -->
-
 </mat-card>
