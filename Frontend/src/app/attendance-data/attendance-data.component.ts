@@ -94,7 +94,8 @@ export interface DialogData {
                                      .subscribe(
                                          data => {
                                              console.log('PUT Request is successful');
-                                             window.location.reload(true);
+                                              this.dialogRef.close();
+                                             //window.location.reload(true);
                                               localStorage.setItem('links', 'attendanceData');
                                          },
                                          error => {

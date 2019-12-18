@@ -55,7 +55,7 @@
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="/newheader" (click)="callAttendance()" *ngIf="(role == 'EMPLOYEE' ? true : false)||(role == 'SUPERVISOR' ? true : false)&&(logouts == 'true' ? false : true)||(role == 'ADMIN' ? true : false)">Attendance</a> <!-- เห็นทุกคน ยกเว้น HR -->
+              <a routerLink="/newheader" (click)="callAttendance()" *ngIf="(role == 'EMPLOYEE' ? true : false)||(role == 'SUPERVISOR' ? true : false)&&(logouts == 'true' ? false : true)||(role == 'ADMIN' ? true : false)||(role == 'HR' ? true : false)">Attendance</a> <!-- เห็นทุกคน ยกเว้น HR -->
               <a routerLink="/newheader" (click)="callAttendanceData()" *ngIf="(role == 'EMPLOYEE' ? false : true)&&(logouts == 'true' ? false : true)">Data Attendance</a>  <!-- เห็นทุกคน -->
              <!--<a routerLink="" *ngIf="(role == 'HR' ? true : false)||(role == 'ADMIN' ? true : false)&&(logouts == 'true' ? false : true)">Data Attendance For HR</a>   <!-- เห็นเฉพาะ HR -->
               <a routerLink="/newheader" (click)="callApproveBySupervisor()" *ngIf="(role == 'SUPERVISOR' ? true : false)||(role == 'ADMIN' ? true : false)&&(logouts == 'true' ? false : true)">Approve By SUPERVISOR</a>   <!-- เห็นเฉพาะ SUPERVISOR -->

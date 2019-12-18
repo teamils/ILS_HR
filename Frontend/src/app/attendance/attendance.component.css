@@ -38,5 +38,6 @@ table {
               //width:auto;
      }
 
-
-
+mat-grid-tile {
+  background: lightblue;
+}

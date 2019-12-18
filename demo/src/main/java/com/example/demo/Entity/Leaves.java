@@ -11,23 +11,99 @@ public class Leaves {
     @SequenceGenerator(name = "Leaves3_seq", sequenceName = "Leaves3_seq",initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator ="Leaves3_seq")
     private long leavesID;
-    private Date leavesDate;
-    private String reason; // เหตุผล
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
-    @Temporal(TemporalType.DATE)
-    private Date endDate;
-    private String startTime;
-    private String endTime;
-    private String approvedBySupervisor;
-    private String approvedByManager;
-    private String isActiveAttendance;
-    private String leaveType;
-    @ManyToOne private EmployeeMaster employeeMasterid;
+    private Date createDate;
     private Date updateLeave_date;
     private String updateLeave_by;
     private String createLeave_by;
+
+    private String reasonForHalfDay; // เหตุผล
+    @Temporal(TemporalType.DATE)
+    private Date startDateForHalfDay;
+    @Temporal(TemporalType.DATE)
+    private Date endDateForHalfDay;
+    private String startTimeForHalfDay;
+    private String endTimeForHalfDay;
+    private String leaveTypeForHalfDay;
+    private String labelLeaveHalfDay;
+
+    private String reasonForAllDay; // เหตุผล
+    @Temporal(TemporalType.DATE)
+    private Date startDateForAllDay;
+    @Temporal(TemporalType.DATE)
+    private Date endDateForAllDay;
+    private String startTimeForAllDay;
+    private String endTimeForAllDay;
+    private String leaveTypeForAllDay;
+
+    private String approvedBySupervisor;
+    private String approvedByManager;
+    private String isActiveAttendance;
+    @ManyToOne private EmployeeMaster employeeMasterid;
     private String leaveStatus;
+
+    public String getLabelLeaveHalfDay() {
+        return labelLeaveHalfDay;
+    }
+
+    public void setLabelLeaveHalfDay(String labelLeaveHalfDay) {
+        this.labelLeaveHalfDay = labelLeaveHalfDay;
+    }
+
+    public String getReasonForAllDay() {
+        return reasonForAllDay;
+    }
+
+    public void setReasonForAllDay(String reasonForAllDay) {
+        this.reasonForAllDay = reasonForAllDay;
+    }
+
+    public Date getStartDateForAllDay() {
+        return startDateForAllDay;
+    }
+
+    public void setStartDateForAllDay(Date startDateForAllDay) {
+        this.startDateForAllDay = startDateForAllDay;
+    }
+
+    public Date getEndDateForAllDay() {
+        return endDateForAllDay;
+    }
+
+    public void setEndDateForAllDay(Date endDateForAllDay) {
+        this.endDateForAllDay = endDateForAllDay;
+    }
+
+    public String getStartTimeForAllDay() {
+        return startTimeForAllDay;
+    }
+
+    public void setStartTimeForAllDay(String startTimeForAllDay) {
+        this.startTimeForAllDay = startTimeForAllDay;
+    }
+
+    public String getEndTimeForAllDay() {
+        return endTimeForAllDay;
+    }
+
+    public void setEndTimeForAllDay(String endTimeForAllDay) {
+        this.endTimeForAllDay = endTimeForAllDay;
+    }
+
+    public String getLeaveTypeForHalfDay() {
+        return leaveTypeForHalfDay;
+    }
+
+    public void setLeaveTypeForHalfDay(String leaveTypeForHalfDay) {
+        this.leaveTypeForHalfDay = leaveTypeForHalfDay;
+    }
+
+    public String getLeaveTypeForAllDay() {
+        return leaveTypeForAllDay;
+    }
+
+    public void setLeaveTypeForAllDay(String leaveTypeForAllDay) {
+        this.leaveTypeForAllDay = leaveTypeForAllDay;
+    }
 
     public String getLeaveStatus() {
         return leaveStatus;
@@ -62,35 +138,35 @@ public class Leaves {
     }
 
     public String getLeaveType() {
-        return leaveType;
+        return leaveTypeForHalfDay;
     }
 
     public void setLeaveType(String leaveType) {
-        this.leaveType = leaveType;
+        this.leaveTypeForHalfDay = leaveType;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Date getStartDateForHalfDay() {
+        return startDateForHalfDay;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStartDateForHalfDay(Date startDateForHalfDay) {
+        this.startDateForHalfDay = startDateForHalfDay;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public String getStartTimeForHalfDay() {
+        return startTimeForHalfDay;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setStartTimeForHalfDay(String startTimeForHalfDay) {
+        this.startTimeForHalfDay = startTimeForHalfDay;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public String getEndTimeForHalfDay() {
+        return endTimeForHalfDay;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setEndTimeForHalfDay(String endTimeForHalfDay) {
+        this.endTimeForHalfDay = endTimeForHalfDay;
     }
 
     public long getLeavesID() {
@@ -101,28 +177,28 @@ public class Leaves {
         this.leavesID = leavesID;
     }
 
-    public Date getLeavesDate() {
-        return leavesDate;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setLeavesDate(Date leavesDate) {
-        this.leavesDate = leavesDate;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
-    public String getReason() {
-        return reason;
+    public String getReasonForHalfDay() {
+        return reasonForHalfDay;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setReasonForHalfDay(String reasonForHalfDay) {
+        this.reasonForHalfDay = reasonForHalfDay;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public Date getEndDateForHalfDay() {
+        return endDateForHalfDay;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setEndDateForHalfDay(Date endDateForHalfDay) {
+        this.endDateForHalfDay = endDateForHalfDay;
     }
 
     public String getApprovedBySupervisor() {

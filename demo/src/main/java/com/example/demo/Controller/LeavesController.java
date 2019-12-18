@@ -5,11 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
-import java.text.ParseException;
 
 
 @RestController
@@ -46,6 +44,11 @@ public class LeavesController {
         return this.leavesRepository.getLeaves(employeeCode);
     }
 
+    @GetMapping("/showleave3/{employeeCode}")
+    public Iterable<Leaves> leaves2(@PathVariable String employeeCode) {
+        return this.leavesRepository.getLeaves2(employeeCode);
+    }
+
    /* @PostMapping(path = "/savetotalAnnualLeave/{leaID}/{sumDate}") //Delete Attendance Data
     public Leaves leaves(@PathVariable Long leaID,@PathVariable int sumDate) {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
@@ -54,38 +57,50 @@ public class LeavesController {
         leaves1.setEmployeeMasterid(employeeMaster);
         return leavesRepository.save(leaves1);
     }*/
-    @PostMapping("/leave/{leaID}/{leaveTypeSelect}/{startDate}/{endDate}/{startTime}/{endTime}/{reason}") // saveLeave
-    public Leaves leaves( @PathVariable Long leaID , @PathVariable Date startDate ,@PathVariable String leaveTypeSelect
-            , @PathVariable Date endDate , @PathVariable String startTime , @PathVariable String endTime
-            , @PathVariable String reason ){
+    @PostMapping("/leave/{leaID}/{leaveTypeSelect}/{labelLeaveHalfDay}/{startDate}/{reason}") // saveLeave ครึ่งวัน
+    public Leaves leaves( @PathVariable Long leaID , @PathVariable String leaveTypeSelect ,@PathVariable String labelLeaveHalfDay
+            , @PathVariable Date startDate , @PathVariable String reason ){
 
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
-        Date leaveDate = new Date();
+        Date createDate = new Date();
 
         Leaves leaves1 = new Leaves();
         leaves1.setEmployeeMasterid(employeeMaster);
-        leaves1.setLeaveType(leaveTypeSelect);
-        leaves1.setLeavesDate(leaveDate);
+        leaves1.setCreateDate(createDate);
+        leaves1.setLeaveTypeForHalfDay(leaveTypeSelect);
+        leaves1.setStartDateForHalfDay(startDate);
+        leaves1.setReasonForHalfDay(reason);
+        leaves1.setLabelLeaveHalfDay(labelLeaveHalfDay);
 
-       /* SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        String startDateToString = formatter.format(startDate);
-        String[] dateSplit;
-        dateSplit = startDateToString.split("-");
-        String fullPatternyear = dateSplit[0] + '-' + dateSplit[1] + '-' +dateSplit[2];//dateSplit[2];
-        System.out.println(fullPatternyear);
-        Date startDateToDate = formatter.parse(fullPatternyear);*/
-        leaves1.setStartDate(startDate);
-
-        leaves1.setEndDate(endDate);
-        leaves1.setStartTime(startTime);
-        leaves1.setEndTime(endTime);
-        leaves1.setReason(reason);
         leaves1.setApprovedBySupervisor("not approved");
         leaves1.setApprovedByManager("not approved");
         leaves1.setIsActiveAttendance("1");
         leaves1.setLeaveStatus("Waiting");
         leavesRepository.save(leaves1);
         return leaves1;
+    }
+
+    @PostMapping("/leave2/{leaID}/{leaveTypeSelect2}/{startDate2}/{endDate2}/{reason2}") // saveLeave2 เต็มวัน
+    public Leaves leaves2( @PathVariable Long leaID , @PathVariable String leaveTypeSelect2 ,@PathVariable Date startDate2
+            , @PathVariable Date endDate2 , @PathVariable String reason2 ){
+
+        EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
+        Date createDate = new Date();
+
+        Leaves leaves2 = new Leaves();
+        leaves2.setEmployeeMasterid(employeeMaster);
+        leaves2.setCreateDate(createDate);
+        leaves2.setLeaveTypeForAllDay(leaveTypeSelect2);
+        leaves2.setStartDateForAllDay(startDate2);
+        leaves2.setEndDateForAllDay(endDate2);
+        leaves2.setReasonForAllDay(reason2);
+
+        leaves2.setApprovedBySupervisor("not approved");
+        leaves2.setApprovedByManager("not approved");
+        leaves2.setIsActiveAttendance("1");
+        leaves2.setLeaveStatus("Waiting");
+        leavesRepository.save(leaves2);
+        return leaves2;
     }
 
     @PostMapping(path = "/deleteAttendance/{leavesID}") //Delete Attendance Data
@@ -96,8 +111,19 @@ public class LeavesController {
         return leaves;
     }
 
-    @PostMapping(path = "/saveleaveNumber/{empId}/{sumDateime}") //saveleaveNumber
+    @PostMapping(path = "/saveleaveNumber/{empId}/{sumDateime}") //saveleaveNumber Set Default
     public LeavesNumbers leavesNumbers(@PathVariable Long empId,@PathVariable int sumDateime) {
+        EmployeeMaster employeeMaster = employeeMasterRepository.findById(empId).get();
+        LeavesNumbers leavesNumbers = new LeavesNumbers();
+        leavesNumbers.setEmployeeMasterid(employeeMaster);
+        leavesNumbers.setTotalAnnualLeave(sumDateime);
+        leavesNumbers.setTotalSickLeave(30);
+        leavesNumbersRepository.save(leavesNumbers);
+        return leavesNumbers;
+    }
+
+    @PostMapping(path = "/saveleaveNumber2/{empId}/{sumDateime}") //saveleaveNumber2
+    public LeavesNumbers leavesNumbers2(@PathVariable Long empId,@PathVariable int sumDateime) {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(empId).get();
         LeavesNumbers leavesNumbers = new LeavesNumbers();
         leavesNumbers.setEmployeeMasterid(employeeMaster);

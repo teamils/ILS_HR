@@ -37,6 +37,9 @@ export class ServiceService {
   getShowLeaves(leaID : String):Observable<any>{
       return this.http.get(this.API+'/showleave2/'+leaID,{})
   }
+  getShowLeaves2(leaID : String):Observable<any>{
+      return this.http.get(this.API+'/showleave3/'+leaID,{})
+  }
   getSearchEmployeeForAttendance(employeeMasterID:String): Observable<any>{
       return this.http.get(this.API+'/SearchEmployeeForAttendance/'+employeeMasterID,{})
   }

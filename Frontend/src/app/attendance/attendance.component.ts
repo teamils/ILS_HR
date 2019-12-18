@@ -18,6 +18,9 @@ export interface employeeMasters{
 export interface leave{
     leavesID : String;
 }
+export interface leave2{
+    leavesID : String;
+}
 
 @Component({
   selector: 'app-attendance',
@@ -32,6 +35,27 @@ export interface leave{
 export class AttendanceComponent implements OnInit {
 
   public API = '//localhost:8080';
+  table : any = {
+    leaID : '',
+    empCode : '',
+    fName : '',
+    lName : '',
+    empDep : '',
+    empPos : '',
+    StartDate : '',
+    sumDate : '',
+  };
+
+  leavetatelAll : any = {
+    leavesNumbersID : '',
+    totalAnnualLeave : '',
+    sumAnnualLeave: '',
+    totalSickLeave : '',
+    sumSickLeave: '',
+    totalOthersLeave : '',
+    sumOthersLeave: '',
+    sumAllLeave : '',
+  };
   employeeMasterCustomerCode : String;
   empID : Array<any>;
   dataLeave : Array<any>;
@@ -39,51 +63,47 @@ export class AttendanceComponent implements OnInit {
   startDateToString : Array<string>;
   splitStartDate: Array<string>;
 
+  startDate : any;
+  endDate : any;
+  reason : any;
+  labelLeaveHalfDay: any;
+    startDate2 : any;
+    endDate2 : any;
+    reason2 : any;
+    leaveTypeSelect2 : string;
+
+  leavecheck : Array<any>;
+  totalAnnualLeave;
   leaveType : Array<any>;
   leaveTypeSelect : string;
   leaves : Array<any>;
+  leaves2 : Array<any>;
+  interval2:any;
+  diffTime1:number;
+  diffDay:number;
   empId = localStorage.getItem('empId');
-  displayedColumns: string[] = ['number','leaveType', 'startDate', 'endDate', 'startTime', 'endTime', 'reason', 'approvedBySupervisor', 'approvedByManager','leaveStatus','del'];
+
+  displayedColumns: string[] = ['number','leaveType','halfDay','startDate', 'reason', 'approvedBySupervisor', 'approvedByManager','leaveStatus','del'];
   dataSource = new MatTableDataSource<leave>(this.leaves);
 
-  startDate : any;
-  endDate : any;
-  startTime : any;
-  endTime : any;
-  reason : any;
-
-  table : any = {
-      leaID : '',
-      empCode : '',
-      fName : '',
-      lName : '',
-      empDep : '',
-      empPos : '',
-      StartDate : '',
-      sumDate : '',
-  };
-
-  leavetatelAll : any = {
-      leavesNumbersID : '',
-      totalAnnualLeave : '',
-      totalSickLeave : '',
-      totalOthersLeave : '',
-      sumAllLeave : '',
-  };
+  displayedColumns2: string[] = ['number','leaveType','startDate','endDate2', 'reason', 'approvedBySupervisor', 'approvedByManager','leaveStatus','del'];
+  dataSource2 = new MatTableDataSource<leave2>(this.leaves2);
 
   constructor(private service:ServiceService,
             private router:Router,
-            private route:ActivatedRoute ,
+            private route:ActivatedRoute,
             public dialog: MatDialog,
              private http: HttpClient,
          ) { }
 
+  ngOnDestroy() {
+    if (this.interval2) { // show table Leave
+      clearInterval(this.interval2);
+    }
+
+  }
   ngOnInit() {
-       setInterval(() => {
-          if(this.leaveTypeSelect == "ลาครึ่งวัน"){
-              this.xx = true;
-          }
-       }, 200);
+
       this.service.getLeaveType().subscribe(data => {
         this.leaveType = data;
         //console.log('leaveType -> ',this.leaveType);
@@ -98,23 +118,30 @@ export class AttendanceComponent implements OnInit {
               this.table.empDep = data1.employeeDepartment;
               this.table.empPos = data1.employeePosition;
 
+
               this.nowDateToString = new Date().toString().split(" ");
               //console.log(parseInt(this.nowDateToString[3]));
-
               this.table.StartDate = data1.employeeMasterStartDate;
               this.startDateToString = this.table.StartDate.toString().split("-");
               //console.log(parseInt(this.startDateToString[0]));
               this.table.sumDate = parseInt(this.nowDateToString[3]) - parseInt(this.startDateToString[0]);
               //console.log(this.table.sumDate);
 
-              this.service.getShowLeaves(this.table.leaID).subscribe(data => {
+              this.interval2 = setInterval(() => {  //show table Leave
+                  this.service.getShowLeaves(this.table.leaID).subscribe(data => {
                   if(data!=null){
                     this.leaves = data;
                     this.dataSource.data = this.leaves;
-                    console.log('leaves -> ',this.leaves);
+                    //console.log('leaves -> ',this.leaves);
                   }
                   else console.log( this.table.fName,'--> ไม่มีการลาพักร้อน');
               });
+                this.service.getShowLeaves2(this.table.leaID).subscribe(data => {
+                    this.leaves2 = data;
+                    this.dataSource2.data = this.leaves2;
+                    //console.log('leaves2 -> ',this.leaves2);
+                });
+             }, 1000);
 
                  if(this.table.sumDate >= 10){
                       this.table.sumDate = 15;
@@ -133,22 +160,18 @@ export class AttendanceComponent implements OnInit {
                 }
                  this.SaveLeaveNumber();
         });
-
   }
-
     SubmitData(){
-        //console.log('Sum Date = ',this.endDate);
-         if(this.leaveTypeSelect == null)  alert("กรุณาเลือกประเภทการลา");
+        if(this.leaveTypeSelect == null)  alert("กรุณาเลือกประเภทการลา");
         else if(this.startDate == null) alert("กรุณาเลือกวันลา");
-        else if(this.endDate == null) alert("กรุณาเลือกวันสิ้นสุดการลา");
-        else if(this.reason == null) alert("กรุณากรอกหมายเหตุ");
+        else if(this.reason == null) alert("กรุณากรอกเหตุผล");
         else{
-             this.http.post(this.API  +/leave/+ this.table.leaID +'/'+ this.leaveTypeSelect +'/'+ this.startDate +'/'+ this.endDate +'/'+ this.startTime +'/'+ this.endTime +'/'+ this.reason  ,{})
+             this.http.post(this.API  +/leave/+ this.table.leaID +'/'+ this.leaveTypeSelect +'/'+ this.labelLeaveHalfDay +'/'+ this.startDate  +'/'+ this.reason,{})
                         .subscribe(
                                        dataLeave => {
                                            console.log('PUT Request is successful', dataLeave);
                                            alert("ลาสําเร็จ รอการอนุมัติ");
-                                            window.location.reload(true);
+                                            //window.location.reload(true);
                                             localStorage.setItem('links', 'attendance');
                                        },
                                        error => {
@@ -156,24 +179,55 @@ export class AttendanceComponent implements OnInit {
                                        }
                                       );
         }
+        if(this.startDate != null&&this.endDate != null){
+            this.CalculateLeaveDate();
+        }
+    }
+    SubmitData2(){
+        if(this.leaveTypeSelect2 == null)  alert("กรุณาเลือกประเภทการลา");
+        else if(this.startDate2 == null) alert("กรุณาเลือกวันลา");
+        else if(this.endDate2 == null) alert("กรุณาเลือกวันสิ้นสุดการลา");
+        else if(this.reason2 == null) alert("กรุณากรอกเหตุผล");
+        else{
+             this.http.post(this.API  +/leave2/+ this.table.leaID +'/'+ this.leaveTypeSelect2 +'/'+ this.startDate2 +'/'+  this.endDate2 +'/'+ this.reason2 ,{})
+                        .subscribe(
+                                       dataLeave => {
+                                           console.log('PUT Request is successful', dataLeave);
+                                           alert("ลาสําเร็จ รอการอนุมัติ");
+                                            //window.location.reload(true);
+                                            localStorage.setItem('links', 'attendance');
+                                       },
+                                       error => {
+                                           console.log('Error', error);
+                                       }
+                                      );
+        }
+        if(this.startDate != null&&this.endDate != null){
+            this.CalculateLeaveDate();
+        }
     }
 
-    leavecheck : Array<any>;
-    totalAnnualLeave;
     SaveLeaveNumber(){ //function
                 this.service.getShowLeavesNumber(this.empId).subscribe(data => {
                         if(data==null){
                             this.http.post(this.API  +/saveleaveNumber/+ this.empId +'/'+ this.table.sumDate ,{})
                                .subscribe(dataleaveNumber => {console.log('PUT Request is successful');},error => {console.log('Error', error);});
                         }
-                        else{
+                        else if(data!=null){
                             this.leavecheck = data;
                             this.leavetatelAll.leavesNumbersID = data.leavesNumbersID;
                             this.leavetatelAll.totalAnnualLeave = data.totalAnnualLeave;
+                            this.leavetatelAll.sumAnnualLeave = data.sumAnnualLeave;
                             this.leavetatelAll.totalSickLeave = data.totalSickLeave;
+                            this.leavetatelAll.sumSickLeave = data.sumSickLeave;
                             this.leavetatelAll.totalOthersLeave = data.totalOthersLeave;
+                            this.leavetatelAll.sumOthersLeave = data.sumOthersLeave;
                             this.leavetatelAll.sumAllLeave = data.sumAllLeave;
                             //console.log('SaveLeaveNumber -> ',this.leavetatelAll.totalAnnualLeave);
+                        }
+                         if(this.leavetatelAll.totalAnnualLeave != this.table.sumDate || this.leavetatelAll.totalSickLeave != 30){
+
+
                         }
 
                       });
@@ -187,24 +241,19 @@ export class AttendanceComponent implements OnInit {
                   data: row,
             });
           }
-    xx;
-    SelectLeaveType(selectLeaveType:string){
-      console.log('SelectLeaveType ->',selectLeaveType);
-        if(selectLeaveType == "ลาครึ่งวัน"){
-              this.endDate = new Date();
-              this.startTime = "8:00 AM";
-              this.endTime = "12:00 AM";
-        }
-        else{
-            this.startTime = "8:00 AM";
-            this.endTime = "5:00 PM";
-        }
+
+    CalculateLeaveDate(){
+        this.diffTime1 = (this.endDate - this.startDate);
+        this.diffDay = Math.ceil((this.diffTime1 / (1000 * 60 * 60 * 24))+1);
+        console.log(this.diffDay);
     }
 
 
+
+
+
+
 }
-
-
 
 //Dialog
 export interface DialogData {
@@ -236,8 +285,10 @@ export interface DialogData {
                                      .subscribe(
                                          data => {
                                              console.log('PUT Request is successful');
-                                             window.location.reload(true);
+                                             //window.location.reload(true);
+                                              this.dialogRef.close();
                                               localStorage.setItem('links', 'attendance');
+
                                          },
                                          error => {
                                              console.log('Error', error);

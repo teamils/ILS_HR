@@ -16,6 +16,17 @@ import java.util.Collection;
 public interface LeavesRepository extends JpaRepository<Leaves,Long>{
     Leaves findByemployeeMasterid(EmployeeMaster employeeMasterid);
 
-    @Query(value = "SELECT * FROM leaves WHERE employee_masterid_employee_masterid = :employeeCode and is_active_attendance='1' and (leave_status = 'waiting' or leave_status='Complete') and (approved_by_supervisor='not approved' or approved_by_manager='not approved')",nativeQuery = true)
+    //getLeaves 1คน
+    @Query(value = "SELECT * FROM leaves WHERE employee_masterid_employee_masterid = :employeeCode " +
+            "and is_active_attendance='1' and (leave_status = 'waiting' or leave_status='Complete') " +
+            "and (approved_by_supervisor='not approved' or approved_by_manager='not approved') " +
+            "and (label_leave_half_day='ครึ่งวันเช้า' or label_leave_half_day='ครึ่งวันบ่าย')",nativeQuery = true)
     Collection<Leaves> getLeaves(@Param("employeeCode") String employeeCode );
+
+    @Query(value = "SELECT * FROM leaves WHERE employee_masterid_employee_masterid = :employeeCode2 " +
+            "and is_active_attendance='1' and (leave_status = 'waiting' or leave_status='Complete') " +
+            "and (approved_by_supervisor='not approved' or approved_by_manager='not approved')" +
+            "and (label_leave_half_day IS NULL)",nativeQuery = true)
+    Collection<Leaves> getLeaves2(@Param("employeeCode2") String employeeCode2 );
+
 }
