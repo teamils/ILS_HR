@@ -1,5 +1,4 @@
-# ILS_HR
-(SpringBoot+Angular)
+# ILS_HR (SpringBoot+Angular)
 ===============================
 StartProject
 ===============================
@@ -19,6 +18,7 @@ mvnw clean install package
 
 Angular
 ng build --prod --base-href=/yourNameProject/
+
 ng build --prod --base-href=/ILS-HR/
 
 
