@@ -1,7 +1,7 @@
 # ILS_HR
 
 ===============================
-Project_ILS (SpringBoot+Angular)
+(SpringBoot+Angular)
 ===============================
 StartProject
 ===============================
