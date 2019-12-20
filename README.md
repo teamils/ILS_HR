@@ -14,9 +14,11 @@ ng s
 BuildingProject
 ===============================
 Maven
+
 mvnw clean install package
 
 Angular
+
 ng build --prod --base-href=/yourNameProject/
 
 ng build --prod --base-href=/ILS-HR/
