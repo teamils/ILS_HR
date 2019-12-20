@@ -10,8 +10,8 @@ import java.util.Collection;
 @Table(name = "Department")
 public class Department {
     @Id
-    @SequenceGenerator(name = "Department_seq", sequenceName = "Department_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Department_seq")
+    @SequenceGenerator(name = "Department_seq1", sequenceName = "Department_seq1",initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Department_seq1")
     private long departmentID;
     private String departmentName;
 

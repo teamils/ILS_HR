@@ -104,7 +104,7 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>2.2</version>
 				<configuration>
-					<url>http://192.168.1.64:8080/manager/html</url>
+					<url>http://192.168.1.46:8080/manager/html</url>
 					<server>TomcatServer</server>
 					<path>/ILS_HR</path>
 				</configuration>
@@ -115,5 +115,6 @@
 			</plugin>
 		</plugins>
 	</build>
+
 
 </project>

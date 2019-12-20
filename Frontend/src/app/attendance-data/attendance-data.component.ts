@@ -15,18 +15,7 @@ export interface PeriodicElement {
   weight: number;
   symbol: string;
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-{position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-{position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-{position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-{position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-{position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-{position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-{position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-{position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-{position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-{position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+
 @Component({
   selector: 'app-attendance-data',
   templateUrl: './attendance-data.component.html',
@@ -34,8 +23,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AttendanceDataComponent implements OnInit {
   leaves  : Array<any>;
-  displayedColumns: string[] = ['number','employeeCode', 'name', 'leaveType', 'startDate', 'endDate', 'startTime', 'endTime', 'reason', 'approvedBySupervisor', 'approvedByManager','leaveStatus','del'];
+  LeavesToComplete: Array<any>;
+  isChecked;
+  interval:any;
+  dis;
+  displayedColumns: string[] = ['number','employeeCode', 'name','position','department','date', 'leaveType', 'reason', 'startDate', 'endDate','total', 'approvedBySupervisor', 'approvedByManager','leaveStatus','del'];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
+
+
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
   constructor(private service:ServiceService,
             private router:Router,
@@ -43,24 +38,53 @@ export class AttendanceDataComponent implements OnInit {
             public dialog: MatDialog,
              private http: HttpClient,) { }
 
+  ngOnDestroy() {
+    if (this.interval) { // show table Leave
+      clearInterval(this.interval);
+    }
+
+  }
   ngOnInit() {
-          this.service.getLeaves().subscribe(data => {
+        this.service.getshowLeavesToNotComplete().subscribe(data => {
             this.leaves = data;
             this.dataSource.data = this.leaves;
-            console.log('leaves -> ',this.leaves);
-          });
-          this.dataSource.paginator = this.paginator;
+            //console.log('leaves -> ',this.leaves);
+        });
+        this.dataSource.paginator = this.paginator;
 
   }
 
           DeleteAttendance(row : any){
             const dialogRef = this.dialog.open(AttendanceDeleteDialog, {
-                  width: '300px',
+                  width: '320px',
                   height:'200px',
                   data: row,
             });
+            this.onChange();
           }
+        onChange(){
+           this.interval = setTimeout(() => {  //show table Leave
+              if(this.isChecked == true){
+                this.dis=true;
+                this.service.getshowLeavesToComplete().subscribe(dataLeavesToComplete => {
+                      this.leaves = dataLeavesToComplete;
+                      this.dataSource.data = this.leaves;
+                      //console.log('leaves -> ',this.leaves);
+              });
 
+              }
+              else{
+                this.dis=false;
+                  this.service.getshowLeavesToNotComplete().subscribe(data => {
+                    this.leaves = data;
+                    this.dataSource.data = this.leaves;
+                    //console.log('leaves -> ',this.leaves);
+
+
+                  });
+              }
+            }, 1000);
+        }
 }
 
 

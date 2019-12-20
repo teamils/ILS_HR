@@ -76,17 +76,14 @@ export class AttendanceComponent implements OnInit {
   totalAnnualLeave;
   leaveType : Array<any>;
   leaveTypeSelect : string;
-  leaves : Array<any>;
   leaves2 : Array<any>;
   interval2:any;
   diffTime1:number;
   diffDay:number;
+  dis:true;
   empId = localStorage.getItem('empId');
 
-  displayedColumns: string[] = ['number','leaveType','halfDay','startDate', 'reason', 'approvedBySupervisor', 'approvedByManager','leaveStatus','del'];
-  dataSource = new MatTableDataSource<leave>(this.leaves);
-
-  displayedColumns2: string[] = ['number','leaveType','startDate','endDate2', 'reason', 'approvedBySupervisor', 'approvedByManager','leaveStatus','del'];
+  displayedColumns2: string[] = ['number','date','leaveType', 'reason','startDate','endDate2','total', 'approvedBySupervisor', 'approvedByManager','leaveStatus','del'];
   dataSource2 = new MatTableDataSource<leave2>(this.leaves2);
 
   constructor(private service:ServiceService,
@@ -103,12 +100,11 @@ export class AttendanceComponent implements OnInit {
 
   }
   ngOnInit() {
-
       this.service.getLeaveType().subscribe(data => {
         this.leaveType = data;
         //console.log('leaveType -> ',this.leaveType);
       });
-      //console.log(new Date());
+
             this.service.getSearchEmployeeForAttendance2(this.empId).subscribe(data1 => {
               //console.log('data1->',data1);
               this.table.leaID = this.empId;
@@ -118,7 +114,6 @@ export class AttendanceComponent implements OnInit {
               this.table.empDep = data1.employeeDepartment;
               this.table.empPos = data1.employeePosition;
 
-
               this.nowDateToString = new Date().toString().split(" ");
               //console.log(parseInt(this.nowDateToString[3]));
               this.table.StartDate = data1.employeeMasterStartDate;
@@ -126,22 +121,6 @@ export class AttendanceComponent implements OnInit {
               //console.log(parseInt(this.startDateToString[0]));
               this.table.sumDate = parseInt(this.nowDateToString[3]) - parseInt(this.startDateToString[0]);
               //console.log(this.table.sumDate);
-
-              this.interval2 = setInterval(() => {  //show table Leave
-                  this.service.getShowLeaves(this.table.leaID).subscribe(data => {
-                  if(data!=null){
-                    this.leaves = data;
-                    this.dataSource.data = this.leaves;
-                    //console.log('leaves -> ',this.leaves);
-                  }
-                  else console.log( this.table.fName,'--> ไม่มีการลาพักร้อน');
-              });
-                this.service.getShowLeaves2(this.table.leaID).subscribe(data => {
-                    this.leaves2 = data;
-                    this.dataSource2.data = this.leaves2;
-                    //console.log('leaves2 -> ',this.leaves2);
-                });
-             }, 1000);
 
                  if(this.table.sumDate >= 10){
                       this.table.sumDate = 15;
@@ -159,9 +138,23 @@ export class AttendanceComponent implements OnInit {
                       this.table.sumDate = 0;
                 }
                  this.SaveLeaveNumber();
+              this.service.getShowLeaves2(this.table.leaID).subscribe(data => {
+                    this.leaves2 = data;
+                    this.dataSource2.data = this.leaves2;
+                });
         });
   }
-    SubmitData(){
+  RefreshTable(){
+     this.interval2 = setTimeout(() => {  //show table Leave
+                this.service.getShowLeaves2(this.table.leaID).subscribe(data => {
+                    this.leaves2 = data;
+                    this.dataSource2.data = this.leaves2;
+                    //console.log('leaves2 -> ',this.leaves2);
+                });
+             }, 1000);
+  }
+    SubmitData(){ // Half Day
+        this. RefreshTable();
         if(this.leaveTypeSelect == null)  alert("กรุณาเลือกประเภทการลา");
         else if(this.startDate == null) alert("กรุณาเลือกวันลา");
         else if(this.reason == null) alert("กรุณากรอกเหตุผล");
@@ -183,13 +176,19 @@ export class AttendanceComponent implements OnInit {
             this.CalculateLeaveDate();
         }
     }
-    SubmitData2(){
-        if(this.leaveTypeSelect2 == null)  alert("กรุณาเลือกประเภทการลา");
+    SubmitData2(){ //Full day
+        this. RefreshTable();
+        this.CalculateLeaveDate();
+        if(this.diffDay<1){
+          this.startDate2  = null;
+          this.endDate2  = null;
+        }
+        else if(this.leaveTypeSelect2 == null)  alert("กรุณาเลือกประเภทการลา");
         else if(this.startDate2 == null) alert("กรุณาเลือกวันลา");
         else if(this.endDate2 == null) alert("กรุณาเลือกวันสิ้นสุดการลา");
         else if(this.reason2 == null) alert("กรุณากรอกเหตุผล");
         else{
-             this.http.post(this.API  +/leave2/+ this.table.leaID +'/'+ this.leaveTypeSelect2 +'/'+ this.startDate2 +'/'+  this.endDate2 +'/'+ this.reason2 ,{})
+             this.http.post(this.API  +/leave2/+ this.table.leaID +'/'+ this.leaveTypeSelect2 +'/'+ this.startDate2 +'/'+  this.endDate2 +'/'+ this.reason2 +'/'+ this.diffDay ,{})
                         .subscribe(
                                        dataLeave => {
                                            console.log('PUT Request is successful', dataLeave);
@@ -240,10 +239,11 @@ export class AttendanceComponent implements OnInit {
                   height:'200px',
                   data: row,
             });
-          }
+            this.RefreshTable();
+    }
 
     CalculateLeaveDate(){
-        this.diffTime1 = (this.endDate - this.startDate);
+        this.diffTime1 = (this.endDate2 - this.startDate2);
         this.diffDay = Math.ceil((this.diffTime1 / (1000 * 60 * 60 * 24))+1);
         console.log(this.diffDay);
     }

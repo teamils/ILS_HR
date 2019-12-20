@@ -14,12 +14,12 @@ import { ApproveBySupervisorComponent } from './approve-by-supervisor/approve-by
        { path: 'HR-ADMIN', component: HomeComponent },
        { path: 'newheader', component: NewheaderComponent },
 
-       { path: 'employee-add', component: EmployeeAddComponent },
+       /*{ path: 'employee-add', component: EmployeeAddComponent },
        { path: 'employee-master', component: EmployeeMasterComponent },
        { path: 'create-account', component: CreateAccountComponent },
        { path: 'employee-edit', component: EmployeeEditComponent },
        { path: 'attendance', component: AttendanceComponent },
-       { path: 'approveBySupervisor', component: ApproveBySupervisorComponent },
+       { path: 'approveBySupervisor', component: ApproveBySupervisorComponent },*/
 
     ];
 

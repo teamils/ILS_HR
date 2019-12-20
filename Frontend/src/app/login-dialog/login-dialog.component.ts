@@ -23,7 +23,7 @@ export class LoginDialogComponent implements OnInit {
   public API = '//localhost:8080/';
 
   employee : Array<any>;
-
+  hide:any;
   id : String = null;
   NewPassword : String = null ;
 

@@ -16,12 +16,11 @@ export interface PeriodicElement {
   symbol: string;
 }
 @Component({
-  selector: 'app-approve-by-supervisor',
-  templateUrl: './approve-by-supervisor.component.html',
-  styleUrls: ['./approve-by-supervisor.component.css']
+  selector: 'app-approve-by-manager',
+  templateUrl: './approve-by-manager.component.html',
+  styleUrls: ['./approve-by-manager.component.css']
 })
-
-export class ApproveBySupervisorComponent implements OnInit {
+export class ApproveByManagerComponent implements OnInit {
   public API = '//localhost:8080';
   leaves  : Array<any>;
   LeavesToComplete: Array<any>;
@@ -33,10 +32,10 @@ export class ApproveBySupervisorComponent implements OnInit {
   lastNameOnLogin  = localStorage.getItem('lName');
   departmentOnLogin = localStorage.getItem('departmentlogin');
 
-  displayedColumns: string[] = ['number','employeeCode', 'name','date', 'leaveType', 'reason', 'startDate', 'endDate','total', 'approvedBySupervisor', 'approvedByManager','leaveStatus','approve','notApprove'];
-  dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
-  @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
-  constructor(private service:ServiceService,
+displayedColumns: string[] = ['number','employeeCode', 'name','date', 'leaveType', 'reason', 'startDate', 'endDate','total', 'approvedBySupervisor', 'approvedByManager','leaveStatus','approve','notApprove'];
+dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
+@ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
+constructor(private service:ServiceService,
             private router:Router,
             private route:ActivatedRoute ,
             public dialog: MatDialog,
@@ -44,7 +43,8 @@ export class ApproveBySupervisorComponent implements OnInit {
 
 
   ngOnInit() {
-        this.service.getLeavesToNotCompleteBySupervisor(this.departmentOnLogin).subscribe(data => {
+        this.service.getShowLeavesNotApproveBySup(this.departmentOnLogin).subscribe(data => {
+            console.log('leaves -> ', data.leaveStatus);
             this.leaves = data;
             this.dataSource.data = this.leaves;
             //console.log('leaves -> ',this.leaves);
@@ -52,7 +52,7 @@ export class ApproveBySupervisorComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
   }
   approve(row : any){
-        this.http.post(this.API + '/approveBySupervisor/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {
+        this.http.post(this.API + '/approveByManager/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {
             console.log('Approve is successful');
             alert("Approve successful");
           },
@@ -62,7 +62,7 @@ export class ApproveBySupervisorComponent implements OnInit {
         );
   }
   notApprove(row : any){
-        this.http.post(this.API + '/notApproveBySupervisor/' + row.leavesID ,{}).subscribe(data => {
+        this.http.post(this.API + '/notApproveByManager/' + row.leavesID ,{}).subscribe(data => {
             console.log('Not approve is successful');
             alert("Not approve successful");
           },
@@ -70,29 +70,26 @@ export class ApproveBySupervisorComponent implements OnInit {
             console.log('Error', error);
           }
         );
-
   }
-
   onChange(){
            this.interval = setTimeout(() => {  //show table Leave
               if(this.isChecked == true){
+                this.dis=true;
                 this.service.getLeavesSelectDepartment(this.departmentOnLogin).subscribe(dataLeavesToComplete => {
                       this.leaves = dataLeavesToComplete;
                       this.dataSource.data = this.leaves;
                       //console.log('leaves -> ',this.leaves);
                   });
-                  this.dis=true;
               }
               else{
-                  this.service.getLeavesToNotCompleteBySupervisor(this.departmentOnLogin).subscribe(data => {
+                  this.dis=false;
+                  this.service.getShowLeavesNotApproveBySup(this.departmentOnLogin).subscribe(data => {
                     this.leaves = data;
                     this.dataSource.data = this.leaves;
                     //console.log('leaves -> ',this.leaves);
                   });
-                  this.dis=false;
               }
             }, 1000);
   }
-
 
 }

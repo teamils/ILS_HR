@@ -9,8 +9,8 @@ import javax.validation.constraints.NotNull;
 
 public class AccountUsers {
     @Id
-    @SequenceGenerator(name = "user_seq",sequenceName = "user_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "user_seq")
+    @SequenceGenerator(name = "user_seq1",sequenceName = "user_seq1",initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "user_seq1")
     private Long accountID;
 
     private String username;

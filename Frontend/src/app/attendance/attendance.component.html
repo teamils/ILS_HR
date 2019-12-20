@@ -1,10 +1,5 @@
 <mat-card class="cardHeader">
-
-      <!--<mat-form-field appearance="fill" hintLabel="พิมพ์รหัสพนักงานแล้วกด Enter" (keydown.enter)="NewSearchData(employeeMasterCustomerCode);">
-        <mat-label>พิมพ์รหัสพนักงาน</mat-label>
-        <input matInput   [(ngModel)]="employeeMasterCustomerCode">
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field> -->
+  <h1 align="center">The Leave</h1>
   ชื่อ - สกุล:&nbsp;<b>{{table.fName}}&nbsp;&nbsp;{{table.lName}}</b>&nbsp;&nbsp; แผนก:&nbsp;<b>{{table.empDep}}</b> &nbsp;&nbsp; ตำแหน่ง:&nbsp;<b>{{table.empPos}}</b>
   &nbsp;&nbsp;ลาพักร้อนคงเหลือ(วัน):&nbsp;<b>{{this.leavetatelAll.totalAnnualLeave}}</b>&nbsp;&nbsp;ลาป่วยคงเหลือ(วัน)/ปี:&nbsp;<b>{{this.leavetatelAll.totalSickLeave}}</b><hr>
   <mat-tab-group>
@@ -35,63 +30,7 @@
             </mat-form-field>
         <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;" (click)="SubmitData()">Save</button>
       </div>
-      <mat-card class="card2">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-          <ng-container matColumnDef="number" >
-            <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ลำดับที่</b></font></th>
-            <td mat-cell *matCellDef="let element ; let i = index">{{i+1}}.</td>
-          </ng-container>
-
-          <ng-container matColumnDef="leaveType">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>ประเภทการลา</b></font>  </th>
-            <td mat-cell *matCellDef="let element"> {{element.leaveTypeForHalfDay}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="halfDay">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>เช้า/บ่าย</b></font>  </th>
-            <td mat-cell *matCellDef="let element"> {{element.labelLeaveHalfDay}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="startDate">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>วันเริ่มจากวันที่</b></font>  </th>
-            <td mat-cell *matCellDef="let element"> {{element.startDateForHalfDay}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="reason">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>เหตุผล</b></font></th>
-            <td mat-cell *matCellDef="let element"> {{element.reasonForHalfDay}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="approvedBySupervisor">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>อนุมัติโดยSupervisor</b></font>  </th>
-            <td mat-cell *matCellDef="let element"> {{element.approvedBySupervisor}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="approvedByManager">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>อนุมัติโดยManager</b></font>  </th>
-            <td mat-cell *matCellDef="let element"> {{element.approvedByManager}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="leaveStatus">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>สถานะ</b></font>  </th>
-            <td mat-cell *matCellDef="let element"> {{element.leaveStatus}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="del" stickyEnd>
-            <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ยกเลิก</b></font></th>
-            <td mat-cell *matCellDef="let element" >
-              <button mat-icon-button matTooltip="ยกเลิกการลา" matTooltipPosition="right" (click)="CancelDataAttendance(element);"  #ckeckEdit>
-                <mat-icon>cancel_presentation</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      </mat-card>
     </mat-tab>
-
     <mat-tab label="การลาเต็มวัน">
         <div align="center">
           <h2>กรอกข้อมูลการลาเต็มวัน</h2>
@@ -119,70 +58,78 @@
           <mat-datepicker-toggle matSuffix [for]="pickers2"></mat-datepicker-toggle>
           <mat-datepicker touchUi #pickers2></mat-datepicker>
         </mat-form-field>
-        &nbsp;&nbsp;
-        <mat-form-field>
+        <br>
+        <mat-form-field style="width:30%;">
           <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason2" required ></textarea>
         </mat-form-field>
-
         <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;" (click)="SubmitData2()">Save</button>
       </div>
-      <mat-card class="card2">
-        <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
-          <ng-container matColumnDef="number" >
-            <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ลำดับที่</b></font></th>
-            <td mat-cell *matCellDef="let element ; let i = index">{{i+1}}.</td>
-          </ng-container>
-
-          <ng-container matColumnDef="leaveType">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>ประเภทการลา</b></font>  </th>
-            <td mat-cell *matCellDef="let element"> {{element.leaveTypeForAllDay}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="startDate">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>วันเริ่มจากวันที่</b></font>  </th>
-            <td mat-cell *matCellDef="let element"> {{element.startDateForAllDay}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="endDate2">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>ถึงวันที่</b></font>  </th>
-            <td mat-cell *matCellDef="let element"> {{element.endDateForAllDay}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="reason">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>เหตุผล</b></font>  </th>
-            <td mat-cell *matCellDef="let element"> {{element.reasonForAllDay}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="approvedBySupervisor">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>เวลาที่เริ่มลา</b></font>  </th>
-            <td mat-cell *matCellDef="let element"> {{element.approvedBySupervisor}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="approvedByManager">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>ถึงเวลา</b></font>  </th>
-            <td mat-cell *matCellDef="let element"> {{element.approvedByManager}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="leaveStatus">
-            <th mat-header-cell *matHeaderCellDef><font color="black"><b>เหตุผล</b></font></th>
-            <td mat-cell *matCellDef="let element"> {{element.leaveStatus}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="del" stickyEnd>
-            <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ยกเลิก</b></font></th>
-            <td mat-cell *matCellDef="let element" >
-              <button mat-icon-button matTooltip="ยกเลิกการลา" matTooltipPosition="right" (click)="CancelDataAttendance(element);"  #ckeckEdit>
-                <mat-icon>cancel_presentation</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-        </table>
-      </mat-card>
     </mat-tab>
   </mat-tab-group>
 </mat-card>
+<mat-card class="card2">
+  <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
+    <ng-container matColumnDef="number" >
+      <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>
+      <td mat-cell *matCellDef="let element ; let i = index">{{i+1}}.</td>
+    </ng-container>
 
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>วันที่</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.createDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="leaveType">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>ประเภทการลา</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.leaveTypeForAllDay}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="reason">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>เหตุผล</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.reasonForAllDay}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>เริ่มจากวันที่</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.startDateForAllDay}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="endDate2">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>ถึงวันที่</b></font>  </th>
+      <td mat-cell *matCellDef="let element" > {{element.endDateForAllDay}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>รวม</b></font>  </th>
+      <td mat-cell *matCellDef="let element">{{element.labelLeaveHalfDay}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="approvedBySupervisor">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>อนุมัติโดยSupervisor</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.approvedBySupervisor}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="approvedByManager">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>อนุมัติโดยManager</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.approvedByManager}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="leaveStatus">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>สถานะ</b></font></th>
+      <td mat-cell *matCellDef="let element"> {{element.leaveStatus}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="del">
+      <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ลบข้อมูล</b></font></th>
+      <td mat-cell *matCellDef="let element" >
+        <button mat-icon-button matTooltip="ยกเลิกการลา" matTooltipPosition="right" (click)="CancelDataAttendance(element); RefreshTable();"  [disabled]="dis"  #ckeckEdit>
+          <mat-icon>cancel_presentation</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+  </table>
+</mat-card>
 

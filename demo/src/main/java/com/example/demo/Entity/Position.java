@@ -11,8 +11,8 @@ import java.util.Collection;
 @Table(name = "Position")
 public class Position {
     @Id
-    @SequenceGenerator(name = "Position_seq", sequenceName = "Position_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Position_seq")
+    @SequenceGenerator(name = "Position_seq1", sequenceName = "Position_seq1",initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Position_seq1")
     private long positionID;
     private String positionName;
 

@@ -57,6 +57,7 @@ import { AttendanceDataComponent } from './attendance-data/attendance-data.compo
 import { AttendanceDeleteDialog } from './attendance-data/attendance-data.component';
 import { AttendanceCancelDialog } from './attendance/attendance.component';
 import { ApproveBySupervisorComponent } from './approve-by-supervisor/approve-by-supervisor.component';
+import { ApproveByManagerComponent } from './approve-by-manager/approve-by-manager.component';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { ApproveBySupervisorComponent } from './approve-by-supervisor/approve-by
     AttendanceDeleteDialog,
     ApproveBySupervisorComponent,
     AttendanceCancelDialog,
+    ApproveByManagerComponent,
 
   ],
 

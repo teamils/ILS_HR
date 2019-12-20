@@ -31,32 +31,33 @@ public class LeavesController {
         return leavesNumbers;
     }
 
-    @GetMapping(path = "/leaves")
-    public Collection<Leaves> leaves() {
-        return leavesRepository.findAll().stream().filter(this::Active).collect(Collectors.toList());
-    }
-    private boolean Active(Leaves leaves) {
-        return leaves.getIsActiveAttendance().equals("1");
-    }
-
-    @GetMapping("/showleave2/{employeeCode}")
-    public Iterable<Leaves> leaves(@PathVariable String employeeCode) {
-        return this.leavesRepository.getLeaves(employeeCode);
+    @GetMapping(path = "/LeavesToNotCompleteBySupervisor/{department}")
+    public Iterable<Leaves> leaves(@PathVariable String department) {
+        return this.leavesRepository.getLeavesToNotCompleteBySupervisor(department);
     }
 
     @GetMapping("/showleave3/{employeeCode}")
     public Iterable<Leaves> leaves2(@PathVariable String employeeCode) {
         return this.leavesRepository.getLeaves2(employeeCode);
     }
+    @GetMapping("/showLeavesToComplete")
+    public Iterable<Leaves> showLeavesToComplete() {
+        return this.leavesRepository.getLeavesToComplete();
+    }
+    @GetMapping("/showLeavesToNotComplete")
+    public Iterable<Leaves> showLeavesToNotComplete() {
+        return this.leavesRepository.getLeavesToNotComplete();
+    }
+    @GetMapping(path = "/NotApproveBySup/{department}")
+    public Iterable<Leaves> NotApproveBySup(@PathVariable String department) {
+        return this.leavesRepository.getLeavesToNotApproveByManager(department);
+    }
 
-   /* @PostMapping(path = "/savetotalAnnualLeave/{leaID}/{sumDate}") //Delete Attendance Data
-    public Leaves leaves(@PathVariable Long leaID,@PathVariable int sumDate) {
-        EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
-        Leaves leaves1 = new Leaves();
-        leaves1.setTotalAnnualLeave(sumDate);
-        leaves1.setEmployeeMasterid(employeeMaster);
-        return leavesRepository.save(leaves1);
-    }*/
+    @GetMapping("/LeavesSelectDepartment/{employeeCode}")
+    public Iterable<Leaves> LeavesSelectDepartment(@PathVariable String employeeCode) {
+        return this.leavesRepository.getLeavesSelectDepartment(employeeCode);
+    }
+
     @PostMapping("/leave/{leaID}/{leaveTypeSelect}/{labelLeaveHalfDay}/{startDate}/{reason}") // saveLeave ครึ่งวัน
     public Leaves leaves( @PathVariable Long leaID , @PathVariable String leaveTypeSelect ,@PathVariable String labelLeaveHalfDay
             , @PathVariable Date startDate , @PathVariable String reason ){
@@ -67,22 +68,23 @@ public class LeavesController {
         Leaves leaves1 = new Leaves();
         leaves1.setEmployeeMasterid(employeeMaster);
         leaves1.setCreateDate(createDate);
-        leaves1.setLeaveTypeForHalfDay(leaveTypeSelect);
-        leaves1.setStartDateForHalfDay(startDate);
-        leaves1.setReasonForHalfDay(reason);
+        leaves1.setLeaveTypeForAllDay(leaveTypeSelect);
+        leaves1.setStartDateForAllDay(startDate);
+        leaves1.setEndDateForAllDay(startDate);
+        leaves1.setReasonForAllDay(reason);
         leaves1.setLabelLeaveHalfDay(labelLeaveHalfDay);
 
-        leaves1.setApprovedBySupervisor("not approved");
-        leaves1.setApprovedByManager("not approved");
+        leaves1.setApprovedBySupervisor("Waiting approve");
+        leaves1.setApprovedByManager("Waiting approve");
         leaves1.setIsActiveAttendance("1");
         leaves1.setLeaveStatus("Waiting");
         leavesRepository.save(leaves1);
         return leaves1;
     }
 
-    @PostMapping("/leave2/{leaID}/{leaveTypeSelect2}/{startDate2}/{endDate2}/{reason2}") // saveLeave2 เต็มวัน
+    @PostMapping("/leave2/{leaID}/{leaveTypeSelect2}/{startDate2}/{endDate2}/{reason2}/{diffDay}") // saveLeave2 เต็มวัน
     public Leaves leaves2( @PathVariable Long leaID , @PathVariable String leaveTypeSelect2 ,@PathVariable Date startDate2
-            , @PathVariable Date endDate2 , @PathVariable String reason2 ){
+            , @PathVariable Date endDate2 , @PathVariable String reason2  , @PathVariable String diffDay){
 
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
         Date createDate = new Date();
@@ -94,9 +96,10 @@ public class LeavesController {
         leaves2.setStartDateForAllDay(startDate2);
         leaves2.setEndDateForAllDay(endDate2);
         leaves2.setReasonForAllDay(reason2);
+        leaves2.setLabelLeaveHalfDay(diffDay + " ว ัน");
 
-        leaves2.setApprovedBySupervisor("not approved");
-        leaves2.setApprovedByManager("not approved");
+        leaves2.setApprovedBySupervisor("Waiting approve");
+        leaves2.setApprovedByManager("Waiting approve");
         leaves2.setIsActiveAttendance("1");
         leaves2.setLeaveStatus("Waiting");
         leavesRepository.save(leaves2);
@@ -106,7 +109,7 @@ public class LeavesController {
     @PostMapping(path = "/deleteAttendance/{leavesID}") //Delete Attendance Data
     public Leaves leaves(@PathVariable Long leavesID) {
         Leaves leaves = leavesRepository.findById(leavesID).get();
-        leaves.setIsActiveAttendance("0");
+        leaves.setLeaveStatus("Cancel");
         leavesRepository.save(leaves);
         return leaves;
     }
@@ -136,8 +139,42 @@ public class LeavesController {
     @PostMapping(path = "/CancelLeave/{leavesID}") //Cancel Leave
     public Leaves leaves2(@PathVariable Long leavesID) {
         Leaves leaves = leavesRepository.findById(leavesID).get();
-        leaves.setLeaveStatus("Cancel");
+        leaves.setIsActiveAttendance("0");
         leavesRepository.save(leaves);
         return leaves;
+    }
+
+    @PostMapping("/approveBySupervisor/{leavesID}/{firstNameOnLogin}/{lastNameOnLogin}") // approveBySupervisor
+    public Leaves approveBySupervisor( @PathVariable Long leavesID,@PathVariable String firstNameOnLogin,@PathVariable String lastNameOnLogin){
+        Leaves approveBySupervisor = leavesRepository.findById(leavesID).get();
+        String name = firstNameOnLogin +"  "+ lastNameOnLogin;
+        approveBySupervisor.setApprovedBySupervisor(name);
+        leavesRepository.save(approveBySupervisor);
+        return approveBySupervisor;
+    }
+    @PostMapping("/notApproveBySupervisor/{leavesID}") // not ApproveBySupervisor
+    public Leaves notApproveBySupervisor( @PathVariable Long leavesID){
+        Leaves notApproveBySupervisor = leavesRepository.findById(leavesID).get();
+        notApproveBySupervisor.setApprovedBySupervisor("Not approve");
+        notApproveBySupervisor.setLeaveStatus("NotApproveBySup");
+        leavesRepository.save(notApproveBySupervisor);
+        return notApproveBySupervisor;
+    }
+    @PostMapping("/approveByManager/{leavesID}/{firstNameOnLogin}/{lastNameOnLogin}") // approveByManager
+    public Leaves approveByManager( @PathVariable Long leavesID,@PathVariable String firstNameOnLogin,@PathVariable String lastNameOnLogin){
+        Leaves approveByManager = leavesRepository.findById(leavesID).get();
+        String name = firstNameOnLogin +"  "+ lastNameOnLogin;
+        approveByManager.setApprovedByManager(name);
+        approveByManager.setLeaveStatus("Complete");
+        leavesRepository.save(approveByManager);
+        return approveByManager;
+    }
+    @PostMapping("/notApproveByManager/{leavesID}") // not ApproveBySupervisor
+    public Leaves notApproveByManager( @PathVariable Long leavesID){
+        Leaves notApproveByManager = leavesRepository.findById(leavesID).get();
+        notApproveByManager.setApprovedByManager("Not approve");
+        notApproveByManager.setLeaveStatus("Not complete");
+        leavesRepository.save(notApproveByManager);
+        return notApproveByManager;
     }
 }

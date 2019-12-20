@@ -26,7 +26,7 @@
 }
 .sidenav a {
   padding: 2px 2px 2px 2px;
-  text-decoration: none;
+  //text-decoration: none;
   font-size: 17px;
   color: #000000;
   display: block;
@@ -35,6 +35,7 @@
 .sidenav a:hover {
   color: #0000ff;
 }
+
 
 .dd{
   font-size: 18px;
@@ -114,7 +115,7 @@
 }
 
 .example-header-image {
-  background-image: url('http://www.ils.co.th/wp-content/themes/ils/images/logo.png');
+  background-image: url('C:\Users\Diki Kawasaki\Downloads\145841-avatar-set\svg\man-1.svg');
   background-size: cover;
 }
 
@@ -123,5 +124,9 @@ margin-top: auto;
   margin-right: auto;
   margin-left: 20px;
   margin-bottom: auto;
+}
+
+example-fill-remaining-space {
+  flex: 1 1 auto;
 }
 

@@ -15,10 +15,13 @@
    margin-bottom: auto;
 }
 
-td, th {
+td{
   border: 1px solid #ffffff;
   text-align: center;
-  padding: 8px;
+}
+th {
+  border: 1px solid #ffffff;
+  background-color: #C0C0f0;
 }
 tr:nth-child(even) {
   background-color: #E6E6FA;
@@ -30,14 +33,26 @@ table {
   height: auto;
 }
 
-  th {
-    background-color: #C0C0f0;
-  }
-  th.mat-column-leaveType{
-              padding: 10px;
-              //width:auto;
-     }
+
+   th.mat-column-number,
+   th.mat-column-date,
+   th.mat-column-leaveType,
+   th.mat-column-halfDay,
+   th.mat-column-startDate,
+   th.mat-column-reason,
+   th.mat-column-approvedBySupervisor,
+   th.mat-column-approvedByManager,
+   th.mat-column-leaveStatus,
+   th.mat-column-del,
+   th.mat-column-endDate2,
+   th.mat-column-total{
+          text-align: center;
+   }
 
 mat-grid-tile {
   background: lightblue;
+}
+
+.example-fill-remaining-space {
+  flex: 1 1 auto;
 }

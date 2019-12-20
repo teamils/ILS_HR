@@ -10,8 +10,8 @@ import java.util.Collection;
 @Table(name = "RoleStatus")
 public class RoleStatus {
     @Id
-    @SequenceGenerator(name = "RoleStatus_seq", sequenceName = "RoleStatus_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RoleStatus_seq")
+    @SequenceGenerator(name = "RoleStatus_seq1", sequenceName = "RoleStatus_seq1",initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RoleStatus_seq1")
     private long RoleStatusID;
     private String RoleStatusName;
     private String RoleStatusAbbreviation;

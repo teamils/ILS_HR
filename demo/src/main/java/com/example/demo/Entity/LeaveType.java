@@ -11,8 +11,8 @@ import java.util.Date;
 @Table(name = "LeaveType")
 public class LeaveType {
     @Id
-    @SequenceGenerator(name = "LeaveType_seq", sequenceName = "LeaveType_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LeaveType_seq")
+    @SequenceGenerator(name = "LeaveType_seq1", sequenceName = "LeaveType_seq1",initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LeaveType_seq1")
     private long leaveTypeID;
     private String leaveTypeName;
 

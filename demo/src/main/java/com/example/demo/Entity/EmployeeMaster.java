@@ -17,8 +17,8 @@ import java.util.Date;
 @Table(name = "EmployeeMaster")
 public class EmployeeMaster {
     @Id
-    @SequenceGenerator(name = "Emp_seq", sequenceName = "Emp_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Emp_seq")
+    @SequenceGenerator(name = "Emp_seq1", sequenceName = "Emp_seq1",initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Emp_seq1")
     private long employeeMasterID;
     //@Id @GeneratedValue(strategy=GenerationType.AUTO)
 

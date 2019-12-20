@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
     public API = '//localhost:8080/';
 
     employee : Array<any>;
-
+    hide:any;
     id : String = null;
     NewPassword : String = null ;
 
@@ -67,6 +67,7 @@ export class HomeComponent implements OnInit {
                 localStorage.setItem('empCode', this.table.empCode);
                 localStorage.setItem('fName', this.table.fName);
                 localStorage.setItem('lName', this.table.lName);
+                localStorage.setItem('departmentlogin', data.employeeDepartment);
 
                 if(data != null){
                     this.router.navigate(['newheader']);

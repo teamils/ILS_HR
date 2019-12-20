@@ -29,6 +29,7 @@ export class NewheaderComponent implements OnInit {
   selectAttendance : String;
   selectAttendanceDate : String;
   selectApproveBySupervisor : String;
+  selectApproveByManager : String;
 
   employee : Array<any>;
   id : String ;
@@ -66,6 +67,8 @@ private _mobileQueryListener: () => void;
                               this.selectAttendance =  localStorage.getItem('selectAttendance');
                               localStorage.setItem('selectApproveBySupervisor', 'false');
                               this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+                              localStorage.setItem('selectApproveByManager', 'false');
+                              this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
                           }
                           else if(this.links == 'attendanceData'){
                               localStorage.setItem('selectAttendanceDate', 'true');
@@ -76,6 +79,8 @@ private _mobileQueryListener: () => void;
                               this.selectAttendance =  localStorage.getItem('selectAttendance');
                               localStorage.setItem('selectApproveBySupervisor', 'false');
                               this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+                              localStorage.setItem('selectApproveByManager', 'false');
+                              this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
                           }
                           else if(this.links == 'attendance'){
                               localStorage.setItem('selectAttendance', 'true');
@@ -86,9 +91,25 @@ private _mobileQueryListener: () => void;
                               this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
                               localStorage.setItem('selectApproveBySupervisor', 'false');
                               this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+                              localStorage.setItem('selectApproveByManager', 'false');
+                              this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
                           }
                           else if(this.links == 'approvebysupervisor'){
                               localStorage.setItem('selectApproveBySupervisor', 'true');
+                              this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+                              localStorage.setItem('selectAttendance', 'false');
+                              this.selectAttendance =  localStorage.getItem('selectAttendance');
+                              localStorage.setItem('selectAttendanceDate', 'false');
+                              this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+                              localStorage.setItem('selectEmployeemaster', 'false');
+                              this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+                              localStorage.setItem('selectApproveByManager', 'false');
+                              this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
+                          }
+                          else if(this.links == 'approvebymanager'){
+                              localStorage.setItem('selectApproveByManager', 'true');
+                              this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
+                              localStorage.setItem('selectApproveBySupervisor', 'false');
                               this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
                               localStorage.setItem('selectAttendance', 'false');
                               this.selectAttendance =  localStorage.getItem('selectAttendance');
@@ -105,7 +126,6 @@ private _mobileQueryListener: () => void;
       ngOnInit() : void {
         this.role = localStorage.getItem('role');
         this.mobileQuery.removeListener(this._mobileQueryListener);
-
       }
       shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
 
@@ -135,6 +155,8 @@ private _mobileQueryListener: () => void;
           this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
           localStorage.setItem('selectApproveBySupervisor', 'false');
           this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+          localStorage.setItem('selectApproveByManager', 'false');
+          this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
 
           /*console.log(this.selectEmployeemaster);*/
       }
@@ -150,6 +172,8 @@ private _mobileQueryListener: () => void;
           this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
           localStorage.setItem('selectApproveBySupervisor', 'false');
           this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+          localStorage.setItem('selectApproveByManager', 'false');
+          this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
       }
       callAttendance(){
           localStorage.setItem('links', 'attendance');
@@ -163,6 +187,8 @@ private _mobileQueryListener: () => void;
           this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
           localStorage.setItem('selectApproveBySupervisor', 'false');
           this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+          localStorage.setItem('selectApproveByManager', 'false');
+          this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
       }
       callAttendanceData(){
           localStorage.setItem('links', 'attendanceData');
@@ -176,7 +202,8 @@ private _mobileQueryListener: () => void;
           this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
           localStorage.setItem('selectApproveBySupervisor', 'false');
           this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
-
+          localStorage.setItem('selectApproveByManager', 'false');
+          this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
       }
       callApproveBySupervisor(){
           localStorage.setItem('links', 'approvebysupervisor');
@@ -190,7 +217,24 @@ private _mobileQueryListener: () => void;
           this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
           localStorage.setItem('selectEmployeemaster', 'false');
           this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+          localStorage.setItem('selectApproveByManager', 'false');
+          this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
+      }
 
+      callApproveByManager(){
+          localStorage.setItem('links', 'approvebymanager');
+          localStorage.setItem('selectApproveByManager', 'true');
+          this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
+          localStorage.setItem('selectApproveBySupervisor', 'false');
+          this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+          localStorage.setItem('selectAttendanceDate', 'false');
+          this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+          localStorage.setItem('selectAttendance', 'false');
+          this.selectAttendance =  localStorage.getItem('selectAttendance')
+          localStorage.setItem('selectEmployeeAdd', 'false');
+          this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
+          localStorage.setItem('selectEmployeemaster', 'false');
+          this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
       }
 
 }
