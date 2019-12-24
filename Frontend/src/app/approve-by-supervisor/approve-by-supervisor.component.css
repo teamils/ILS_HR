@@ -34,7 +34,9 @@ table {
    th.mat-column-leaveStatus,
    th.mat-column-del,
    th.mat-column-endDate2,
-   th.mat-column-total{
+   th.mat-column-total,
+   th.mat-column-approve,
+   th.mat-column-notApprove{
           text-align: center;
    }
 

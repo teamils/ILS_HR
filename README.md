@@ -21,8 +21,7 @@ Angular
 
 ng build --prod --base-href=/yourNameProject/
 
-ng build --prod --base-href=/${project.name}/
-
+ng build --prod --base-href=/ILS-HR/
 
 
 DATABASE

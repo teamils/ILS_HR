@@ -4,8 +4,8 @@ import {ChangeDetectorRef,  OnDestroy} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Router,ActivatedRoute} from "@angular/router";
 import { ServiceService } from '../service/service.service';
-import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 import { Inject} from '@angular/core';
+import { AppComponent } from '../app.component';
 
 export interface DialogData {
   employee : Array<any>;
@@ -43,7 +43,7 @@ export class NewheaderComponent implements OnInit {
   NewRoleStatus =  localStorage.getItem('role');
   links = localStorage.getItem('links');
 
-private _mobileQueryListener: () => void;
+  private _mobileQueryListener: () => void;
 
       constructor(changeDetectorRef: ChangeDetectorRef
                   ,media: MediaMatcher
@@ -129,14 +129,6 @@ private _mobileQueryListener: () => void;
       }
       shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
 
-
-      openLoginDialogComponent(){
-            const dialogRef = this.dialog.open(LoginDialogComponent, {
-                  width: '330px',
-                 data: {id: this.id, NewPassword: this.NewPassword, employee:this.employee}
-
-            });
-      }
       logout(){
         localStorage.clear();
         localStorage.setItem('logouts', 'true');

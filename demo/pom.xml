@@ -13,7 +13,7 @@
 	<artifactId>demo</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ILS_HR</name>
+	<name>Frontend</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -90,10 +90,16 @@
 
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
-		<finalName>ILS_HR</finalName>
+		<finalName>Frontend</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -104,17 +110,23 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>2.2</version>
 				<configuration>
-					<url>http://192.168.1.46:8080/manager/html</url>
-					<server>TomcatServer</server>
-					<path>/ILS_HR</path>
+					<url>http://192.168.1.47:8080/manager/html</url>
+					<server>
+						<id>TomcatServer</id>
+						<username>webdev</username>
+						<password>webdev2019</password>
+					</server>
+					<path>/Frontend</path>
 				</configuration>
 			</plugin>
-			 <plugin>
+			<!-- <plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.0</version>
-			</plugin>
+			</plugin> -->
 		</plugins>
 	</build>
 
-
 </project>
+
+
+

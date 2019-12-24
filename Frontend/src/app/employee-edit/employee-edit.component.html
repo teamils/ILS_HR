@@ -6,10 +6,11 @@
       </button>
     </div>
     <br><br>
-    <div (keydown.enter)="EditEmployee()">
+    <mat-checkbox [(ngModel)]="dis">Edit employee code!</mat-checkbox>
+    <div (keydown.enter)="EditEmployee()" >
       <mat-form-field appearance="outline">
         <mat-label>รหัสพนักงาน</mat-label>
-        <input matInput disabled [(ngModel)]="NewemployeeMasterCustomerCode">
+        <input matInput [disabled]="!dis" [(ngModel)]="NewemployeeMasterCustomerCode">
         <mat-icon matSuffix>perm_identity</mat-icon>
       </mat-form-field>
       &nbsp;

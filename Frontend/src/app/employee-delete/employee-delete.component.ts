@@ -18,7 +18,8 @@ export interface DialogData {
   styleUrls: ['./employee-delete.component.css']
 })
 export class EmployeeDeleteComponent implements OnInit {
-    public API = '//localhost:8080/';
+    //public API = 'http://192.168.1.47:8080';
+    public API = '//localhost:8080';
     hide : boolean;
     panelOpenState : boolean=true;
     NewIsActive: string;

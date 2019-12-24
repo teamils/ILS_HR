@@ -37,10 +37,8 @@
         </ng-container>
 
         <ng-container matColumnDef="number" >
-          <tr>
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>
           <td mat-cell *matCellDef="let element; let i = index">{{i+1}}.</td>
-          </tr>
         </ng-container>
 
         <ng-container matColumnDef="empCodeID" class="example-detail-row" >
@@ -100,20 +98,20 @@
           <td mat-cell *matCellDef="let element"> {{element.employeeMasterTel1}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="Email">
-          <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Email</b></font></th>
-          <td mat-cell *matCellDef="let element"> {{element.empEmail}} </td>
-        </ng-container>
+        <!--  <ng-container matColumnDef="Email">
+           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Email</b></font></th>
+           <td mat-cell *matCellDef="let element"> {{element.empEmail}} </td>
+         </ng-container>
 
-       <!-- <ng-container matColumnDef="AddressReal">
-          <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Address real</b></font></th>
-          <td mat-cell *matCellDef="let element"> {{element.empAddressReal}} </td>
-        </ng-container>
+        <ng-container matColumnDef="AddressReal">
+           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Address real</b></font></th>
+           <td mat-cell *matCellDef="let element"> {{element.empAddressReal}} </td>
+         </ng-container>
 
-        <ng-container matColumnDef="AddressPerson">
-          <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Address person</b></font></th>
-          <td mat-cell *matCellDef="let element"> {{element.empAddressPerson}} </td>
-        </ng-container> -->
+         <ng-container matColumnDef="AddressPerson">
+           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Address person</b></font></th>
+           <td mat-cell *matCellDef="let element"> {{element.empAddressPerson}} </td>
+         </ng-container> -->
 
         <ng-container matColumnDef="StartDate">
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Start work</b></font></th>

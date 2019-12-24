@@ -17,7 +17,7 @@ import { EmployeeDeleteComponent } from '../employee-delete/employee-delete.comp
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-
+import { AppComponent } from '../app.component';
 
 export interface Emp{
   empCodeIDxx : number;
@@ -33,14 +33,13 @@ export interface Emp{
 
 export class EmployeeMasterComponent implements OnInit {
     onHide : boolean;
-    public API = '//localhost:8080/ILS_HR';   //for test
     data:any={}
     employee : Array<any>;
     employeeSelect : '';
     dataSearch: null;
     accountuser : Array<any>;
     pipe = new DatePipe('en-TH');
-    displayedColumns: string[] = ['select','number','empCodeID'/*,'prefix'*/,'empFristName','empLastName',/*'NickName',*/'Gender'/*,'Status','BirthDate'*/ /*,'Age'*/ ,'PersonID','Tel1','Email'/*,'AddressReal','AddressPerson'*/,'StartDate','Position','Department','empType'/*,'educations'*//*,'bank','bankNumber'*/,'del','Edit'];
+    displayedColumns: string[] = ['select','number','empCodeID'/*,'prefix'*/,'empFristName','empLastName',/*'NickName',*/'Gender'/*,'Status','BirthDate'*/ /*,'Age'*/ ,'PersonID','Tel1'/*,'Email','AddressReal','AddressPerson'*/,'StartDate','Position','Department','empType'/*,'educations'*//*,'bank','bankNumber'*/,'del','Edit'];
     dataSource = new MatTableDataSource<Emp>(this.employee);
     selection = new SelectionModel<Emp>(true, []);
     @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
@@ -76,8 +75,9 @@ export class EmployeeMasterComponent implements OnInit {
                 private route:ActivatedRoute ,
                 public dialog: MatDialog,
                  private http: HttpClient,
-                private service:ServiceService,
-               ) { }
+                private service:ServiceService) { }
+
+
 
         ngOnInit() {
             this.service.getemployee().subscribe(data => {

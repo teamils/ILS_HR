@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class ServiceService {
 
   public API = '//localhost:8080';
-
+  //public API = 'http://192.168.1.47:8080';
 
   constructor( private http: HttpClient ) { }
 
@@ -30,6 +30,9 @@ export class ServiceService {
   }
   getLeaveType():Observable<any>{
       return this.http.get(this.API+'/leaveType',{})
+  }
+  getleaveTypeForAlldays():Observable<any>{
+      return this.http.get(this.API+'/leaveTypeForAlldays',{})
   }
   getLeavesToNotCompleteBySupervisor(department:String):Observable<any>{
       return this.http.get(this.API+'/LeavesToNotCompleteBySupervisor/'+department,{})
@@ -55,9 +58,9 @@ export class ServiceService {
   getUserPassword(employeeCode: String, password : String): Observable<any>{
       return this.http.get(this.API+'/login/'+employeeCode+'/'+password,{})
   }
-  getShowLeavesNumber(leaID : String):Observable<any>{
+  /*getShowLeavesNumber(leaID : String):Observable<any>{
       return this.http.get(this.API+'/showleaveNumber/'+leaID,{})
-  }
+  }*/
   getSearchEmployee(dataSearch:String):Observable<any>{
       return this.http.get(this.API+'/SearchEmployee/'+dataSearch,{})
   }

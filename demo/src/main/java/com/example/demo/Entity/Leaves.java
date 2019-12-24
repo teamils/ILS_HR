@@ -3,6 +3,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.time.LocalDate;
@@ -16,8 +18,10 @@ public class Leaves {
     @SequenceGenerator(name = "Leaves3_seq", sequenceName = "Leaves3_seq",initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator ="Leaves3_seq")
     private long leavesID;
-    @Temporal(TemporalType.DATE)
-    private Date createDate;
+
+
+    private String createDate;
+
     private Date updateLeave_date;
     private String updateLeave_by;
     private String createLeave_by;
@@ -27,6 +31,8 @@ public class Leaves {
     private Date startDateForAllDay;
     @Temporal(TemporalType.DATE)
     private Date endDateForAllDay;
+    private String startTime;
+    private String endTime;
     private String leaveTypeForAllDay;
 
     private String approvedBySupervisor;
@@ -35,6 +41,39 @@ public class Leaves {
 
     @ManyToOne private EmployeeMaster employeeMasterid;
     private String leaveStatus;
+    private String reasonNotApprove;
+
+    public String getReasonNotApprove() {
+        return reasonNotApprove;
+    }
+
+    public void setReasonNotApprove(String reasonNotApprove) {
+        this.reasonNotApprove = reasonNotApprove;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
 
     public long getLeavesID() {
         return leavesID;
@@ -44,13 +83,6 @@ public class Leaves {
         this.leavesID = leavesID;
     }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
 
     public Date getUpdateLeave_date() {
         return updateLeave_date;

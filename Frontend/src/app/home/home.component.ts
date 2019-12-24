@@ -6,6 +6,7 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef,  OnDestroy} from '@angular/core';
 import { ServiceService } from '../service/service.service';
 import { HttpClient} from '@angular/common/http';
+import { AppComponent } from '../app.component';
 
 export interface DialogData {
   employee : Array<any>;
@@ -18,8 +19,6 @@ export interface DialogData {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    public API = '//localhost:8080/';
-
     employee : Array<any>;
     hide:any;
     id : String = null;

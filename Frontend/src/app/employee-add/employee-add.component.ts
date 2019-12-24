@@ -8,6 +8,7 @@ import { HttpClient} from '@angular/common/http';
 
 import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-employee-add',
@@ -24,6 +25,8 @@ import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/mater
 })
 
 export class EmployeeAddComponent implements OnInit {
+
+
 data:any={}
 
 employeeMasterCustomerCode : null;
@@ -63,13 +66,13 @@ role_statusSelect = '';
 passwordCreate : null;
 
 
-public API = '//localhost:8080/ILS_HR';   //for test
 
 constructor(private route:ActivatedRoute ,
             public dialog: MatDialog,
             private http: HttpClient,
             private service:ServiceService,
-           ) { }
+            public api : AppComponent) { }
+    public API3 = this.api.API;
 
     ngOnInit() {
         this.route.params.subscribe(prams=>{
@@ -132,7 +135,7 @@ constructor(private route:ActivatedRoute ,
         }
 
         else{
-       this.http.post(this.API + '/'+this.employeeMasterCustomerCode + '/' + this.prefixSelect  + '/' + this.empMasterFirstName +'/' + this.empMasterLastName
+       this.http.post(this.API3 + /ILS_HR/ + this.employeeMasterCustomerCode + '/' + this.prefixSelect  + '/' + this.empMasterFirstName +'/' + this.empMasterLastName
        +'/' + this.empMasterNickName +'/' + this.genderSelect  +'/' + this.BirthDateSelect
        +'/' + this.personID +'/' + this.callContact +'/' + this.emails +'/' + this.homeNo +'/' + this.homeNowAddress
        +'/' + this.startWorks +'/' + this.positionSelect +'/' + this.departmentSelect +'/' + this.typeNameSelect

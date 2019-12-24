@@ -8,6 +8,7 @@ import { ServiceService } from '../service/service.service';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { AppComponent } from '../app.component';
 
 export interface PeriodicElement {
   name: string;
@@ -27,7 +28,7 @@ export class AttendanceDataComponent implements OnInit {
   isChecked;
   interval:any;
   dis;
-  displayedColumns: string[] = ['number','employeeCode', 'name','position','department','date', 'leaveType', 'reason', 'startDate', 'endDate','total', 'approvedBySupervisor', 'approvedByManager','leaveStatus','del'];
+  displayedColumns: string[] = ['number','employeeCode', 'name','position','department','employeeType','date', 'leaveType', 'reason', 'startDate', 'endDate','total', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','leaveStatus','del'];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
 
 
@@ -36,7 +37,9 @@ export class AttendanceDataComponent implements OnInit {
             private router:Router,
             private route:ActivatedRoute ,
             public dialog: MatDialog,
-             private http: HttpClient,) { }
+             private http: HttpClient,
+             public api : AppComponent) { }
+    public API2 = this.api.API;
 
   ngOnDestroy() {
     if (this.interval) { // show table Leave

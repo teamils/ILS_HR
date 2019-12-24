@@ -100,7 +100,6 @@ public class EmployeeMaster {
     }
 
 
-
     public Long getEmployeeMasterID() {
         return employeeMasterID;
     }

@@ -1,0 +1,10 @@
+
+<h3 align="center">Why you don't approve?</h3>
+<mat-form-field style="width:100%;">
+  <textarea matInput placeholder="reason"  [(ngModel)]="reasonNotapprove" required></textarea>
+</mat-form-field>
+<div align="center">
+  <button mat-raised-button color="primary"(click)="notApprove()" >Confirm</button>&nbsp;&nbsp;
+  <button mat-raised-button color="accent" (click)="closeDialog()">Cancel</button>
+</div>
+

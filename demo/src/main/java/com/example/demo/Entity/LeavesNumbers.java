@@ -11,39 +11,65 @@ public class LeavesNumbers {
     @SequenceGenerator(name = "LeavesNumbers_seq", sequenceName = "LeavesNumbers_seq",initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator ="LeavesNumbers_seq")
     private long leavesNumbersID;
+    private int getDay; // วันได้รับ
+    private int usedDay; //วันใช้ไป
+    private int BalanceDay; // วันคงเหลือ
+    private int CompoundDay; // ทบวัน
 
-    private int  totalAnnualLeave; // ลาพักร้อนคงเหลือ วัน/ปี
-    private int  sumAnnualLeave;
-    private int  totalSickLeave; // ลาป่วยคงเหลือ วัน/ปี
-    private int  sumSickLeave;
-    private int  totalOthersLeave;
-    private int  sumOthersLeave;
-    private int  sumAllLeave;
-    @ManyToOne private EmployeeMaster employeeMasterid;
+    @ManyToOne
+    @JoinColumn(name = "leaveTypeID", insertable = true)
+    private LeaveTypeForAllday leaveTypeid;
 
+    @ManyToOne
+    @JoinColumn(name = "employeeMasterID", insertable = true)
+     private EmployeeMaster employeeMasterid;
 
-    public int getSumAnnualLeave() {
-        return sumAnnualLeave;
+    public long getLeavesNumbersID() {
+        return leavesNumbersID;
     }
 
-    public void setSumAnnualLeave(int sumAnnualLeave) {
-        this.sumAnnualLeave = sumAnnualLeave;
+    public void setLeavesNumbersID(long leavesNumbersID) {
+        this.leavesNumbersID = leavesNumbersID;
     }
 
-    public int getSumSickLeave() {
-        return sumSickLeave;
+    public int getGetDay() {
+        return getDay;
     }
 
-    public void setSumSickLeave(int sumSickLeave) {
-        this.sumSickLeave = sumSickLeave;
+    public void setGetDay(int getDay) {
+        this.getDay = getDay;
     }
 
-    public int getSumOthersLeave() {
-        return sumOthersLeave;
+    public int getUsedDay() {
+        return usedDay;
     }
 
-    public void setSumOthersLeave(int sumOthersLeave) {
-        this.sumOthersLeave = sumOthersLeave;
+    public void setUsedDay(int usedDay) {
+        this.usedDay = usedDay;
+    }
+
+    public int getBalanceDay() {
+        return BalanceDay;
+    }
+
+    public void setBalanceDay(int balanceDay) {
+        BalanceDay = balanceDay;
+    }
+
+    public int getCompoundDay() {
+        return CompoundDay;
+    }
+
+    public void setCompoundDay(int compoundDay) {
+        CompoundDay = compoundDay;
+    }
+
+    public LeaveTypeForAllday getLeaveTypeForAllday() {
+        return leaveTypeid;
+    }
+
+    public void setLeaveTypeForAllday(LeaveTypeForAllday leaveTypeForAllday) {
+        this.leaveTypeid = leaveTypeForAllday;
     }
 
     public EmployeeMaster getEmployeeMasterid() {
@@ -54,45 +80,7 @@ public class LeavesNumbers {
         this.employeeMasterid = employeeMasterid;
     }
 
-    public long getLeavesNumbersID() {
-        return leavesNumbersID;
-    }
 
-    public void setLeavesNumbersID(long leavesNumbersID) {
-        this.leavesNumbersID = leavesNumbersID;
-    }
-
-    public int getTotalAnnualLeave() {
-        return totalAnnualLeave;
-    }
-
-    public void setTotalAnnualLeave(int totalAnnualLeave) {
-        this.totalAnnualLeave = totalAnnualLeave;
-    }
-
-    public int getTotalSickLeave() {
-        return totalSickLeave;
-    }
-
-    public void setTotalSickLeave(int totalSickLeave) {
-        this.totalSickLeave = totalSickLeave;
-    }
-
-    public int getTotalOthersLeave() {
-        return totalOthersLeave;
-    }
-
-    public void setTotalOthersLeave(int totalOthersLeave) {
-        this.totalOthersLeave = totalOthersLeave;
-    }
-
-    public int getSumAllLeave() {
-        return sumAllLeave;
-    }
-
-    public void setSumAllLeave(int sumAllLeave) {
-        this.sumAllLeave = sumAllLeave;
-    }
 
 
 }

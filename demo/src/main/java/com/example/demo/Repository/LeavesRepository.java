@@ -29,11 +29,11 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
     Collection<Leaves> getLeavesToNotComplete();
 
     //approveBySupervisor // ตอนไม่กด Complete
-    @Query(value = "SELECT * FROM leaves,employee_master WHERE is_active_attendance='1' and employee_department=:department3 and leave_status <>'Complete' and leaves.employee_masterid_employee_masterid=employee_master.employee_masterid" ,nativeQuery = true)
+    @Query(value = "SELECT * FROM leaves,employee_master WHERE is_active_attendance='1' and employee_department=:department3 and leave_status <>'Complete' and leave_status <>'Cancel' and leaves.employee_masterid_employee_masterid=employee_master.employee_masterid" ,nativeQuery = true)
     Collection<Leaves> getLeavesToNotCompleteBySupervisor(@Param("department3") String department3 );
 
     // approveByManager ลูกน้องตัวเอง // ตอนไม่กด Complete
-    @Query(value = "SELECT * FROM leaves,employee_master WHERE is_active_attendance='1' and employee_department=:department2 and leave_status <>'NotApproveBySup' and leave_status <>'Complete' and leaves.employee_masterid_employee_masterid=employee_master.employee_masterid" ,nativeQuery = true)
+    @Query(value = "SELECT * FROM leaves,employee_master WHERE is_active_attendance='1' and employee_department=:department2 and leave_status <>'Complete' and leave_status <>'Cancel' and leave_status <>'Supervisor not approve' and leaves.employee_masterid_employee_masterid=employee_master.employee_masterid" ,nativeQuery = true)
     Collection<Leaves> getLeavesToNotApproveByManager(@Param("department2") String department2 );
 
     //approveBySupervisor and approveByManager ลูกน้องตัวเอง//get leaves ที่ department=x   // ตกนกด Complete

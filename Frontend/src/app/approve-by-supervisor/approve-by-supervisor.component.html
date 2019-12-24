@@ -1,6 +1,6 @@
 
 <mat-toolbar color="primary">
-  <span>Approve(Attendance)</span>&nbsp;&nbsp;&nbsp;&nbsp;
+  <span>Approve(Attendance) by supervisor</span>&nbsp;&nbsp;&nbsp;&nbsp;
   <span class="example-fill-remaining-space" style="align:center;"></span>
   <span>
       <mat-slide-toggle (change)="onChange()" [(ngModel)]="isChecked">Complete</mat-slide-toggle>
@@ -71,18 +71,14 @@
   <ng-container matColumnDef="approve">
     <th mat-header-cell *matHeaderCellDef><font  color="black"><b>อนุมัติ</b></font></th>
     <td mat-cell *matCellDef="let element" >
-      <button mat-icon-button matTooltip="อนุมัติ" matTooltipPosition="right" (click)="approve(element);onChange();" [disabled]="dis" #ckeckEdit>
-        <mat-icon>check</mat-icon>
-      </button>
+      <button mat-mini-fab color="primary" matTooltip="อนุมัติ" matTooltipPosition="right" (click)="approve(element); onChange();" [disabled]="dis"><mat-icon>check</mat-icon></button>
     </td>
   </ng-container>
 
   <ng-container matColumnDef="notApprove">
     <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ไม่อนุมัติ</b></font></th>
     <td mat-cell *matCellDef="let element" >
-      <button mat-icon-button matTooltip="ไม่อนุมัติ" matTooltipPosition="right" (click)="notApprove(element);onChange();" [disabled]="dis" #ckeckEdit>
-        <mat-icon>cancel</mat-icon>
-      </button>
+      <button mat-mini-fab color="warn" matTooltip="ไม่อนุมัติ" matTooltipPosition="right" (click)="notApprove(element); onChange();" [disabled]="dis"><mat-icon>clear</mat-icon></button>
     </td>
   </ng-container>
 

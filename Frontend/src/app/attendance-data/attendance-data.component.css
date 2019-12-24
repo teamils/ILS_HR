@@ -34,7 +34,11 @@ table {
    th.mat-column-leaveStatus,
    th.mat-column-del,
    th.mat-column-endDate2,
-   th.mat-column-total{
+   th.mat-column-total,
+   th.mat-column-employeeType,
+   th.mat-column-position,
+   th.mat-column-department,
+   th.mat-column-reasonNotApprove{
           text-align: center;
    }
 

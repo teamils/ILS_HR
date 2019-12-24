@@ -8,6 +8,7 @@ import { ServiceService } from '../service/service.service';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { AppComponent } from '../app.component';
 
 export interface PeriodicElement {
   name: string;
@@ -22,7 +23,6 @@ export interface PeriodicElement {
 })
 
 export class ApproveBySupervisorComponent implements OnInit {
-  public API = '//localhost:8080';
   leaves  : Array<any>;
   LeavesToComplete: Array<any>;
   isChecked;
@@ -40,7 +40,9 @@ export class ApproveBySupervisorComponent implements OnInit {
             private router:Router,
             private route:ActivatedRoute ,
             public dialog: MatDialog,
-             private http: HttpClient,) { }
+             private http: HttpClient,
+            public api : AppComponent) { }
+    public API = this.api.API;
 
 
   ngOnInit() {
@@ -62,15 +64,11 @@ export class ApproveBySupervisorComponent implements OnInit {
         );
   }
   notApprove(row : any){
-        this.http.post(this.API + '/notApproveBySupervisor/' + row.leavesID ,{}).subscribe(data => {
-            console.log('Not approve is successful');
-            alert("Not approve successful");
-          },
-          error => {
-            console.log('Error', error);
-          }
-        );
-
+      const dialogRef = this.dialog.open(ReasonNotApproveDialog, {
+                  width: '360px',
+                  height:'270px',
+                  data: row,
+            });
   }
 
   onChange(){
@@ -96,3 +94,44 @@ export class ApproveBySupervisorComponent implements OnInit {
 
 
 }
+
+
+
+//Dialog
+export interface DialogData {
+  leavesID : null;
+  isActiveAttendance: string;
+}
+@Component({
+    selector: 'reasonNotApprove',
+    templateUrl: 'reasonNotApprove.html',
+  })
+  export class ReasonNotApproveDialog {
+    public API = '//localhost:8080/';
+    leavesID: string;
+    isActiveAttendance:string;
+    reasonNotapprove=null;
+    constructor(public dialogRef: MatDialogRef<ReasonNotApproveDialog> , public service:ServiceService,@Inject(MAT_DIALOG_DATA)  public date: DialogData,private http: HttpClient){
+         this.leavesID = this.date.leavesID;
+        this.isActiveAttendance = this.date.isActiveAttendance;
+    }
+
+    closeDialog(): void {
+      this.dialogRef.close();
+    }
+
+  notApprove(){
+
+        this.http.post(this.API + '/notApproveBySupervisor/' + this.leavesID +'/'+ this.reasonNotapprove,{}).subscribe(data => {
+            console.log('Not approve is successful');
+            alert("Not approve successful");
+          },
+          error => {
+            console.log('Error', error);
+          }
+        );
+        this.dialogRef.close();
+      }
+
+
+  }

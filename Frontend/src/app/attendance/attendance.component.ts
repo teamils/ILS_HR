@@ -8,6 +8,7 @@ import { ServiceService } from '../service/service.service';
 import {  MatPaginator, MatTableDataSource } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { AppComponent } from '../app.component';
 
 export interface employeeMasters{
     Fname : String;
@@ -33,8 +34,6 @@ export interface leave2{
 
 })
 export class AttendanceComponent implements OnInit {
-
-  public API = '//localhost:8080';
   table : any = {
     leaID : '',
     empCode : '',
@@ -44,9 +43,11 @@ export class AttendanceComponent implements OnInit {
     empPos : '',
     StartDate : '',
     sumDate : '',
+    status:'',
   };
 
   leavetatelAll : any = {
+    leaveTypeForAllDay: '',
     leavesNumbersID : '',
     totalAnnualLeave : '',
     sumAnnualLeave: '',
@@ -56,6 +57,7 @@ export class AttendanceComponent implements OnInit {
     sumOthersLeave: '',
     sumAllLeave : '',
   };
+
   employeeMasterCustomerCode : String;
   empID : Array<any>;
   dataLeave : Array<any>;
@@ -65,6 +67,8 @@ export class AttendanceComponent implements OnInit {
 
   startDate : any;
   endDate : any;
+  startTimeSelect=null;
+  endTimeSelect=null;
   reason : any;
   labelLeaveHalfDay: any;
     startDate2 : any;
@@ -75,15 +79,18 @@ export class AttendanceComponent implements OnInit {
   leavecheck : Array<any>;
   totalAnnualLeave;
   leaveType : Array<any>;
+  leaveTypeForAlldays : Array<any>;
   leaveTypeSelect : string;
   leaves2 : Array<any>;
   interval2:any;
   diffTime1:number;
   diffDay:number;
   dis:true;
+  hourdis;
+
   empId = localStorage.getItem('empId');
 
-  displayedColumns2: string[] = ['number','date','leaveType', 'reason','startDate','endDate2','total', 'approvedBySupervisor', 'approvedByManager','leaveStatus','del'];
+  displayedColumns2: string[] = ['number','date','leaveType', 'reason','startDate','endDate2','total', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','leaveStatus','del'];
   dataSource2 = new MatTableDataSource<leave2>(this.leaves2);
 
   constructor(private service:ServiceService,
@@ -91,18 +98,23 @@ export class AttendanceComponent implements OnInit {
             private route:ActivatedRoute,
             public dialog: MatDialog,
              private http: HttpClient,
-         ) { }
+             public api : AppComponent) { }
+    public API1 = this.api.API;
 
   ngOnDestroy() {
     if (this.interval2) { // show table Leave
       clearInterval(this.interval2);
     }
-
   }
+
   ngOnInit() {
       this.service.getLeaveType().subscribe(data => {
         this.leaveType = data;
         //console.log('leaveType -> ',this.leaveType);
+      });
+      this.service.getleaveTypeForAlldays().subscribe(data => {
+        this.leaveTypeForAlldays = data;
+        //console.log('leaveTypeForAlldays -> ',this.leaveTypeForAlldays);
       });
 
             this.service.getSearchEmployeeForAttendance2(this.empId).subscribe(data1 => {
@@ -113,6 +125,7 @@ export class AttendanceComponent implements OnInit {
               this.table.lName = data1.employeeMasterLastName;
               this.table.empDep = data1.employeeDepartment;
               this.table.empPos = data1.employeePosition;
+
 
               this.nowDateToString = new Date().toString().split(" ");
               //console.log(parseInt(this.nowDateToString[3]));
@@ -137,10 +150,13 @@ export class AttendanceComponent implements OnInit {
                 else {
                       this.table.sumDate = 0;
                 }
-                 this.SaveLeaveNumber();
-              this.service.getShowLeaves2(this.table.leaID).subscribe(data => {
-                    this.leaves2 = data;
+                 //this.SaveLeaveNumber();
+              this.service.getShowLeaves2(this.table.leaID).subscribe(dataleave => {
+                    this.leaves2 = dataleave;
                     this.dataSource2.data = this.leaves2;
+                    this.leavetatelAll.leaveTypeForAllDay = dataleave.leaveTypeForAllDay;
+                    //console.log('leaves2 -> ',this.leaves2);
+
                 });
         });
   }
@@ -154,12 +170,12 @@ export class AttendanceComponent implements OnInit {
              }, 1000);
   }
     SubmitData(){ // Half Day
-        this. RefreshTable();
         if(this.leaveTypeSelect == null)  alert("กรุณาเลือกประเภทการลา");
+        else if(this.labelLeaveHalfDay == null) alert("กรุณาเลือกเช้า-เย็น");
         else if(this.startDate == null) alert("กรุณาเลือกวันลา");
         else if(this.reason == null) alert("กรุณากรอกเหตุผล");
         else{
-             this.http.post(this.API  +/leave/+ this.table.leaID +'/'+ this.leaveTypeSelect +'/'+ this.labelLeaveHalfDay +'/'+ this.startDate  +'/'+ this.reason,{})
+             this.http.post(this.API1  +/SaveLeaveHalfDay/+ this.table.leaID +'/'+ this.leaveTypeSelect +'/'+ this.labelLeaveHalfDay +'/'+ this.startDate  +'/'+ this.reason +'/'+ this.startTimeSelect +'/'+ this.endTimeSelect,{})
                         .subscribe(
                                        dataLeave => {
                                            console.log('PUT Request is successful', dataLeave);
@@ -171,14 +187,14 @@ export class AttendanceComponent implements OnInit {
                                            console.log('Error', error);
                                        }
                                       );
-        }
-        if(this.startDate != null&&this.endDate != null){
-            this.CalculateLeaveDate();
+            this.ClearTextInput();
+            this. RefreshTable();
         }
     }
     SubmitData2(){ //Full day
-        this. RefreshTable();
-        this.CalculateLeaveDate();
+
+            this.CalculateLeaveDate();
+
         if(this.diffDay<1){
           this.startDate2  = null;
           this.endDate2  = null;
@@ -188,7 +204,7 @@ export class AttendanceComponent implements OnInit {
         else if(this.endDate2 == null) alert("กรุณาเลือกวันสิ้นสุดการลา");
         else if(this.reason2 == null) alert("กรุณากรอกเหตุผล");
         else{
-             this.http.post(this.API  +/leave2/+ this.table.leaID +'/'+ this.leaveTypeSelect2 +'/'+ this.startDate2 +'/'+  this.endDate2 +'/'+ this.reason2 +'/'+ this.diffDay ,{})
+             this.http.post(this.API1  +/SaveLeaveFullDay/+ this.table.leaID +'/'+ this.leaveTypeSelect2 +'/'+ this.startDate2 +'/'+  this.endDate2 +'/'+ this.reason2 +'/'+ this.diffDay ,{})
                         .subscribe(
                                        dataLeave => {
                                            console.log('PUT Request is successful', dataLeave);
@@ -200,16 +216,18 @@ export class AttendanceComponent implements OnInit {
                                            console.log('Error', error);
                                        }
                                       );
+             this.ClearTextInput();
+              this. RefreshTable();
         }
-        if(this.startDate != null&&this.endDate != null){
-            this.CalculateLeaveDate();
-        }
+
     }
 
-    SaveLeaveNumber(){ //function
+
+
+    /*SaveLeaveNumber(){ //function
                 this.service.getShowLeavesNumber(this.empId).subscribe(data => {
                         if(data==null){
-                            this.http.post(this.API  +/saveleaveNumber/+ this.empId +'/'+ this.table.sumDate ,{})
+                            this.http.post(this.API1  +/saveleaveNumber/+ this.empId +'/'+ this.table.sumDate ,{})
                                .subscribe(dataleaveNumber => {console.log('PUT Request is successful');},error => {console.log('Error', error);});
                         }
                         else if(data!=null){
@@ -230,7 +248,7 @@ export class AttendanceComponent implements OnInit {
                         }
 
                       });
-    }
+    }*/
 
 
     CancelDataAttendance(row : any){
@@ -248,7 +266,18 @@ export class AttendanceComponent implements OnInit {
         console.log(this.diffDay);
     }
 
-
+    ClearTextInput(){
+        this.leaveTypeSelect="";
+        this.leaveTypeSelect2="";
+        this.startDate="";
+        this.startDate2="";
+        this.endDate2="";
+        this.reason = "";
+        this.reason2 = "";
+        this.labelLeaveHalfDay="";
+        this.startTimeSelect="";
+        this.endTimeSelect="";
+    }
 
 
 

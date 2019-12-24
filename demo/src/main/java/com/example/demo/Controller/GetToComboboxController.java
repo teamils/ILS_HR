@@ -17,6 +17,7 @@ public class GetToComboboxController {
     @Autowired private PositionRepository positionRepository;
     @Autowired private LeaveTypeRepository leaveTypeRepository;
     @Autowired private LeavesRepository leavesRepository;
+    @Autowired private LeaveTypeForAlldayRepository leaveTypeForAlldayRepository;
 
     @GetMapping(path = "/department")
     public Iterable<Department> departments() {
@@ -41,6 +42,11 @@ public class GetToComboboxController {
     @GetMapping(path = "/leaveType")
     public Iterable<LeaveType> leaveTypes() {
         return leaveTypeRepository.findAll().stream().collect(Collectors.toList());
+    }
+
+    @GetMapping(path = "/leaveTypeForAlldays")
+    public Iterable<LeaveTypeForAllday> leaveTypeForAlldays() {
+        return leaveTypeForAlldayRepository.findAll().stream().collect(Collectors.toList());
     }
 
 

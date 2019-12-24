@@ -26,7 +26,7 @@
 }
 .sidenav a {
   padding: 2px 2px 2px 2px;
-  //text-decoration: none;
+
   font-size: 17px;
   color: #000000;
   display: block;
@@ -53,7 +53,7 @@
 /*----------------------------หน้า menu ด้านซ่าย--------------------------------------------*/
 .example-sidenav-container { /* หน้าใหญ่สุด #3 */
   display: flex;
-   //background-image:url(src/app/image/hr.jpg);
+
    height: 100%;
    width: 100%;
    flex: 1;
@@ -110,7 +110,7 @@
     margin-right: auto;
     margin-left: auto;
     margin-bottom: auto;
-    //background-color: #ffffff;
+
     opacity: 0.85;
 }
 

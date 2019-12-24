@@ -9,6 +9,7 @@ import { HttpClient} from '@angular/common/http';
 
 import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { AppComponent } from '../app.component';
 
 export interface DialogData {
     employeeMasterID : null;
@@ -47,7 +48,8 @@ export interface DialogData {
 })
 
 export class EmployeeEditComponent implements OnInit {
-        public API = '//localhost:8080/';
+        public API = '//localhost:8080';
+        //public API = 'http://192.168.1.47:8080';
         nowDate = new Date();
         NewemployeeMasterID : null;
         NewemployeeMasterCustomerCode: string;
@@ -75,7 +77,7 @@ export class EmployeeEditComponent implements OnInit {
         NewbankNumber: string;
         NewIsActive: string;
         Newpassword: string;
-
+        dis;
       constructor(public dialogRef: MatDialogRef<EmployeeEditComponent>
                       ,hangeDetectorRef: ChangeDetectorRef
                       ,media: MediaMatcher
