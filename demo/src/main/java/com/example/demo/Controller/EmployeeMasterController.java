@@ -121,19 +121,61 @@ public class EmployeeMasterController {
                                          @PathVariable String Newprefix, @PathVariable String NewemployeeMasterFirstName,
                                          @PathVariable String NewemployeeMasterLastName, @PathVariable String NewemployeeMasterNickName,
                                          @PathVariable String NewemployeeMasterGender, @PathVariable String NewmaritalStatus,
-                                         /*@PathVariable Date NewemployeeMasterBirthDate,*/ @PathVariable String NewemployeeMasterPersonID,
+                                         @PathVariable String NewemployeeMasterBirthDate, @PathVariable String NewemployeeMasterPersonID,
                                          @PathVariable String NewemployeeMasterTel1, @PathVariable String NewempEmail,
                                          @PathVariable String NewempAddressReal, @PathVariable String NewempAddressPerson,
-                                         /*@PathVariable Date NewemployeeMasterStartDate,*/ @PathVariable String NewemployeePosition,
+                                         @PathVariable String NewemployeeMasterStartDate, @PathVariable String NewemployeePosition,
                                          @PathVariable String NewemployeeDepartment, @PathVariable String NewemployeeType,
                                          @PathVariable String Neweducation, @PathVariable String Newbank,
-                                         @PathVariable String NewbankNumber,@PathVariable String Newpassword){
+                                         @PathVariable String NewbankNumber,@PathVariable String Newpassword) throws ParseException {
 
         EmployeeMaster employeeMaster2 = employeeMasterRepository.findById(NewemployeeMasterID).get();
 
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd:MM:yyyy");
-        //LocalDate Stratdate = LocalDate.parse(NewemployeeMasterStartDate, formatter);
-        //LocalDate BirthDate = LocalDate.parse(NewemployeeMasterBirthDate, formatter);
+        String[] birthdatesplit;
+        String[] startdatesplit;
+        birthdatesplit = NewemployeeMasterBirthDate.split("-");
+        startdatesplit = NewemployeeMasterStartDate.split("-");
+        String bd;
+        String sd;
+
+        if(birthdatesplit.length !=3 ){
+            birthdatesplit = NewemployeeMasterBirthDate.split(" ");
+            birthdatesplit[3] = String.valueOf(Integer.parseInt(birthdatesplit[3]) + 543);
+            if(birthdatesplit[1].equals("Jan")){birthdatesplit[1]="01";}else if(birthdatesplit[1].equals("Feb")){birthdatesplit[1]="02";}
+            if(birthdatesplit[1].equals("Mar")){birthdatesplit[1]="03";}else if(birthdatesplit[1].equals("Apr")){birthdatesplit[1]="04";}
+            if(birthdatesplit[1].equals("May")){birthdatesplit[1]="05";}else if(birthdatesplit[1].equals("Jun")){birthdatesplit[1]="06";}
+            if(birthdatesplit[1].equals("Jul")){birthdatesplit[1]="07";}else if(birthdatesplit[1].equals("Aug")){birthdatesplit[1]="08";}
+            if(birthdatesplit[1].equals("Sep")){birthdatesplit[1]="09";}else if(birthdatesplit[1].equals("Oct")){birthdatesplit[1]="10";}
+            if(birthdatesplit[1].equals("Nov")){birthdatesplit[1]="11";}else if(birthdatesplit[1].equals("Dec")){birthdatesplit[1]="12";}
+             bd = birthdatesplit[3] + "-"+birthdatesplit[1]+"-" +birthdatesplit[2];
+        }else{
+
+
+            birthdatesplit[0] = String.valueOf(Integer.parseInt(birthdatesplit[0]) + 543);
+             bd = birthdatesplit[0] + "-"+birthdatesplit[1]+"-" +birthdatesplit[2];
+
+        }
+
+        if(startdatesplit.length !=3 ){
+            startdatesplit = NewemployeeMasterStartDate.split(" ");
+            startdatesplit[3] = String.valueOf(Integer.parseInt(startdatesplit[3]) + 543);
+            if(startdatesplit[1].equals("Jan")){startdatesplit[1]="01";}else if(startdatesplit[1].equals("Feb")){startdatesplit[1]="02";}
+            if(startdatesplit[1].equals("Mar")){startdatesplit[1]="03";}else if(startdatesplit[1].equals("Apr")){startdatesplit[1]="04";}
+            if(startdatesplit[1].equals("May")){startdatesplit[1]="05";}else if(startdatesplit[1].equals("Jun")){startdatesplit[1]="06";}
+            if(startdatesplit[1].equals("Jul")){startdatesplit[1]="07";}else if(startdatesplit[1].equals("Aug")){startdatesplit[1]="08";}
+            if(startdatesplit[1].equals("Sep")){startdatesplit[1]="09";}else if(startdatesplit[1].equals("Oct")){startdatesplit[1]="10";}
+            if(startdatesplit[1].equals("Nov")){startdatesplit[1]="11";}else if(startdatesplit[1].equals("Dec")){startdatesplit[1]="12";}
+             sd = startdatesplit[3] + "-"+startdatesplit[1]+"-" +startdatesplit[2];
+        }else{
+
+            startdatesplit[0] = String.valueOf(Integer.parseInt(startdatesplit[0]) + 543);
+             sd = startdatesplit[0] + "-"+startdatesplit[1]+"-" +startdatesplit[2];
+
+        }
+
+
+        Date birthdate=new SimpleDateFormat("yyyy-MM-dd").parse(bd);
+        Date startdate=new SimpleDateFormat("yyyy-MM-dd").parse(sd);
 
         employeeMaster2.setEmployeeMasterCustomerCode(NewemployeeMasterCustomerCode);
         employeeMaster2.setPrefix(Newprefix);
@@ -142,13 +184,13 @@ public class EmployeeMasterController {
         employeeMaster2.setEmployeeMasterNickName(NewemployeeMasterNickName);
         employeeMaster2.setEmployeeMasterGender(NewemployeeMasterGender);
         employeeMaster2.setMaritalStatus(NewmaritalStatus);
-        //employeeMaster2.setEmployeeMasterBirthDate(NewemployeeMasterBirthDate);
+        employeeMaster2.setEmployeeMasterBirthDate(birthdate);
         employeeMaster2.setEmployeeMasterPersonID(NewemployeeMasterPersonID);
         employeeMaster2.setEmployeeMasterTel1(NewemployeeMasterTel1);
         employeeMaster2.setEmpEmail(NewempEmail);
         employeeMaster2.setEmpAddressReal(NewempAddressReal);
         employeeMaster2.setEmpAddressPerson(NewempAddressPerson);
-        //employeeMaster2.setEmployeeMasterStartDate(NewemployeeMasterStartDate);
+        employeeMaster2.setEmployeeMasterStartDate(startdate);
         employeeMaster2.setEmployeePosition(NewemployeePosition);
         employeeMaster2.setEmployeeDepartment(NewemployeeDepartment);
         employeeMaster2.setEmployeeType(NewemployeeType);
