@@ -70,6 +70,7 @@ constructor(private service:ServiceService,
                   height:'270px',
                   data: row,
             });
+      this.onChange();
   }
   onChange(){
            this.interval = setTimeout(() => {  //show table Leave
@@ -120,7 +121,6 @@ export class ReasonNotApproveBygerDialog {
     }
 
    notApprove(){
-
         this.http.post(this.API + '/notApproveByManager/' + this.leavesID +'/'+ this.reasonNotapprove,{}).subscribe(data => {
             console.log('Not approve is successful');
             alert("Not approve successful");

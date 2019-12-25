@@ -24,6 +24,7 @@ public class LeavesController {
     @Autowired private  LeavesRepository leavesRepository;
     @Autowired private EmployeeMasterRepository employeeMasterRepository;
     @Autowired private LeavesNumbersRepository leavesNumbersRepository;
+    @Autowired private LeaveTypeForAlldayRepository leaveTypeForAlldayRepository;
 
     @GetMapping(path = "/leave/{leaID}")
     public Leaves leaves(@PathVariable long leaID) {
@@ -145,16 +146,22 @@ public class LeavesController {
         return leaves;
     }
 
-   /* @PostMapping(path = "/saveleaveNumber/{empId}/{sumDateime}") //saveleaveNumber Set Default
-    public LeavesNumbers leavesNumbers(@PathVariable Long empId,@PathVariable int sumDateime) {
+    @PostMapping(path = "/saveleaveNumber/{empId}/{sumDate}") //saveleaveNumber Set Default
+    public LeavesNumbers leavesNumbers(@PathVariable Long empId,@PathVariable int sumDate) {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(empId).get();
-        LeavesNumbers leavesNumbers = new LeavesNumbers();
-        leavesNumbers.setEmployeeMasterid(employeeMaster);
-        leavesNumbers.setTotalAnnualLeave(sumDateime);
-        leavesNumbers.setTotalSickLeave(30);
-        leavesNumbersRepository.save(leavesNumbers);
-        return leavesNumbers;
-    }*/
+        for(long i=1;i<=8;i++){
+            LeavesNumbers leavesNumbers = new LeavesNumbers();
+            LeaveTypeForAllday leaveTypeForAllday = leaveTypeForAlldayRepository.findById(i).get();
+            leavesNumbers.setEmployeeMasterid(employeeMaster);
+            leavesNumbers.setLeaveTypeForAllday(leaveTypeForAllday);
+            if(i==1||i==4||i==5){
+                leavesNumbers.setGetDay(3);
+                leavesNumbers.setCompoundDay(0);
+            }
+            leavesNumbersRepository.save(leavesNumbers);
+        }
+       return null;
+    }
 
   /*  @PostMapping(path = "/saveleaveNumber2/{empId}/{sumDateime}") //saveleaveNumber2
     public LeavesNumbers leavesNumbers2(@PathVariable Long empId,@PathVariable int sumDateime) {

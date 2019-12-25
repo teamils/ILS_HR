@@ -58,9 +58,9 @@ export class ServiceService {
   getUserPassword(employeeCode: String, password : String): Observable<any>{
       return this.http.get(this.API+'/login/'+employeeCode+'/'+password,{})
   }
-  /*getShowLeavesNumber(leaID : String):Observable<any>{
+  getShowLeavesNumber(leaID : String):Observable<any>{
       return this.http.get(this.API+'/showleaveNumber/'+leaID,{})
-  }*/
+  }
   getSearchEmployee(dataSearch:String):Observable<any>{
       return this.http.get(this.API+'/SearchEmployee/'+dataSearch,{})
   }

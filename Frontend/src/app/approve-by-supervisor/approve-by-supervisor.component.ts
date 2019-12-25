@@ -69,6 +69,7 @@ export class ApproveBySupervisorComponent implements OnInit {
                   height:'270px',
                   data: row,
             });
+        this.onChange();
   }
 
   onChange(){

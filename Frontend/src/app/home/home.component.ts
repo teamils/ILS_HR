@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
     hide:any;
     id : String = null;
     NewPassword : String = null ;
-
+    leaveTypeForAlldays: Array<any>;
     table : any = {
       leaID : '',
       empCode : '',
@@ -55,8 +55,7 @@ export class HomeComponent implements OnInit {
               this.service.getUserPassword(id,NewPassword).subscribe(data => {
                 if(data == null) alert("UserID and password not complete");
                 this.employee = data;
-                console.log('Employee In Login ->',data);
-                // window.location.reload(true);
+                //console.table(data);
                 this.table.leaID = data.employeeMasterID;
                 this.table.empCode = data.employeeMasterCustomerCode;
                 this.table.fName = data.employeeMasterFirstName;
@@ -67,6 +66,7 @@ export class HomeComponent implements OnInit {
                 localStorage.setItem('fName', this.table.fName);
                 localStorage.setItem('lName', this.table.lName);
                 localStorage.setItem('departmentlogin', data.employeeDepartment);
+                localStorage.setItem('startDateInLogin', data.employeeMasterStartDate);
 
                 if(data != null){
                     this.router.navigate(['newheader']);
@@ -97,6 +97,8 @@ export class HomeComponent implements OnInit {
               this.NewPassword = null;
         }
     }
+
+
 
 }
 

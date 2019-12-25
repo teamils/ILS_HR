@@ -9,6 +9,8 @@ import {  MatPaginator, MatTableDataSource } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import { AppComponent } from '../app.component';
+import { Pipe, PipeTransform} from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 export interface employeeMasters{
     Fname : String;
@@ -47,24 +49,16 @@ export class AttendanceComponent implements OnInit {
   };
 
   leavetatelAll : any = {
-    leaveTypeForAllDay: '',
-    leavesNumbersID : '',
-    totalAnnualLeave : '',
-    sumAnnualLeave: '',
-    totalSickLeave : '',
-    sumSickLeave: '',
-    totalOthersLeave : '',
-    sumOthersLeave: '',
-    sumAllLeave : '',
+    leavesNumbersID: '',
+    getDay : '',
+    usedDay : '',
+    BalanceDay: '',
+    CompoundDay : '',
   };
 
   employeeMasterCustomerCode : String;
   empID : Array<any>;
   dataLeave : Array<any>;
-  nowDateToString : Array<string>;
-  startDateToString : Array<string>;
-  splitStartDate: Array<string>;
-
   startDate : any;
   endDate : any;
   startTimeSelect=null;
@@ -87,8 +81,10 @@ export class AttendanceComponent implements OnInit {
   diffDay:number;
   dis:true;
   hourdis;
+  nowdate:Date;
 
   empId = localStorage.getItem('empId');
+  startDateInLogin = localStorage.getItem('startDateInLogin');
 
   displayedColumns2: string[] = ['number','date','leaveType', 'reason','startDate','endDate2','total', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','leaveStatus','del'];
   dataSource2 = new MatTableDataSource<leave2>(this.leaves2);
@@ -108,13 +104,14 @@ export class AttendanceComponent implements OnInit {
   }
 
   ngOnInit() {
+
       this.service.getLeaveType().subscribe(data => {
         this.leaveType = data;
         //console.log('leaveType -> ',this.leaveType);
       });
       this.service.getleaveTypeForAlldays().subscribe(data => {
         this.leaveTypeForAlldays = data;
-        //console.log('leaveTypeForAlldays -> ',this.leaveTypeForAlldays);
+        console.table(this.leaveTypeForAlldays);
       });
 
             this.service.getSearchEmployeeForAttendance2(this.empId).subscribe(data1 => {
@@ -127,30 +124,8 @@ export class AttendanceComponent implements OnInit {
               this.table.empPos = data1.employeePosition;
 
 
-              this.nowDateToString = new Date().toString().split(" ");
-              //console.log(parseInt(this.nowDateToString[3]));
-              this.table.StartDate = data1.employeeMasterStartDate;
-              this.startDateToString = this.table.StartDate.toString().split("-");
-              //console.log(parseInt(this.startDateToString[0]));
-              this.table.sumDate = parseInt(this.nowDateToString[3]) - parseInt(this.startDateToString[0]);
-              //console.log(this.table.sumDate);
 
-                 if(this.table.sumDate >= 10){
-                      this.table.sumDate = 15;
-                }
-                else if(this.table.sumDate >= 5){
-                      this.table.sumDate = 12;
-                }
-                else if(this.table.sumDate >= 3){
-                      this.table.sumDate = 10;
-                }
-                else if(this.table.sumDate >= 1){
-                      this.table.sumDate = 7;
-                }
-                else {
-                      this.table.sumDate = 0;
-                }
-                 //this.SaveLeaveNumber();
+              this.SaveLeaveNumber();
               this.service.getShowLeaves2(this.table.leaID).subscribe(dataleave => {
                     this.leaves2 = dataleave;
                     this.dataSource2.data = this.leaves2;
@@ -193,8 +168,8 @@ export class AttendanceComponent implements OnInit {
     }
     SubmitData2(){ //Full day
 
-            this.CalculateLeaveDate();
-
+            this.CalculateLeaveDate(this.startDate2,this.endDate2);
+        console.log('this.startDate2 -> ',this.startDate2);
         if(this.diffDay<1){
           this.startDate2  = null;
           this.endDate2  = null;
@@ -217,38 +192,40 @@ export class AttendanceComponent implements OnInit {
                                        }
                                       );
              this.ClearTextInput();
-              this. RefreshTable();
+              this.RefreshTable();
         }
 
     }
 
+    todayDate:Date;
 
+    SaveLeaveNumber(){ //function
+          this.todayDate = new Date();
+          var CDate = new Date(this.startDateInLogin);
+          console.log('Date Date -> ',CDate);
 
-    /*SaveLeaveNumber(){ //function
-                this.service.getShowLeavesNumber(this.empId).subscribe(data => {
-                        if(data==null){
-                            this.http.post(this.API1  +/saveleaveNumber/+ this.empId +'/'+ this.table.sumDate ,{})
+              /*this.CalculateStartWorkDate(CDate,this.todayDate);
+             this.http.post(this.API1  +/saveleaveNumber/+ this.empId +'/'+ this.table.sumDate ,{})
                                .subscribe(dataleaveNumber => {console.log('PUT Request is successful');},error => {console.log('Error', error);});
-                        }
-                        else if(data!=null){
+
+                this.service.getShowLeavesNumber(this.empId).subscribe(data => {
+                       if(data!=null){
                             this.leavecheck = data;
                             this.leavetatelAll.leavesNumbersID = data.leavesNumbersID;
-                            this.leavetatelAll.totalAnnualLeave = data.totalAnnualLeave;
-                            this.leavetatelAll.sumAnnualLeave = data.sumAnnualLeave;
-                            this.leavetatelAll.totalSickLeave = data.totalSickLeave;
-                            this.leavetatelAll.sumSickLeave = data.sumSickLeave;
-                            this.leavetatelAll.totalOthersLeave = data.totalOthersLeave;
-                            this.leavetatelAll.sumOthersLeave = data.sumOthersLeave;
-                            this.leavetatelAll.sumAllLeave = data.sumAllLeave;
-                            //console.log('SaveLeaveNumber -> ',this.leavetatelAll.totalAnnualLeave);
+                            this.leavetatelAll.getDay = data.getDay;
+                            this.leavetatelAll.usedDay = data.usedDay;
+                            this.leavetatelAll.BalanceDay = data.BalanceDay;
+                            this.leavetatelAll.CompoundDay = data.CompoundDay;
+
+                            console.log('SaveLeaveNumber -> ',this.leavecheck);
                         }
                          if(this.leavetatelAll.totalAnnualLeave != this.table.sumDate || this.leavetatelAll.totalSickLeave != 30){
 
 
                         }
 
-                      });
-    }*/
+                      });*/
+    }
 
 
     CancelDataAttendance(row : any){
@@ -260,10 +237,17 @@ export class AttendanceComponent implements OnInit {
             this.RefreshTable();
     }
 
-    CalculateLeaveDate(){
-        this.diffTime1 = (this.endDate2 - this.startDate2);
+    CalculateLeaveDate(date1:any,date2:any){
+        this.diffTime1 = (date2 - date1);
         this.diffDay = Math.ceil((this.diffTime1 / (1000 * 60 * 60 * 24))+1);
         console.log(this.diffDay);
+    }
+    diffTime2:number;
+    sumDay:number;
+    CalculateStartWorkDate(date1:any,date2:any){
+        this.diffTime2 = (date2 - date1);
+        this.sumDay = Math.ceil((this.diffTime1 / (1000 * 60 * 60 * 24))-1);
+        console.log(this.sumDay);
     }
 
     ClearTextInput(){
