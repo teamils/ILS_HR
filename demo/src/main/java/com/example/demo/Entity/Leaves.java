@@ -22,7 +22,7 @@ public class Leaves {
     @Id
     @SequenceGenerator(name = "Leaves3_seq", sequenceName = "Leaves3_seq",initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator ="Leaves3_seq")
-    private Long leavesID;
+    private long leavesID;
 
 
     private String createDate;
@@ -74,6 +74,10 @@ public class Leaves {
 
     public String getEndTime() {
         return endTime;
+    }
+
+    public void setLeavesID(Long leavesID) {
+        this.leavesID = leavesID;
     }
 
     public void setEndTime(String endTime) {

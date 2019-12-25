@@ -150,7 +150,8 @@ export class AttendanceComponent implements OnInit {
         else if(this.startDate == null) alert("กรุณาเลือกวันลา");
         else if(this.reason == null) alert("กรุณากรอกเหตุผล");
         else{
-             this.http.post(this.API1  +/SaveLeaveHalfDay/+ this.table.leaID +'/'+ this.leaveTypeSelect +'/'+ this.labelLeaveHalfDay +'/'+ this.startDate  +'/'+ this.reason +'/'+ this.startTimeSelect +'/'+ this.endTimeSelect,{})
+
+             this.http.post(this.API1  +/SaveLeaveHalfDay/+ this.table.leaID +'/'+ this.leaveTypeSelect +'/'+ this.labelLeaveHalfDay +'/'+ this.startDate  +'/'+ this.reason +'/null/null'  ,{})
                         .subscribe(
                                        dataLeave => {
                                            console.log('PUT Request is successful', dataLeave);
