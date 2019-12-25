@@ -25,6 +25,7 @@ public class LeavesController {
     @Autowired private EmployeeMasterRepository employeeMasterRepository;
     @Autowired private LeavesNumbersRepository leavesNumbersRepository;
     @Autowired private LeaveTypeForAlldayRepository leaveTypeForAlldayRepository;
+    @Autowired private MasterAttendanceRepository masterAttendanceRepository;
 
     @GetMapping(path = "/leave/{leaID}")
     public Leaves leaves(@PathVariable long leaID) {
@@ -32,11 +33,9 @@ public class LeavesController {
         Leaves leaves = leavesRepository.findByemployeeMasterid(employeeMaster);
         return leaves;
     }
-    @GetMapping(path = "/showleaveNumber/{leaID}")
-    public LeavesNumbers leavesNumbers(@PathVariable long leaID) {
-        EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
-        LeavesNumbers leavesNumbers = leavesNumbersRepository.findByemployeeMasterid(employeeMaster);
-        return leavesNumbers;
+    @GetMapping("/showleaveNumber/{leaID}")
+    public Iterable<LeavesNumbers> leavesNumbers(@PathVariable String leaID) {
+        return this.leavesNumbersRepository.getLeaveNumber(leaID);
     }
 
     @GetMapping(path = "/LeavesToNotCompleteBySupervisor/{department}")
@@ -146,9 +145,10 @@ public class LeavesController {
         return leaves;
     }
 
-    @PostMapping(path = "/saveleaveNumber/{empId}") //saveleaveNumber Set Default
-    public LeavesNumbers leavesNumbers(@PathVariable Long empId) {
+    @PostMapping(path = "/saveleaveNumber/{empId}/{sumDay_365}") //saveleaveNumber Set Default
+    public LeavesNumbers leavesNumbers(@PathVariable Long empId,@PathVariable int sumDay_365) {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(empId).get();
+        MasterAttendance masterAttendance = masterAttendanceRepository.findByYear(sumDay_365);
         for(long i=1;i<=8;i++){
             LeavesNumbers saveleaveNumber = new LeavesNumbers();
             LeaveTypeForAllday leaveTypeForAllday = leaveTypeForAlldayRepository.findById(i).get();
@@ -158,6 +158,7 @@ public class LeavesController {
                 saveleaveNumber.setGetDay(3);
                 saveleaveNumber.setCompoundDay(0);
             }
+            else if(i==3)   saveleaveNumber.setGetDay(masterAttendance.getDayLeave());
             else if(i==2) saveleaveNumber.setGetDay(30);
             else if(i==6) saveleaveNumber.setGetDay(7);
             else if(i==7) saveleaveNumber.setGetDay(60);

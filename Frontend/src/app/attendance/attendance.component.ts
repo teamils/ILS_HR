@@ -82,6 +82,10 @@ export class AttendanceComponent implements OnInit {
   dis:true;
   hourdis;
   nowdate:Date;
+  todayDate:Date;
+  diffTime2:number;
+  sumDay:number;
+  sumDay_365:number;
 
   empId = localStorage.getItem('empId');
   startDateInLogin = localStorage.getItem('startDateInLogin');
@@ -111,7 +115,7 @@ export class AttendanceComponent implements OnInit {
       });
       this.service.getleaveTypeForAlldays().subscribe(data => {
         this.leaveTypeForAlldays = data;
-        console.table(this.leaveTypeForAlldays);
+        //console.table(this.leaveTypeForAlldays);
       });
 
             this.service.getSearchEmployeeForAttendance2(this.empId).subscribe(data1 => {
@@ -198,34 +202,26 @@ export class AttendanceComponent implements OnInit {
 
     }
 
-    todayDate:Date;
-
     SaveLeaveNumber(){ //function
           this.todayDate = new Date();
           var CDate = new Date(this.startDateInLogin);
-          console.log('Date Date -> ',CDate);
+          this.CalculateStartWorkDate(CDate,this.todayDate);
 
-              this.CalculateStartWorkDate(CDate,this.todayDate);
-             this.http.post(this.API1  +/saveleaveNumber/+ this.empId  ,{})
+           this.service.getShowLeavesNumber(this.empId).subscribe(data => {
+                console.table(data);
+                if(data.length==0){
+                        this.http.post(this.API1  +/saveleaveNumber/+ this.empId +'/'+ this.sumDay_365 ,{})
                                .subscribe(dataleaveNumber => {console.log('PUT Request is successful');},error => {console.log('Error', error);});
-
-               /* this.service.getShowLeavesNumber(this.empId).subscribe(data => {
-                       if(data!=null){
-                            this.leavecheck = data;
-                            this.leavetatelAll.leavesNumbersID = data.leavesNumbersID;
-                            this.leavetatelAll.getDay = data.getDay;
-                            this.leavetatelAll.usedDay = data.usedDay;
-                            this.leavetatelAll.BalanceDay = data.BalanceDay;
-                            this.leavetatelAll.CompoundDay = data.CompoundDay;
-
-                            console.log('SaveLeaveNumber -> ',this.leavecheck);
-                        }
-                         if(this.leavetatelAll.totalAnnualLeave != this.table.sumDate || this.leavetatelAll.totalSickLeave != 30){
+                }
+                else{
+                    this.leavecheck = data;
+                    //console.log('SaveLeaveNumber -> ',this.leavecheck);
+                }
 
 
-                        }
 
-                      });*/
+          });
+
     }
 
 
@@ -243,12 +239,24 @@ export class AttendanceComponent implements OnInit {
         this.diffDay = Math.ceil((this.diffTime1 / (1000 * 60 * 60 * 24))+1);
         console.log(this.diffDay);
     }
-    diffTime2:number;
-    sumDay:number;
+
     CalculateStartWorkDate(date1:any,date2:any){
         this.diffTime2 = (date2 - date1);
         this.sumDay = Math.ceil((this.diffTime2 / (1000 * 60 * 60 * 24))-1);
         console.log(this.sumDay);
+        this.sumDay_365 = this.sumDay/365.0;
+        console.log(this.sumDay_365);
+        if(this.sumDay_365<1) this.sumDay_365=0;
+        else if(this.sumDay_365<2) this.sumDay_365=1;
+        else if(this.sumDay_365<3) this.sumDay_365=2;
+        else if(this.sumDay_365<4) this.sumDay_365=3;
+        else if(this.sumDay_365<5) this.sumDay_365=4;
+        else if(this.sumDay_365<6) this.sumDay_365=5;
+        else if(this.sumDay_365<7) this.sumDay_365=6;
+        else if(this.sumDay_365<8) this.sumDay_365=7;
+        else if(this.sumDay_365<9) this.sumDay_365=8;
+        else if(this.sumDay_365<10) this.sumDay_365=9;
+        else this.sumDay_365=10;
     }
 
     ClearTextInput(){

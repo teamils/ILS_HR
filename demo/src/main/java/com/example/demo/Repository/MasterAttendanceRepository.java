@@ -14,5 +14,5 @@ import java.util.Collection;
 
 @Repository
 public interface MasterAttendanceRepository extends JpaRepository<MasterAttendance,Long>{
-
+    MasterAttendance findByYear(int year);
 }
