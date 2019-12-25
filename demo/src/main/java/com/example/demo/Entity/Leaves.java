@@ -1,4 +1,6 @@
 package com.example.demo.Entity;
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -11,13 +13,16 @@ import java.time.LocalDate;
 import java.util.GregorianCalendar;
 
 @Entity
-@Table(name = "Leaves")
-
+@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Leaves {
     @Id
     @SequenceGenerator(name = "Leaves3_seq", sequenceName = "Leaves3_seq",initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator ="Leaves3_seq")
-    private long leavesID;
+    private Long leavesID;
 
 
     private String createDate;

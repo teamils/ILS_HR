@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Frontend';
+  title = 'ILS_HR';
   //public API = 'http://192.168.1.47:8080';
   public API = '//localhost:8080';
 

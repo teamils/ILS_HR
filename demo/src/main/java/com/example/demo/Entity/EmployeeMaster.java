@@ -12,14 +12,17 @@ import java.util.Collection;
 import java.util.Date;
 
 @Entity
+@Data
+@Setter
+@Getter
+@NoArgsConstructor
 @EqualsAndHashCode
-@ToString
-@Table(name = "EmployeeMaster")
+
 public class EmployeeMaster {
     @Id
     @SequenceGenerator(name = "Emp_seq1", sequenceName = "Emp_seq1",initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Emp_seq1")
-    private long employeeMasterID;
+    private Long employeeMasterID;
     //@Id @GeneratedValue(strategy=GenerationType.AUTO)
 
     private String employeeMasterCustomerCode;
@@ -82,7 +85,7 @@ public class EmployeeMaster {
     }
 
 
-    public  EmployeeMaster (){ }
+
     public Date getEmployeeMasterBirthDate() {
         return employeeMasterBirthDate;
     }

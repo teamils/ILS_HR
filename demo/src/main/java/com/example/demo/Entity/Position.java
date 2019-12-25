@@ -1,5 +1,7 @@
 package com.example.demo.Entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -8,12 +10,16 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Position")
+@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Position {
     @Id
     @SequenceGenerator(name = "Position_seq1", sequenceName = "Position_seq1",initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Position_seq1")
-    private long positionID;
+    private Long positionID;
     private String positionName;
 
     public long getPositionID() {

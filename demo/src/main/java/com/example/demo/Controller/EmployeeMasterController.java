@@ -14,9 +14,8 @@ import java.util.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 public class EmployeeMasterController {
 
 

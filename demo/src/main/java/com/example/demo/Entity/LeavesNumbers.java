@@ -1,16 +1,22 @@
 package com.example.demo.Entity;
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Entity
-@Table(name = "LeavesNumbers")
+@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@EqualsAndHashCode
 public class LeavesNumbers {
     @Id
     @SequenceGenerator(name = "LeavesNumbers_seq", sequenceName = "LeavesNumbers_seq",initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator ="LeavesNumbers_seq")
-    private long leavesNumbersID;
+    private Long leavesNumbersID;
     private int getDay; // วันได้รับ
     private int usedDay; //วันใช้ไป
     private int BalanceDay; // วันคงเหลือ
