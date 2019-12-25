@@ -1,4 +1,6 @@
 package com.example.demo.Entity;
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -7,12 +9,16 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Department")
+@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Department {
     @Id
     @SequenceGenerator(name = "Department_seq1", sequenceName = "Department_seq1",initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Department_seq1")
-    private long departmentID;
+    private Long departmentID;
     private String departmentName;
 
     public long getDepartmentID() {
