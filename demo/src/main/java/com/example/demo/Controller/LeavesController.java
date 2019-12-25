@@ -146,21 +146,25 @@ public class LeavesController {
         return leaves;
     }
 
-    @PostMapping(path = "/saveleaveNumber/{empId}/{sumDate}") //saveleaveNumber Set Default
-    public LeavesNumbers leavesNumbers(@PathVariable Long empId,@PathVariable int sumDate) {
+    @PostMapping(path = "/saveleaveNumber/{empId}") //saveleaveNumber Set Default
+    public LeavesNumbers leavesNumbers(@PathVariable Long empId) {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(empId).get();
         for(long i=1;i<=8;i++){
-            LeavesNumbers leavesNumbers = new LeavesNumbers();
+            LeavesNumbers saveleaveNumber = new LeavesNumbers();
             LeaveTypeForAllday leaveTypeForAllday = leaveTypeForAlldayRepository.findById(i).get();
-            leavesNumbers.setEmployeeMasterid(employeeMaster);
-            leavesNumbers.setLeaveTypeForAllday(leaveTypeForAllday);
+            saveleaveNumber.setEmployeeMasterid(employeeMaster);
+            saveleaveNumber.setLeaveTypeid(leaveTypeForAllday);
             if(i==1||i==4||i==5){
-                leavesNumbers.setGetDay(3);
-                leavesNumbers.setCompoundDay(0);
+                saveleaveNumber.setGetDay(3);
+                saveleaveNumber.setCompoundDay(0);
             }
-            leavesNumbersRepository.save(leavesNumbers);
+            else if(i==2) saveleaveNumber.setGetDay(30);
+            else if(i==6) saveleaveNumber.setGetDay(7);
+            else if(i==7) saveleaveNumber.setGetDay(60);
+            else if(i==8) saveleaveNumber.setGetDay(45);
+            leavesNumbersRepository.save(saveleaveNumber);
         }
-       return null;
+        return null;
     }
 
   /*  @PostMapping(path = "/saveleaveNumber2/{empId}/{sumDateime}") //saveleaveNumber2

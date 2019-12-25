@@ -22,11 +22,11 @@ public class RoleStatus {
     private String RoleStatusName;
     private String RoleStatusAbbreviation;
 
-    public long getRoleStatusID() {
+    public Long getRoleStatusID() {
         return RoleStatusID;
     }
 
-    public void setRoleStatusID(long roleStatusID) {
+    public void setRoleStatusID(Long roleStatusID) {
         RoleStatusID = roleStatusID;
     }
 
@@ -45,6 +45,4 @@ public class RoleStatus {
     public void setRoleStatusAbbreviation(String roleStatusAbbreviation) {
         RoleStatusAbbreviation = roleStatusAbbreviation;
     }
-
-
 }

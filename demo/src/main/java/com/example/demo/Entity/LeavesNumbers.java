@@ -30,11 +30,11 @@ public class LeavesNumbers {
     @JoinColumn(name = "employeeMasterID", insertable = true)
      private EmployeeMaster employeeMasterid;
 
-    public long getLeavesNumbersID() {
+    public Long getLeavesNumbersID() {
         return leavesNumbersID;
     }
 
-    public void setLeavesNumbersID(long leavesNumbersID) {
+    public void setLeavesNumbersID(Long leavesNumbersID) {
         this.leavesNumbersID = leavesNumbersID;
     }
 
@@ -70,12 +70,12 @@ public class LeavesNumbers {
         CompoundDay = compoundDay;
     }
 
-    public LeaveTypeForAllday getLeaveTypeForAllday() {
+    public LeaveTypeForAllday getLeaveTypeid() {
         return leaveTypeid;
     }
 
-    public void setLeaveTypeForAllday(LeaveTypeForAllday leaveTypeForAllday) {
-        this.leaveTypeid = leaveTypeForAllday;
+    public void setLeaveTypeid(LeaveTypeForAllday leaveTypeid) {
+        this.leaveTypeid = leaveTypeid;
     }
 
     public EmployeeMaster getEmployeeMasterid() {
@@ -85,8 +85,4 @@ public class LeavesNumbers {
     public void setEmployeeMasterid(EmployeeMaster employeeMasterid) {
         this.employeeMasterid = employeeMasterid;
     }
-
-
-
-
 }

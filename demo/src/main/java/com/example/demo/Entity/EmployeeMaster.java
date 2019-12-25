@@ -56,53 +56,6 @@ public class EmployeeMaster {
     private String password;
 
 
-    public void setEmployeeMasterID(long employeeMasterID) {
-        this.employeeMasterID = employeeMasterID;
-    }
-
-    public String getRoleStatus() {
-        return roleStatus;
-    }
-
-    public void setRoleStatus(String roleStatus) {
-        this.roleStatus = roleStatus;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-
-
-    public Date getEmployeeMasterBirthDate() {
-        return employeeMasterBirthDate;
-    }
-
-    public void setEmployeeMasterBirthDate(Date employeeMasterBirthDate) {
-        this.employeeMasterBirthDate = employeeMasterBirthDate;
-    }
-
-    public Date getEmployeeMasterStartDate() {
-        return employeeMasterStartDate;
-    }
-
-    public void setEmployeeMasterStartDate(Date employeeMasterStartDate) {
-        this.employeeMasterStartDate = employeeMasterStartDate;
-    }
-
-
     public Long getEmployeeMasterID() {
         return employeeMasterID;
     }
@@ -117,6 +70,14 @@ public class EmployeeMaster {
 
     public void setEmployeeMasterCustomerCode(String employeeMasterCustomerCode) {
         this.employeeMasterCustomerCode = employeeMasterCustomerCode;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 
     public String getEmployeeMasterFirstName() {
@@ -159,7 +120,13 @@ public class EmployeeMaster {
         this.maritalStatus = maritalStatus;
     }
 
+    public Date getEmployeeMasterBirthDate() {
+        return employeeMasterBirthDate;
+    }
 
+    public void setEmployeeMasterBirthDate(Date employeeMasterBirthDate) {
+        this.employeeMasterBirthDate = employeeMasterBirthDate;
+    }
 
     public String getEmployeeMasterPersonID() {
         return employeeMasterPersonID;
@@ -201,7 +168,13 @@ public class EmployeeMaster {
         this.empAddressPerson = empAddressPerson;
     }
 
+    public Date getEmployeeMasterStartDate() {
+        return employeeMasterStartDate;
+    }
 
+    public void setEmployeeMasterStartDate(Date employeeMasterStartDate) {
+        this.employeeMasterStartDate = employeeMasterStartDate;
+    }
 
     public String getEmployeePosition() {
         return employeePosition;
@@ -259,6 +232,19 @@ public class EmployeeMaster {
         this.isActive = isActive;
     }
 
+    public String getRoleStatus() {
+        return roleStatus;
+    }
 
+    public void setRoleStatus(String roleStatus) {
+        this.roleStatus = roleStatus;
+    }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

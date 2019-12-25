@@ -21,11 +21,11 @@ public class MasterAttendance {
     private int year;
     private int dayLeave;
 
-    public long getMasterAttendanceID() {
+    public Long getMasterAttendanceID() {
         return MasterAttendanceID;
     }
 
-    public void setMasterAttendanceID(long masterAttendanceID) {
+    public void setMasterAttendanceID(Long masterAttendanceID) {
         MasterAttendanceID = masterAttendanceID;
     }
 
@@ -44,6 +44,4 @@ public class MasterAttendance {
     public void setDayLeave(int dayLeave) {
         this.dayLeave = dayLeave;
     }
-
-
 }

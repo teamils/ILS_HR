@@ -20,11 +20,11 @@ public class LeaveTypeForAllday {
     private Long leaveTypeForAlldayID;
     private String leaveTypeForAlldayName;
 
-    public long getLeaveTypeForAlldayID() {
+    public Long getLeaveTypeForAlldayID() {
         return leaveTypeForAlldayID;
     }
 
-    public void setLeaveTypeForAlldayID(long leaveTypeForAlldayID) {
+    public void setLeaveTypeForAlldayID(Long leaveTypeForAlldayID) {
         this.leaveTypeForAlldayID = leaveTypeForAlldayID;
     }
 
@@ -35,7 +35,4 @@ public class LeaveTypeForAllday {
     public void setLeaveTypeForAlldayName(String leaveTypeForAlldayName) {
         this.leaveTypeForAlldayName = leaveTypeForAlldayName;
     }
-
-
-
 }

@@ -22,11 +22,11 @@ public class LeaveType {
     private Long leaveTypeID;
     private String leaveTypeName;
 
-    public long getLeaveTypeID() {
+    public Long getLeaveTypeID() {
         return leaveTypeID;
     }
 
-    public void setLeaveTypeID(long leaveTypeID) {
+    public void setLeaveTypeID(Long leaveTypeID) {
         this.leaveTypeID = leaveTypeID;
     }
 
@@ -37,7 +37,4 @@ public class LeaveType {
     public void setLeaveTypeName(String leaveTypeName) {
         this.leaveTypeName = leaveTypeName;
     }
-
-
-
 }

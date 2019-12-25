@@ -48,12 +48,12 @@ public class Leaves {
     private String leaveStatus;
     private String reasonNotApprove;
 
-    public String getReasonNotApprove() {
-        return reasonNotApprove;
+    public long getLeavesID() {
+        return leavesID;
     }
 
-    public void setReasonNotApprove(String reasonNotApprove) {
-        this.reasonNotApprove = reasonNotApprove;
+    public void setLeavesID(long leavesID) {
+        this.leavesID = leavesID;
     }
 
     public String getCreateDate() {
@@ -63,35 +63,6 @@ public class Leaves {
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setLeavesID(Long leavesID) {
-        this.leavesID = leavesID;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
-
-    public long getLeavesID() {
-        return leavesID;
-    }
-
-    public void setLeavesID(long leavesID) {
-        this.leavesID = leavesID;
-    }
-
 
     public Date getUpdateLeave_date() {
         return updateLeave_date;
@@ -149,6 +120,22 @@ public class Leaves {
         this.endDateForAllDay = endDateForAllDay;
     }
 
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
     public String getLeaveTypeForAllDay() {
         return leaveTypeForAllDay;
     }
@@ -197,7 +184,11 @@ public class Leaves {
         this.leaveStatus = leaveStatus;
     }
 
+    public String getReasonNotApprove() {
+        return reasonNotApprove;
+    }
 
-
-
+    public void setReasonNotApprove(String reasonNotApprove) {
+        this.reasonNotApprove = reasonNotApprove;
+    }
 }

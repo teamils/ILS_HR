@@ -21,11 +21,12 @@ public class Bank {
     private Long bankID;
     private String bankName;
 
-    public long getBankID() {
+
+    public Long getBankID() {
         return bankID;
     }
 
-    public void setBankID(long bankID) {
+    public void setBankID(Long bankID) {
         this.bankID = bankID;
     }
 
@@ -36,6 +37,4 @@ public class Bank {
     public void setBankName(String bankName) {
         this.bankName = bankName;
     }
-
-
 }

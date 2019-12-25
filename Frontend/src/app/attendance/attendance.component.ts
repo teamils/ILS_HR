@@ -205,11 +205,11 @@ export class AttendanceComponent implements OnInit {
           var CDate = new Date(this.startDateInLogin);
           console.log('Date Date -> ',CDate);
 
-              /*this.CalculateStartWorkDate(CDate,this.todayDate);
-             this.http.post(this.API1  +/saveleaveNumber/+ this.empId +'/'+ this.table.sumDate ,{})
+              this.CalculateStartWorkDate(CDate,this.todayDate);
+             this.http.post(this.API1  +/saveleaveNumber/+ this.empId  ,{})
                                .subscribe(dataleaveNumber => {console.log('PUT Request is successful');},error => {console.log('Error', error);});
 
-                this.service.getShowLeavesNumber(this.empId).subscribe(data => {
+               /* this.service.getShowLeavesNumber(this.empId).subscribe(data => {
                        if(data!=null){
                             this.leavecheck = data;
                             this.leavetatelAll.leavesNumbersID = data.leavesNumbersID;
@@ -247,7 +247,7 @@ export class AttendanceComponent implements OnInit {
     sumDay:number;
     CalculateStartWorkDate(date1:any,date2:any){
         this.diffTime2 = (date2 - date1);
-        this.sumDay = Math.ceil((this.diffTime1 / (1000 * 60 * 60 * 24))-1);
+        this.sumDay = Math.ceil((this.diffTime2 / (1000 * 60 * 60 * 24))-1);
         console.log(this.sumDay);
     }
 

@@ -22,11 +22,11 @@ public class Position {
     private Long positionID;
     private String positionName;
 
-    public long getPositionID() {
+    public Long getPositionID() {
         return positionID;
     }
 
-    public void setPositionID(long positionID) {
+    public void setPositionID(Long positionID) {
         this.positionID = positionID;
     }
 
@@ -37,6 +37,4 @@ public class Position {
     public void setPositionName(String positionName) {
         this.positionName = positionName;
     }
-
-
 }
