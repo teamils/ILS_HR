@@ -11,6 +11,7 @@ import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/mater
 import { AppComponent } from '../app.component';
 import { Pipe, PipeTransform} from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { AttendanceShowLeavenumberComponent } from '../attendance-show-leavenumber/attendance-show-leavenumber.component';
 
 export interface employeeMasters{
     Fname : String;
@@ -61,8 +62,8 @@ export class AttendanceComponent implements OnInit {
   dataLeave : Array<any>;
   startDate : any;
   endDate : any;
-  startTimeSelect=null;
-  endTimeSelect=null;
+  startTimeSelect='null';
+  endTimeSelect='null';
   reason : any;
   labelLeaveHalfDay: any;
     startDate2 : any;
@@ -70,7 +71,7 @@ export class AttendanceComponent implements OnInit {
     reason2 : any;
     leaveTypeSelect2 : string;
 
-  leavecheck : Array<any>;
+  leaveNumber : Array<any>;
   totalAnnualLeave;
   leaveType : Array<any>;
   leaveTypeForAlldays : Array<any>;
@@ -86,11 +87,11 @@ export class AttendanceComponent implements OnInit {
   diffTime2:number;
   sumDay:number;
   sumDay_365:number;
-
+  x:any=false;
   empId = localStorage.getItem('empId');
   startDateInLogin = localStorage.getItem('startDateInLogin');
 
-  displayedColumns2: string[] = ['number','date','leaveType', 'reason','startDate','endDate2','total', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','leaveStatus','del'];
+  displayedColumns2: string[] = ['number','date','leaveType', 'reason','startDate','endDate2','total', /*'approvedBySupervisor', 'approvedByManager',*/'reasonNotApprove','leaveStatus','del'];
   dataSource2 = new MatTableDataSource<leave2>(this.leaves2);
 
   constructor(private service:ServiceService,
@@ -155,13 +156,14 @@ export class AttendanceComponent implements OnInit {
         else if(this.reason == null) alert("กรุณากรอกเหตุผล");
         else{
 
-             this.http.post(this.API1  +/SaveLeaveHalfDay/+ this.table.leaID +'/'+ this.leaveTypeSelect +'/'+ this.labelLeaveHalfDay +'/'+ this.startDate  +'/'+ this.reason +'/null/null'  ,{})
+             this.http.post(this.API1  +/SaveLeaveHalfDay/+ this.table.leaID +'/'+ this.leaveTypeSelect +'/'+ this.labelLeaveHalfDay +'/'+ this.startDate  +'/'+ this.reason +'/'+ this.startTimeSelect +'/'+ this.endTimeSelect  ,{})
                         .subscribe(
                                        dataLeave => {
                                            console.log('PUT Request is successful', dataLeave);
                                            alert("ลาสําเร็จ รอการอนุมัติ");
                                             //window.location.reload(true);
                                             localStorage.setItem('links', 'attendance');
+                                            this.x=false;
                                        },
                                        error => {
                                            console.log('Error', error);
@@ -169,6 +171,7 @@ export class AttendanceComponent implements OnInit {
                                       );
             this.ClearTextInput();
             this. RefreshTable();
+            this.x=true;
         }
     }
     SubmitData2(){ //Full day
@@ -191,6 +194,7 @@ export class AttendanceComponent implements OnInit {
                                            alert("ลาสําเร็จ รอการอนุมัติ");
                                             //window.location.reload(true);
                                             localStorage.setItem('links', 'attendance');
+                                            this.x=false;
                                        },
                                        error => {
                                            console.log('Error', error);
@@ -198,6 +202,7 @@ export class AttendanceComponent implements OnInit {
                                       );
              this.ClearTextInput();
               this.RefreshTable();
+              this.x=true;
         }
 
     }
@@ -214,11 +219,9 @@ export class AttendanceComponent implements OnInit {
                                .subscribe(dataleaveNumber => {console.log('PUT Request is successful');},error => {console.log('Error', error);});
                 }
                 else{
-                    this.leavecheck = data;
+                    this.leaveNumber = data;
                     //console.log('SaveLeaveNumber -> ',this.leavecheck);
                 }
-
-
 
           });
 
@@ -232,6 +235,12 @@ export class AttendanceComponent implements OnInit {
                   data: row,
             });
             this.RefreshTable();
+    }
+    ShowLeaveNumberDailog(){
+            const dialogRef = this.dialog.open(AttendanceShowLeavenumberComponent, {
+                  width: 'auto;',
+                  height:'auto;',
+            });
     }
 
     CalculateLeaveDate(date1:any,date2:any){

@@ -33,7 +33,7 @@ export class ApproveBySupervisorComponent implements OnInit {
   lastNameOnLogin  = localStorage.getItem('lName');
   departmentOnLogin = localStorage.getItem('departmentlogin');
 
-  displayedColumns: string[] = ['number','employeeCode', 'name','date', 'leaveType', 'reason', 'startDate', 'endDate','total', 'approvedBySupervisor', 'approvedByManager','leaveStatus','approve','notApprove'];
+  displayedColumns: string[] = ['number','employeeCode', 'name','date', 'leaveType', 'reason', 'startDate', 'endDate','total', /*'approvedBySupervisor', 'approvedByManager',*/'leaveStatus','approve','notApprove'];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
   constructor(private service:ServiceService,

@@ -67,8 +67,7 @@ public class LeavesController {
 
     @PostMapping("/SaveLeaveHalfDay/{leaID}/{leaveTypeSelect}/{labelLeaveHalfDay}/{startDate}/{reason}/{startTimeSelect}/{endTimeSelect}") // saveLeave ครึ่งวัน
     public Leaves leaves( @PathVariable Long leaID , @PathVariable String leaveTypeSelect ,@PathVariable String labelLeaveHalfDay
-            , @PathVariable Date startDate , @PathVariable String reason, @PathVariable String startTimeSelect, @PathVariable String endTimeSelect ) throws ParseException {
-
+            , @PathVariable Date startDate , @PathVariable String reason, @PathVariable String startTimeSelect, @PathVariable String endTimeSelect )  {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -97,6 +96,7 @@ public class LeavesController {
         leaves1.setApprovedByManager("Pending");
         leaves1.setIsActiveAttendance("1");
         leaves1.setLeaveStatus("Pending");
+        leaves1.setWageStatus(1);
         leavesRepository.save(leaves1);
         return leaves1;
     }
@@ -133,6 +133,7 @@ public class LeavesController {
         leaves2.setApprovedByManager("Pending");
         leaves2.setIsActiveAttendance("1");
         leaves2.setLeaveStatus("Pending");
+        leaves2.setWageStatus(1);
         leavesRepository.save(leaves2);
         return leaves2;
     }
@@ -149,20 +150,14 @@ public class LeavesController {
     public LeavesNumbers leavesNumbers(@PathVariable Long empId,@PathVariable int sumDay_365) {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(empId).get();
         MasterAttendance masterAttendance = masterAttendanceRepository.findByYear(sumDay_365);
+        LeaveTypeForAllday setleaveTypeForAllday = leaveTypeForAlldayRepository.findByLeaveTypeForAlldayName("ลาพักร้อน");
+        setleaveTypeForAllday.setDefaultLeaveDay(masterAttendance.getDayLeave());
         for(long i=1;i<=8;i++){
             LeavesNumbers saveleaveNumber = new LeavesNumbers();
             LeaveTypeForAllday leaveTypeForAllday = leaveTypeForAlldayRepository.findById(i).get();
             saveleaveNumber.setEmployeeMasterid(employeeMaster);
             saveleaveNumber.setLeaveTypeid(leaveTypeForAllday);
-            if(i==1||i==4||i==5){
-                saveleaveNumber.setGetDay(3);
-                saveleaveNumber.setCompoundDay(0);
-            }
-            else if(i==3)   saveleaveNumber.setGetDay(masterAttendance.getDayLeave());
-            else if(i==2) saveleaveNumber.setGetDay(30);
-            else if(i==6) saveleaveNumber.setGetDay(7);
-            else if(i==7) saveleaveNumber.setGetDay(60);
-            else if(i==8) saveleaveNumber.setGetDay(45);
+            saveleaveNumber.setGetDay(leaveTypeForAllday.getDefaultLeaveDay());
             leavesNumbersRepository.save(saveleaveNumber);
         }
         return null;
@@ -179,7 +174,7 @@ public class LeavesController {
         return leavesNumbers;
     }*/
 
-    @PostMapping(path = "/CancelLeave/{leavesID}") //Cancel Leave
+    @PostMapping(path = "/CancelLeave/{leavesID}") //Delete Leave
     public Leaves leaves2(@PathVariable Long leavesID) {
         Leaves leaves = leavesRepository.findById(leavesID).get();
         leaves.setIsActiveAttendance("0");
@@ -192,7 +187,7 @@ public class LeavesController {
         Leaves approveBySupervisor = leavesRepository.findById(leavesID).get();
         String name = firstNameOnLogin +"  "+ lastNameOnLogin;
         approveBySupervisor.setApprovedBySupervisor(name);
-        approveBySupervisor.setLeaveStatus("Pending");
+        approveBySupervisor.setLeaveStatus("Waiting approve"); //รอ ger approve
         leavesRepository.save(approveBySupervisor);
         return approveBySupervisor;
     }
@@ -200,7 +195,7 @@ public class LeavesController {
     public Leaves notApproveBySupervisor( @PathVariable Long leavesID, @PathVariable String reasonNotapprove){
         Leaves notApproveBySupervisor = leavesRepository.findById(leavesID).get();
         notApproveBySupervisor.setApprovedBySupervisor("Not approve");
-        notApproveBySupervisor.setLeaveStatus("Supervisor not approve");
+        notApproveBySupervisor.setLeaveStatus("Not approve");
         notApproveBySupervisor.setReasonNotApprove(reasonNotapprove);
         leavesRepository.save(notApproveBySupervisor);
         return notApproveBySupervisor;
@@ -210,7 +205,7 @@ public class LeavesController {
         Leaves approveByManager = leavesRepository.findById(leavesID).get();
         String name = firstNameOnLogin +"  "+ lastNameOnLogin;
         approveByManager.setApprovedByManager(name);
-        approveByManager.setLeaveStatus("Complete");
+        approveByManager.setLeaveStatus("Approve");
         leavesRepository.save(approveByManager);
         return approveByManager;
     }

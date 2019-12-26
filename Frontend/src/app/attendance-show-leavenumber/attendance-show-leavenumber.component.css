@@ -1,0 +1,13 @@
+th {
+  background-color: #FFA07A;
+}
+td{
+  text-align: center;
+}
+tr:nth-child(even) {
+  background-color: #FFDAB9;
+}
+table {
+  font-family: arial, sans-serif;
+  border: 1px solid #FFA07A;
+}

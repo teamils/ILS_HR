@@ -1,0 +1,15 @@
+<table>
+  <tr>
+    <th>ประเภท</th>
+    <th>วันลาที่ได้รับค่าจ้าง</th>
+    <th>ลาไปแล้ว</th>
+    <th>คงเหลือ</th>
+  </tr>
+
+  <tr *ngFor="let dessert of leaveNumber; let i = index">
+    <td class="td1">{{dessert.leaveTypeid.leaveTypeForAlldayName}}</td>
+    <td>{{dessert.getDay}}</td>
+    <td>{{dessert.usedDay}}</td>
+    <td>{{dessert.balanceDay}}</td>
+  </tr>
+</table>

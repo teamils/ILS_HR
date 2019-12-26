@@ -14,5 +14,5 @@ import java.util.Collection;
 
 @Repository
 public interface LeaveTypeForAlldayRepository extends JpaRepository<LeaveTypeForAllday,Long> {
-
+    LeaveTypeForAllday findByLeaveTypeForAlldayName(String leaveTypeForAlldayName);
 }

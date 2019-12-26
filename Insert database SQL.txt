@@ -167,33 +167,45 @@ VALUES (5, 'ลากิจงานศพ');
 
 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
-VALUES (1, 'ลากิจ'); 
+VALUES (1, 3, 'ลากิจ' ); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
-VALUES (2, 'ลาป่วย'); 
+VALUES (2, 30, 'ลาป่วย'); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
-VALUES (3, 'ลาพักร้อน'); 
+VALUES (3, 0, 'ลาพักร้อน'); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
-VALUES (4, 'ลากิจงานเเต่ง'); 
+VALUES (4, 3, 'ลากิจงานเเต่ง'); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
-VALUES (5, 'ลากิจงานศพ'); 
+VALUES (5, 3, 'ลากิจงานศพ'); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
-VALUES (6, 'ลาไปทหาร'); 
+VALUES (6, 60, 'ลาไปทหาร'); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
-VALUES (7, 'ลาบวช'); 
+VALUES (7, 7, 'ลาบวช'); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
-VALUES (8, 'ลาคลอด'); 
+VALUES (8, 45, 'ลาคลอด'); 
 
 INSERT INTO MASTER_ATTENDANCE 
 VALUES (1, 0, 0); 
 INSERT INTO MASTER_ATTENDANCE 
 VALUES (2, 7, 1); 
 INSERT INTO MASTER_ATTENDANCE 
-VALUES (3, 10, 3); 
+VALUES (3, 7, 2); 
 INSERT INTO MASTER_ATTENDANCE 
-VALUES (4, 12, 5); 
+VALUES (4, 10, 3); 
 INSERT INTO MASTER_ATTENDANCE 
-VALUES (5, 15, 10); 
+VALUES (5, 10, 4); 
+INSERT INTO MASTER_ATTENDANCE 
+VALUES (6, 12, 5); 
+INSERT INTO MASTER_ATTENDANCE 
+VALUES (7, 12, 6); 
+INSERT INTO MASTER_ATTENDANCE 
+VALUES (8, 12, 7); 
+INSERT INTO MASTER_ATTENDANCE 
+VALUES (9, 12, 8); 
+INSERT INTO MASTER_ATTENDANCE 
+VALUES (10, 12, 9); 
+INSERT INTO MASTER_ATTENDANCE 
+VALUES (11, 15, 10); 
 
 
 INSERT INTO EMPLOYEE_MASTER 
-VALUES (1, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','7072698661','ป.ตรี','-','180 ม.5 ต.วังซ่าน อ.เเม่วงก์ จ.นครสวรรค์','dikinakub6509@gmail.com','IT','1997-07-30','400234','ดิกิ','ชาย','คาวาซากิ','กิ','1600100723988','2019-11-04','0834318890','IT Programmer','นักศึกษาฝึกงาน','1','ยังปฏิบัติงานอยู่','400234','นาย','ADMIN'); 
+VALUES (1, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','7072698661','ป.ตรี','-','180 ม.5 ต.วังซ่าน อ.เเม่วงก์ จ.นครสวรรค์','dikinakub6509@gmail.com','IT','1997-07-30','400234','ดิกิ','ชาย','คาวาซากิ','กิ','1600100723988','2010-12-26','0834318890','IT Programmer','นักศึกษาฝึกงาน','1','ยังปฏิบัติงานอยู่','400234','นาย','ADMIN'); 

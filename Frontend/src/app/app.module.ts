@@ -58,6 +58,7 @@ import { ApproveBySupervisorComponent } from './approve-by-supervisor/approve-by
 import { ReasonNotApproveDialog } from './approve-by-supervisor/approve-by-supervisor.component';
 import { ApproveByManagerComponent } from './approve-by-manager/approve-by-manager.component';
 import { ReasonNotApproveBygerDialog } from './approve-by-manager/approve-by-manager.component';
+import { AttendanceShowLeavenumberComponent } from './attendance-show-leavenumber/attendance-show-leavenumber.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { ReasonNotApproveBygerDialog } from './approve-by-manager/approve-by-man
     ApproveByManagerComponent,
     ReasonNotApproveDialog,
     ReasonNotApproveBygerDialog,
+    AttendanceShowLeavenumberComponent,
   ],
 
       imports: [
@@ -137,7 +139,8 @@ import { ReasonNotApproveBygerDialog } from './approve-by-manager/approve-by-man
                     AttendanceDeleteDialog,
                     AttendanceCancelDialog,
                     ReasonNotApproveDialog,
-                    ReasonNotApproveBygerDialog
+                    ReasonNotApproveBygerDialog,
+                    AttendanceShowLeavenumberComponent,
    ],
   providers: [],
   bootstrap: [AppComponent]

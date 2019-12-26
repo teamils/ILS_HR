@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
     hide:any;
     id : String = null;
     NewPassword : String = null ;
+    x:any=false;
     leaveTypeForAlldays: Array<any>;
     table : any = {
       leaID : '',
@@ -69,6 +70,7 @@ export class HomeComponent implements OnInit {
                 localStorage.setItem('startDateInLogin', data.employeeMasterStartDate);
 
                 if(data != null){
+                    this.x=true;
                     this.router.navigate(['newheader']);
                     localStorage.setItem('logouts', 'false');
                     if(data.roleStatus == "EMPLOYEE"){

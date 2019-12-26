@@ -21,23 +21,23 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
     Collection<Leaves> getLeaves2(@Param("employeeCode2") String employeeCode2 );
 
     //date attendance // ตกนกด Complete
-    @Query(value = "SELECT * FROM leaves WHERE   is_active_attendance='1' and leave_status='Complete'" ,nativeQuery = true)
+    @Query(value = "SELECT * FROM leaves WHERE   is_active_attendance='1' and leave_status='Approve'" ,nativeQuery = true)
     Collection<Leaves> getLeavesToComplete();
 
     //date attendance // ตกนไม่กด Complete
-    @Query(value = "SELECT * FROM leaves WHERE   is_active_attendance='1' and leave_status<>'Complete'" ,nativeQuery = true)
+    @Query(value = "SELECT * FROM leaves WHERE   is_active_attendance='1' and leave_status<>'Approve'" ,nativeQuery = true)
     Collection<Leaves> getLeavesToNotComplete();
 
     //approveBySupervisor // ตอนไม่กด Complete
-    @Query(value = "SELECT * FROM leaves,employee_master WHERE is_active_attendance='1' and employee_department=:department3 and leave_status <>'Complete' and leave_status <>'Cancel' and leaves.employee_masterid_employee_masterid=employee_master.employee_masterid" ,nativeQuery = true)
+    @Query(value = "SELECT * FROM leaves,employee_master WHERE is_active_attendance='1' and employee_department=:department3 and leave_status <>'Approve' and leave_status <>'Cancel' and leaves.employee_masterid_employee_masterid=employee_master.employee_masterid" ,nativeQuery = true)
     Collection<Leaves> getLeavesToNotCompleteBySupervisor(@Param("department3") String department3 );
 
     // approveByManager ลูกน้องตัวเอง // ตอนไม่กด Complete
-    @Query(value = "SELECT * FROM leaves,employee_master WHERE is_active_attendance='1' and employee_department=:department2 and leave_status <>'Complete' and leave_status <>'Cancel' and leave_status <>'Supervisor not approve' and leaves.employee_masterid_employee_masterid=employee_master.employee_masterid" ,nativeQuery = true)
+    @Query(value = "SELECT *FROM leaves,employee_master WHERE is_active_attendance='1' and employee_department='IT' and leave_status <>'Approve' and leave_status <>'Cancel' and (APPROVED_BY_SUPERVISOR <>'Not  approve' and  leave_status <>'Not approve') and leaves.employee_masterid_employee_masterid=employee_master.employee_masterid" ,nativeQuery = true)
     Collection<Leaves> getLeavesToNotApproveByManager(@Param("department2") String department2 );
 
     //approveBySupervisor and approveByManager ลูกน้องตัวเอง//get leaves ที่ department=x   // ตกนกด Complete
-    @Query(value = "SELECT * FROM leaves,employee_master WHERE is_active_attendance='1' and employee_department=:department  and leave_status='Complete' and leaves.employee_masterid_employee_masterid=employee_master.employee_masterid",nativeQuery = true)
+    @Query(value = "SELECT * FROM leaves,employee_master WHERE is_active_attendance='1' and employee_department=:department  and leave_status='Approve' and leaves.employee_masterid_employee_masterid=employee_master.employee_masterid",nativeQuery = true)
     Collection<Leaves> getLeavesSelectDepartment(@Param("department") String department );
 
 }

@@ -23,10 +23,7 @@ public class Leaves {
     @SequenceGenerator(name = "Leaves3_seq", sequenceName = "Leaves3_seq",initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator ="Leaves3_seq")
     private long leavesID;
-
-
     private String createDate;
-
     private Date updateLeave_date;
     private String updateLeave_by;
     private String createLeave_by;
@@ -39,7 +36,6 @@ public class Leaves {
     private String startTime;
     private String endTime;
     private String leaveTypeForAllDay;
-
     private String approvedBySupervisor;
     private String approvedByManager;
     private String isActiveAttendance;
@@ -47,6 +43,15 @@ public class Leaves {
     @ManyToOne private EmployeeMaster employeeMasterid;
     private String leaveStatus;
     private String reasonNotApprove;
+    private int wageStatus;
+
+    public int getWageStatus() {
+        return wageStatus;
+    }
+
+    public void setWageStatus(int wageStatus) {
+        this.wageStatus = wageStatus;
+    }
 
     public long getLeavesID() {
         return leavesID;

@@ -19,6 +19,15 @@ public class LeaveTypeForAllday {
     @Id
     private Long leaveTypeForAlldayID;
     private String leaveTypeForAlldayName;
+    private int defaultLeaveDay;
+
+    public int getDefaultLeaveDay() {
+        return defaultLeaveDay;
+    }
+
+    public void setDefaultLeaveDay(int defaultLeaveDay) {
+        this.defaultLeaveDay = defaultLeaveDay;
+    }
 
     public Long getLeaveTypeForAlldayID() {
         return leaveTypeForAlldayID;

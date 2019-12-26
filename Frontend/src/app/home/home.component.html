@@ -19,9 +19,10 @@
             }
         </style>
     </head>
-
+    <mat-progress-bar mode="indeterminate" *ngIf="x"></mat-progress-bar>
     <body (keydown.enter)="login(id,NewPassword)" class="center">
       <div class="card">
+
        <!-- <p align="center"><font color="black" class="font">ILS HUMAN RESOURCES</font></p> -->
         <img style="margin-left : 32%" src="http://www.ils.co.th/wp-content/themes/ils/images/logo.png" alt="ILS"/>
 
