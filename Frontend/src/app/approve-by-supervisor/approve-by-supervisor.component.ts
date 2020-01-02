@@ -44,7 +44,11 @@ export class ApproveBySupervisorComponent implements OnInit {
             public api : AppComponent) { }
     public API = this.api.API;
 
-
+  ngOnDestroy() {
+    if (this.interval) {
+      clearInterval(this.interval);
+      }
+  }
   ngOnInit() {
         this.service.getLeavesToNotCompleteBySupervisor(this.departmentOnLogin).subscribe(data => {
             this.leaves = data;
@@ -71,6 +75,8 @@ export class ApproveBySupervisorComponent implements OnInit {
             });
         this.onChange();
   }
+
+
 
   onChange(){
            this.interval = setTimeout(() => {  //show table Leave

@@ -45,6 +45,12 @@ constructor(private service:ServiceService,
              public api : AppComponent) { }
     public APIs = this.api.API;
 
+  ngOnDestroy() {
+    if (this.interval) {
+      clearInterval(this.interval);
+      }
+  }
+
   ngOnInit() {
         this.service.getShowLeavesNotApproveBySup(this.departmentOnLogin).subscribe(data => {
             console.log('leaves -> ', data.leaveStatus);

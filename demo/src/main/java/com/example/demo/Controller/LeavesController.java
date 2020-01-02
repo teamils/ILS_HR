@@ -146,34 +146,6 @@ public class LeavesController {
         return leaves;
     }
 
-    @PostMapping(path = "/saveleaveNumber/{empId}/{sumDay_365}") //saveleaveNumber Set Default
-    public LeavesNumbers leavesNumbers(@PathVariable Long empId,@PathVariable int sumDay_365) {
-        EmployeeMaster employeeMaster = employeeMasterRepository.findById(empId).get();
-        MasterAttendance masterAttendance = masterAttendanceRepository.findByYear(sumDay_365);
-        LeaveTypeForAllday setleaveTypeForAllday = leaveTypeForAlldayRepository.findByLeaveTypeForAlldayName("ลาพักร้อน");
-        setleaveTypeForAllday.setDefaultLeaveDay(masterAttendance.getDayLeave());
-        for(long i=1;i<=8;i++){
-            LeavesNumbers saveleaveNumber = new LeavesNumbers();
-            LeaveTypeForAllday leaveTypeForAllday = leaveTypeForAlldayRepository.findById(i).get();
-            saveleaveNumber.setEmployeeMasterid(employeeMaster);
-            saveleaveNumber.setLeaveTypeid(leaveTypeForAllday);
-            saveleaveNumber.setGetDay(leaveTypeForAllday.getDefaultLeaveDay());
-            leavesNumbersRepository.save(saveleaveNumber);
-        }
-        return null;
-    }
-
-  /*  @PostMapping(path = "/saveleaveNumber2/{empId}/{sumDateime}") //saveleaveNumber2
-    public LeavesNumbers leavesNumbers2(@PathVariable Long empId,@PathVariable int sumDateime) {
-        EmployeeMaster employeeMaster = employeeMasterRepository.findById(empId).get();
-        LeavesNumbers leavesNumbers = new LeavesNumbers();
-        leavesNumbers.setEmployeeMasterid(employeeMaster);
-        leavesNumbers.setTotalAnnualLeave(sumDateime);
-        leavesNumbers.setTotalSickLeave(30);
-        leavesNumbersRepository.save(leavesNumbers);
-        return leavesNumbers;
-    }*/
-
     @PostMapping(path = "/CancelLeave/{leavesID}") //Delete Leave
     public Leaves leaves2(@PathVariable Long leavesID) {
         Leaves leaves = leavesRepository.findById(leavesID).get();
@@ -218,4 +190,6 @@ public class LeavesController {
         leavesRepository.save(notApproveByManager);
         return notApproveByManager;
     }
+
+
 }

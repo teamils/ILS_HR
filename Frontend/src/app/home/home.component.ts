@@ -53,6 +53,7 @@ export class HomeComponent implements OnInit {
         if(this.id == null) alert("Please enter username");
         else if(this.NewPassword == null) alert("Please enter password");
         else{
+              this.x=true;
               this.service.getUserPassword(id,NewPassword).subscribe(data => {
                 if(data == null) alert("UserID and password not complete");
                 this.employee = data;
@@ -98,6 +99,7 @@ export class HomeComponent implements OnInit {
               this.id = null;
               this.NewPassword = null;
         }
+        this.x=false;
     }
 
 

@@ -64,7 +64,7 @@ bankNumbers : null;
 role_status : Array<any>;
 role_statusSelect = '';
 passwordCreate : null;
-
+x:any=false;
 
 
 constructor(private route:ActivatedRoute ,

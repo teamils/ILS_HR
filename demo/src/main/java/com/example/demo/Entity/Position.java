@@ -21,7 +21,6 @@ public class Position {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Position_seq1")
     private Long positionID;
     private String positionName;
-
     public Long getPositionID() {
         return positionID;
     }

@@ -77,7 +77,7 @@
         </mat-form-field>
         <br>
         <mat-form-field style="width:30%;">
-          <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason2" required ></textarea>
+          <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason2" required (click)="Checktheleave()"></textarea>
         </mat-form-field>
         <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;" (click)="SubmitData2()">Save</button>
       </div>

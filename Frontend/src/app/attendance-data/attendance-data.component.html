@@ -8,7 +8,7 @@
       </mat-form-field>
   </span>
   <span>
-    <mat-slide-toggle (change)="onChange()" [(ngModel)]="isChecked">Complete</mat-slide-toggle>
+    <mat-slide-toggle (change)="onChange()" [(ngModel)]="isChecked">Approve</mat-slide-toggle>
   </span>
 </mat-toolbar>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -60,12 +60,12 @@
 
   <ng-container matColumnDef="startDate">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>เริ่มจากวันที่</b></font>  </th>
-    <td mat-cell *matCellDef="let element"> {{element.startDateForAllDay+' '}}{{element.startTime}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.startDateForAllDay+' '}}<div *ngIf="element.startTime=='null'?false:true;">{{element.startTime}}</div></td>
   </ng-container>
 
   <ng-container matColumnDef="endDate">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>ถึงวันที่</b></font>  </th>
-    <td mat-cell *matCellDef="let element"> {{element.endDateForAllDay+' '}}{{element.endTime}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.endDateForAllDay+' '}}<div *ngIf="element.startTime=='null'?false:true;">{{element.endTime}}</div> </td>
   </ng-container>
 
   <ng-container matColumnDef="total">

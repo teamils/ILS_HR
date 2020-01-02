@@ -55,8 +55,8 @@ export class NewheaderComponent implements OnInit {
                           this._mobileQueryListener = () => changeDetectorRef.detectChanges();
                           this.mobileQuery.addListener(this._mobileQueryListener);
 
-                              localStorage.setItem('selectEmployeemaster', 'true');
-                              this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+                              localStorage.setItem('selectAttendance', 'true');
+                              this.selectAttendance =  localStorage.getItem('selectAttendance');
 
                           if(this.links == 'employeeMaster'){
                               localStorage.setItem('selectEmployeemaster', 'true');
