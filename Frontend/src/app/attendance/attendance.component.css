@@ -6,6 +6,10 @@
    margin-left: auto;
    margin-bottom: auto;
 }
+.color{
+ /*background-image:url(src/app/image/GreenDNA-BG-1.jpg);*/
+  background-color: #00aa00;
+}
 .card2{
    wheight: auto;
    height: auto;
@@ -21,10 +25,10 @@ td{
 }
 th {
   border: 1px solid #ffffff;
-  background-color: #C0C0f0;
+  background-color: #00FF00;
 }
 tr:nth-child(even) {
-  background-color: #E6E6FA;
+  background-color: #90EE90;
 }
 table {
   font-family: arial, sans-serif;

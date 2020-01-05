@@ -1,5 +1,5 @@
 INSERT INTO department 
-VALUES (1, 'AE ');
+VALUES (1, 'AE');
 INSERT INTO department 
 VALUES (2, 'Amazon');
 INSERT INTO department 
@@ -153,18 +153,50 @@ VALUES (4, 'sup','SUPERVISOR');
 INSERT INTO ROLE_STATUS
 VALUES (5, 'add','ADMIN'); 
 
+INSERT INTO PREFIX 
+VALUES (1, 'นาย');
+INSERT INTO PREFIX 
+VALUES (2, 'นาง');
+INSERT INTO PREFIX 
+VALUES (3, 'นางสาว');
 
-INSERT INTO LEAVE_TYPE 
-VALUES (1, 'ลากิจ'); 
-INSERT INTO LEAVE_TYPE 
-VALUES (2, 'ลาป่วย'); 
-INSERT INTO LEAVE_TYPE 
-VALUES (3, 'ลาพักร้อน'); 
-INSERT INTO LEAVE_TYPE 
-VALUES (4, 'ลากิจงานเเต่ง'); 
-INSERT INTO LEAVE_TYPE 
-VALUES (5, 'ลากิจงานศพ'); 
+INSERT INTO GENDER 
+VALUES (1,'ชาย'); 
+INSERT INTO GENDER 
+VALUES (2,'หญิง'); 
 
+INSERT INTO EDUCATION 
+VALUES (1,'ป.6'); 
+INSERT INTO EDUCATION 
+VALUES (2,'ม.3'); 
+INSERT INTO EDUCATION 
+VALUES (3,'ม.6'); 
+INSERT INTO EDUCATION 
+VALUES (4,'ปวช.'); 
+INSERT INTO EDUCATION 
+VALUES (5,'ปวส.'); 
+INSERT INTO EDUCATION 
+VALUES (6,'ป.ตรี'); 
+INSERT INTO EDUCATION 
+VALUES (7,'ป.โท'); 
+INSERT INTO EDUCATION 
+VALUES (8,'ป.เอก'); 
+
+INSERT INTO EMPLOYEE_TYPE 
+VALUES (1, 'นักศึกษาฝึกงาน');
+INSERT INTO EMPLOYEE_TYPE 
+VALUES (2, 'รายเดือน');
+INSERT INTO EMPLOYEE_TYPE 
+VALUES (3, 'รายวัน');
+INSERT INTO EMPLOYEE_TYPE 
+VALUES (4, 'รายวันชั่วคราว');
+
+INSERT INTO emp_status 
+VALUES (1, 'ยังปฏิบัติงานอยู่');
+INSERT INTO emp_status 
+VALUES (2, 'พักงาน');
+INSERT INTO emp_status 
+VALUES (3, 'พ้นสภาพพนักงาน');
 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
 VALUES (1, 3, 'ลากิจ' ); 
@@ -173,9 +205,9 @@ VALUES (2, 30, 'ลาป่วย');
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
 VALUES (3, 0, 'ลาพักร้อน'); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
-VALUES (4, 3, 'ลากิจงานเเต่ง'); 
+VALUES (4, 3, 'ลาเเต่งงาน'); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
-VALUES (5, 3, 'ลากิจงานศพ'); 
+VALUES (5, 3, 'ลาไปงานศพ'); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
 VALUES (6, 60, 'ลาไปทหาร'); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
@@ -190,9 +222,9 @@ VALUES (2, 'ลาป่วย', 30);
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
 VALUES (3, 'ลาพักร้อน', 0); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
-VALUES (4, 'ลากิจงานเเต่ง', 3); 
+VALUES (4, 'ลาเเต่งงาน', 3); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
-VALUES (5, 'ลากิจงานศพ', 3); 
+VALUES (5, 'ลาไปงานศพ', 3); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
 VALUES (6, 'ลาไปทหาร', 60); 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
@@ -225,4 +257,12 @@ VALUES (11, 15, 10);
 
 
 INSERT INTO EMPLOYEE_MASTER 
-VALUES (1, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','7072698661','ป.ตรี','-','180 ม.5 ต.วังซ่าน อ.เเม่วงก์ จ.นครสวรรค์','dikinakub6509@gmail.com','IT','1997-07-30','400234','ดิกิ','ชาย','คาวาซากิ','กิ','1600100723988','2010-12-26','0834318890','IT Programmer','นักศึกษาฝึกงาน','1','ยังปฏิบัติงานอยู่','400234','นาย','ADMIN'); 
+VALUES (1, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','7072698661','2020-01-03 16:20:15.5950000','ป.ตรี',',','-','180 ม.5 ต.วังซ่าน อ.เเม่วงก์ จ.นครสวรรค์','dikinakub6509@gmail.com','IT','1997-07-30','400234','ดิกิ','ชาย','คาวาซากิ','กิ','1600100723988','2010-12-26','0834318890','IT Programmer','นักศึกษาฝึกงาน','1','ยังปฏิบัติงานอยู่','400234','นาย','ADMIN'); 
+INSERT INTO EMPLOYEE_MASTER 
+VALUES (2, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','-','ป.เอก','-','-','-','-','IT','1975-04-10','man','พัชรเสฐ ','ชาย','อนันต์ธนารัฐ','หุย','3920400147714','2003-09-08','-','Manager','รายเดือน','1','ยังปฏิบัติงานอยู่','man','นาย','MANAGER'); 
+INSERT INTO EMPLOYEE_MASTER 
+VALUES (3, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','-','ป.ตรี','-','-','-','-','IT','1988-07-19','sup','จักรกฤษณ์','ชาย','รักษ์วนาพงษ์','หรั่ง','2560300014319','2018-07-01','-','IT Suppervisor','รายเดือน','1','ยังปฏิบัติงานอยู่','sup','นาย','SUPERVISOR'); 
+INSERT INTO EMPLOYEE_MASTER 
+VALUES (4, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','-','ป.ตรี','-','-','-','-','HR and Admin','1983-05-01','hr','สุรจิตร   ','ชาย','สุขพลอย','ฟาน','3130500064435','2011-08-01','-','HR Supervisor','รายเดือน','1','ยังปฏิบัติงานอยู่','hr','นาย','HR'); 
+INSERT INTO EMPLOYEE_MASTER 
+VALUES (5, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','-','ป.ตรี','-','-','-','-','Receiving','1987-08-13','emp','วิมลวรรณ','หญิง','ยิ่งคิด','มด','1120600100721','2007-07-01','-','Checker','รายเดือน','1','ยังปฏิบัติงานอยู่','emp','นางสาว','EMPLOYEE'); 

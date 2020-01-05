@@ -1,7 +1,9 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Entity.Combobox.Department;
 import com.example.demo.Repository.*;
 import com.example.demo.Entity.*;
+import com.example.demo.Repository.ComboboxRepository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +21,18 @@ import java.time.format.DateTimeFormatter;
 public class EmployeeMasterController {
 
 
-    @Autowired
-    private EmployeeMasterRepository employeeMasterRepository;
+    @Autowired private EmployeeMasterRepository employeeMasterRepository;
+    @Autowired private DepartmentRepository departmentRepository;
 
     @GetMapping("/ILS_HR/{employee}")
     public Iterable<EmployeeMaster> employeeMasters(@PathVariable String employee) {
         return this.employeeMasterRepository.QueryEmployee();
     }
 
+    @GetMapping("/getemployee1person/{empID}")
+    public Iterable<EmployeeMaster> getemployee1person(@PathVariable long empID) {
+        return this.employeeMasterRepository.QueryEmployee1person(empID);
+    }
    /* @GetMapping("/SearchEmployee/{dataSearch}")
     public Iterable<EmployeeMaster> employeeMasters2(@PathVariable String dataSearch) {
         return this.employeeMasterRepository.QueryEmployeeForCodeAndName();
@@ -62,22 +68,24 @@ public class EmployeeMasterController {
 
     @PostMapping("/ILS_HR/{employeeMasterCustomerCode}/{prefixSelect}/{employeeMasterFirstName}/{employeeMasterLastName}/{employeeMasterNickName}" +
             "/{employeeMasterGender}/{employeeMasterBirthDate}/{employeeMasterPersonID}/{employeeMasterTel1}/{empEmail}" +
-            "/{empAddressReal}/{empAddressPerson}/{employeeMasterStartDate}/{employeePosition}/{employeeDepartment}/{employeeType}/{education}/{bank}/{bankNumber}/{role_statusSelect}/{passwordCreate}") //Employee ADD
+            "/{empAddressReal}/{empAddressPerson}/{emergencyContact}/{employeeMasterStartDate}/{employeePosition}/{employeeDepartment}/{employeeType}/{education}/{bank}/{bankNumber}/{role_statusSelect}/{passwordCreate}/{fName}/{lName}") //Employee ADD
     public EmployeeMaster employeeMaster(@PathVariable String employeeMasterCustomerCode , @PathVariable String prefixSelect ,@PathVariable String employeeMasterFirstName
             , @PathVariable String employeeMasterLastName , @PathVariable String employeeMasterNickName , @PathVariable String employeeMasterGender
             , @PathVariable Date employeeMasterBirthDate , @PathVariable String employeeMasterPersonID
             , @PathVariable String employeeMasterTel1, @PathVariable String empEmail , @PathVariable String empAddressReal
-            , @PathVariable String empAddressPerson , @PathVariable Date employeeMasterStartDate , @PathVariable String employeePosition
+            , @PathVariable String empAddressPerson , @PathVariable String emergencyContact,@PathVariable Date employeeMasterStartDate , @PathVariable String employeePosition
             , @PathVariable String employeeDepartment , @PathVariable String employeeType  , @PathVariable String education
-            , @PathVariable String bank , @PathVariable String bankNumber ,@PathVariable String role_statusSelect ,@PathVariable String passwordCreate) throws ParseException {
+            , @PathVariable String bank , @PathVariable String bankNumber ,@PathVariable String role_statusSelect ,@PathVariable String fName ,@PathVariable String lName ) throws ParseException {
 
+        Department department = departmentRepository.findByDepartmentName(employeeDepartment);
         EmployeeMaster employeeMaster1 = new EmployeeMaster();
 
        /* DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd:MM:yyyy");
         LocalDate BirthDate = LocalDate.parse(employeeMasterBirthDate, formatter);
         LocalDate Stratdate = LocalDate.parse(employeeMasterStartDate, formatter);*/
 
-
+        employeeMaster1.setCreate_date(new Date());
+        employeeMaster1.setCreate_by(fName+" "+lName);
         employeeMaster1.setEmployeeMasterCustomerCode(employeeMasterCustomerCode);
         employeeMaster1.setPrefix(prefixSelect);
         employeeMaster1.setEmployeeMasterFirstName(employeeMasterFirstName);
@@ -91,16 +99,17 @@ public class EmployeeMasterController {
         dateSplit = employeeMasterBirthDate.split("-");
         String fullPatternyear = dateSplit[0] + '-' + dateSplit[1] + '-' +dateSplit[2];//dateSplit[2];
         Date date2=formatter2.parse(fullPatternyear);*/
-        employeeMaster1.setEmployeeMasterBirthDate(employeeMasterBirthDate); // BirthDate */
+        employeeMaster1.setEmployeeMasterBirthDate(employeeMasterBirthDate); // BirthDate
 
         employeeMaster1.setEmployeeMasterPersonID(employeeMasterPersonID);
         employeeMaster1.setEmployeeMasterTel1(employeeMasterTel1);
         employeeMaster1.setEmpEmail(empEmail);
         employeeMaster1.setEmpAddressReal(empAddressReal);
         employeeMaster1.setEmpAddressPerson(empAddressPerson);
+        employeeMaster1.setEmergencyContact(emergencyContact);
         employeeMaster1.setEmployeeMasterStartDate(employeeMasterStartDate); // Stratdate
         employeeMaster1.setEmployeePosition(employeePosition);
-        employeeMaster1.setEmployeeDepartment(employeeDepartment);
+        employeeMaster1.setDepartmentid(department);
         employeeMaster1.setEmployeeType(employeeType);
         employeeMaster1.setEducation(education);
         employeeMaster1.setBank(bank);
@@ -108,6 +117,7 @@ public class EmployeeMasterController {
         employeeMaster1.setIsActive("1");
         employeeMaster1.setRoleStatus(role_statusSelect);
         employeeMaster1.setPassword(employeeMasterCustomerCode);
+
         employeeMasterRepository.save(employeeMaster1);
         return employeeMaster1;
     }
@@ -116,7 +126,7 @@ public class EmployeeMasterController {
             "/{NewemployeeMasterLastName}/{NewemployeeMasterNickName}/{NewemployeeMasterGender}/{NewmaritalStatus}" +
             "/{NewemployeeMasterBirthDate}/{NewemployeeMasterPersonID}/{NewemployeeMasterTel1}/{NewempEmail}/{NewempAddressReal}" +
             "/{NewempAddressPerson}/{NewemployeeMasterStartDate}/{NewemployeePosition}/{NewemployeeDepartment}/{NewemployeeType}" +
-            "/{Neweducation}/{Newbank}/{NewbankNumber}/{Newpassword}") // Edit Employee
+            "/{Neweducation}/{Newbank}/{NewbankNumber}/{Newpassword}/{fName}/{lName}") // Edit Employee
     public EmployeeMaster employeeMaster(@PathVariable Long NewemployeeMasterID, @PathVariable String NewemployeeMasterCustomerCode,
                                          @PathVariable String Newprefix, @PathVariable String NewemployeeMasterFirstName,
                                          @PathVariable String NewemployeeMasterLastName, @PathVariable String NewemployeeMasterNickName,
@@ -125,10 +135,11 @@ public class EmployeeMasterController {
                                          @PathVariable String NewemployeeMasterTel1, @PathVariable String NewempEmail,
                                          @PathVariable String NewempAddressReal, @PathVariable String NewempAddressPerson,
                                          @PathVariable String NewemployeeMasterStartDate, @PathVariable String NewemployeePosition,
-                                         @PathVariable String NewemployeeDepartment, @PathVariable String NewemployeeType,
+                                         @PathVariable long NewemployeeDepartment, @PathVariable String NewemployeeType,
                                          @PathVariable String Neweducation, @PathVariable String Newbank,
-                                         @PathVariable String NewbankNumber,@PathVariable String Newpassword) throws ParseException {
-
+                                         @PathVariable String NewbankNumber,@PathVariable String Newpassword,
+                                         @PathVariable String fName ,@PathVariable String lName) throws ParseException {
+        Department department = departmentRepository.findById(NewemployeeDepartment).get();
         EmployeeMaster employeeMaster2 = employeeMasterRepository.findById(NewemployeeMasterID).get();
 
         String[] birthdatesplit;
@@ -177,6 +188,8 @@ public class EmployeeMasterController {
         Date birthdate=new SimpleDateFormat("yyyy-MM-dd").parse(bd);
         Date startdate=new SimpleDateFormat("yyyy-MM-dd").parse(sd);
 
+        employeeMaster2.setUpdate_date(new Date());
+        employeeMaster2.setUpdate_by(fName+" "+lName);
         employeeMaster2.setEmployeeMasterCustomerCode(NewemployeeMasterCustomerCode);
         employeeMaster2.setPrefix(Newprefix);
         employeeMaster2.setEmployeeMasterFirstName(NewemployeeMasterFirstName);
@@ -192,7 +205,7 @@ public class EmployeeMasterController {
         employeeMaster2.setEmpAddressPerson(NewempAddressPerson);
         employeeMaster2.setEmployeeMasterStartDate(startdate);
         employeeMaster2.setEmployeePosition(NewemployeePosition);
-        employeeMaster2.setEmployeeDepartment(NewemployeeDepartment);
+        employeeMaster2.setDepartmentid(department);
         employeeMaster2.setEmployeeType(NewemployeeType);
         employeeMaster2.setEducation(Neweducation);
         employeeMaster2.setBank(Newbank);

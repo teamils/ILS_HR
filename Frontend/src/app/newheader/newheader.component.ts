@@ -6,6 +6,7 @@ import {Router,ActivatedRoute} from "@angular/router";
 import { ServiceService } from '../service/service.service';
 import { Inject} from '@angular/core';
 import { AppComponent } from '../app.component';
+import { EditPersonalInformationComponent } from '../edit-personal-information/edit-personal-information.component';
 
 export interface DialogData {
   employee : Array<any>;
@@ -37,7 +38,7 @@ export class NewheaderComponent implements OnInit {
   role : string;
 
   logouts = localStorage.getItem('logouts');
-
+  empId = localStorage.getItem('empId');
   NewemployeeMasterFirstName =  localStorage.getItem('fName');
   NewemployeeMasterLastName =  localStorage.getItem('lName');
   NewRoleStatus =  localStorage.getItem('role');
@@ -50,7 +51,7 @@ export class NewheaderComponent implements OnInit {
                   ,public dialog: MatDialog
                   ,private router:Router
                   ,private route:ActivatedRoute
-                  ) {
+                  ,private service:ServiceService) {
                           this.mobileQuery = media.matchMedia('(max-width: 600px)');
                           this._mobileQueryListener = () => changeDetectorRef.detectChanges();
                           this.mobileQuery.addListener(this._mobileQueryListener);
@@ -126,8 +127,19 @@ export class NewheaderComponent implements OnInit {
       ngOnInit() : void {
         this.role = localStorage.getItem('role');
         this.mobileQuery.removeListener(this._mobileQueryListener);
+        this.service.getemployee1person(this.empId).subscribe(data => {
+            this.employee = data;
+            //console.log('employee -> ',this.employee);
+        });
       }
       shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
+
+      OpenEditPersonalInformationComponent(){
+          const dialogRef = this.dialog.open(EditPersonalInformationComponent, {
+              width: '90%',
+              height:'90%',
+          });
+      }
 
       logout(){
         localStorage.clear();

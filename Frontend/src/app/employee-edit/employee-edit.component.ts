@@ -28,13 +28,14 @@ export interface DialogData {
     empAddressPerson: string;
     employeeMasterStartDate: string;
     employeePosition: string;
-    employeeDepartment: string;
+    departmentid: string;
     employeeType: string;
     education: string;
     bank: string;
     bankNumber: string;
     IsActive: string;
     password : string;
+    emergencyContact: string;
 }
 
 @Component({
@@ -77,7 +78,16 @@ export class EmployeeEditComponent implements OnInit {
         NewbankNumber: string;
         NewIsActive: string;
         Newpassword: string;
+        NewemergencyContact: string;
+        education: Array<any>;
+        employeeType: Array<any>;
+        gender:Array<any>;
+        prefix: Array<any>;
+        empStatus: Array<any>;
         dis;
+        empId = localStorage.getItem('empId');
+        fName = localStorage.getItem('fName');
+        lName = localStorage.getItem('lName');
       constructor(public dialogRef: MatDialogRef<EmployeeEditComponent>
                       ,hangeDetectorRef: ChangeDetectorRef
                       ,media: MediaMatcher
@@ -101,11 +111,31 @@ export class EmployeeEditComponent implements OnInit {
                  });
         this.service.getDepartment().subscribe(data => {
                this.department = data;
-              // console.log('department == ',this.department);
+               //console.log('department == ',this.department);
                  });
         this.service.getPosition().subscribe(data => {
                this.position = data;
                //console.log('position == ',this.position);
+                 });
+        this.service.getPrefix().subscribe(data => {
+               this.prefix = data;
+               //console.log('prefix == ',this.prefix);
+                 });
+        this.service.getGender2().subscribe(data => {
+               this.gender = data;
+               //console.log('gender == ',this.gender);
+                 });
+        this.service.getEmployeeType().subscribe(data => {
+               this.employeeType = data;
+               //console.log('employeeType == ',this.employeeType);
+                 });
+        this.service.getEducation().subscribe(data => {
+               this.education = data;
+               //console.log('education == ',this.education);
+                 });
+        this.service.getEmpStatus().subscribe(data => {
+               this.empStatus = data;
+               //console.log('empStatus == ',this.empStatus);
                  });
 
          // console.log(this.data);
@@ -125,13 +155,14 @@ export class EmployeeEditComponent implements OnInit {
           this.NewempAddressPerson = this.data.empAddressPerson;
           this.NewemployeeMasterStartDate = this.data.employeeMasterStartDate;
           this.NewemployeePosition = this.data.employeePosition;
-          this.NewemployeeDepartment = this.data.employeeDepartment;
+          this.NewemployeeDepartment = this.data.departmentid;
           this.NewemployeeType = this.data.employeeType;
           this.Neweducation = this.data.education;
           this.Newbank = this.data.bank;
           this.NewbankNumber = this.data.bankNumber;
           this.NewIsActive = this.data.IsActive;
           this.Newpassword = this.data.password;
+          this.NewemergencyContact = this.data.emergencyContact;
       }
 
       EditEmployee(){
@@ -141,7 +172,7 @@ export class EmployeeEditComponent implements OnInit {
                                                     +'/'+ this.NewmaritalStatus +'/'+ this.NewemployeeMasterBirthDate +'/'+ this.NewemployeeMasterPersonID
                                                     +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewempEmail +'/'+ this.NewempAddressReal +'/'+ this.NewempAddressPerson
                                                     +'/'+ this.NewemployeeMasterStartDate +'/'+ this.NewemployeePosition +'/'+ this.NewemployeeDepartment
-                                                    +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber +'/'+ this.Newpassword ,{})
+                                                    +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber +'/'+ this.Newpassword +'/'+ this.fName +'/'+ this.lName ,{})
                                    .subscribe(
                                        data => {
                                            console.log('PUT Request is successful');

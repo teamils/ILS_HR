@@ -16,8 +16,17 @@ export class ServiceService {
   getemployee(): Observable<any>{
       return this.http.get(this.API+'/ILS_HR'+'/employee',{})
   }
+  getemployee1person(empID:any): Observable<any>{
+      return this.http.get(this.API+'/getemployee1person/'+empID,{})
+  }
   getBank():Observable<any>{
       return this.http.get(this.API+'/bank',{})
+  }
+  getPrefix():Observable<any>{
+      return this.http.get(this.API+'/prefix',{})
+  }
+  getGender2():Observable<any>{
+      return this.http.get(this.API+'/gender',{})
   }
   getDepartment():Observable<any>{
       return this.http.get(this.API+'/department',{})
@@ -25,11 +34,17 @@ export class ServiceService {
   getPosition():Observable<any>{
       return this.http.get(this.API+'/position',{})
   }
+  getEmployeeType():Observable<any>{
+      return this.http.get(this.API+'/employeeType',{})
+  }
+  getEducation():Observable<any>{
+      return this.http.get(this.API+'/education',{})
+  }
+  getEmpStatus():Observable<any>{
+      return this.http.get(this.API+'/empStatus',{})
+  }
   getRoleStatus():Observable<any>{
       return this.http.get(this.API+'/roleStatus',{})
-  }
-  getLeaveType():Observable<any>{
-      return this.http.get(this.API+'/leaveType',{})
   }
   getleaveTypeForAlldays():Observable<any>{
       return this.http.get(this.API+'/leaveTypeForAlldays',{})

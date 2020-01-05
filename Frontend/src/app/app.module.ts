@@ -59,6 +59,7 @@ import { ReasonNotApproveDialog } from './approve-by-supervisor/approve-by-super
 import { ApproveByManagerComponent } from './approve-by-manager/approve-by-manager.component';
 import { ReasonNotApproveBygerDialog } from './approve-by-manager/approve-by-manager.component';
 import { AttendanceShowLeavenumberComponent } from './attendance-show-leavenumber/attendance-show-leavenumber.component';
+import { EditPersonalInformationComponent } from './edit-personal-information/edit-personal-information.component';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import { AttendanceShowLeavenumberComponent } from './attendance-show-leavenumbe
     ReasonNotApproveDialog,
     ReasonNotApproveBygerDialog,
     AttendanceShowLeavenumberComponent,
+    EditPersonalInformationComponent,
   ],
 
       imports: [
@@ -127,12 +129,6 @@ import { AttendanceShowLeavenumberComponent } from './attendance-show-leavenumbe
 
 
        ],
-       exports: [
-            MatTableModule,
-            MatPaginatorModule,
-            MatSortModule,
-
-       ],
 
    entryComponents: [EmployeeEditComponent,
                     EmployeeDeleteComponent,
@@ -141,6 +137,7 @@ import { AttendanceShowLeavenumberComponent } from './attendance-show-leavenumbe
                     ReasonNotApproveDialog,
                     ReasonNotApproveBygerDialog,
                     AttendanceShowLeavenumberComponent,
+                    EditPersonalInformationComponent,
    ],
   providers: [],
   bootstrap: [AppComponent]

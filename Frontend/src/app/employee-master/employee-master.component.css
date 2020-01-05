@@ -98,13 +98,14 @@
    overflow: auto;
    margin-top: 3px;
 }
-td, th {
+
+td {
   border: 1px solid #ffffff;
   text-align: center;
-  padding: 8px;
+
 }
 tr:nth-child(even) {
-  background-color: #E6E6FA;
+  background-color: #90EE90;
 }
 table {
   font-family: arial, sans-serif;
@@ -114,145 +115,46 @@ table {
 }
 
   th {
-    background-color: #C0C0f0;
+   border: 1px solid #ffffff;
+    background-color: #00FF00;
+     text-align: center;
+
   }
-  th.mat-column-leaveType{
-              padding: 10px;
 
-     }
-
-   th.mat-column-select, td.mat-column-select {
-          border-right: 1px double #e0e0e0;
-          border-left: 1px double #e0e0e0;
-          padding: 5px;
-          width:auto;
-    }
-
-   th.mat-column-number, td.mat-column-number {
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-    }
-   th.mat-column-empCodeID, td.mat-column-empCodeID {
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-    }
-
-  th.mat-column-prefix, td.mat-column-prefix {
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-  }
-  th.mat-column-empFristName, td.mat-column-empFristName {
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-  }
-  th.mat-column-empLastName, td.mat-column-empLastName {
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-  }
-   th.mat-column-NickName, td.mat-column-NickName{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-Gender, td.mat-column-Gender{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-Status, td.mat-column-Status{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-BirthDate, td.mat-column-BirthDate{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-Age, td.mat-column-Age{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-      }
-   th.mat-column-PersonID, td.mat-column-PersonID{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-Tel1, td.mat-column-Tel1{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-Email, td.mat-column-Email{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-AddressReal, td.mat-column-AddressReal{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-AddressPerson, td.mat-column-AddressPerson{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-StartDate, td.mat-column-StartDate{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-Position, td.mat-column-Position{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-Department, td.mat-column-Department{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-empType, td.mat-column-empType{
-          border-right: 1px double #e0e0e0;
-          border-left: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-educations, td.mat-column-educations{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-bank, td.mat-column-bank{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-   }
-   th.mat-column-bankNumber, td.mat-column-bankNumber{
-          border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
+   th.mat-column-select,
+   th.mat-column-number,
+   th.mat-column-empCodeID,
+   th.mat-column-prefix,
+   th.mat-column-empFristName,
+   th.mat-column-empLastName,
+   th.mat-column-NickName,
+   th.mat-column-Gender,
+   th.mat-column-Status,
+   th.mat-column-BirthDate,
+   th.mat-column-Age,
+   th.mat-column-PersonID,
+   th.mat-column-Tel1,
+   th.mat-column-Email,
+   th.mat-column-AddressReal,
+   th.mat-column-AddressPerson,
+   th.mat-column-StartDate,
+   th.mat-column-Position,
+   th.mat-column-Department,
+   th.mat-column-empType,
+   th.mat-column-educations,
+   th.mat-column-bank,
+   th.mat-column-bankNumber,
+   th.mat-column-del,
+   th.mat-column-Edit{
+          text-align: center;
    }
 
-   th.mat-column-del, td.mat-column-del{
-        border-left: 1px double #e0e0e0;
-        border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
-
-   }
-   th.mat-column-Edit, td.mat-column-Edit{
-        border-left: 1px double #e0e0e0;
-        border-right: 1px double #e0e0e0;
-          padding: 10px;
-          width:auto;
+   td.mat-column-empFristName,
+   td.mat-column-empLastName,
+   td.mat-column-Position,
+   td.mat-column-Department,
+   td.mat-column-empType{
+      text-align: left;
    }
 
 .example-fill-remaining-space {

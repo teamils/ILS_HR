@@ -1,6 +1,6 @@
-package com.example.demo.Repository;
+package com.example.demo.Repository.ComboboxRepository;
 
-import com.example.demo.Entity.*;
+import com.example.demo.Entity.Combobox.Bank;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.stereotype.Repository;

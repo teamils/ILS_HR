@@ -1,11 +1,8 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span> The Attendance</span>
-    <span class="example-spacer"></span>
-    <button  mat-button (click)="ShowLeaveNumberDailog()"><mat-icon matTooltip="วันลาคงเหลือ">priority_high</mat-icon></button>
-  </mat-toolbar-row>
-</mat-toolbar>
 <mat-progress-bar mode="indeterminate" *ngIf="x"></mat-progress-bar>
+<mat-toolbar-row>
+    <span class="example-spacer"><h1 align="center">The Attendance</h1></span>
+  <button  mat-button (click)="ShowLeaveNumberDailog()"><mat-icon matTooltip="จำนวนวันลา"><font color="red">priority_high</font></mat-icon></button>
+</mat-toolbar-row>
 <mat-card class="cardHeader">
   ชื่อ - สกุล:&nbsp;<b>{{table.fName}}&nbsp;&nbsp;{{table.lName}}</b>&nbsp;&nbsp; แผนก:&nbsp;<b>{{table.empDep}}</b> &nbsp;&nbsp; ตำแหน่ง:&nbsp;<b>{{table.empPos}}</b>
   &nbsp;&nbsp;ลากิจ(วัน):&nbsp;<b *ngFor="let item of leaveNumber;"><b *ngIf="this.item.leaveTypeid.leaveTypeForAlldayID==1">{{this.item.usedDay}}/{{this.item.getDay}}</b></b>
@@ -13,46 +10,6 @@
   &nbsp;&nbsp;ลาพักร้อน(วัน):&nbsp;<b *ngFor="let item of leaveNumber;"><b *ngIf="this.item.leaveTypeid.leaveTypeForAlldayID==3">{{this.item.usedDay}}/{{this.item.getDay}}</b></b>
 
   <mat-tab-group>
-    <mat-tab label="การลาครึ่งวัน">
-      <div align="center">
-        <h2>กรอกข้อมูลการลาครึ่งวัน</h2>
-            <mat-form-field width="200px;">
-              <mat-select  placeholder="ประเภทการลา" [(ngModel)]="leaveTypeSelect"  required >
-                <mat-option *ngFor="let value of leaveTypeForAlldays" [value]="value.leaveTypeForAlldayName">
-                  {{value.leaveTypeForAlldayName}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            &nbsp;&nbsp;
-              <mat-radio-group  [(ngModel)]="labelLeaveHalfDay">
-                <mat-radio-button class="example-margin" value="ครึ่งวันเช้า">ครึ่งวันเช้า</mat-radio-button>&nbsp;&nbsp;
-                <mat-radio-button class="example-margin" value="ครึ่งวันบ่าย">ครึ่งวันบ่าย</mat-radio-button>&nbsp;&nbsp;
-              </mat-radio-group>
-             <mat-checkbox [(ngModel)]="hourdis">ชั่วโมง</mat-checkbox>
-            <br>
-          <div>
-            <mat-label>เวลาไป:</mat-label>
-            <input  aria-label="24hr format"  [ngxTimepicker]="startTime" [format]="24"  [(ngModel)]="startTimeSelect"  [disabled]="!hourdis" readonly>
-            <ngx-material-timepicker #startTime></ngx-material-timepicker>
-            &nbsp;&nbsp;
-            <mat-label>เวลากลับ:</mat-label>
-            <input aria-label="24hr format" [ngxTimepicker]="endTime" [format]="24" [(ngModel)]="endTimeSelect" [disabled]="!hourdis" readonly>
-            <ngx-material-timepicker #endTime></ngx-material-timepicker>
-          </div>
-
-          <br>
-            <mat-form-field>
-              <input matInput [matDatepicker]="picker" placeholder="วันที่ลา" [(ngModel)]="startDate" required >
-              <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
-              <mat-datepicker touchUi #picker></mat-datepicker>
-            </mat-form-field>
-            &nbsp;&nbsp;
-            <mat-form-field>
-              <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason" required ></textarea>
-            </mat-form-field>
-        <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;" (click)="SubmitData()">Save</button>
-      </div>
-    </mat-tab>
     <mat-tab label="การลาเต็มวัน">
         <div align="center">
           <h2>กรอกข้อมูลการลาเต็มวัน</h2>
@@ -75,16 +32,58 @@
           <mat-datepicker-toggle matSuffix [for]="pickers2"></mat-datepicker-toggle>
           <mat-datepicker touchUi #pickers2></mat-datepicker>
         </mat-form-field>
-        <br>
+          <font color="red">&nbsp;&nbsp;*{{leaveTypeSelect2}}&nbsp;{{diffDay}}&nbsp;{{day}}</font>
+          <br>
         <mat-form-field style="width:30%;">
-          <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason2" required (click)="Checktheleave()"></textarea>
+          <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason2" required (click)="CalculateLeaveDate(startDate2,endDate2)"></textarea>
         </mat-form-field>
         <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;" (click)="SubmitData2()">Save</button>
       </div>
     </mat-tab>
+    <mat-tab label="การลาไม่เต็มวัน">
+      <div align="center">
+        <h2>กรอกข้อมูลการลาไม่เต็มวัน</h2>
+        <mat-form-field width="200px;">
+          <mat-select  placeholder="ประเภทการลา" [(ngModel)]="leaveTypeSelect"  required >
+            <mat-option *ngFor="let value of leaveTypeForAlldays" [value]="value.leaveTypeForAlldayName">
+              {{value.leaveTypeForAlldayName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-radio-group  [(ngModel)]="labelLeaveHalfDay">
+          <mat-radio-button class="example-margin" value="ครึ่งวันเช้า">ครึ่งวันเช้า</mat-radio-button>&nbsp;&nbsp;
+          <mat-radio-button class="example-margin" value="ครึ่งวันบ่าย">ครึ่งวันบ่าย</mat-radio-button>&nbsp;&nbsp;
+          <mat-radio-button class="example-margin" value="ชั่วโมง">ชั่วโมง</mat-radio-button>&nbsp;&nbsp;
+        </mat-radio-group>
+        <!-- <mat-checkbox [(ngModel)]="hourdis">ชั่วโมง</mat-checkbox> -->
+        <br>
+        <div>
+          <mat-label>เวลาไป:</mat-label>
+          <input  aria-label="24hr format"  [ngxTimepicker]="startTime" [format]="24"  [(ngModel)]="startTimeSelect"  [disabled]="!hourdis" readonly>
+          <ngx-material-timepicker #startTime></ngx-material-timepicker>
+          &nbsp;&nbsp;
+          <mat-label>เวลากลับ:</mat-label>
+          <input aria-label="24hr format" [ngxTimepicker]="endTime" [format]="24" [(ngModel)]="endTimeSelect" [disabled]="!hourdis" readonly>
+          <ngx-material-timepicker #endTime></ngx-material-timepicker>
+        </div>
+
+        <br>
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="วันที่ลา" [(ngModel)]="startDate" required >
+          <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker></mat-datepicker>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-form-field>
+          <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason" required ></textarea>
+        </mat-form-field>
+        <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;" (click)="SubmitData()">Save</button>
+      </div>
+    </mat-tab>
   </mat-tab-group>
 </mat-card>
-<mat-card class="card2">
+
   <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
     <ng-container matColumnDef="number" >
       <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>
@@ -99,11 +98,6 @@
     <ng-container matColumnDef="leaveType">
       <th mat-header-cell *matHeaderCellDef><font color="black"><b>ประเภทการลา</b></font>  </th>
       <td mat-cell *matCellDef="let element"> {{element.leaveTypeForAllDay}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="reason">
-      <th mat-header-cell *matHeaderCellDef><font color="black"><b>เหตุผล</b></font>  </th>
-      <td mat-cell *matCellDef="let element"> {{element.reasonForAllDay}} </td>
     </ng-container>
 
     <ng-container matColumnDef="startDate">
@@ -121,6 +115,10 @@
       <td mat-cell *matCellDef="let element">{{element.labelLeaveHalfDay}}</td>
     </ng-container>
 
+    <ng-container matColumnDef="reason">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>เหตุผล</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.reasonForAllDay}} </td>
+    </ng-container>
     <!--<ng-container matColumnDef="approvedBySupervisor">
       <th mat-header-cell *matHeaderCellDef><font color="black"><b>อนุมัติโดยSupervisor</b></font>  </th>
       <td mat-cell *matCellDef="let element"> {{element.approvedBySupervisor}} </td>
@@ -142,7 +140,7 @@
     </ng-container>
 
     <ng-container matColumnDef="del">
-      <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ลบข้อมูล</b></font></th>
+      <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ยกเลิกการลา</b></font></th>
       <td mat-cell *matCellDef="let element" >
         <button mat-icon-button matTooltip="ยกเลิกการลา" matTooltipPosition="right" (click)="CancelDataAttendance(element); RefreshTable();"  [disabled]="dis"  #ckeckEdit>
           <mat-icon>cancel_presentation</mat-icon>
@@ -153,5 +151,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
   </table>
-</mat-card>
+
 

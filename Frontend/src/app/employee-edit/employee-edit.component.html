@@ -17,9 +17,9 @@
       <mat-form-field appearance="outline">
         <mat-label>คำนำหน้า</mat-label>
         <mat-select  [(ngModel)]="Newprefix">
-          <mat-option value="นาย" >นาย</mat-option>
-          <mat-option value="นาง" >นาง</mat-option>
-          <mat-option value="นางสาว" >นางสาว</mat-option>
+          <mat-option *ngFor="let value of prefix" [value]="value.prefixName">
+            {{value.prefixName}}
+          </mat-option>
         </mat-select>
         <mat-icon matSuffix>perm_identity</mat-icon>
       </mat-form-field>
@@ -45,8 +45,9 @@
       <mat-form-field appearance="outline">
         <mat-label>เพศ</mat-label>
         <mat-select  [(ngModel)]="NewemployeeMasterGender">
-          <mat-option value="ชาย" >ชาย</mat-option>
-          <mat-option value="หญิง">หญิง</mat-option>
+          <mat-option *ngFor="let value of gender" [value]="value.genderName">
+            {{value.genderName}}
+          </mat-option>
         </mat-select>
         <mat-icon matSuffix>perm_identity</mat-icon>
       </mat-form-field>
@@ -59,20 +60,20 @@
       </mat-form-field>
       &nbsp;
       <mat-form-field  appearance="outline">
-        <mat-label>สถานะภาพ</mat-label>
+        <mat-label>สถานะการทำงาน</mat-label>
         <mat-select  [(ngModel)]="NewmaritalStatus">
-          <mat-option value="ยังปฏิบัติงานอยู่">ยังปฏิบัติงานอยู่</mat-option>
-          <mat-option value="พักงาน">พักงาน</mat-option>
-          <mat-option value="พ้นสภาพพนักงาน">พ้นสภาพพนักงาน</mat-option>
+          <mat-option *ngFor="let value of empStatus" [value]="value.empStatusName">
+            {{value.empStatusName}}
+          </mat-option>
         </mat-select>
         <mat-icon matSuffix>perm_identity</mat-icon>
       </mat-form-field>
-      &nbsp;
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput #password  type="password"  [(ngModel)]="Newpassword">
-        <mat-icon matSuffix>visibility_off</mat-icon>
-      </mat-form-field>
+      <!-- &nbsp;
+       <mat-form-field appearance="outline">
+         <mat-label>Password</mat-label>
+         <input matInput #password  type="password"  [(ngModel)]="Newpassword">
+         <mat-icon matSuffix>visibility_off</mat-icon>
+       </mat-form-field> -->
     <hr>
       <mat-form-field  appearance="outline">
         <mat-label>รหัสประจำตัวประชาชน</mat-label>
@@ -80,7 +81,7 @@
         <mat-hint align="end">{{message.value.length}}/13</mat-hint>
         <mat-icon matSuffix>perm_identity</mat-icon>
       </mat-form-field>
-
+      &nbsp;
       <mat-form-field  appearance="outline" >
         <mat-label>เบอร์โทร</mat-label>
         <input matInput #input maxlength="10"  [(ngModel)]="NewemployeeMasterTel1">
@@ -112,7 +113,23 @@
         <textarea matInput [(ngModel)]="NewempAddressPerson" ></textarea>
         <mat-icon matSuffix>location_city</mat-icon>
       </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>ชื่อ/เบอร์โทร ผู้ที่ติดต่อในกรณีฉุกเฉิน</mat-label>
+        <textarea matInput [(ngModel)]="NewemergencyContact"></textarea>
+        <mat-icon matSuffix>location_city</mat-icon>
+      </mat-form-field>
       <hr>
+      &nbsp;
+      <mat-form-field appearance="outline" >
+        <mat-label>แผนก</mat-label>
+        <mat-select  [(ngModel)]="NewemployeeDepartment">
+          <mat-option *ngFor="let depart of department" [value]="depart.departmentID">
+            {{depart.departmentName}}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>work</mat-icon>
+      </mat-form-field>
       &nbsp;
       <mat-form-field appearance="outline">
         <mat-label>ตำแหน่ง</mat-label>
@@ -124,23 +141,12 @@
         <mat-icon matSuffix>work</mat-icon>
       </mat-form-field>
       &nbsp;
-      <mat-form-field appearance="outline" >
-        <mat-label>แผนก</mat-label>
-        <mat-select  [(ngModel)]="NewemployeeDepartment">
-          <mat-option *ngFor="let depart of department" [value]="depart.departmentName">
-            {{depart.departmentName}}
-          </mat-option>
-        </mat-select>
-        <mat-icon matSuffix>work</mat-icon>
-      </mat-form-field>
-      &nbsp;
       <mat-form-field appearance="outline">
         <mat-label>ประเภทการทำงาน</mat-label>
         <mat-select [(ngModel)]="NewemployeeType">
-          <mat-option value="นักศึกษาฝึกงาน" >นักศึกษาฝึกงาน</mat-option>
-          <mat-option value="รายเดือน" >รายเดือน</mat-option>
-          <mat-option value="รายวัน" >รายวัน</mat-option>
-          <mat-option value="รายวันชั่วคราว" >รายวันชั่วคราว</mat-option>
+          <mat-option *ngFor="let pos of employeeType" [value]="pos.employeeTypeName">
+            {{pos.employeeTypeName}}
+          </mat-option>
         </mat-select>
         <mat-icon matSuffix>work</mat-icon>
       </mat-form-field>
@@ -148,12 +154,9 @@
       <mat-form-field appearance="outline">
         <mat-label>วุฒิการศึกษา</mat-label>
         <mat-select  [(ngModel)]="Neweducation">
-          <mat-option value="ป.6" >ม.3</mat-option>
-          <mat-option value="ม.3" >ม.3</mat-option>
-          <mat-option value="ม.6" >ม.6</mat-option>
-          <mat-option value="ป.ตรี" >ป.ตรี</mat-option>
-          <mat-option value="ป.โท" >ป.โท</mat-option>
-          <mat-option value="ป.เอก" >ป.เอก</mat-option>
+          <mat-option *ngFor="let pos of education" [value]="pos.educationName">
+            {{pos.educationName}}
+          </mat-option>
         </mat-select>
         <mat-icon matSuffix>school</mat-icon>
       </mat-form-field>

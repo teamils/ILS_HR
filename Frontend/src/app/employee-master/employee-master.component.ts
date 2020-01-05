@@ -19,6 +19,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { AppComponent } from '../app.component';
 
+
 export interface Emp{
   empCodeIDxx : number;
   employeeMasterCustomerCode : String;
@@ -84,19 +85,22 @@ export class EmployeeMasterComponent implements OnInit {
                    this.employee = data;
                     this.dataSource.data = this.employee;
                     //console.log('employee->',this.employee);
+                    //this.datemmddyy(data);
               });
-
-              /*this.service.getSearchEmployee("400234").subscribe(data => {
-                   this.employee = data;
-                    this.dataSource.data = this.employee;
-                    console.log('getSearchEmployee->',this.employee);
-              });*/
 
              this.dataSource.paginator = this.paginator;
              this.dataSource.sort = this.sort;
 
         }
+        startwork: Array<any>;
+        datemmddyy(data : any){
+            for (let i of data) {
+                //console.log(i.employeeMasterStartDate);
+                this.startwork = i.employeeMasterStartDate
+                  //console.log('startwork',this.startwork);
+            }
 
+        }
           DeleteEmployeeMaster(row : any){
             const dialogRef = this.dialog.open(EmployeeDeleteComponent, {
                   width: '300px',
@@ -111,6 +115,8 @@ export class EmployeeMasterComponent implements OnInit {
                    data: row,
               });
           }
+
+
 
 
 

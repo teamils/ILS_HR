@@ -28,7 +28,7 @@ export class AttendanceDataComponent implements OnInit {
   isChecked;
   interval:any;
   dis;
-  displayedColumns: string[] = ['number','employeeCode', 'name','position','department','employeeType','date', 'leaveType', 'reason', 'startDate', 'endDate','total', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','leaveStatus','del'];
+  displayedColumns: string[] = ['number','employeeCode', 'name','position','department','employeeType','date', 'leaveType','startDate', 'endDate','total','reason', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','leaveStatus','del'];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
 
 

@@ -3,12 +3,9 @@
   <mat-toolbar class="toolbarStyle">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon class="iconColor">menu</mat-icon></button>
     &nbsp;&nbsp;
-    <h1><font color="white" class="font">ILS HUMAN RESOURCES</font></h1>
-    <!--<h1 class="example-app-name">ILS HUMAN RESOURCES</h1>-->
+    <!-- <h1><font color="white" class="font">ILS HUMAN RESOURCES</font></h1>-->
+       <h1><font color="white">ILS HUMAN RESOURCES</font></h1>
 
-      <!--<mat-chip-list aria-label="Fish selection" class="loginStyle"  *ngIf="(logouts == 'false' ? false : true)">
-        <mat-chip (click)="openLoginDialogComponent()" height="100px" selected><mat-icon matSuffix>fingerprint</mat-icon>LOGIN</mat-chip>
-      </mat-chip-list> -->
       <mat-chip-list aria-label="Fish selection" class="loginStyle" *ngIf="(logouts == 'false' ? true : false)">
         <mat-chip color="primary" (click)="logout()" height="100px" matTooltip="Logout" selected><mat-icon matSuffix>exit_to_app</mat-icon></mat-chip>
       </mat-chip-list>
@@ -19,10 +16,13 @@
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="10" class="BG_Sidenav">
       <mat-nav-list>
 
-        <mat-card-header class="align">
+        <mat-card-header class="align" *ngFor="let value of employee">
           <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title>{{this.NewemployeeMasterFirstName}}&nbsp;{{this.NewemployeeMasterLastName}}</mat-card-title>
-          <mat-card-subtitle>{{this.NewRoleStatus}}</mat-card-subtitle>
+          <mat-card-title>{{value.employeeMasterFirstName}}&nbsp;{{value.employeeMasterLastName}}</mat-card-title>
+          <mat-card-subtitle>{{value.roleStatus}}</mat-card-subtitle>
+          <button mat-icon-button aria-label="Example icon-button with a heart icon" (click)="OpenEditPersonalInformationComponent()">
+            <mat-icon  matTooltip="เเก้ไขข้อมูลส่วนตัว" matTooltipPosition="above">settings_applications</mat-icon>
+          </button>
         </mat-card-header>
 
         <div class="sidenav">

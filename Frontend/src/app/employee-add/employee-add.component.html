@@ -16,9 +16,9 @@
                  <!--Prefix-->
                  <mat-form-field hintLabel="" style="width :100%">
                    <mat-select placeholder="คำนำหน้า" required [(ngModel)]="prefixSelect">
-                     <mat-option value="นาย" >นาย</mat-option>
-                     <mat-option value="นาง" >นาง</mat-option>
-                     <mat-option value="นางสาว" >นางสาว</mat-option>
+                     <mat-option *ngFor="let value of prefix" [value]="value.prefixName">
+                       {{value.prefixName}}
+                     </mat-option>
                    </mat-select>
                    <mat-icon matSuffix>perm_identity</mat-icon>
                  </mat-form-field>
@@ -44,8 +44,9 @@
                 <!--    Gender -->
                 <mat-form-field  style="width :100%" >
                   <mat-select placeholder="เพศ" required [(ngModel)]="genderSelect">
-                    <mat-option value="ชาย" >ชาย</mat-option>
-                    <mat-option value="หญิง">หญิง</mat-option>
+                    <mat-option *ngFor="let value of gender" [value]="value.genderName">
+                      {{value.genderName}}
+                    </mat-option>
                   </mat-select>
                   <mat-icon matSuffix>perm_identity</mat-icon>
                 </mat-form-field>
@@ -53,7 +54,7 @@
 
 
                 <mat-form-field style="width :100%">
-                  <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="วัน/เดือน/ปี เกิด" required autocomplete="off" [(ngModel)]="BirthDateSelect">
+                  <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="เดือน/วัน/ปี เกิด" required autocomplete="off" [(ngModel)]="BirthDateSelect">
                   <mat-datepicker-toggle matSuffix [for]="BirthDate" ></mat-datepicker-toggle>
                   <mat-datepicker touchUi #BirthDate></mat-datepicker>
                 </mat-form-field>
@@ -104,11 +105,10 @@
                   <textarea matInput placeholder="ที่อยู่ที่ติดต่อได้" required [(ngModel)]="homeNowAddress" ></textarea>
                   <mat-icon matSuffix>location_city</mat-icon>
                 </mat-form-field>
-                <!--StartWork-->
+                <!--     Emergency contact.  -->
                 <mat-form-field style="width :100%">
-                  <input matInput [matDatepicker]="startwork" hintLabel="" placeholder="วันเริ่มงาน" required [(ngModel)]="startWorks">
-                  <mat-datepicker-toggle matSuffix [for]="startwork"></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #startwork></mat-datepicker>
+                  <textarea matInput placeholder="ชื่อ/เบอร์โทร ผู้ที่ติดต่อในกรณีฉุกเฉิน" required [(ngModel)]="emergencyContact" ></textarea>
+                  <mat-icon matSuffix>location_city</mat-icon>
                 </mat-form-field>
               </div>
               <div class="buttonStyle">
@@ -125,6 +125,21 @@
         <mat-step>
               <ng-template matStepLabel><b>Job details & bank</b></ng-template>
               <div class="card2">
+                <!--StartWork-->
+                <mat-form-field style="width :100%">
+                  <input matInput [matDatepicker]="startwork" hintLabel="" placeholder="เดือน/วัน/ปี เริ่มงาน" required [(ngModel)]="startWorks">
+                  <mat-datepicker-toggle matSuffix [for]="startwork"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #startwork></mat-datepicker>
+                </mat-form-field>
+                <!-- แผนก -->
+                <mat-form-field class="formcenter" hintLabel="" style="width :20%" style="width :100%" >
+                  <mat-select placeholder="แผนก" required [(ngModel)]="departmentSelect">
+                    <mat-option *ngFor="let depart of department" [value]="depart.departmentID">
+                      {{depart.departmentName}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>work</mat-icon>
+                </mat-form-field>
                 <!------ ตำแหน่ง ------>
                 <mat-form-field class="formcenter" hintLabel=""  style="width :100%" >
                   <mat-select placeholder="ตำแหน่ง" required [(ngModel)]="positionSelect">
@@ -134,34 +149,21 @@
                   </mat-select>
                   <mat-icon matSuffix>work</mat-icon>
                 </mat-form-field>
-                <!-- แผนก -->
-                <mat-form-field class="formcenter" hintLabel="" style="width :20%" style="width :100%" >
-                  <mat-select placeholder="แผนก" required [(ngModel)]="departmentSelect">
-                    <mat-option *ngFor="let depart of department" [value]="depart.departmentName">
-                      {{depart.departmentName}}
-                    </mat-option>
-                  </mat-select>
-                  <mat-icon matSuffix>work</mat-icon>
-                </mat-form-field>
                 <!-- ประเภทการทำงาน -->
                 <mat-form-field class="formcenter" hintLabel="" style="width :100%">
                   <mat-select placeholder="ประเภทการทำงาน" required [(ngModel)]="typeNameSelect">
-                    <mat-option value="นักศึกษาฝึกงาน" >นักศึกษาฝึกงาน</mat-option>
-                    <mat-option value="รายเดือน" >รายเดือน</mat-option>
-                    <mat-option value="รายวัน" >รายวัน</mat-option>
-                    <mat-option value="รายวันชั่วคราว" >รายวันชั่วคราว</mat-option>
+                    <mat-option *ngFor="let pos of employeeType" [value]="pos.employeeTypeName">
+                      {{pos.employeeTypeName}}
+                    </mat-option>
                   </mat-select>
                   <mat-icon matSuffix>work</mat-icon>
                 </mat-form-field>
                 <!-- วุฒิการศึกษา -->
                 <mat-form-field hintLabel="" style="width :100%">
                   <mat-select placeholder="วุฒิการศึกษา" required [(ngModel)]="educationSelect">
-                    <mat-option value="ป.6">ป.6</mat-option>
-                    <mat-option value="ม.3" >ม.3</mat-option>
-                    <mat-option value="ม.6" >ม.6</mat-option>
-                    <mat-option value="ป.ตรี" >ป.ตรี</mat-option>
-                    <mat-option value="ป.โท" >ป.โท</mat-option>
-                    <mat-option value="ป.เอก" >ป.เอก</mat-option>
+                    <mat-option *ngFor="let pos of education" [value]="pos.educationName">
+                      {{pos.educationName}}
+                    </mat-option>
                   </mat-select>
                   <mat-icon matSuffix>school</mat-icon>
                 </mat-form-field>

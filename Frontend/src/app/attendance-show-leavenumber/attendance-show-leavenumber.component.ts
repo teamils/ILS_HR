@@ -41,26 +41,7 @@ export class AttendanceShowLeavenumberComponent implements OnInit {
           this.leave = data;
           //console.log('leave -> ',this.leave);
       });
-      /*setTimeout(() => {
-          this.employeeID = this.leave[0].employeeMasterid.employeeMasterID;
-           console.log('employeeID=>',this.employeeID);
-          for(let i=0;i<this.leave.length;i++){
-              if(this.leave[i].wageStatus==1) this.count++;
-              console.log('leave=>',this.leave[i].leaveTypeForAllDay);
-          }
-          console.log('count =>',this.count);
 
-
-          this.http.post(this.API1  +/SaveLeaveNumber2/+ this.employeeID +'/'+ this.leaveTypeSelect +'/'+ this.labelLeaveHalfDay   ,{})
-                        .subscribe(
-                                       dataLeave => {
-                                           console.log('PUT Request is successful', dataLeave);
-                                       },
-                                       error => {
-                                           console.log('Error', error);
-                                       }
-                                      );
-      }, 1000);*/
 
 
   }

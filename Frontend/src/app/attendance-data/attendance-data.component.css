@@ -1,10 +1,13 @@
+.color{
+  background-color: #2E7D32;
+}
 td {
   border: 1px solid #ffffff;
   text-align: center;
 
 }
 tr:nth-child(even) {
-  background-color: #E6E6FA;
+  background-color: #90EE90;
 }
 table {
   font-family: arial, sans-serif;
@@ -15,7 +18,7 @@ table {
 
   th {
    border: 1px solid #ffffff;
-    background-color: #C0C0f0;
+    background-color: #00FF00;
      text-align: center;
      position: sticky;
   }

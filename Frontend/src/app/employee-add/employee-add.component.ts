@@ -30,11 +30,13 @@ export class EmployeeAddComponent implements OnInit {
 data:any={}
 
 employeeMasterCustomerCode : null;
-prefixSelect : String = '' ;
+prefix: Array<any>;
+prefixSelect = '';
 empMasterFirstName : null;
 empMasterLastName : null;
 empMasterNickName : null;
-genderSelect : String = '' ;
+gender:Array<any>;
+genderSelect = '';
 
 
 BirthDateSelect : String = '' ;
@@ -52,10 +54,11 @@ positionSelect : '';
 
 department: Array<any>;
 departmentSelect : '';
-
+employeeType: Array<any>;
 typeNameSelect : '';
+education: Array<any>;
 educationSelect : '';
-
+emergencyContact :'';
 NewBank: Array<any>;
 bankSelect = '';
 
@@ -65,7 +68,9 @@ role_status : Array<any>;
 role_statusSelect = '';
 passwordCreate : null;
 x:any=false;
-
+empId = localStorage.getItem('empId');
+fName = localStorage.getItem('fName');
+lName = localStorage.getItem('lName');
 
 constructor(private route:ActivatedRoute ,
             public dialog: MatDialog,
@@ -83,6 +88,22 @@ constructor(private route:ActivatedRoute ,
                this.NewBank = data;
                //console.log('NewBankSelect == ',this.NewBank);
                  });
+        this.service.getPrefix().subscribe(data => {
+               this.prefix = data;
+               //console.log('prefix == ',this.prefix);
+                 });
+        this.service.getGender2().subscribe(data => {
+               this.gender = data;
+               //console.log('gender == ',this.gender);
+                 });
+        this.service.getEmployeeType().subscribe(data => {
+               this.employeeType = data;
+               //console.log('employeeType == ',this.employeeType);
+                 });
+        this.service.getEducation().subscribe(data => {
+               this.education = data;
+               //console.log('education == ',this.education);
+                 });
         this.service.getDepartment().subscribe(data => {
                this.department = data;
                //console.log('department == ',this.department);
@@ -98,26 +119,19 @@ constructor(private route:ActivatedRoute ,
 
     }
 
-    nowDateToString;
-    splitBirthdate;
-    subtractYear;
-    subtractDay;
-    startDateToString : Array<string>;
-    splitStartDate: Array<string>;
+    subtractYear:number;
     sumDate;
-    CalculateAge18(){
-         this.nowDateToString = new Date().toString().split(" ");
-          console.log('nowDateToString ->',this.nowDateToString);
-          //console.log(parseInt(this.nowDateToString[2]));
-          this.splitBirthdate = this.BirthDateSelect.toString().split(" ");
-          //console.log('splitBirthdate ->',parseInt(this.splitBirthdate[3]));
-          this.subtractYear = parseInt(this.nowDateToString[3]) - parseInt(this.splitBirthdate[3]);
-          //this.subtractDay = parseInt(this.nowDateToString[2]) - parseInt(this.splitBirthdate[2]);
-          console.log('subtractDay ->',this.subtractYear);
+    diffTime1:number;
+    diffDay:number;
+    CalculateLeaveDate(date1:any,date2:any){
+        this.diffTime1 = (date2 - date1);
+        this.diffDay = Math.ceil((this.diffTime1 / (1000 * 60 * 60 * 24)-1));
+        this.subtractYear = this.diffDay/365;
+        console.log('subtractYear =>',this.subtractYear);
     }
 
     SubmitData(){
-        this.CalculateAge18();
+        this.CalculateLeaveDate(this.BirthDateSelect,new Date());
        if(this.subtractYear < 18){
           alert("ต้องมีอายุ 18ปีบริบูรณ์");
         }
@@ -137,9 +151,9 @@ constructor(private route:ActivatedRoute ,
         else{
        this.http.post(this.API3 + /ILS_HR/ + this.employeeMasterCustomerCode + '/' + this.prefixSelect  + '/' + this.empMasterFirstName +'/' + this.empMasterLastName
        +'/' + this.empMasterNickName +'/' + this.genderSelect  +'/' + this.BirthDateSelect
-       +'/' + this.personID +'/' + this.callContact +'/' + this.emails +'/' + this.homeNo +'/' + this.homeNowAddress
+       +'/' + this.personID +'/' + this.callContact +'/' + this.emails +'/' + this.homeNo +'/' + this.homeNowAddress +'/'+ this.emergencyContact
        +'/' + this.startWorks +'/' + this.positionSelect +'/' + this.departmentSelect +'/' + this.typeNameSelect
-       +'/' + this.educationSelect +'/' + this.bankSelect +'/'+ this.bankNumbers +'/'+ this.role_statusSelect +'/'+ this.passwordCreate,{})
+       +'/' + this.educationSelect +'/' + this.bankSelect +'/'+ this.bankNumbers +'/'+ this.role_statusSelect +'/'+ this.passwordCreate +'/'+ this.fName +'/'+ this.lName,{})
                   .subscribe(
                                  data => {
                                      console.log('PUT Request is successful', data);
@@ -151,7 +165,6 @@ constructor(private route:ActivatedRoute ,
                                      console.log('Error', error);
                                  }
                    );
-
           }
 
     }

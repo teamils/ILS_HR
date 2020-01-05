@@ -1,0 +1,175 @@
+<font size="5px" color="#000088"><b>Edit personal information</b></font>
+<div style="float:right" >
+  <button mat-icon-button (click)="closeDialog()">
+    <mat-icon>cancel</mat-icon>
+  </button>
+</div>
+<br><br>
+
+  <mat-form-field appearance="outline">
+    <mat-label>รหัสพนักงาน</mat-label>
+    <input matInput [(ngModel)]="NewemployeeMasterCustomerCode" disabled>
+    <mat-icon matSuffix>perm_identity</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>คำนำหน้า</mat-label>
+    <mat-select  [(ngModel)]="Newprefix">
+      <mat-option *ngFor="let value of prefix" [value]="value.prefixName">
+        {{value.prefixName}}
+      </mat-option>
+    </mat-select>
+    <mat-icon matSuffix>perm_identity</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>ชื่อ</mat-label>
+    <input matInput [(ngModel)]="NewemployeeMasterFirstName">
+    <mat-icon matSuffix>perm_identity</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>สกุล</mat-label>
+    <input matInput [(ngModel)]="NewemployeeMasterLastName">
+    <mat-icon matSuffix>perm_identity</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>ชื่อเล่น</mat-label>
+    <input matInput [(ngModel)]="NewemployeeMasterNickName">
+    <mat-icon matSuffix>perm_identity</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>เพศ</mat-label>
+    <mat-select  [(ngModel)]="NewemployeeMasterGender">
+      <mat-option *ngFor="let value of gender" [value]="value.genderName">
+        {{value.genderName}}
+      </mat-option>
+    </mat-select>
+    <mat-icon matSuffix>perm_identity</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>วันเกิด</mat-label>
+    <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="วัน/เดือน/ปี เกิด"  [(ngModel)]="NewemployeeMasterBirthDate">
+    <mat-datepicker-toggle matSuffix [for]="BirthDate" ></mat-datepicker-toggle>
+    <mat-datepicker #BirthDate></mat-datepicker>
+  </mat-form-field>
+  &nbsp;
+   <mat-form-field appearance="outline">
+     <mat-label>Password</mat-label>
+     <input matInput placeholder="password" [type]="hide ? 'text' : 'password'" [(ngModel)]="Newpassword">
+     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+       <mat-icon class="icon" >{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+     </button>
+   </mat-form-field>
+  <hr>
+  <mat-form-field  appearance="outline">
+    <mat-label>รหัสประจำตัวประชาชน</mat-label>
+    <input matInput #message maxlength="13"  [(ngModel)]="NewemployeeMasterPersonID">
+    <mat-hint align="end">{{message.value.length}}/13</mat-hint>
+    <mat-icon matSuffix>perm_identity</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field  appearance="outline" >
+    <mat-label>เบอร์โทร</mat-label>
+    <input matInput #input maxlength="10"  [(ngModel)]="NewemployeeMasterTel1">
+    <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+    <mat-icon matSuffix>phone_iphone</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field  appearance="outline">
+    <mat-label>email</mat-label>
+    <input matInput [(ngModel)]="NewempEmail">
+    <mat-icon matSuffix>email</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>วันเริ่มงาน</mat-label>
+    <input matInput [matDatepicker]="startwork"  [(ngModel)]="NewemployeeMasterStartDate" disabled>
+    <mat-datepicker-toggle matSuffix [for]="startwork" ></mat-datepicker-toggle>
+    <mat-datepicker #startwork></mat-datepicker>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>ที่อยู่</mat-label>
+    <textarea matInput [(ngModel)]="NewempAddressReal"></textarea>
+    <mat-icon matSuffix>location_city</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>ที่อยู่ปัจจุบัน</mat-label>
+    <textarea matInput [(ngModel)]="NewempAddressPerson" ></textarea>
+    <mat-icon matSuffix>location_city</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>ชื่อ/เบอร์โทร ผู้ที่ติดต่อในกรณีฉุกเฉิน</mat-label>
+    <textarea matInput [(ngModel)]="NewemergencyContact"></textarea>
+    <mat-icon matSuffix>location_city</mat-icon>
+  </mat-form-field>
+  <hr>
+  &nbsp;
+  <mat-form-field appearance="outline" >
+    <mat-label>แผนก</mat-label>
+    <mat-select  [(ngModel)]="NewemployeeDepartment">
+      <mat-option *ngFor="let depart of department" [value]="depart.departmentName">
+        {{depart.departmentName}}
+      </mat-option>
+    </mat-select>
+    <mat-icon matSuffix>work</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>ตำแหน่ง</mat-label>
+    <mat-select  [(ngModel)]="NewemployeePosition">
+      <mat-option *ngFor="let pos of position" [value]="pos.positionName">
+        {{pos.positionName}}
+      </mat-option>
+    </mat-select>
+    <mat-icon matSuffix>work</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>ประเภทการทำงาน</mat-label>
+    <mat-select [(ngModel)]="NewemployeeType">
+      <mat-option *ngFor="let pos of employeeType" [value]="pos.employeeTypeName">
+        {{pos.employeeTypeName}}
+      </mat-option>
+    </mat-select>
+    <mat-icon matSuffix>work</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>วุฒิการศึกษา</mat-label>
+    <mat-select  [(ngModel)]="Neweducation">
+      <mat-option *ngFor="let pos of education" [value]="pos.educationName">
+        {{pos.educationName}}
+      </mat-option>
+    </mat-select>
+    <mat-icon matSuffix>school</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>ธนาคาร</mat-label>
+    <mat-select  [(ngModel)]="Newbank">
+      <mat-option *ngFor="let bank of NewBank" [value]="bank.bankName">
+        {{bank.bankName}}
+      </mat-option>
+    </mat-select>
+    <mat-icon matSuffix>account_balance</mat-icon>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>เลขบัญชี</mat-label>
+    <input matInput #AccountNo maxlength="10" [(ngModel)]="NewbankNumber">
+    <mat-hint align="end">{{AccountNo.value?.length || 0}}/10</mat-hint>
+    <mat-icon matSuffix>monetization_on</mat-icon>
+  </mat-form-field>
+  <hr>
+  <div align="center">
+    <button  mat-fab color="accent" matTooltip="บันทึก" matTooltipPosition="right" (click)="EditEmployee()">
+      <mat-icon matSuffix>save</mat-icon>
+    </button>
+  </div>

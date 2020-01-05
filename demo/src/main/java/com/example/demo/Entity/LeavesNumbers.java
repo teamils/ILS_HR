@@ -1,9 +1,8 @@
 package com.example.demo.Entity;
+import com.example.demo.Entity.Combobox.LeaveTypeForAllday;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Entity
@@ -25,6 +24,7 @@ public class LeavesNumbers {
     private int usedDay; //วันใช้ไป
     private int BalanceDay; // วันคงเหลือ
     private int CompoundDay; // ทบวัน
+    private int diffDay; //จำนวนวันลา ณ การลา1ครั่ง
 
     @ManyToOne
     @JoinColumn(name = "leaveTypeID", insertable = true)
@@ -120,5 +120,13 @@ public class LeavesNumbers {
 
     public void setUpdate_by(String update_by) {
         this.update_by = update_by;
+    }
+
+    public int getDiffDay() {
+        return diffDay;
+    }
+
+    public void setDiffDay(int diffDay) {
+        this.diffDay = diffDay;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.Entity;
 
 
+import com.example.demo.Entity.Combobox.Department;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,6 +25,10 @@ public class EmployeeMaster {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Emp_seq1")
     private Long employeeMasterID;
     //@Id @GeneratedValue(strategy=GenerationType.AUTO)
+    private Date create_date;
+    private String create_by;
+    private Date update_date;
+    private String update_by;
 
     private String employeeMasterCustomerCode;
     private String prefix;
@@ -41,12 +46,13 @@ public class EmployeeMaster {
     private String empEmail;
     private String empAddressReal;
     private String empAddressPerson;
+    private String emergencyContact;
 
     @Temporal(TemporalType.DATE)
     private Date employeeMasterStartDate;
 
     private String employeePosition;
-    private String employeeDepartment;
+    @ManyToOne private Department departmentid;
     private String employeeType;
     private String education;
     private String bank;
@@ -55,6 +61,37 @@ public class EmployeeMaster {
     private String roleStatus;
     private String password;
 
+    public Date getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(Date create_date) {
+        this.create_date = create_date;
+    }
+
+    public String getCreate_by() {
+        return create_by;
+    }
+
+    public void setCreate_by(String create_by) {
+        this.create_by = create_by;
+    }
+
+    public Date getUpdate_date() {
+        return update_date;
+    }
+
+    public void setUpdate_date(Date update_date) {
+        this.update_date = update_date;
+    }
+
+    public String getUpdate_by() {
+        return update_by;
+    }
+
+    public void setUpdate_by(String update_by) {
+        this.update_by = update_by;
+    }
 
     public Long getEmployeeMasterID() {
         return employeeMasterID;
@@ -184,12 +221,12 @@ public class EmployeeMaster {
         this.employeePosition = employeePosition;
     }
 
-    public String getEmployeeDepartment() {
-        return employeeDepartment;
+    public Department getDepartmentid() {
+        return departmentid;
     }
 
-    public void setEmployeeDepartment(String employeeDepartment) {
-        this.employeeDepartment = employeeDepartment;
+    public void setDepartmentid(Department departmentid) {
+        this.departmentid = departmentid;
     }
 
     public String getEmployeeType() {
@@ -246,5 +283,13 @@ public class EmployeeMaster {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmergencyContact() {
+        return emergencyContact;
+    }
+
+    public void setEmergencyContact(String emergencyContact) {
+        this.emergencyContact = emergencyContact;
     }
 }
