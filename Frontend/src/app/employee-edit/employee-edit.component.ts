@@ -12,32 +12,9 @@ import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/mater
 import { AppComponent } from '../app.component';
 
 export interface DialogData {
-    employeeMasterID : null;
-    employeeMasterCustomerCode: string;
-    prefix : string;
-    employeeMasterFirstName : string;
-    employeeMasterLastName : string;
-    employeeMasterNickName: string;
-    employeeMasterGender: string;
-    maritalStatus: string;
-    employeeMasterBirthDate: string;
-    employeeMasterPersonID: string;
-    employeeMasterTel1: string;
-    empEmail: string;
-    empAddressReal: string;
-    empAddressPerson: string;
-    employeeMasterStartDate: string;
-    employeePosition: string;
-    departmentid: string;
-    employeeType: string;
-    education: string;
-    bank: string;
-    bankNumber: string;
-    IsActive: string;
-    password : string;
-    emergencyContact: string;
+  employeeMasterID : null;
+  isActive: string;
 }
-
 @Component({
   selector: 'app-employee-edit',
   templateUrl: './employee-edit.component.html',
@@ -52,6 +29,8 @@ export class EmployeeEditComponent implements OnInit {
         public API = '//localhost:8080';
         //public API = 'http://192.168.1.47:8080';
         nowDate = new Date();
+        employee: Array<any>;
+        empID : null;
         NewemployeeMasterID : null;
         NewemployeeMasterCustomerCode: string;
         Newprefix : string;
@@ -84,6 +63,7 @@ export class EmployeeEditComponent implements OnInit {
         gender:Array<any>;
         prefix: Array<any>;
         empStatus: Array<any>;
+        NewRoleStatus: string;
         dis;
         empId = localStorage.getItem('empId');
         fName = localStorage.getItem('fName');
@@ -96,8 +76,9 @@ export class EmployeeEditComponent implements OnInit {
                       ,private route:ActivatedRoute
                       ,private service:ServiceService
                       ,private http: HttpClient
-                      ,@Inject(MAT_DIALOG_DATA)  public data: DialogData) {
+                      ,@Inject(MAT_DIALOG_DATA)  public date: DialogData) {
                             dialogRef.disableClose = true;
+                  this.empID = date.employeeMasterID
       }
 
       closeDialog(): void {
@@ -105,6 +86,11 @@ export class EmployeeEditComponent implements OnInit {
       }
 
       ngOnInit() {
+        this.service.getemployee1person(this.empID).subscribe(data => {
+            this.employee = data;
+            this.addValue(data);
+            //console.log('employee in edit -> ',this.employee);
+        });
         this.service.getBank().subscribe(data => {
                this.NewBank = data;
                //console.log('NewBank >>> ',this.NewBank);
@@ -139,52 +125,78 @@ export class EmployeeEditComponent implements OnInit {
                  });
 
          // console.log(this.data);
-          this.NewemployeeMasterID = this.data.employeeMasterID;
-          this.NewemployeeMasterCustomerCode = this.data.employeeMasterCustomerCode;
-          this.Newprefix = this.data.prefix;
-          this.NewemployeeMasterFirstName = this.data.employeeMasterFirstName;
-          this.NewemployeeMasterLastName = this.data.employeeMasterLastName;
-          this.NewemployeeMasterNickName = this.data.employeeMasterNickName;
-          this.NewemployeeMasterGender = this.data.employeeMasterGender;
-          this.NewmaritalStatus = this.data.maritalStatus;
-          this.NewemployeeMasterBirthDate = this.data.employeeMasterBirthDate;
-          this.NewemployeeMasterPersonID = this.data.employeeMasterPersonID;
-          this.NewemployeeMasterTel1 = this.data.employeeMasterTel1;
-          this.NewempEmail = this.data.empEmail;
-          this.NewempAddressReal = this.data.empAddressReal;
-          this.NewempAddressPerson = this.data.empAddressPerson;
-          this.NewemployeeMasterStartDate = this.data.employeeMasterStartDate;
-          this.NewemployeePosition = this.data.employeePosition;
-          this.NewemployeeDepartment = this.data.departmentid;
-          this.NewemployeeType = this.data.employeeType;
-          this.Neweducation = this.data.education;
-          this.Newbank = this.data.bank;
-          this.NewbankNumber = this.data.bankNumber;
-          this.NewIsActive = this.data.IsActive;
-          this.Newpassword = this.data.password;
-          this.NewemergencyContact = this.data.emergencyContact;
+
       }
 
       EditEmployee(){
-
-            this.http.post(this.API + '/editemployee/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
+           this.http.post(this.API + '/editemployee/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
                                                     +'/'+ this.NewemployeeMasterLastName +'/'+ this.NewemployeeMasterNickName +'/'+ this.NewemployeeMasterGender
                                                     +'/'+ this.NewmaritalStatus +'/'+ this.NewemployeeMasterBirthDate +'/'+ this.NewemployeeMasterPersonID
-                                                    +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewempEmail +'/'+ this.NewempAddressReal +'/'+ this.NewempAddressPerson
+                                                    +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewempEmail +'/'+ this.NewempAddressReal +'/'+ this.NewempAddressPerson +'/'+ this.NewemergencyContact
                                                     +'/'+ this.NewemployeeMasterStartDate +'/'+ this.NewemployeePosition +'/'+ this.NewemployeeDepartment
                                                     +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber +'/'+ this.Newpassword +'/'+ this.fName +'/'+ this.lName ,{})
                                    .subscribe(
                                        data => {
-                                           console.log('PUT Request is successful');
+                                           console.log('EditEmployee is successful');
                                            alert("Edit Success!");
+                                            this.BackupEmployeeMaster();
+                                            localStorage.setItem('links', 'employeeMaster');
                                            window.location.reload(true);
-                                          localStorage.setItem('links', 'employeeMaster');
+
                                        },
                                        error => {
                                            console.log('Error', error);
                                        }
                                     );
       }
+
+    BackupEmployeeMaster(){
+            this.http.post(this.API + '/BackupEmployeeMaster/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
+                                                    +'/'+ this.NewemployeeMasterLastName +'/'+ this.NewemployeeMasterNickName +'/'+ this.NewemployeeMasterGender
+                                                    +'/'+ this.NewmaritalStatus +'/'+ this.NewemployeeMasterBirthDate +'/'+ this.NewemployeeMasterPersonID
+                                                    +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewempEmail +'/'+ this.NewempAddressReal +'/'+ this.NewempAddressPerson +'/'+ this.NewemergencyContact
+                                                    +'/'+ this.NewemployeeMasterStartDate +'/'+ this.NewemployeePosition +'/'+ this.NewemployeeDepartment
+                                                    +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber +'/'+ this.Newpassword
+                                                    +'/'+ this.fName +'/'+ this.lName +'/'+ this.NewRoleStatus,{})
+                                   .subscribe(
+                                       data => {
+                                           console.log('BackupEmployeeMaster is successful');
+                                       },
+                                       error => {
+                                           console.log('Error', error);
+                                       }
+                                    );
+    }
+
+    addValue(data:any){
+        for (let i of data){
+            this.NewemployeeMasterID = i.employeeMasterID;
+            this.NewemployeeMasterCustomerCode = i.employeeMasterCustomerCode;
+            this.Newprefix = i.prefix;
+            this.NewemployeeMasterFirstName = i.employeeMasterFirstName;
+            this.NewemployeeMasterLastName = i.employeeMasterLastName;
+            this.NewemployeeMasterNickName = i.employeeMasterNickName;
+            this.NewemployeeMasterGender = i.employeeMasterGender;
+            this.NewmaritalStatus = i.maritalStatus;
+            this.NewemployeeMasterBirthDate = i.employeeMasterBirthDate;
+            this.NewemployeeMasterPersonID = i.employeeMasterPersonID;
+            this.NewemployeeMasterTel1 = i.employeeMasterTel1;
+            this.NewempEmail = i.empEmail;
+            this.NewempAddressReal = i.empAddressReal;
+            this.NewempAddressPerson = i.empAddressPerson;
+            this.NewemergencyContact = i.emergencyContact;
+            this.NewemployeeMasterStartDate = i.employeeMasterStartDate;
+            this.NewemployeePosition = i.employeePosition;
+            this.NewemployeeDepartment = i.departmentid.departmentName;
+            this.NewemployeeType = i.employeeType;
+            this.Neweducation = i.education;
+            this.Newbank = i.bank;
+            this.NewbankNumber = i.bankNumber;
+            this.NewIsActive = i.IsActive;
+            this.Newpassword = i.password;
+            this.NewRoleStatus = i.roleStatus;
+        }
+    }
 
 }
 

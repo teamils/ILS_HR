@@ -134,7 +134,7 @@
                 <!-- แผนก -->
                 <mat-form-field class="formcenter" hintLabel="" style="width :20%" style="width :100%" >
                   <mat-select placeholder="แผนก" required [(ngModel)]="departmentSelect">
-                    <mat-option *ngFor="let depart of department" [value]="depart.departmentID">
+                    <mat-option *ngFor="let depart of department" [value]="depart.departmentName">
                       {{depart.departmentName}}
                     </mat-option>
                   </mat-select>

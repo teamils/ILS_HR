@@ -1,45 +1,45 @@
 INSERT INTO department 
-VALUES (1, 'AE');
+VALUES (1, 'AE','');
 INSERT INTO department 
-VALUES (2, 'Amazon');
+VALUES (2, 'Amazon','');
 INSERT INTO department 
-VALUES (3, 'Chester');
+VALUES (3, 'Chester','');
 INSERT INTO department 
-VALUES (4, 'Chevron POP');
+VALUES (4, 'Chevron POP','');
 INSERT INTO department 
-VALUES (5, 'EXPORT');
+VALUES (5, 'EXPORT','');
 INSERT INTO department 
-VALUES (6, 'HR and Admin');
+VALUES (6, 'HR and Admin','');
 INSERT INTO department 
-VALUES (7, 'IMC');
+VALUES (7, 'IMC','');
 INSERT INTO department 
-VALUES (8, 'Intanin');
+VALUES (8, 'Intanin','');
 INSERT INTO department 
-VALUES (9, 'IT');
+VALUES (9, 'IT','');
 INSERT INTO department 
-VALUES (10, 'PLC');
+VALUES (10, 'PLC','');
 INSERT INTO department 
-VALUES (11, 'PTT');
+VALUES (11, 'PTT','');
 INSERT INTO department 
-VALUES (12, 'Receiving');
+VALUES (12, 'Receiving','');
 INSERT INTO department 
-VALUES (13, 'Safety');
+VALUES (13, 'Safety','');
 INSERT INTO department 
-VALUES (14, 'STL');
+VALUES (14, 'STL','');
 INSERT INTO department 
-VALUES (15, 'TKNR');
+VALUES (15, 'TKNR','');
 INSERT INTO department 
-VALUES (16, 'Transport');
+VALUES (16, 'Transport','');
 INSERT INTO department 
-VALUES (17, 'Vcan');
+VALUES (17, 'Vcan','');
 INSERT INTO department 
-VALUES (18, 'WH Operation');
+VALUES (18, 'WH Operation','');
 INSERT INTO department 
-VALUES (19, 'กัมพูชา');
+VALUES (19, 'กัมพูชา','');
 INSERT INTO department 
-VALUES (20, 'ลาว');
+VALUES (20, 'ลาว','');
 INSERT INTO department 
-VALUES (21, 'Muffy');
+VALUES (21, 'Muffy','');
 
 
 INSERT INTO BANK 
@@ -257,7 +257,7 @@ VALUES (11, 15, 10);
 
 
 INSERT INTO EMPLOYEE_MASTER 
-VALUES (1, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','7072698661','2020-01-03 16:20:15.5950000','ป.ตรี',',','-','180 ม.5 ต.วังซ่าน อ.เเม่วงก์ จ.นครสวรรค์','dikinakub6509@gmail.com','IT','1997-07-30','400234','ดิกิ','ชาย','คาวาซากิ','กิ','1600100723988','2010-12-26','0834318890','IT Programmer','นักศึกษาฝึกงาน','1','ยังปฏิบัติงานอยู่','400234','นาย','ADMIN'); 
+VALUES (1, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','7072698661','-',2020-01-05 12:34:20.183,'ป.ตรี', '-', '-', '180 ม.5 ต.วังซ่าน อ.เเม่วงก์ จ.นครสวรรค์','dikinakub6509@gmail.com',1997-07-30,'400234','ดิกิ','ชาย','คาวาซากิ','กิ','1600100723988',2010-12-26,'0834318890','IT Programmer','นักศึกษาฝึกงาน','1','ยังปฏิบัติงานอยู่','400234','นาย','ADMIN','diki kawasaki',2020-01-05 12:52:12.056,9); 
 INSERT INTO EMPLOYEE_MASTER 
 VALUES (2, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','-','ป.เอก','-','-','-','-','IT','1975-04-10','man','พัชรเสฐ ','ชาย','อนันต์ธนารัฐ','หุย','3920400147714','2003-09-08','-','Manager','รายเดือน','1','ยังปฏิบัติงานอยู่','man','นาย','MANAGER'); 
 INSERT INTO EMPLOYEE_MASTER 

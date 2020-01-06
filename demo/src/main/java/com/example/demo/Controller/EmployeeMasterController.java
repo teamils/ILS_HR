@@ -125,7 +125,7 @@ public class EmployeeMasterController {
     @PostMapping(path = "/editemployee/{NewemployeeMasterID}/{NewemployeeMasterCustomerCode}/{Newprefix}/{NewemployeeMasterFirstName}" +
             "/{NewemployeeMasterLastName}/{NewemployeeMasterNickName}/{NewemployeeMasterGender}/{NewmaritalStatus}" +
             "/{NewemployeeMasterBirthDate}/{NewemployeeMasterPersonID}/{NewemployeeMasterTel1}/{NewempEmail}/{NewempAddressReal}" +
-            "/{NewempAddressPerson}/{NewemployeeMasterStartDate}/{NewemployeePosition}/{NewemployeeDepartment}/{NewemployeeType}" +
+            "/{NewempAddressPerson}/{NewemergencyContact}/{NewemployeeMasterStartDate}/{NewemployeePosition}/{NewemployeeDepartment}/{NewemployeeType}" +
             "/{Neweducation}/{Newbank}/{NewbankNumber}/{Newpassword}/{fName}/{lName}") // Edit Employee
     public EmployeeMaster employeeMaster(@PathVariable Long NewemployeeMasterID, @PathVariable String NewemployeeMasterCustomerCode,
                                          @PathVariable String Newprefix, @PathVariable String NewemployeeMasterFirstName,
@@ -133,13 +133,13 @@ public class EmployeeMasterController {
                                          @PathVariable String NewemployeeMasterGender, @PathVariable String NewmaritalStatus,
                                          @PathVariable String NewemployeeMasterBirthDate, @PathVariable String NewemployeeMasterPersonID,
                                          @PathVariable String NewemployeeMasterTel1, @PathVariable String NewempEmail,
-                                         @PathVariable String NewempAddressReal, @PathVariable String NewempAddressPerson,
+                                         @PathVariable String NewempAddressReal, @PathVariable String NewempAddressPerson, @PathVariable String NewemergencyContact,
                                          @PathVariable String NewemployeeMasterStartDate, @PathVariable String NewemployeePosition,
-                                         @PathVariable long NewemployeeDepartment, @PathVariable String NewemployeeType,
+                                         @PathVariable String NewemployeeDepartment, @PathVariable String NewemployeeType,
                                          @PathVariable String Neweducation, @PathVariable String Newbank,
                                          @PathVariable String NewbankNumber,@PathVariable String Newpassword,
                                          @PathVariable String fName ,@PathVariable String lName) throws ParseException {
-        Department department = departmentRepository.findById(NewemployeeDepartment).get();
+        Department department = departmentRepository.findByDepartmentName(NewemployeeDepartment);
         EmployeeMaster employeeMaster2 = employeeMasterRepository.findById(NewemployeeMasterID).get();
 
         String[] birthdatesplit;
@@ -203,6 +203,7 @@ public class EmployeeMasterController {
         employeeMaster2.setEmpEmail(NewempEmail);
         employeeMaster2.setEmpAddressReal(NewempAddressReal);
         employeeMaster2.setEmpAddressPerson(NewempAddressPerson);
+        employeeMaster2.setEmergencyContact(NewemergencyContact);
         employeeMaster2.setEmployeeMasterStartDate(startdate);
         employeeMaster2.setEmployeePosition(NewemployeePosition);
         employeeMaster2.setDepartmentid(department);

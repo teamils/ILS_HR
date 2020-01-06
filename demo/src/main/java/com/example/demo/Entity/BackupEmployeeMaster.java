@@ -1,6 +1,4 @@
 package com.example.demo.Entity;
-
-
 import com.example.demo.Entity.Combobox.Department;
 import lombok.*;
 
@@ -19,11 +17,11 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode
 
-public class EmployeeMaster {
+public class BackupEmployeeMaster {
     @Id
-    @SequenceGenerator(name = "Emp_seq1", sequenceName = "Emp_seq1",initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Emp_seq1")
-    private Long employeeMasterID;
+    @SequenceGenerator(name = "BackupEmployeeMaster_seq", sequenceName = "BackupEmployeeMaster_seq",initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BackupEmployeeMaster_seq")
+    private Long BackupEmployeeMasterID;
     private Date create_date;
     private String create_by;
     private Date update_date;
@@ -60,6 +58,14 @@ public class EmployeeMaster {
     private String roleStatus;
     private String password;
 
+    public Long getBackupEmployeeMasterID() {
+        return BackupEmployeeMasterID;
+    }
+
+    public void setBackupEmployeeMasterID(Long backupEmployeeMasterID) {
+        BackupEmployeeMasterID = backupEmployeeMasterID;
+    }
+
     public Date getCreate_date() {
         return create_date;
     }
@@ -90,14 +96,6 @@ public class EmployeeMaster {
 
     public void setUpdate_by(String update_by) {
         this.update_by = update_by;
-    }
-
-    public Long getEmployeeMasterID() {
-        return employeeMasterID;
-    }
-
-    public void setEmployeeMasterID(Long employeeMasterID) {
-        this.employeeMasterID = employeeMasterID;
     }
 
     public String getEmployeeMasterCustomerCode() {
@@ -204,6 +202,14 @@ public class EmployeeMaster {
         this.empAddressPerson = empAddressPerson;
     }
 
+    public String getEmergencyContact() {
+        return emergencyContact;
+    }
+
+    public void setEmergencyContact(String emergencyContact) {
+        this.emergencyContact = emergencyContact;
+    }
+
     public Date getEmployeeMasterStartDate() {
         return employeeMasterStartDate;
     }
@@ -282,13 +288,5 @@ public class EmployeeMaster {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getEmergencyContact() {
-        return emergencyContact;
-    }
-
-    public void setEmergencyContact(String emergencyContact) {
-        this.emergencyContact = emergencyContact;
     }
 }

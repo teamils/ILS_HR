@@ -27,13 +27,13 @@ export class EditPersonalInformationComponent implements OnInit {
     NewemployeeMasterNickName: string;
     NewemployeeMasterGender: string;
     NewmaritalStatus: string;
-    NewemployeeMasterBirthDate: string;
+    NewemployeeMasterBirthDate: any;
     NewemployeeMasterPersonID: string;
     NewemployeeMasterTel1: string;
     NewempEmail: string;
     NewempAddressReal: string;
     NewempAddressPerson: string;
-    NewemployeeMasterStartDate: string;
+    NewemployeeMasterStartDate: any;
     position: Array<any>;
     NewemployeePosition: string;
     department: Array<any>;
@@ -51,6 +51,7 @@ export class EditPersonalInformationComponent implements OnInit {
     gender:Array<any>;
     prefix: Array<any>;
     empStatus: Array<any>;
+    NewRoleStatus:string;
     constructor(
       public dialogRef: MatDialogRef<EditPersonalInformationComponent>
                       ,changeDetectorRef: ChangeDetectorRef
@@ -72,7 +73,7 @@ export class EditPersonalInformationComponent implements OnInit {
         this.service.getemployee1person(this.empId).subscribe(data => {
             this.employee = data;
             this.addValue(data);
-            console.log('employee in edit -> ',this.employee);
+            //console.log('employee in edit -> ',this.employee);
         });
 
         this.service.getBank().subscribe(data => {
@@ -109,27 +110,44 @@ export class EditPersonalInformationComponent implements OnInit {
                  });
     }
     EditEmployee(){
-
             this.http.post(this.API + '/editemployee/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
                                                     +'/'+ this.NewemployeeMasterLastName +'/'+ this.NewemployeeMasterNickName +'/'+ this.NewemployeeMasterGender
                                                     +'/'+ this.NewmaritalStatus +'/'+ this.NewemployeeMasterBirthDate +'/'+ this.NewemployeeMasterPersonID
-                                                    +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewempEmail +'/'+ this.NewempAddressReal +'/'+ this.NewempAddressPerson
+                                                    +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewempEmail +'/'+ this.NewempAddressReal +'/'+ this.NewempAddressPerson +'/'+ this.NewemergencyContact
                                                     +'/'+ this.NewemployeeMasterStartDate +'/'+ this.NewemployeePosition +'/'+ this.NewemployeeDepartment
                                                     +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber +'/'+ this.Newpassword +'/'+ this.fName +'/'+ this.lName ,{})
                                    .subscribe(
                                        data => {
-                                           console.log('PUT Request is successful');
+                                           console.log('EditEmployee is successful');
                                            alert("Edit Success!");
+                                            this.BackupEmployeeMaster();
                                            window.location.reload(true);
-                                          localStorage.setItem('links', 'employeeMaster');
                                        },
                                        error => {
                                            console.log('Error', error);
                                        }
                                     );
       }
-    addValue(data:any){
 
+    BackupEmployeeMaster(){
+            this.http.post(this.API + '/BackupEmployeeMaster/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
+                                                    +'/'+ this.NewemployeeMasterLastName +'/'+ this.NewemployeeMasterNickName +'/'+ this.NewemployeeMasterGender
+                                                    +'/'+ this.NewmaritalStatus +'/'+ this.NewemployeeMasterBirthDate +'/'+ this.NewemployeeMasterPersonID
+                                                    +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewempEmail +'/'+ this.NewempAddressReal +'/'+ this.NewempAddressPerson +'/'+ this.NewemergencyContact
+                                                    +'/'+ this.NewemployeeMasterStartDate +'/'+ this.NewemployeePosition +'/'+ this.NewemployeeDepartment
+                                                    +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber +'/'+ this.Newpassword
+                                                    +'/'+ this.fName +'/'+ this.lName +'/'+ this.NewRoleStatus,{})
+                                   .subscribe(
+                                       data => {
+                                           console.log('BackupEmployeeMaster is successful');
+                                       },
+                                       error => {
+                                           console.log('Error', error);
+                                       }
+                                    );
+    }
+
+    addValue(data:any){
         for (let i of data){
             this.NewemployeeMasterID = i.employeeMasterID;
             this.NewemployeeMasterCustomerCode = i.employeeMasterCustomerCode;
@@ -155,6 +173,7 @@ export class EditPersonalInformationComponent implements OnInit {
             this.NewbankNumber = i.bankNumber;
             this.NewIsActive = i.IsActive;
             this.Newpassword = i.password;
+            this.NewRoleStatus = i.roleStatus;
         }
     }
 

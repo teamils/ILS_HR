@@ -124,7 +124,7 @@
       <mat-form-field appearance="outline" >
         <mat-label>แผนก</mat-label>
         <mat-select  [(ngModel)]="NewemployeeDepartment">
-          <mat-option *ngFor="let depart of department" [value]="depart.departmentID">
+          <mat-option *ngFor="let depart of department" [value]="depart.departmentName">
             {{depart.departmentName}}
           </mat-option>
         </mat-select>
