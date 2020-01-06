@@ -9,6 +9,8 @@ td {
 tr:nth-child(even) {
   background-color: #90EE90;
 }
+
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -48,3 +50,9 @@ table {
 .example-fill-remaining-space {
   flex: 2 2 auto;
 }
+.searchStyle{
+  width:200px;
+}
+
+
+

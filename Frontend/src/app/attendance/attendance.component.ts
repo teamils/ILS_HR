@@ -186,7 +186,7 @@ export class AttendanceComponent implements OnInit {
     }
     SubmitData2(){ //Full day
         this.CalculateLeaveDate(this.startDate2,this.endDate2);
-        this.Checktheleave()
+        this.Checktheleave();
         if(this.diffDay<1){
           this.startDate2  = null;
           this.endDate2  = null;
@@ -195,11 +195,8 @@ export class AttendanceComponent implements OnInit {
         else if(this.startDate2 == null) alert("กรุณาเลือกวันลา");
         else if(this.endDate2 == null) alert("กรุณาเลือกวันสิ้นสุดการลา");
         else if(this.reason2 == null) alert("กรุณากรอกเหตุผล");
-        /*else if(this.leavetatelAll.BalanceDay<=0){
-          alert("วันลา"+this.leaveTypeSelect2+"คงเหลือของคุณไม่มีแล้ว หากคุณจะดำเนินการต่อ คุณจะไม่ได้รับค่าจ้างในส่วนนี้");
-        }*/
         else{
-             this.http.post(this.API1  +/SaveLeaveFullDay/+ this.table.leaID +'/'+ this.leaveTypeSelect2 +'/'+ this.startDate2 +'/'+  this.endDate2 +'/'+ this.reason2 +'/'+ this.diffDay ,{})
+             this.http.post(this.API1  +/SaveLeaveFullDay/+ this.table.leaID +'/'+ this.leaveTypeSelect2 +'/'+ this.startDate2 +'/'+  this.endDate2 +'/'+ this.reason2 +'/'+ this.diffDay +'/'+ this.leavetatelAll.leavesNumbersID ,{})
                         .subscribe(
                                        dataLeave => {
                                            console.log('PUT Request is successful', dataLeave);
@@ -207,12 +204,12 @@ export class AttendanceComponent implements OnInit {
                                             //window.location.reload(true);
                                             localStorage.setItem('links', 'attendance');
                                             this.x=false;
-                                            this.UpdateLeaveNumber();
+                                            //this.UpdateLeaveNumber();
                                        },
                                        error => {
+                                          console.log('Error', error);
                                           alert("ไม่สำเร็จ กรุณาลองใหม่");
                                           window.location.reload(true);
-                                           console.log('Error', error);
                                        }
                                       );
              this.ClearTextInput();
@@ -325,7 +322,7 @@ export class AttendanceComponent implements OnInit {
 
 }
 
-//Dialog
+//Dialog AttendanceCancelDialog
 export interface DialogData {
   leavesID : null;
   isActiveAttendance: string;
@@ -369,3 +366,4 @@ export interface DialogData {
 
 
   }
+

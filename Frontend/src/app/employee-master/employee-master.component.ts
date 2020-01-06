@@ -87,7 +87,6 @@ export class EmployeeMasterComponent implements OnInit {
                     //console.log('employee->',this.employee);
                     //this.datemmddyy(data);
               });
-
              this.dataSource.paginator = this.paginator;
              this.dataSource.sort = this.sort;
 

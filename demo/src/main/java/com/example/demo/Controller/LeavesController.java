@@ -1,4 +1,6 @@
 package com.example.demo.Controller;
+import com.example.demo.Entity.Combobox.Department;
+import com.example.demo.Entity.Combobox.LeaveTypeForAllday;
 import com.example.demo.Repository.*;
 import com.example.demo.Entity.*;
 import com.example.demo.Repository.ComboboxRepository.LeaveTypeForAlldayRepository;
@@ -61,6 +63,7 @@ public class LeavesController {
     public Leaves leaves( @PathVariable Long leaID , @PathVariable String leaveTypeSelect ,@PathVariable String labelLeaveHalfDay
             , @PathVariable Date startDate , @PathVariable String reason, @PathVariable String startTimeSelect, @PathVariable String endTimeSelect )  {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
+        LeaveTypeForAllday leaveTypeForAllday = leaveTypeForAlldayRepository.findByLeaveTypeForAlldayName(leaveTypeSelect);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm:ss");
@@ -76,7 +79,7 @@ public class LeavesController {
         Leaves leaves1 = new Leaves();
         leaves1.setEmployeeMasterid(employeeMaster);
         leaves1.setCreateDate(datetrue);
-        leaves1.setLeaveTypeForAllDay(leaveTypeSelect);
+        leaves1.setLeaveTypeForAllDay(leaveTypeForAllday);
         leaves1.setStartDateForAllDay(startDate);
         leaves1.setStartTime(startTimeSelect);
         leaves1.setEndTime(endTimeSelect);
@@ -88,16 +91,18 @@ public class LeavesController {
         leaves1.setApprovedByManager("Pending");
         leaves1.setIsActiveAttendance("1");
         leaves1.setLeaveStatus("Pending");
-        leaves1.setWageStatus(1);
+        //leaves1.setWageStatus(1);
         leavesRepository.save(leaves1);
         return leaves1;
     }
 
-    @PostMapping("/SaveLeaveFullDay/{leaID}/{leaveTypeSelect2}/{startDate2}/{endDate2}/{reason2}/{diffDay}") // saveLeave2 เต็มวัน
+    @PostMapping("/SaveLeaveFullDay/{leaID}/{leaveTypeSelect2}/{startDate2}/{endDate2}/{reason2}/{diffDay}/{leavesNumbersID}") // saveLeave2 เต็มวัน
     public Leaves leaves2( @PathVariable Long leaID , @PathVariable String leaveTypeSelect2 ,@PathVariable Date startDate2
-            , @PathVariable Date endDate2 , @PathVariable String reason2  , @PathVariable String diffDay){
+            , @PathVariable Date endDate2 , @PathVariable String reason2  , @PathVariable String diffDay, @PathVariable long leavesNumbersID){
 
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
+        LeaveTypeForAllday leaveTypeForAllday = leaveTypeForAlldayRepository.findByLeaveTypeForAlldayName(leaveTypeSelect2);
+        LeavesNumbers leavesNumbers = leavesNumbersRepository.findById(leavesNumbersID).get();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm:ss");
@@ -113,19 +118,21 @@ public class LeavesController {
         Leaves leaves2 = new Leaves();
         leaves2.setEmployeeMasterid(employeeMaster);
         leaves2.setCreateDate(datetrue);
-        leaves2.setLeaveTypeForAllDay(leaveTypeSelect2);
+        leaves2.setLeaveTypeForAllDay(leaveTypeForAllday);
         leaves2.setStartDateForAllDay(startDate2);
         leaves2.setEndDateForAllDay(endDate2);
         leaves2.setStartTime("08:00");
         leaves2.setEndTime("17:00");
         leaves2.setReasonForAllDay(reason2);
         leaves2.setLabelLeaveHalfDay(diffDay + " ว ัน");
-
         leaves2.setApprovedBySupervisor("Pending");
         leaves2.setApprovedByManager("Pending");
         leaves2.setIsActiveAttendance("1");
         leaves2.setLeaveStatus("Pending");
-        leaves2.setWageStatus(1);
+
+        if(leavesNumbers.getBalanceDay()>0) leaves2.setIsPayment("payment");
+        else leaves2.setIsPayment("not payment");
+
         leavesRepository.save(leaves2);
         return leaves2;
     }
@@ -183,5 +190,21 @@ public class LeavesController {
         return notApproveByManager;
     }
 
+    @PostMapping("/confirmByHR/{leavesID}/{fName}/{lName}") // not ApproveByManager
+    public Leaves confirmByHR( @PathVariable Long leavesID,@PathVariable String fName,@PathVariable String lName){
+        Leaves confirmByHR = leavesRepository.findById(leavesID).get();
+        confirmByHR.setLeaveStatus("Complete");
+        confirmByHR.setConfirmByHR(fName+" "+lName);
+        leavesRepository.save(confirmByHR);
+        return confirmByHR;
+    }
 
+    @GetMapping("/SearchEmployeeByCodeAndName/{empCode}")
+    public Iterable<Leaves> searchEmployeeByCodeAndName(@PathVariable String empCode){
+        return this.leavesRepository.SearchEmployeeByCodeAndName(empCode);
+    }
+    @GetMapping("/SearchEmployeeByDepartmentID/{departmentID}")
+    public Iterable<Leaves> searchEmployeeByDepartmentID(@PathVariable String departmentID){
+        return this.leavesRepository.getLeavesSelectDepartment(departmentID);
+    }
 }

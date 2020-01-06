@@ -8,10 +8,31 @@
           </mat-form-field> -->
   </span>
   <span>
-    <mat-slide-toggle (change)="onChange()" [(ngModel)]="isChecked">Approve</mat-slide-toggle>
+    <mat-slide-toggle (change)="onChange()" [(ngModel)]="isChecked">Complete</mat-slide-toggle>
   </span>
 </mat-toolbar>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+<mat-card>
+  ค้นหา :
+  <mat-form-field  class="searchStyle" (keydown.enter)="SearchEmployeeByCodeAndName()">
+    <mat-label>Search</mat-label>
+    <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  <!-- &nbsp; &nbsp;
+  <mat-form-field class="formcenter" hintLabel="" style="width :200px">
+    <mat-select placeholder="Search by department"  [(ngModel)]="departmentSelect">
+      <mat-option *ngFor="let depart of department" [value]="depart.departmentID">
+        {{depart.departmentName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;
+  <button mat-raised-button (click)="SearchEmployeeByDepartmentID()"><mat-icon matSuffix>search</mat-icon></button>
+  {{departmentSelect}} -->
+</mat-card>
+
+<table mat-table [dataSource]="dataSource" matSort  class="mat-elevation-z8">
   <ng-container matColumnDef="number">
     <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>
     <td mat-cell *matCellDef="let element ; let i = index">{{i+1}}.</td>
@@ -38,10 +59,10 @@
     <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.departmentid.departmentName}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="employeeType">
+ <!-- <ng-container matColumnDef="employeeType">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>ประเภทพนักงาน</b></font>  </th>
     <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.employeeType}} </td>
-  </ng-container>
+  </ng-container> -->
 
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>วันที่</b></font>  </th>
@@ -50,7 +71,7 @@
 
   <ng-container matColumnDef="leaveType">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>ประเภทการลา</b></font>  </th>
-    <td mat-cell *matCellDef="let element"> {{element.leaveTypeForAllDay}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.leaveTypeForAllDay.leaveTypeForAlldayName}}</td>
   </ng-container>
 
   <ng-container matColumnDef="startDate">
@@ -69,7 +90,7 @@
   </ng-container>
 
   <ng-container matColumnDef="reason">
-    <th mat-header-cell *matHeaderCellDef><font color="black"><b>เหตุผล</b></font></th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header><font color="black"><b>เหตุผล</b></font></th>
     <td mat-cell *matCellDef="let element"> {{element.reasonForAllDay}} </td>
   </ng-container>
 
@@ -93,11 +114,29 @@
     <td mat-cell *matCellDef="let element"> {{element.leaveStatus}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="del" stickyEnd>
-    <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ยกเลิการลา</b></font></th>
+  <ng-container matColumnDef="confirm">
+    <th mat-header-cell *matHeaderCellDef><font  color="black"><b></b></font></th>
+    <td mat-cell *matCellDef="let element">
+        <button mat-icon-button style="color: green;" matTooltip="ยืนยัน" matTooltipPosition="left"  [disabled]="dis" (click)="ConfirmByHR(element);" aria-label="Example icon-button with a heart icon">
+          <mat-icon>check_circle_outline</mat-icon>
+        </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="del">
+    <th mat-header-cell *matHeaderCellDef><font  color="black"><b></b></font></th>
     <td mat-cell *matCellDef="let element" >
-      <button mat-icon-button matTooltip="ยกเลิกการลา" matTooltipPosition="right" (click)="DeleteAttendance(element);" [disabled]="dis" #ckeckEdit>
-        <mat-icon>cancel_presentation</mat-icon>
+      <button mat-icon-button style="color: red;" matTooltip="ยกเลิกการลา" matTooltipPosition="left" (click)="DeleteAttendance(element);" [disabled]="dis" #ckeckEdit>
+        <mat-icon>highlight_off</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef><font  color="black"><b></b></font></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button  matTooltip="เเก้ไขการจ่ายเงิน" matTooltipPosition="left"  (click)="getEditPaymentDialog()" [disabled]="dis" aria-label="Example icon-button with a heart icon">
+        <mat-icon>edit</mat-icon>
       </button>
     </td>
   </ng-container>

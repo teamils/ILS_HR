@@ -85,5 +85,14 @@ export class ServiceService {
   show1rowof1person(empID:String,leaveID:String):Observable<any>{
       return this.http.get(this.API+'/show1rowof1person/'+empID+'/'+leaveID,{})
   }
+  getDepartmentMasterRole():Observable<any>{
+      return this.http.get(this.API+'/DepartmentMasterRole',{})
+  }
+  getSearchEmployeeByCodeAndName(empID:String):Observable<any>{
+      return this.http.get(this.API+'/SearchEmployeeByCodeAndName' +'/'+ empID,{})
+  }
+  getSearchEmployeeByDepartmentID(departmentID:String):Observable<any>{
+      return this.http.get(this.API+'/SearchEmployeeByDepartmentID' +'/'+ departmentID,{})
+  }
 
 }

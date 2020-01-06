@@ -30,7 +30,7 @@
 
   <ng-container matColumnDef="leaveType">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>ประเภทการลา</b></font>  </th>
-    <td mat-cell *matCellDef="let element"> {{element.leaveTypeForAllDay}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.leaveTypeForAllDay.leaveTypeForAlldayName}}</td>
   </ng-container>
 
   <ng-container matColumnDef="startDate">

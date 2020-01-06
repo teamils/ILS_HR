@@ -26,6 +26,7 @@ export class ApproveByManagerComponent implements OnInit {
   //public API = 'http://192.168.1.47:8080/ILS_HR';
   leaves  : Array<any>;
   LeavesToComplete: Array<any>;
+  departmentMasterRole: Array<any>;
   isChecked;
   interval:any;
   leaveID;
@@ -60,6 +61,11 @@ constructor(private service:ServiceService,
             //console.log('leaves -> ',this.leaves);
         });
         this.dataSource.paginator = this.paginator;
+
+        this.service.getDepartmentMasterRole().subscribe(data => {
+            this.departmentMasterRole = data;
+            console.log('departmentMasterRole -> ',this.departmentMasterRole);
+        });
   }
   approve(row : any){
         this.http.post(this.APIs + '/approveByManager/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {

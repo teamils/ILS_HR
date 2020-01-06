@@ -1,5 +1,6 @@
 package com.example.demo.Repository;
 import com.example.demo.Entity.*;
+import com.example.demo.Entity.Combobox.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 //import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.jpa.repository.Query;
@@ -21,11 +22,11 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
     Collection<Leaves> getLeaves2(@Param("employeeCode2") String employeeCode2 );
 
     //date attendance // ตกนกด Complete
-    @Query(value = "SELECT * FROM leaves WHERE   is_active_attendance='1' and leave_status='Approve'" ,nativeQuery = true)
+    @Query(value = "SELECT * FROM leaves WHERE   is_active_attendance='1' and leave_status='Complete'" ,nativeQuery = true)
     Collection<Leaves> getLeavesToComplete();
 
     //date attendance // ตกนไม่กด Complete
-    @Query(value = "SELECT * FROM leaves WHERE   is_active_attendance='1' and leave_status<>'Approve'" ,nativeQuery = true)
+    @Query(value = "SELECT * FROM leaves WHERE   is_active_attendance='1' and leave_status<>'Complete'" ,nativeQuery = true)
     Collection<Leaves> getLeavesToNotComplete();
 
     //approveBySupervisor // ตอนไม่กด Complete
@@ -39,5 +40,14 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
     //approveBySupervisor and approveByManager ลูกน้องตัวเอง//get leaves ที่ department=x   // ตกนกด Complete
     @Query(value = "SELECT * FROM leaves,employee_master WHERE is_active_attendance='1' and employee_department=:department  and leave_status='Approve' and leaves.employee_masterid_employee_masterid=employee_master.employee_masterid",nativeQuery = true)
     Collection<Leaves> getLeavesSelectDepartment(@Param("department") String department );
+
+    //Data Attendance ค้นหา รหัสพนักงาน ชื่อ - สกุล
+    @Query(value = "select * from leaves,employee_master where (employee_master_customer_code LIKE %:empCode% or employee_master_first_name like %:empCode% or employee_master_last_name like %:empCode%) and leaves.employee_masterid_employee_masterid = employee_master.employee_masterid",nativeQuery = true)
+    Collection<Leaves> SearchEmployeeByCodeAndName(@Param("empCode") String empCode );
+
+    //Data Attendance ค้นหา By departmentID
+    @Query(value = "select * from leaves,employee_master where employee_master.departmentid_departmentid=:departmentID and leaves.employee_masterid_employee_masterid = employee_master.employee_masterid",nativeQuery = true)
+    Collection<Leaves> SearchEmployeeByDepartmentID(@Param("departmentID") String departmentID );
+
 
 }

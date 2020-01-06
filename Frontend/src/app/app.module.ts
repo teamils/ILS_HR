@@ -60,7 +60,7 @@ import { ApproveByManagerComponent } from './approve-by-manager/approve-by-manag
 import { ReasonNotApproveBygerDialog } from './approve-by-manager/approve-by-manager.component';
 import { AttendanceShowLeavenumberComponent } from './attendance-show-leavenumber/attendance-show-leavenumber.component';
 import { EditPersonalInformationComponent } from './edit-personal-information/edit-personal-information.component';
-
+import { EditPaymentDialog } from './attendance-data/attendance-data.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +81,7 @@ import { EditPersonalInformationComponent } from './edit-personal-information/ed
     ReasonNotApproveBygerDialog,
     AttendanceShowLeavenumberComponent,
     EditPersonalInformationComponent,
+    EditPaymentDialog,
   ],
 
       imports: [
@@ -138,6 +139,7 @@ import { EditPersonalInformationComponent } from './edit-personal-information/ed
                     ReasonNotApproveBygerDialog,
                     AttendanceShowLeavenumberComponent,
                     EditPersonalInformationComponent,
+                    EditPaymentDialog,
    ],
   providers: [],
   bootstrap: [AppComponent]

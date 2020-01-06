@@ -195,7 +195,7 @@ export class NewheaderComponent implements OnInit {
           this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
       }
       callAttendanceData(){
-          localStorage.setItem('links', 'attendanceData');
+          localStorage.setItem('links', 'attendance');
           localStorage.setItem('selectAttendanceDate', 'true');
           this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
           localStorage.setItem('selectAttendance', 'false');
@@ -210,7 +210,7 @@ export class NewheaderComponent implements OnInit {
           this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
       }
       callApproveBySupervisor(){
-          localStorage.setItem('links', 'approvebysupervisor');
+          localStorage.setItem('links', 'attendance');
           localStorage.setItem('selectApproveBySupervisor', 'true');
           this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
           localStorage.setItem('selectAttendanceDate', 'false');
@@ -226,7 +226,7 @@ export class NewheaderComponent implements OnInit {
       }
 
       callApproveByManager(){
-          localStorage.setItem('links', 'approvebymanager');
+          localStorage.setItem('links', 'attendance');
           localStorage.setItem('selectApproveByManager', 'true');
           this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
           localStorage.setItem('selectApproveBySupervisor', 'false');

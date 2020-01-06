@@ -9,6 +9,8 @@ import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/mater
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { AppComponent } from '../app.component';
+import {FormControl} from '@angular/forms';
+import { AttendanceComponent } from '../attendance/attendance.component';
 
 export interface PeriodicElement {
   name: string;
@@ -23,16 +25,21 @@ export interface PeriodicElement {
   styleUrls: ['./attendance-data.component.css']
 })
 export class AttendanceDataComponent implements OnInit {
+  public API = '//localhost:8080';
   leaves  : Array<any>;
+  department: Array<any>;
+  departmentSelect:any;
   LeavesToComplete: Array<any>;
   isChecked;
   interval:any;
   dis;
-  displayedColumns: string[] = ['number','employeeCode', 'name','position','department','employeeType','date', 'leaveType','startDate', 'endDate','total','reason', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','leaveStatus','del'];
+  dataSearch;
+  firstNameOnLogin = localStorage.getItem('fName');
+  lastNameOnLogin  = localStorage.getItem('lName');
+  displayedColumns: string[] = ['number','employeeCode', 'name','position','department'/*,'employeeType'*/,'date', 'leaveType','startDate', 'endDate','total','reason', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','leaveStatus','confirm','del','edit'];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
-
-
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
+
   constructor(private service:ServiceService,
             private router:Router,
             private route:ActivatedRoute ,
@@ -45,13 +52,16 @@ export class AttendanceDataComponent implements OnInit {
     if (this.interval) { // show table Leave
       clearInterval(this.interval);
     }
-
   }
   ngOnInit() {
         this.service.getshowLeavesToNotComplete().subscribe(data => {
             this.leaves = data;
             this.dataSource.data = this.leaves;
             //console.log('leaves -> ',this.leaves);
+        });
+        this.service.getDepartment().subscribe(data => {
+               this.department = data;
+              //console.log('department == ',this.department);
         });
         this.dataSource.paginator = this.paginator;
 
@@ -88,10 +98,42 @@ export class AttendanceDataComponent implements OnInit {
               }
             }, 1000);
         }
+
+    SearchEmployeeByCodeAndName(){
+      this.service.getSearchEmployeeByCodeAndName(this.dataSearch).subscribe(data => {
+              this.leaves = data;
+              this.dataSource.data = this.leaves;
+      });
+    }
+    SearchEmployeeByDepartmentID(){
+      this.service.getSearchEmployeeByDepartmentID(this.departmentSelect).subscribe(data => {
+              this.leaves = data;
+              this.dataSource.data = this.leaves;
+      });
+    }
+    ConfirmByHR(row : any){
+        this.http.post(this.API + '/confirmByHR/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {
+            //console.log('Approve is successful');
+            alert("Confirm successful");
+            this.onChange();
+          },
+          error => {
+            console.log('Error', error);
+          }
+        );
+    }
+    getEditPaymentDialog(){
+            const dialogRef = this.dialog.open(EditPaymentDialog, {
+                  width: '320px',
+                  height:'200px',
+                  //data: row,
+            });
+            //this.onChange();
+    }
 }
 
 
-//Dialog
+//Dialog AttendanceDeleteDialog
 export interface DialogData {
   leavesID : null;
   isActiveAttendance: string;
@@ -132,7 +174,40 @@ export interface DialogData {
 
         }
 
+  }
 
+
+
+
+//Dialog EditPayment
+export interface DialogData {
+  leavesID : null;
+  isActiveAttendance: string;
+}
+@Component({
+    selector: 'editPayment',
+    templateUrl: 'editPayment.html',
+  })
+  export class EditPaymentDialog {
+    public API = '//localhost:8080/';
+    leavesID: string;
+    isActiveAttendance:string;
+    selectAttendanceDate : String;
+
+    constructor(public dialogRef: MatDialogRef<EditPaymentDialog> ,
+                public service:ServiceService,
+                private http: HttpClient){
+          dialogRef.disableClose = false;
+    }
+
+    closeDialog(): void {
+      this.dialogRef.close();
+    }
+
+    DeleteAttendance(){
+
+
+    }
 
 
   }

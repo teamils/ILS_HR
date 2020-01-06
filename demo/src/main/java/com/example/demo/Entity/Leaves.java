@@ -1,4 +1,5 @@
 package com.example.demo.Entity;
+import com.example.demo.Entity.Combobox.LeaveTypeForAllday;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,22 +36,31 @@ public class Leaves {
     private Date endDateForAllDay;
     private String startTime;
     private String endTime;
-    private String leaveTypeForAllDay;
+    @ManyToOne private LeaveTypeForAllday leaveTypeForAllDay;
     private String approvedBySupervisor;
     private String approvedByManager;
+    private String confirmByHR;
     private String isActiveAttendance;
-
     @ManyToOne private EmployeeMaster employeeMasterid;
     private String leaveStatus;
     private String reasonNotApprove;
-    private int wageStatus;
+    private String isPayment;
+    private String paymentReson;
 
-    public int getWageStatus() {
-        return wageStatus;
+    public String getIsPayment() {
+        return isPayment;
     }
 
-    public void setWageStatus(int wageStatus) {
-        this.wageStatus = wageStatus;
+    public void setIsPayment(String isPayment) {
+        this.isPayment = isPayment;
+    }
+
+    public String getPaymentReson() {
+        return paymentReson;
+    }
+
+    public void setPaymentReson(String paymentReson) {
+        this.paymentReson = paymentReson;
     }
 
     public long getLeavesID() {
@@ -141,11 +151,11 @@ public class Leaves {
         this.endTime = endTime;
     }
 
-    public String getLeaveTypeForAllDay() {
+    public LeaveTypeForAllday getLeaveTypeForAllDay() {
         return leaveTypeForAllDay;
     }
 
-    public void setLeaveTypeForAllDay(String leaveTypeForAllDay) {
+    public void setLeaveTypeForAllDay(LeaveTypeForAllday leaveTypeForAllDay) {
         this.leaveTypeForAllDay = leaveTypeForAllDay;
     }
 
@@ -195,5 +205,13 @@ public class Leaves {
 
     public void setReasonNotApprove(String reasonNotApprove) {
         this.reasonNotApprove = reasonNotApprove;
+    }
+
+    public String getConfirmByHR() {
+        return confirmByHR;
+    }
+
+    public void setConfirmByHR(String confirmByHR) {
+        this.confirmByHR = confirmByHR;
     }
 }
