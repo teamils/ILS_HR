@@ -13,12 +13,13 @@
 </mat-toolbar>
 
 <mat-card>
-  ค้นหา :
-  <mat-form-field  class="searchStyle" (keydown.enter)="SearchEmployeeByCodeAndName()">
-    <mat-label>Search</mat-label>
-    <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
+    ค้นหา :
+    <mat-form-field  class="searchStyle" (keydown.enter)="SearchEmployeeByCodeAndName()">
+      <mat-label>Search</mat-label>
+      <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
   <!-- &nbsp; &nbsp;
   <mat-form-field class="formcenter" hintLabel="" style="width :200px">
     <mat-select placeholder="Search by department"  [(ngModel)]="departmentSelect">
@@ -76,12 +77,12 @@
 
   <ng-container matColumnDef="startDate">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>เริ่มจากวันที่</b></font>  </th>
-    <td mat-cell *matCellDef="let element"> {{element.startDateForAllDay+' '}}<div *ngIf="element.startTime=='null'?false:true;">{{element.startTime}}</div></td>
+    <td mat-cell *matCellDef="let element"> {{element.startDateForAllDay+' '}}<font *ngIf="element.startTime=='null'?false:true;">{{element.startTime}}</font></td>
   </ng-container>
 
   <ng-container matColumnDef="endDate">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>ถึงวันที่</b></font>  </th>
-    <td mat-cell *matCellDef="let element"> {{element.endDateForAllDay+' '}}<div *ngIf="element.startTime=='null'?false:true;">{{element.endTime}}</div> </td>
+    <td mat-cell *matCellDef="let element"> {{element.endDateForAllDay+' '}}<font *ngIf="element.startTime=='null'?false:true;">{{element.endTime}}</font> </td>
   </ng-container>
 
   <ng-container matColumnDef="total">
@@ -95,18 +96,23 @@
   </ng-container>
 
   <ng-container matColumnDef="approvedBySupervisor">
-    <th mat-header-cell *matHeaderCellDef><font color="black"><b>อนุมัติโดยSupervisor</b></font>  </th>
+    <th mat-header-cell *matHeaderCellDef><font color="black"><b>Ap_Sup</b></font>  </th>
     <td mat-cell *matCellDef="let element"> {{element.approvedBySupervisor}} </td>
   </ng-container>
 
   <ng-container matColumnDef="approvedByManager">
-    <th mat-header-cell *matHeaderCellDef><font color="black"><b>อนุมัติโดยManager</b></font>  </th>
+    <th mat-header-cell *matHeaderCellDef><font color="black"><b>Ap_Mgr</b></font>  </th>
     <td mat-cell *matCellDef="let element"> {{element.approvedByManager}} </td>
   </ng-container>
 
   <ng-container matColumnDef="reasonNotApprove">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>เหตุผลที่ไม่อนุมัติ</b></font></th>
     <td mat-cell *matCellDef="let element"> {{element.reasonNotApprove}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="isPayment">
+    <th mat-header-cell *matHeaderCellDef><font color="black"><b>Payment</b></font></th>
+    <td mat-cell *matCellDef="let element"> {{element.isPayment}} </td>
   </ng-container>
 
   <ng-container matColumnDef="leaveStatus">
@@ -117,7 +123,7 @@
   <ng-container matColumnDef="confirm">
     <th mat-header-cell *matHeaderCellDef><font  color="black"><b></b></font></th>
     <td mat-cell *matCellDef="let element">
-        <button mat-icon-button style="color: green;" matTooltip="ยืนยัน" matTooltipPosition="left"  [disabled]="dis" (click)="ConfirmByHR(element);" aria-label="Example icon-button with a heart icon">
+        <button mat-icon-button style="color: green;" matTooltip="ยืนยัน" matTooltipPosition="left"  [disabled]="dis" (click)="getEditPaymentDialog(element)" aria-label="Example icon-button with a heart icon">
           <mat-icon>check_circle_outline</mat-icon>
         </button>
     </td>
@@ -132,14 +138,14 @@
     </td>
   </ng-container>
 
-  <ng-container matColumnDef="edit">
+  <!--<ng-container matColumnDef="edit">
     <th mat-header-cell *matHeaderCellDef><font  color="black"><b></b></font></th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button  matTooltip="เเก้ไขการจ่ายเงิน" matTooltipPosition="left"  (click)="getEditPaymentDialog()" [disabled]="dis" aria-label="Example icon-button with a heart icon">
+      <button mat-icon-button  matTooltip="เเก้ไขการจ่ายเงิน" matTooltipPosition="left"  (click)="getEditPaymentDialog(element)" [disabled]="dis" aria-label="Example icon-button with a heart icon">
         <mat-icon>edit</mat-icon>
       </button>
     </td>
-  </ng-container>
+  </ng-container> -->
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

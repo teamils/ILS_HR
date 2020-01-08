@@ -36,7 +36,8 @@ export class AttendanceDataComponent implements OnInit {
   dataSearch;
   firstNameOnLogin = localStorage.getItem('fName');
   lastNameOnLogin  = localStorage.getItem('lName');
-  displayedColumns: string[] = ['number','employeeCode', 'name','position','department'/*,'employeeType'*/,'date', 'leaveType','startDate', 'endDate','total','reason', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','leaveStatus','confirm','del','edit'];
+  empId = localStorage.getItem('empId');
+  displayedColumns: string[] = ['number','employeeCode', 'name','position','department'/*,'employeeType'*/,'date', 'leaveType','startDate', 'endDate','total','reason', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','isPayment','leaveStatus','confirm','del'/*,'edit'*/];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
 
@@ -122,13 +123,14 @@ export class AttendanceDataComponent implements OnInit {
           }
         );
     }
-    getEditPaymentDialog(){
+    getEditPaymentDialog(row : any){
             const dialogRef = this.dialog.open(EditPaymentDialog, {
-                  width: '320px',
-                  height:'200px',
-                  //data: row,
+                  width: 'auto',
+                  height:'auto',
+                  data: row,
             });
-            //this.onChange();
+            this.onChange();
+
     }
 }
 
@@ -148,7 +150,10 @@ export interface DialogData {
     isActiveAttendance:string;
     selectAttendanceDate : String;
 
-    constructor(public dialogRef: MatDialogRef<AttendanceDeleteDialog> , public service:ServiceService,@Inject(MAT_DIALOG_DATA)  public date: DialogData,private http: HttpClient){
+    constructor(public dialogRef: MatDialogRef<AttendanceDeleteDialog>,
+                public service:ServiceService,
+                @Inject(MAT_DIALOG_DATA)  public date: DialogData,
+                private http: HttpClient){
           dialogRef.disableClose = true;
         this.leavesID = this.date.leavesID;
         this.isActiveAttendance = this.date.isActiveAttendance;
@@ -180,33 +185,101 @@ export interface DialogData {
 
 
 //Dialog EditPayment
-export interface DialogData {
+export interface EditPaymentDialogData {
   leavesID : null;
   isActiveAttendance: string;
 }
+
 @Component({
     selector: 'editPayment',
     templateUrl: 'editPayment.html',
   })
   export class EditPaymentDialog {
-    public API = '//localhost:8080/';
+    public API = '//localhost:8080';
+    empId = localStorage.getItem('empId');
+    firstNameOnLogin = localStorage.getItem('fName');
+    lastNameOnLogin  = localStorage.getItem('lName');
+    leaves: Array<any>;
     leavesID: string;
-    isActiveAttendance:string;
-    selectAttendanceDate : String;
+    employeeMasterFirstName='';
+    employeeMasterLastName='';
+    isPayments:string='';
+    labelLeaveHalfDay='';
+    leaveTypeForAllDay='';
+    balanceDay;
+    diffDay;
+    splitted;
+    paymentReson:String=null;
+    leavetatelAll : any = {
+      leavesNumbersID: '',
+      getDay : '',
+      usedDay : '',
+      BalanceDay: '',
+      CompoundDay : '',
+    };
 
     constructor(public dialogRef: MatDialogRef<EditPaymentDialog> ,
                 public service:ServiceService,
-                private http: HttpClient){
-          dialogRef.disableClose = false;
+                private http: HttpClient,
+                @Inject(MAT_DIALOG_DATA)  public data: EditPaymentDialogData,){
+          dialogRef.disableClose = true;
+          this.leavesID = this.data.leavesID;
+
+        this.service.getLeavesFindByID(this.leavesID).subscribe(data => {
+            this.leaves = data;
+            console.log('leaves -> ',this.leaves);
+            this.isPayments = data.isPayment;
+            this.labelLeaveHalfDay = data.labelLeaveHalfDay
+            this.leaveTypeForAllDay = data.leaveTypeForAllDay.leaveTypeForAlldayName;
+
+            if(data.leavesNumbersid.balanceDay>0)
+            this.balanceDay = data.leavesNumbersid.balanceDay;
+            else this.balanceDay=0;
+            this.splitted = data.labelLeaveHalfDay.split(" ");
+            this.diffDay = parseInt(this.splitted[0]);
+            this.employeeMasterFirstName = data.employeeMasterid.employeeMasterFirstName;
+            this.employeeMasterLastName = data.employeeMasterid.employeeMasterLastName;
+            console.log('diffDay -> ',this.diffDay);
+            this.Checktheleave();
+        });
     }
 
     closeDialog(): void {
       this.dialogRef.close();
     }
 
-    DeleteAttendance(){
+    ConfirmByHR(){
+        this.http.post(this.API + '/confirmByHR/' + this.leavesID +'/'+ this.isPayments +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin +'/'+ this.paymentReson ,{}).subscribe(data => {
+            //console.log('Approve is successful');
+            alert("Confirm successful");
+             this.dialogRef.close();
+          },
+          error => {
+            console.log('Error', error);
+          }
+        );
+        if(this.isPayments=="payment"){
+             this.UpdateLeaveNumber();
+        }
+        else{}
+    }
 
+    UpdateLeaveNumber(){
+        this.http.post(this.API + '/UpdateLeaveNumber/' + this.leavetatelAll.leavesNumbersID +'/'+ this.diffDay  +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin ,{}).subscribe(
+          dataupdate => {
+            console.log('Update Leave Number is successful');
+          },
+            error => {console.log('Error', error);}
+        );
+    }
 
+    Checktheleave(){ //checkว่าสามาถรลาได้มั้ยเมื่อเทียบกับวันลาที่มี
+       this.service.show1rowof1person(this.empId,this.leaveTypeForAllDay).subscribe(data => {
+        console.log('show1rowof1person -> ',data);
+        for (let i of data) {
+            this.leavetatelAll.leavesNumbersID = i.leavesNumbersID;
+        }
+      });
     }
 
 

@@ -5,9 +5,9 @@
 </mat-toolbar-row>
 <mat-card class="cardHeader">
   ชื่อ - สกุล:&nbsp;<b>{{table.fName}}&nbsp;&nbsp;{{table.lName}}</b>&nbsp;&nbsp; แผนก:&nbsp;<b>{{table.empDep}}</b> &nbsp;&nbsp; ตำแหน่ง:&nbsp;<b>{{table.empPos}}</b>
-  &nbsp;&nbsp;ลากิจ(วัน):&nbsp;<b *ngFor="let item of leaveNumber;"><b *ngIf="this.item.leaveTypeid.leaveTypeForAlldayID==1">{{this.item.usedDay}}/{{this.item.getDay}}</b></b>
-  &nbsp;&nbsp;ลาป่วย(วัน):&nbsp;<b *ngFor="let item of leaveNumber;"><b *ngIf="this.item.leaveTypeid.leaveTypeForAlldayID==2">{{this.item.usedDay}}/{{this.item.getDay}}</b></b>
-  &nbsp;&nbsp;ลาพักร้อน(วัน):&nbsp;<b *ngFor="let item of leaveNumber;"><b *ngIf="this.item.leaveTypeid.leaveTypeForAlldayID==3">{{this.item.usedDay}}/{{this.item.getDay}}</b></b>
+  &nbsp;&nbsp;ลากิจคงเหลือ :&nbsp;<b *ngFor="let item of leaveNumber;"><b *ngIf="this.item.leaveTypeid.leaveTypeForAlldayID==1">{{this.item.balanceDay}}</b></b>
+  &nbsp;&nbsp;ลาป่วยคงเหลือ :&nbsp;<b *ngFor="let item of leaveNumber;"><b *ngIf="this.item.leaveTypeid.leaveTypeForAlldayID==2">{{this.item.balanceDay}}</b></b>
+  &nbsp;&nbsp;ลาพักร้อนคงเหลือ :&nbsp;<b *ngFor="let item of leaveNumber;"><b *ngIf="this.item.leaveTypeid.leaveTypeForAlldayID==3">{{this.item.balanceDay}}</b></b>
 
   <mat-tab-group>
     <mat-tab label="การลาเต็มวัน">
@@ -51,7 +51,7 @@
           </mat-select>
         </mat-form-field>
         &nbsp;&nbsp;
-        <mat-radio-group  [(ngModel)]="labelLeaveHalfDay">
+        <mat-radio-group  [(ngModel)]="labelLeaveHalfDay" (change)="SettingTime()">
           <mat-radio-button class="example-margin" value="ครึ่งวันเช้า">ครึ่งวันเช้า</mat-radio-button>&nbsp;&nbsp;
           <mat-radio-button class="example-margin" value="ครึ่งวันบ่าย">ครึ่งวันบ่าย</mat-radio-button>&nbsp;&nbsp;
           <mat-radio-button class="example-margin" value="ชั่วโมง">ชั่วโมง</mat-radio-button>&nbsp;&nbsp;
@@ -102,12 +102,12 @@
 
     <ng-container matColumnDef="startDate">
       <th mat-header-cell *matHeaderCellDef><font color="black"><b>เริ่มจากวันที่</b></font>  </th>
-      <td mat-cell *matCellDef="let element"> {{element.startDateForAllDay+' '}}<div *ngIf="element.startTime=='null'?false:true;">{{element.startTime}}</div></td>
+      <td mat-cell *matCellDef="let element"> {{element.startDateForAllDay+' '}}<font *ngIf="element.startTime=='null'?false:true;">{{element.startTime}}</font></td>
     </ng-container>
 
     <ng-container matColumnDef="endDate2">
       <th mat-header-cell *matHeaderCellDef><font color="black"><b>ถึงวันที่</b></font>  </th>
-      <td mat-cell *matCellDef="let element" > {{element.endDateForAllDay+' '}}<div *ngIf="element.startTime=='null'?false:true;">{{element.endTime}}</div></td>
+      <td mat-cell *matCellDef="let element" > {{element.endDateForAllDay+' '}}<font *ngIf="element.startTime=='null'?false:true;">{{element.endTime}}</font></td>
     </ng-container>
 
     <ng-container matColumnDef="total">
@@ -132,6 +132,11 @@
     <ng-container matColumnDef="reasonNotApprove">
       <th mat-header-cell *matHeaderCellDef><font color="black"><b>เหตุผลที่ไม่อนุมัติ</b></font></th>
       <td mat-cell *matCellDef="let element"> {{element.reasonNotApprove}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="isPayment">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>Payment</b></font></th>
+      <td mat-cell *matCellDef="let element"> {{element.isPayment}} </td>
     </ng-container>
 
     <ng-container matColumnDef="leaveStatus">

@@ -25,6 +25,18 @@ table {
      position: sticky;
   }
 
+td.mat-column-total {
+  width: 50px;
+}
+td.mat-column-position {
+  width: 100px;
+}
+td.mat-column-approvedBySupervisor {
+  width: 100px;
+}
+td.mat-column-approvedByManager {
+  width: 100px;
+}
    th.mat-column-number,
    th.mat-column-employeeCode,
    th.mat-column-name,
@@ -43,7 +55,8 @@ table {
    th.mat-column-employeeType,
    th.mat-column-position,
    th.mat-column-department,
-   th.mat-column-reasonNotApprove{
+   th.mat-column-reasonNotApprove,
+   th.mat-column-isPayment{
           text-align: center;
    }
 
@@ -54,5 +67,9 @@ table {
   width:200px;
 }
 
-
-
+.example-spacer {
+  flex: 1 1 auto;
+}
+.example-icon {
+  padding: 0 14px;
+}

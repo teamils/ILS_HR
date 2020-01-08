@@ -1,4 +1,5 @@
 package com.example.demo.Entity;
+import com.example.demo.Entity.Combobox.Department;
 import com.example.demo.Entity.Combobox.LeaveTypeForAllday;
 import lombok.*;
 
@@ -46,6 +47,24 @@ public class Leaves {
     private String reasonNotApprove;
     private String isPayment;
     private String paymentReson;
+    @ManyToOne @JoinColumn(name = "leavesNumbersid", insertable = true) private LeavesNumbers leavesNumbersid;
+    @ManyToOne @JoinColumn(name = "departmentid", insertable = true) private Department departmentid;
+
+    public Department getDepartmentid() {
+        return departmentid;
+    }
+
+    public void setDepartmentid(Department departmentid) {
+        this.departmentid = departmentid;
+    }
+
+    public LeavesNumbers getLeavesNumbersid() {
+        return leavesNumbersid;
+    }
+
+    public void setLeavesNumbersid(LeavesNumbers leavesNumbersid) {
+        this.leavesNumbersid = leavesNumbersid;
+    }
 
     public String getIsPayment() {
         return isPayment;

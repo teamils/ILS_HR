@@ -3,12 +3,14 @@ import com.example.demo.Entity.Combobox.Department;
 import com.example.demo.Entity.Combobox.LeaveTypeForAllday;
 import com.example.demo.Repository.*;
 import com.example.demo.Entity.*;
+import com.example.demo.Repository.ComboboxRepository.DepartmentRepository;
 import com.example.demo.Repository.ComboboxRepository.LeaveTypeForAlldayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -20,6 +22,13 @@ public class LeavesController {
     @Autowired private LeavesNumbersRepository leavesNumbersRepository;
     @Autowired private LeaveTypeForAlldayRepository leaveTypeForAlldayRepository;
     @Autowired private MasterAttendanceRepository masterAttendanceRepository;
+    @Autowired private DepartmentMasterRoleRepository departmentMasterRoleRepository;
+    @Autowired private DepartmentRepository departmentRepository;
+
+    @GetMapping(path = "/showLeavesFindByID/{leavesID}")
+    public Leaves showLeavesFindByID(@PathVariable long leavesID) {
+        return leavesRepository.findById(leavesID).get();
+    }
 
     @GetMapping(path = "/leave/{leaID}")
     public Leaves leaves(@PathVariable long leaID) {
@@ -32,9 +41,9 @@ public class LeavesController {
         return this.leavesNumbersRepository.getLeaveNumber(leaID);
     }
 
-    @GetMapping(path = "/LeavesToNotCompleteBySupervisor/{department}")
-    public Iterable<Leaves> leaves(@PathVariable String department) {
-        return this.leavesRepository.getLeavesToNotCompleteBySupervisor(department);
+    @GetMapping(path = "/LeavesToNotCompleteBySupervisor/{empId}")
+    public Iterable<Leaves> leaves(@PathVariable String empId) {
+        return this.leavesRepository.getLeavesToNotCompleteBySupervisor(empId);
     }
 
     @GetMapping("/showleave3/{employeeCode}")
@@ -49,14 +58,15 @@ public class LeavesController {
     public Iterable<Leaves> showLeavesToNotComplete() {
         return this.leavesRepository.getLeavesToNotComplete();
     }
-    @GetMapping(path = "/NotApproveBySup/{department}")
-    public Iterable<Leaves> NotApproveBySup(@PathVariable String department) {
-        return this.leavesRepository.getLeavesToNotApproveByManager(department);
+
+    @GetMapping(path = "/NotApproveBySup/{empID}")
+    public Iterable<Leaves> NotApproveBySup(@PathVariable String empID) {
+        return this.leavesRepository.getLeavesToNotApproveByManager(empID);
     }
 
-    @GetMapping("/LeavesSelectDepartment/{employeeCode}")
-    public Iterable<Leaves> LeavesSelectDepartment(@PathVariable String employeeCode) {
-        return this.leavesRepository.getLeavesSelectDepartment(employeeCode);
+    @GetMapping("/LeavesSelectDepartment/{empID}")
+    public Iterable<Leaves> LeavesSelectDepartment(@PathVariable String empID) {
+        return this.leavesRepository.getLeavesSelectDepartment(empID);
     }
 
     @PostMapping("/SaveLeaveHalfDay/{leaID}/{leaveTypeSelect}/{labelLeaveHalfDay}/{startDate}/{reason}/{startTimeSelect}/{endTimeSelect}") // saveLeave ครึ่งวัน
@@ -96,14 +106,16 @@ public class LeavesController {
         return leaves1;
     }
 
-    @PostMapping("/SaveLeaveFullDay/{leaID}/{leaveTypeSelect2}/{startDate2}/{endDate2}/{reason2}/{diffDay}/{leavesNumbersID}") // saveLeave2 เต็มวัน
+    @PostMapping("/SaveLeaveFullDay/{leaID}/{leaveTypeSelect2}/{startDate2}/{endDate2}/{reason2}/{diffDay}/{leavesNumbersID}/{departmentIDLogin}") // saveLeave2 เต็มวัน
     public Leaves leaves2( @PathVariable Long leaID , @PathVariable String leaveTypeSelect2 ,@PathVariable Date startDate2
-            , @PathVariable Date endDate2 , @PathVariable String reason2  , @PathVariable String diffDay, @PathVariable long leavesNumbersID){
+            , @PathVariable Date endDate2 , @PathVariable String reason2  , @PathVariable String diffDay, @PathVariable long leavesNumbersID
+            , @PathVariable long departmentIDLogin){
 
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
         LeaveTypeForAllday leaveTypeForAllday = leaveTypeForAlldayRepository.findByLeaveTypeForAlldayName(leaveTypeSelect2);
         LeavesNumbers leavesNumbers = leavesNumbersRepository.findById(leavesNumbersID).get();
-
+        Department department = departmentRepository.findById(departmentIDLogin).get();
+        //DepartmentMasterRole departmentMasterRole = departmentMasterRoleRepository.findBy
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
@@ -127,9 +139,11 @@ public class LeavesController {
         leaves2.setLabelLeaveHalfDay(diffDay + " ว ัน");
         leaves2.setApprovedBySupervisor("Pending");
         leaves2.setApprovedByManager("Pending");
+        leaves2.setConfirmByHR("Pending");
         leaves2.setIsActiveAttendance("1");
         leaves2.setLeaveStatus("Pending");
-
+        leaves2.setLeavesNumbersid(leavesNumbers);
+        leaves2.setDepartmentid(department);
         if(leavesNumbers.getBalanceDay()>0) leaves2.setIsPayment("payment");
         else leaves2.setIsPayment("not payment");
 
@@ -190,11 +204,14 @@ public class LeavesController {
         return notApproveByManager;
     }
 
-    @PostMapping("/confirmByHR/{leavesID}/{fName}/{lName}") // not ApproveByManager
-    public Leaves confirmByHR( @PathVariable Long leavesID,@PathVariable String fName,@PathVariable String lName){
+    @PostMapping("/confirmByHR/{leavesID}/{isPayments}/{fName}/{lName}/{paymentReson}")
+    public Leaves confirmByHR( @PathVariable Long leavesID,@PathVariable String isPayments,@PathVariable String fName
+                                ,@PathVariable String lName,@PathVariable String paymentReson){
         Leaves confirmByHR = leavesRepository.findById(leavesID).get();
         confirmByHR.setLeaveStatus("Complete");
         confirmByHR.setConfirmByHR(fName+" "+lName);
+        confirmByHR.setIsPayment(isPayments);
+        confirmByHR.setPaymentReson(paymentReson);
         leavesRepository.save(confirmByHR);
         return confirmByHR;
     }
@@ -207,4 +224,6 @@ public class LeavesController {
     public Iterable<Leaves> searchEmployeeByDepartmentID(@PathVariable String departmentID){
         return this.leavesRepository.getLeavesSelectDepartment(departmentID);
     }
+
+
 }

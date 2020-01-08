@@ -6,6 +6,15 @@
       <mat-slide-toggle (change)="onChange()" [(ngModel)]="isChecked">Approve</mat-slide-toggle>
   </span>
 </mat-toolbar>
+<!--<mat-card>
+  ค้นหา :
+  <mat-form-field  class="searchStyle" (keydown.enter)="SearchEmployeeByCodeAndName()">
+    <mat-label>Search</mat-label>
+    <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</mat-card> -->
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container matColumnDef="number" >
     <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>

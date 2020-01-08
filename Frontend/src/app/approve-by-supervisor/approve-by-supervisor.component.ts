@@ -29,11 +29,12 @@ export class ApproveBySupervisorComponent implements OnInit {
   interval:any;
   leaveID;
   dis;
+  empId = localStorage.getItem('empId');
   firstNameOnLogin = localStorage.getItem('fName');
   lastNameOnLogin  = localStorage.getItem('lName');
   departmentOnLogin = localStorage.getItem('departmentlogin');
 
-  displayedColumns: string[] = ['number','employeeCode', 'name','date', 'leaveType','startDate', 'endDate','total','reason', /*'approvedBySupervisor', 'approvedByManager',*/'leaveStatus','approve','notApprove'];
+  displayedColumns: string[] = ['number','employeeCode', 'name','department','date', 'leaveType','startDate', 'endDate','total','reason', /*'approvedBySupervisor', 'approvedByManager',*/'leaveStatus','approve','notApprove'];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
   constructor(private service:ServiceService,
@@ -50,7 +51,7 @@ export class ApproveBySupervisorComponent implements OnInit {
       }
   }
   ngOnInit() {
-        this.service.getLeavesToNotCompleteBySupervisor(this.departmentOnLogin).subscribe(data => {
+        this.service.getLeavesToNotCompleteBySupervisor(this.empId).subscribe(data => {
             this.leaves = data;
             this.dataSource.data = this.leaves;
             //console.log('leaves -> ',this.leaves);
@@ -81,7 +82,7 @@ export class ApproveBySupervisorComponent implements OnInit {
   onChange(){
            this.interval = setTimeout(() => {  //show table Leave
               if(this.isChecked == true){
-                this.service.getLeavesSelectDepartment(this.departmentOnLogin).subscribe(dataLeavesToComplete => {
+                this.service.getLeavesSelectDepartment(this.empId).subscribe(dataLeavesToComplete => {
                       this.leaves = dataLeavesToComplete;
                       this.dataSource.data = this.leaves;
                       //console.log('leaves -> ',this.leaves);
@@ -89,7 +90,7 @@ export class ApproveBySupervisorComponent implements OnInit {
                   this.dis=true;
               }
               else{
-                  this.service.getLeavesToNotCompleteBySupervisor(this.departmentOnLogin).subscribe(data => {
+                  this.service.getLeavesToNotCompleteBySupervisor(this.empId).subscribe(data => {
                     this.leaves = data;
                     this.dataSource.data = this.leaves;
                     //console.log('leaves -> ',this.leaves);

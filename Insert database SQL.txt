@@ -1,194 +1,193 @@
 INSERT INTO department 
-VALUES (1, 'AE','');
+VALUES (1, 'AE');
 INSERT INTO department 
-VALUES (2, 'Amazon','');
+VALUES (2, 'Amazon');
 INSERT INTO department 
-VALUES (3, 'Chester','');
+VALUES (3, 'Chester');
 INSERT INTO department 
-VALUES (4, 'Chevron POP','');
+VALUES (4, 'Chevron POP');
 INSERT INTO department 
-VALUES (5, 'EXPORT','');
+VALUES (5, 'EXPORT');
 INSERT INTO department 
-VALUES (6, 'HR and Admin','');
+VALUES (6, 'HR and Admin');
 INSERT INTO department 
-VALUES (7, 'IMC','');
+VALUES (7, 'IMC');
 INSERT INTO department 
-VALUES (8, 'Intanin','');
+VALUES (8, 'Intanin');
 INSERT INTO department 
-VALUES (9, 'IT','');
+VALUES (9, 'IT');
 INSERT INTO department 
-VALUES (10, 'PLC','');
+VALUES (10, 'PLC');
 INSERT INTO department 
-VALUES (11, 'PTT','');
+VALUES (11, 'PTT');
 INSERT INTO department 
-VALUES (12, 'Receiving','');
+VALUES (12, 'Receiving');
 INSERT INTO department 
-VALUES (13, 'Safety','');
+VALUES (13, 'Safety');
 INSERT INTO department 
-VALUES (14, 'STL','');
+VALUES (14, 'STL');
 INSERT INTO department 
-VALUES (15, 'TKNR','');
+VALUES (15, 'TKNR');
 INSERT INTO department 
-VALUES (16, 'Transport','');
+VALUES (16, 'Transport');
 INSERT INTO department 
-VALUES (17, 'Vcan','');
+VALUES (17, 'Vcan');
 INSERT INTO department 
-VALUES (18, 'WH Operation','');
+VALUES (18, 'WH Operation');
 INSERT INTO department 
-VALUES (19, 'กัมพูชา','');
+VALUES (19, 'กัมพูชา');
 INSERT INTO department 
-VALUES (20, 'ลาว','');
+VALUES (20, 'ลาว');
 INSERT INTO department 
-VALUES (21, 'Muffy','');
+VALUES (21, 'Muffy');
 
-
-INSERT INTO BANK 
+INSERT INTO bank 
 VALUES (1, 'ธนาคารกรุงศรีอยุธยา จำกัด(มหาชน)'); 
-INSERT INTO BANK 
+INSERT INTO bank 
 VALUES (2, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)'); 
-INSERT INTO BANK 
+INSERT INTO bank 
 VALUES (3, 'ธนาคารทหารไทย จำกัด(มหาชน)'); 
-INSERT INTO BANK 
+INSERT INTO bank 
 VALUES (4, 'ธนาคารกรุงเทพ จำกัด(มหาชน)'); 
-INSERT INTO BANK 
+INSERT INTO bank 
 VALUES (5, 'ธนาคารออมสิน จํากัด (มหาชน)'); 
-INSERT INTO BANK 
+INSERT INTO bank 
 VALUES (6, 'ธนาคารกสิกรไทย จำกัด(มหาชน)'); 
-INSERT INTO BANK 
+INSERT INTO bank 
 VALUES (7, 'ธนาคารกรุงไทย จำกัด(มหาชน)'); 
 
 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (1, 'Account Executive & CS'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (2, 'Account Executive Admin'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (3, 'Analysis'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (4, 'ANALYST'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (5, 'Ast. IMC Manager L.2'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (6, 'Ast. Opt. Manager L.1'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (7, 'Business Development'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (8, 'Call Center '); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (9, 'Checker'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (10, 'Document'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (11, 'Driver'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (12, 'Export'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (13, 'Forklift'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (14, 'Forklift Driver'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (15, 'Forklift Drivers STL'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (16, 'Forklift Leader'); 
-INSERT INTO POSITION 
-VALUES (17, 'GR  act Leader'); 
-INSERT INTO POSITION 
+INSERT INTO position 
+VALUES (17, 'GR act Leader'); 
+INSERT INTO position 
 VALUES (18, 'HR and Admin Officer'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (19, 'HR Supervisor '); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (20, 'Implement'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (21, 'Inventory Admin'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (22, 'IT Programmer'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (23, 'IT Suppervisor'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (24, 'IT Support'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (25, 'leader'); 
-INSERT INTO POSITION 
-VALUES (26, 'leader  Forklift Drivers'); 
-INSERT INTO POSITION 
+INSERT INTO position 
+VALUES (26, 'leader Forklift Drivers'); 
+INSERT INTO position 
 VALUES (27, 'Leader Inventory'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (28, 'Manager'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (29, 'Operation Supervisor '); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (30, 'Opt Supervisor OR'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (31, 'Picker'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (32, 'Safety Supervisor'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (33, 'Senior '); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (34, 'Senior ANALYST'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (35, 'Supervisor'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (36, 'TSP Admin'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (37, 'TSP Analyst'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (38, 'TSP Leader'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (39, 'TSP Mgr.'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (40, 'เจ้าหน้าที่ความปลอดภัยในการทำงานระดับวิชาชีพ'); 
-INSERT INTO POSITION 
+INSERT INTO position 
 VALUES (41, 'แม่บ้าน'); 
 
 
-INSERT INTO ROLE_STATUS
+INSERT INTO role_status
 VALUES (1, 'man','MANAGER'); 
-INSERT INTO ROLE_STATUS
+INSERT INTO role_status
 VALUES (2, 'emp','EMPLOYEE'); 
-INSERT INTO ROLE_STATUS
+INSERT INTO role_status
 VALUES (3, 'hr','HR'); 
-INSERT INTO ROLE_STATUS
+INSERT INTO role_status
 VALUES (4, 'sup','SUPERVISOR'); 
-INSERT INTO ROLE_STATUS
+INSERT INTO role_status
 VALUES (5, 'add','ADMIN'); 
 
-INSERT INTO PREFIX 
+INSERT INTO prefix 
 VALUES (1, 'นาย');
-INSERT INTO PREFIX 
+INSERT INTO prefix 
 VALUES (2, 'นาง');
-INSERT INTO PREFIX 
+INSERT INTO prefix 
 VALUES (3, 'นางสาว');
 
-INSERT INTO GENDER 
+INSERT INTO gender 
 VALUES (1,'ชาย'); 
-INSERT INTO GENDER 
+INSERT INTO gender 
 VALUES (2,'หญิง'); 
 
-INSERT INTO EDUCATION 
+INSERT INTO education 
 VALUES (1,'ป.6'); 
-INSERT INTO EDUCATION 
+INSERT INTO education 
 VALUES (2,'ม.3'); 
-INSERT INTO EDUCATION 
+INSERT INTO education 
 VALUES (3,'ม.6'); 
-INSERT INTO EDUCATION 
+INSERT INTO education 
 VALUES (4,'ปวช.'); 
-INSERT INTO EDUCATION 
+INSERT INTO education 
 VALUES (5,'ปวส.'); 
-INSERT INTO EDUCATION 
+INSERT INTO education 
 VALUES (6,'ป.ตรี'); 
-INSERT INTO EDUCATION 
+INSERT INTO education 
 VALUES (7,'ป.โท'); 
-INSERT INTO EDUCATION 
+INSERT INTO education 
 VALUES (8,'ป.เอก'); 
 
-INSERT INTO EMPLOYEE_TYPE 
+INSERT INTO employee_type 
 VALUES (1, 'นักศึกษาฝึกงาน');
-INSERT INTO EMPLOYEE_TYPE 
+INSERT INTO employee_type 
 VALUES (2, 'รายเดือน');
-INSERT INTO EMPLOYEE_TYPE 
+INSERT INTO employee_type 
 VALUES (3, 'รายวัน');
-INSERT INTO EMPLOYEE_TYPE 
+INSERT INTO employee_type 
 VALUES (4, 'รายวันชั่วคราว');
 
 INSERT INTO emp_status 
@@ -198,21 +197,21 @@ VALUES (2, 'พักงาน');
 INSERT INTO emp_status 
 VALUES (3, 'พ้นสภาพพนักงาน');
 
-INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
+INSERT INTO leave_type_for_allday 
 VALUES (1, 3, 'ลากิจ' ); 
-INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
+INSERT INTO leave_type_for_allday 
 VALUES (2, 30, 'ลาป่วย'); 
-INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
+INSERT INTO leave_type_for_allday 
 VALUES (3, 0, 'ลาพักร้อน'); 
-INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
+INSERT INTO leave_type_for_allday 
 VALUES (4, 3, 'ลาเเต่งงาน'); 
-INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
+INSERT INTO leave_type_for_allday 
 VALUES (5, 3, 'ลาไปงานศพ'); 
-INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
+INSERT INTO leave_type_for_allday 
 VALUES (6, 60, 'ลาไปทหาร'); 
-INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
+INSERT INTO leave_type_for_allday 
 VALUES (7, 7, 'ลาบวช'); 
-INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
+INSERT INTO leave_type_for_allday 
 VALUES (8, 45, 'ลาคลอด'); 
 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
@@ -232,29 +231,28 @@ VALUES (7, 'ลาบวช', 7);
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
 VALUES (8, 'ลาคลอด', 45); 
 
-INSERT INTO MASTER_ATTENDANCE 
+INSERT INTO master_attendance 
 VALUES (1, 0, 0); 
-INSERT INTO MASTER_ATTENDANCE 
+INSERT INTO master_attendance 
 VALUES (2, 7, 1); 
-INSERT INTO MASTER_ATTENDANCE 
+INSERT INTO master_attendance 
 VALUES (3, 7, 2); 
-INSERT INTO MASTER_ATTENDANCE 
+INSERT INTO master_attendance 
 VALUES (4, 10, 3); 
-INSERT INTO MASTER_ATTENDANCE 
+INSERT INTO master_attendance 
 VALUES (5, 10, 4); 
-INSERT INTO MASTER_ATTENDANCE 
+INSERT INTO master_attendance 
 VALUES (6, 12, 5); 
-INSERT INTO MASTER_ATTENDANCE 
+INSERT INTO master_attendance 
 VALUES (7, 12, 6); 
-INSERT INTO MASTER_ATTENDANCE 
+INSERT INTO master_attendance 
 VALUES (8, 12, 7); 
-INSERT INTO MASTER_ATTENDANCE 
+INSERT INTO master_attendance 
 VALUES (9, 12, 8); 
-INSERT INTO MASTER_ATTENDANCE 
+INSERT INTO master_attendance 
 VALUES (10, 12, 9); 
-INSERT INTO MASTER_ATTENDANCE 
+INSERT INTO master_attendance 
 VALUES (11, 15, 10); 
-
 
 INSERT INTO EMPLOYEE_MASTER 
 VALUES (1, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','7072698661','-',2020-01-05 12:34:20.183,'ป.ตรี', '-', '-', '180 ม.5 ต.วังซ่าน อ.เเม่วงก์ จ.นครสวรรค์','dikinakub6509@gmail.com',1997-07-30,'400234','ดิกิ','ชาย','คาวาซากิ','กิ','1600100723988',2010-12-26,'0834318890','IT Programmer','นักศึกษาฝึกงาน','1','ยังปฏิบัติงานอยู่','400234','นาย','ADMIN','diki kawasaki',2020-01-05 12:52:12.056,9); 

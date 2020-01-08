@@ -32,6 +32,8 @@ export class ApproveByManagerComponent implements OnInit {
   leaveID;
   dis;
   x=false;
+  dataSearch;
+  empId = localStorage.getItem('empId');
   firstNameOnLogin = localStorage.getItem('fName');
   lastNameOnLogin  = localStorage.getItem('lName');
   departmentOnLogin = localStorage.getItem('departmentlogin');
@@ -54,8 +56,8 @@ constructor(private service:ServiceService,
   }
 
   ngOnInit() {
-        this.service.getShowLeavesNotApproveBySup(this.departmentOnLogin).subscribe(data => {
-            console.log('leaves -> ', data.leaveStatus);
+        this.service.getShowLeavesNotApproveBySup(this.empId).subscribe(data => {
+            //console.log('leaves -> ', data.leaveStatus);
             this.leaves = data;
             this.dataSource.data = this.leaves;
             //console.log('leaves -> ',this.leaves);
@@ -64,7 +66,7 @@ constructor(private service:ServiceService,
 
         this.service.getDepartmentMasterRole().subscribe(data => {
             this.departmentMasterRole = data;
-            console.log('departmentMasterRole -> ',this.departmentMasterRole);
+            //console.log('departmentMasterRole -> ',this.departmentMasterRole);
         });
   }
   approve(row : any){
@@ -89,7 +91,7 @@ constructor(private service:ServiceService,
            this.interval = setTimeout(() => {  //show table Leave
               if(this.isChecked == true){
                 this.dis=true;
-                this.service.getLeavesSelectDepartment(this.departmentOnLogin).subscribe(dataLeavesToComplete => {
+                this.service.getLeavesSelectDepartment(this.empId).subscribe(dataLeavesToComplete => {
                       this.leaves = dataLeavesToComplete;
                       this.dataSource.data = this.leaves;
                       //console.log('leaves -> ',this.leaves);
@@ -97,7 +99,7 @@ constructor(private service:ServiceService,
               }
               else{
                   this.dis=false;
-                  this.service.getShowLeavesNotApproveBySup(this.departmentOnLogin).subscribe(data => {
+                  this.service.getShowLeavesNotApproveBySup(this.empId).subscribe(data => {
                     this.leaves = data;
                     this.dataSource.data = this.leaves;
                     //console.log('leaves -> ',this.leaves);

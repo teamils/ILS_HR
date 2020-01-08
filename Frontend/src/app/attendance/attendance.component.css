@@ -37,7 +37,6 @@ table {
   height: auto;
 }
 
-
    th.mat-column-number,
    th.mat-column-date,
    th.mat-column-leaveType,
@@ -50,7 +49,8 @@ table {
    th.mat-column-del,
    th.mat-column-endDate2,
    th.mat-column-total,
-   th.mat-column-reasonNotApprove{
+   th.mat-column-reasonNotApprove,
+   th.mat-column-isPayment{
           text-align: center;
    }
 

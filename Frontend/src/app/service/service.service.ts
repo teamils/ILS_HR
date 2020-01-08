@@ -49,14 +49,14 @@ export class ServiceService {
   getleaveTypeForAlldays():Observable<any>{
       return this.http.get(this.API+'/leaveTypeForAlldays',{})
   }
-  getLeavesToNotCompleteBySupervisor(department:String):Observable<any>{
-      return this.http.get(this.API+'/LeavesToNotCompleteBySupervisor/'+department,{})
+  getLeavesToNotCompleteBySupervisor(empId:String):Observable<any>{
+      return this.http.get(this.API+'/LeavesToNotCompleteBySupervisor/'+empId,{})
   }
   getShowLeaves2(leaID : String):Observable<any>{
       return this.http.get(this.API+'/showleave3/'+leaID,{})
   }
-  getShowLeavesNotApproveBySup(department:String):Observable<any>{
-      return this.http.get(this.API+'/NotApproveBySup/'+department,{})
+  getShowLeavesNotApproveBySup(empID:String):Observable<any>{
+      return this.http.get(this.API+'/NotApproveBySup/'+empID,{})
   }
   getshowLeavesToComplete():Observable<any>{
       return this.http.get(this.API+'/showLeavesToComplete',{})
@@ -79,8 +79,8 @@ export class ServiceService {
   getSearchEmployee(dataSearch:String):Observable<any>{
       return this.http.get(this.API+'/SearchEmployee/'+dataSearch,{})
   }
-  getLeavesSelectDepartment(department:String):Observable<any>{
-      return this.http.get(this.API+'/LeavesSelectDepartment/'+department,{})
+  getLeavesSelectDepartment(empID:String):Observable<any>{
+      return this.http.get(this.API+'/LeavesSelectDepartment/'+empID,{})
   }
   show1rowof1person(empID:String,leaveID:String):Observable<any>{
       return this.http.get(this.API+'/show1rowof1person/'+empID+'/'+leaveID,{})
@@ -94,5 +94,9 @@ export class ServiceService {
   getSearchEmployeeByDepartmentID(departmentID:String):Observable<any>{
       return this.http.get(this.API+'/SearchEmployeeByDepartmentID' +'/'+ departmentID,{})
   }
+  getLeavesFindByID(leavesID : any):Observable<any>{
+      return this.http.get(this.API+'/showLeavesFindByID' +'/'+ leavesID,{})
+  }
+
 
 }

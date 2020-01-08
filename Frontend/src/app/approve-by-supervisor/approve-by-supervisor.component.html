@@ -23,6 +23,11 @@
     <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.employeeMasterFirstName}}&nbsp;&nbsp;{{element.employeeMasterid.employeeMasterLastName}} </td>
   </ng-container>
 
+  <ng-container matColumnDef="department">
+    <th mat-header-cell *matHeaderCellDef><font color="black"><b>เเผนก</b></font>  </th>
+    <td mat-cell *matCellDef="let element"> {{element.departmentid.departmentName}} </td>
+  </ng-container>
+
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>วันที่</b></font>  </th>
     <td mat-cell *matCellDef="let element"> {{element.createDate}} </td>

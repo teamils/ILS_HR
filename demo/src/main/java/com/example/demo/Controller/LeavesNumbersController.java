@@ -53,13 +53,6 @@ public class LeavesNumbersController {
         int balance = leavesNumbers.getBalanceDay() - diffDay;
         leavesNumbers.setBalanceDay(balance);
         leavesNumbers.setDiffDay(diffDay);
-
-        /*if(setleaveTypeForAllday.getLeaveTypeForAlldayName()=="ลาพักร้อน") {
-            if (balance < 0)
-                leavesNumbers.setCompoundDay(0);
-             else
-                 leavesNumbers.setCompoundDay(balance);
-        }*/
         leavesNumbers.setUpdate_Date(new Date());
         leavesNumbers.setUpdate_by(fName+" "+lName);
         leavesNumbersRepository.save(leavesNumbers);

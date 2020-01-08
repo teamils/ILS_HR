@@ -20,7 +20,7 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Department_seq1")
     private Long departmentID;
     private String departmentName;
-    private String mainDepartment;
+
 
     public Long getDepartmentID() {
         return departmentID;
@@ -38,11 +38,4 @@ public class Department {
         this.departmentName = departmentName;
     }
 
-    public String getMainDepartment() {
-        return mainDepartment;
-    }
-
-    public void setMainDepartment(String mainDepartment) {
-        this.mainDepartment = mainDepartment;
-    }
 }
