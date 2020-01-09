@@ -93,8 +93,6 @@ export class AttendanceDataComponent implements OnInit {
                     this.leaves = data;
                     this.dataSource.data = this.leaves;
                     //console.log('leaves -> ',this.leaves);
-
-
                   });
               }
             }, 1000);
@@ -112,7 +110,7 @@ export class AttendanceDataComponent implements OnInit {
               this.dataSource.data = this.leaves;
       });
     }
-    ConfirmByHR(row : any){
+    /*ConfirmByHR(row : any){
         this.http.post(this.API + '/confirmByHR/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {
             //console.log('Approve is successful');
             alert("Confirm successful");
@@ -122,7 +120,7 @@ export class AttendanceDataComponent implements OnInit {
             console.log('Error', error);
           }
         );
-    }
+    }*/
     getEditPaymentDialog(row : any){
             const dialogRef = this.dialog.open(EditPaymentDialog, {
                   width: 'auto',
@@ -207,17 +205,13 @@ export interface EditPaymentDialogData {
     labelLeaveHalfDay='';
     leaveTypeForAllDay='';
     balanceDay;
-    diffDay;
+    diffDay:String;
     splitted;
+    diffShowFrontend;
     paymentReson:String=null;
-    leavetatelAll : any = {
-      leavesNumbersID: '',
-      getDay : '',
-      usedDay : '',
-      BalanceDay: '',
-      CompoundDay : '',
-    };
-
+    statusLabelLeaveHalfDay:any;
+    leavesNumbersID=null;
+    test;
     constructor(public dialogRef: MatDialogRef<EditPaymentDialog> ,
                 public service:ServiceService,
                 private http: HttpClient,
@@ -227,20 +221,34 @@ export interface EditPaymentDialogData {
 
         this.service.getLeavesFindByID(this.leavesID).subscribe(data => {
             this.leaves = data;
-            console.log('leaves -> ',this.leaves);
+            //console.log('leaves -> ',this.leaves);
             this.isPayments = data.isPayment;
             this.labelLeaveHalfDay = data.labelLeaveHalfDay
             this.leaveTypeForAllDay = data.leaveTypeForAllDay.leaveTypeForAlldayName;
+            this.leavesNumbersID = data.leavesNumbersid.leavesNumbersID;
 
             if(data.leavesNumbersid.balanceDay>0)
             this.balanceDay = data.leavesNumbersid.balanceDay;
             else this.balanceDay=0;
             this.splitted = data.labelLeaveHalfDay.split(" ");
-            this.diffDay = parseInt(this.splitted[0]);
+            this.diffDay = this.splitted[0];
+            this.diffShowFrontend = this.splitted[0].toString();
+              if(this.splitted[1]=='ชั่วโมง'){
+                this.test='ชั่วโมง';
+                this.statusLabelLeaveHalfDay = 1;
+              }
+              else if(this.splitted[1]=='ว'){
+                this.test='วัน';
+                this.statusLabelLeaveHalfDay = 2;
+              }
+              else{
+                this.test='';
+                this.statusLabelLeaveHalfDay = 3;
+              }
             this.employeeMasterFirstName = data.employeeMasterid.employeeMasterFirstName;
             this.employeeMasterLastName = data.employeeMasterid.employeeMasterLastName;
             console.log('diffDay -> ',this.diffDay);
-            this.Checktheleave();
+            console.log('statusLabelLeaveHalfDay ->',this.statusLabelLeaveHalfDay);
         });
     }
 
@@ -265,7 +273,7 @@ export interface EditPaymentDialogData {
     }
 
     UpdateLeaveNumber(){
-        this.http.post(this.API + '/UpdateLeaveNumber/' + this.leavetatelAll.leavesNumbersID +'/'+ this.diffDay  +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin ,{}).subscribe(
+        this.http.post(this.API + '/UpdateLeaveNumber/' + this.leavesNumbersID +'/'+ this.diffDay  +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin +'/'+ this.statusLabelLeaveHalfDay ,{}).subscribe(
           dataupdate => {
             console.log('Update Leave Number is successful');
           },
@@ -273,14 +281,6 @@ export interface EditPaymentDialogData {
         );
     }
 
-    Checktheleave(){ //checkว่าสามาถรลาได้มั้ยเมื่อเทียบกับวันลาที่มี
-       this.service.show1rowof1person(this.empId,this.leaveTypeForAllDay).subscribe(data => {
-        console.log('show1rowof1person -> ',data);
-        for (let i of data) {
-            this.leavetatelAll.leavesNumbersID = i.leavesNumbersID;
-        }
-      });
-    }
 
 
   }

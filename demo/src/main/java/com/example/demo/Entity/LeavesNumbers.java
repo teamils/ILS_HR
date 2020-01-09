@@ -20,11 +20,11 @@ public class LeavesNumbers {
     private Date update_Date;
     private String create_by;
     private String update_by;
-    private int getDay; // วันได้รับ
-    private int usedDay; //วันใช้ไป
-    private int BalanceDay; // วันคงเหลือ
-    private int CompoundDay; // ทบวัน
-    private int diffDay; //จำนวนวันลา ณ การลา1ครั่ง
+    private double getDay; // วันได้รับ
+    private double usedDay; //วันใช้ไป
+    private double BalanceDay; // วันคงเหลือ
+    private double CompoundDay; // ทบวัน
+    private double diffDay; //จำนวนวันลา ณ การลา1ครั่ง
 
     @ManyToOne
     @JoinColumn(name = "leaveTypeID", insertable = true)
@@ -32,7 +32,7 @@ public class LeavesNumbers {
 
     @ManyToOne
     @JoinColumn(name = "employeeMasterID", insertable = true)
-     private EmployeeMaster employeeMasterid;
+    private EmployeeMaster employeeMasterid;
 
     public Long getLeavesNumbersID() {
         return leavesNumbersID;
@@ -40,54 +40,6 @@ public class LeavesNumbers {
 
     public void setLeavesNumbersID(Long leavesNumbersID) {
         this.leavesNumbersID = leavesNumbersID;
-    }
-
-    public int getGetDay() {
-        return getDay;
-    }
-
-    public void setGetDay(int getDay) {
-        this.getDay = getDay;
-    }
-
-    public int getUsedDay() {
-        return usedDay;
-    }
-
-    public void setUsedDay(int usedDay) {
-        this.usedDay = usedDay;
-    }
-
-    public int getBalanceDay() {
-        return BalanceDay;
-    }
-
-    public void setBalanceDay(int balanceDay) {
-        BalanceDay = balanceDay;
-    }
-
-    public int getCompoundDay() {
-        return CompoundDay;
-    }
-
-    public void setCompoundDay(int compoundDay) {
-        CompoundDay = compoundDay;
-    }
-
-    public LeaveTypeForAllday getLeaveTypeid() {
-        return leaveTypeid;
-    }
-
-    public void setLeaveTypeid(LeaveTypeForAllday leaveTypeid) {
-        this.leaveTypeid = leaveTypeid;
-    }
-
-    public EmployeeMaster getEmployeeMasterid() {
-        return employeeMasterid;
-    }
-
-    public void setEmployeeMasterid(EmployeeMaster employeeMasterid) {
-        this.employeeMasterid = employeeMasterid;
     }
 
     public Date getCreate_Date() {
@@ -122,11 +74,59 @@ public class LeavesNumbers {
         this.update_by = update_by;
     }
 
-    public int getDiffDay() {
+    public double getGetDay() {
+        return getDay;
+    }
+
+    public void setGetDay(double getDay) {
+        this.getDay = getDay;
+    }
+
+    public double getUsedDay() {
+        return usedDay;
+    }
+
+    public void setUsedDay(double usedDay) {
+        this.usedDay = usedDay;
+    }
+
+    public double getBalanceDay() {
+        return BalanceDay;
+    }
+
+    public void setBalanceDay(double balanceDay) {
+        BalanceDay = balanceDay;
+    }
+
+    public double getCompoundDay() {
+        return CompoundDay;
+    }
+
+    public void setCompoundDay(double compoundDay) {
+        CompoundDay = compoundDay;
+    }
+
+    public double getDiffDay() {
         return diffDay;
     }
 
-    public void setDiffDay(int diffDay) {
+    public void setDiffDay(double diffDay) {
         this.diffDay = diffDay;
+    }
+
+    public LeaveTypeForAllday getLeaveTypeid() {
+        return leaveTypeid;
+    }
+
+    public void setLeaveTypeid(LeaveTypeForAllday leaveTypeid) {
+        this.leaveTypeid = leaveTypeid;
+    }
+
+    public EmployeeMaster getEmployeeMasterid() {
+        return employeeMasterid;
+    }
+
+    public void setEmployeeMasterid(EmployeeMaster employeeMasterid) {
+        this.employeeMasterid = employeeMasterid;
     }
 }

@@ -1,6 +1,6 @@
   <p align="center">คุณ {{employeeMasterFirstName}} {{employeeMasterLastName}}</p>
   <p align="center">มี{{leaveTypeForAllDay}}คงเหลือ : {{balanceDay}} วัน</p>
-  <p align="center">ต้องการ{{leaveTypeForAllDay}} : {{diffDay}} วัน</p>
+  <p align="center">ต้องการ{{leaveTypeForAllDay}} : {{diffShowFrontend}} {{test}}</p>
 <mat-radio-group [(ngModel)]="isPayments" style="align:center">
   <mat-radio-button value="payment">Payment</mat-radio-button>
   &nbsp;
@@ -12,7 +12,7 @@
 </mat-form-field>
 <br><br>
 <div align="center">
-  <mat-chip color="warn" (click)="ConfirmByHR()" selected><mat-icon matSuffix> check</mat-icon>&nbsp;Confirm</mat-chip>&nbsp;
+  <mat-chip color="warn" (click)="ConfirmByHR();" selected><mat-icon matSuffix> check</mat-icon>&nbsp;Confirm</mat-chip>&nbsp;
   <mat-chip color="primary"  (click)="closeDialog()" selected><mat-icon matSuffix>cancel</mat-icon>&nbsp;Cancel</mat-chip>&nbsp;
 </div>
 

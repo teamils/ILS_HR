@@ -158,36 +158,58 @@ export class AttendanceComponent implements OnInit {
                 });
              }, 1000);
   }
-  total:number;
+  totalTime:any;
+  totalHour:number;
+  totalMinute:number;
+  totalMinute2:number;
   startHour;
   startMinute;
   EndHour;
   EndMinute;
   splitStartTime:Array<any>;
   splitEndTime:Array<any>;
+  total:any;
   CalculateLeaveTime(){
       this.splitStartTime = this.startTimeSelect.split(":")
       this.startHour = parseInt(this.splitStartTime[0]);
       this.startMinute = parseInt(this.splitStartTime[1]);
-
       this.splitEndTime = this.endTimeSelect.split(":")
       this.EndHour = parseInt(this.splitEndTime[0]);
       this.EndMinute = parseInt(this.splitEndTime[1]);
-      this.total = this.EndHour - this.startHour;
-      console.log(this.startHour);
-      console.log(this.EndHour);
-      console.log(this.total);
+      this.totalHour = this.EndHour - this.startHour;
+      this.totalMinute = this.EndMinute - this.startMinute
+      if(this.totalMinute<0) this.totalMinute2=this.totalMinute*(-1);
+      this.total = this.totalHour+'.'+this.totalMinute2;
+      //console.log(this.total,'ชั่วโมง');
+
+      this.http.post(this.API1  +/Time/+ this.startTimeSelect +'/'+ this.endTimeSelect ,{})
+                        .subscribe(
+                                       data => {
+                                           console.log(data);
+                                            this.totalTime = data;
+                                       },
+                                       error => {}
+      );
   }
+  statusLabelLeaveHalfDay;
     SubmitData(){ // Half Day
         this.CalculateLeaveTime();
+        this.Checktheleave(this.table.leaID,this.leaveTypeSelect);
+        if(this.labelLeaveHalfDay=='ชั่วโมง') this.statusLabelLeaveHalfDay=1;
+        else this.statusLabelLeaveHalfDay=0;
+
         if(this.leaveTypeSelect == null)  alert("กรุณาเลือกประเภทการลา");
         else if(this.labelLeaveHalfDay == null) alert("กรุณาเลือกเช้า-เย็น");
         else if(this.labelLeaveHalfDay=='ชั่วโมง' && this.startTimeSelect == 'null') alert("กรุณาเลือกเวลาเริ่มต้น");
         else if(this.labelLeaveHalfDay=='ชั่วโมง' && this.endTimeSelect == 'null') alert("กรุณาเลือกเวลาสิ้นสุด");
+        else if(this.totalHour<0 || (this.totalHour==0&&this.totalMinute<=0)) alert("กรุณาเลือกเวลาให้ถูกต้อง");
         else if(this.startDate == null) alert("กรุณาเลือกวันลา");
         else if(this.reason == null) alert("กรุณากรอกเหตุผล");
         else{
-             this.http.post(this.API1  +/SaveLeaveHalfDay/+ this.table.leaID +'/'+ this.leaveTypeSelect +'/'+ this.labelLeaveHalfDay +'/'+ this.startDate  +'/'+ this.reason +'/'+ this.startTimeSelect +'/'+ this.endTimeSelect  ,{})
+             this.http.post(this.API1  +/SaveLeaveHalfDay/+ this.table.leaID +'/'+ this.leaveTypeSelect
+                              +'/'+ this.labelLeaveHalfDay +'/'+ this.startDate  +'/'+ this.reason +'/'+
+                              this.startTimeSelect +'/'+ this.endTimeSelect +'/'+ this.totalTime +'/'+
+                              this.statusLabelLeaveHalfDay +'/'+ this.departmentIDLogin +'/'+ this.leavetatelAll.leavesNumbersID,{})
                         .subscribe(
                                        dataLeave => {
                                            console.log('PUT Request is successful', dataLeave);
@@ -210,7 +232,7 @@ export class AttendanceComponent implements OnInit {
 
     SubmitData2(){ //Full day
         this.CalculateLeaveDate(this.startDate2,this.endDate2);
-        this.Checktheleave();
+        this.Checktheleave(this.table.leaID,this.leaveTypeSelect2);
         if(this.diffDay<1){
           this.startDate2  = null;
           this.endDate2  = null;
@@ -245,13 +267,7 @@ export class AttendanceComponent implements OnInit {
         }
 
     }
-    AlertLeave(){
 
-        /*if(this.leavetatelAll.BalanceDay<=0){
-          alert("วันลา"+this.leaveTypeSelect2+"คงเหลือของคุณไม่มีแล้ว ถ้าคุณจะดำเนินการต่อ คุณจะไม่ได้รับค่าจ้างในส่วนนี้");
-        }
-        else{}*/
-    }
     SaveLeaveNumber(){ //function
           this.todayDate = new Date();
           var CDate = new Date(this.startDateInLogin);
@@ -326,14 +342,16 @@ export class AttendanceComponent implements OnInit {
         this.endTimeSelect="";
     }
 
-    Checktheleave(){ //checkว่าสามาถรลาได้มั้ยเมื่อเทียบกับวันลาที่มี
-       this.service.show1rowof1person(this.empId,this.leaveTypeSelect2).subscribe(data => {
-        //console.log('show1rowof1person -> ',data);
-        for (let i of data) {
-            this.leavetatelAll.leavesNumbersID = i.leavesNumbersID;
-            this.leavetatelAll.BalanceDay = i.balanceDay;
-        }
-      });
+    Checktheleave(empID1:any,leaveType1:any){ //checkว่าสามาถรลาได้มั้ยเมื่อเทียบกับวันลาที่มี
+      setTimeout(() => {
+         this.service.show1rowof1person(empID1,leaveType1).subscribe(data => {
+          console.log('show1rowof1person -> ',data);
+          for (let i of data) {
+              this.leavetatelAll.leavesNumbersID = i.leavesNumbersID;
+              this.leavetatelAll.BalanceDay = i.balanceDay;
+          }
+        });
+      }, 100);
     }
 
     SettingTime(){

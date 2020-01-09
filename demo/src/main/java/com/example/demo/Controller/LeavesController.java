@@ -8,9 +8,9 @@ import com.example.demo.Repository.ComboboxRepository.LeaveTypeForAlldayReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -68,12 +68,31 @@ public class LeavesController {
     public Iterable<Leaves> LeavesSelectDepartment(@PathVariable String empID) {
         return this.leavesRepository.getLeavesSelectDepartment(empID);
     }
+    @PostMapping("/Time/{startTime}/{endTime}")
+    public String Time(@PathVariable String startTime , @PathVariable String endTime) throws ParseException {
 
-    @PostMapping("/SaveLeaveHalfDay/{leaID}/{leaveTypeSelect}/{labelLeaveHalfDay}/{startDate}/{reason}/{startTimeSelect}/{endTimeSelect}") // saveLeave ครึ่งวัน
-    public Leaves leaves( @PathVariable Long leaID , @PathVariable String leaveTypeSelect ,@PathVariable String labelLeaveHalfDay
-            , @PathVariable Date startDate , @PathVariable String reason, @PathVariable String startTimeSelect, @PathVariable String endTimeSelect )  {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        Date date1 = format.parse(startTime);
+        Date date2 = format.parse(endTime);
+        long difference = date2.getTime() - date1.getTime();
+        long diffSeconds = difference / 1000 % 60;
+        long diffMinutes = difference / (60 * 1000) % 60;
+        long diffHours = difference / (60 * 60 * 1000) % 24;
+        long diffDays = difference / (24 * 60 * 60 * 1000);
+
+        String total = diffHours+"."+diffMinutes;
+        return total;
+
+    }
+    @PostMapping("/SaveLeaveHalfDay/{leaID}/{leaveTypeSelect}/{labelLeaveHalfDay}/{startDate}/{reason}/{startTimeSelect}/{endTimeSelect}/{totalTime}/{statusLabelLeaveHalfDay}/{departmentIDLogin}/{leavesNumbersID}") // saveLeave ครึ่งวัน
+    public Leaves leaves( @PathVariable Long leaID , @PathVariable String leaveTypeSelect,@PathVariable String labelLeaveHalfDay
+            , @PathVariable Date startDate , @PathVariable String reason, @PathVariable String startTimeSelect
+            , @PathVariable String endTimeSelect , @PathVariable float totalTime, @PathVariable int statusLabelLeaveHalfDay
+            , @PathVariable long departmentIDLogin, @PathVariable long leavesNumbersID)  {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
         LeaveTypeForAllday leaveTypeForAllday = leaveTypeForAlldayRepository.findByLeaveTypeForAlldayName(leaveTypeSelect);
+        Department department = departmentRepository.findById(departmentIDLogin).get();
+        LeavesNumbers leavesNumbers = leavesNumbersRepository.findById(leavesNumbersID).get();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm:ss");
@@ -95,13 +114,17 @@ public class LeavesController {
         leaves1.setEndTime(endTimeSelect);
         leaves1.setEndDateForAllDay(startDate);
         leaves1.setReasonForAllDay(reason);
-        leaves1.setLabelLeaveHalfDay(labelLeaveHalfDay);
-
+        if(statusLabelLeaveHalfDay==1) leaves1.setLabelLeaveHalfDay(totalTime+" "+labelLeaveHalfDay);// x ชั่วโมง
+        else leaves1.setLabelLeaveHalfDay(labelLeaveHalfDay);
         leaves1.setApprovedBySupervisor("Pending");
         leaves1.setApprovedByManager("Pending");
+        leaves1.setConfirmByHR("Pending");
         leaves1.setIsActiveAttendance("1");
         leaves1.setLeaveStatus("Pending");
-        //leaves1.setWageStatus(1);
+        leaves1.setDepartmentid(department);
+        leaves1.setLeavesNumbersid(leavesNumbers);
+        if(leavesNumbers.getBalanceDay()>0) leaves1.setIsPayment("payment");
+        else leaves1.setIsPayment("not payment");
         leavesRepository.save(leaves1);
         return leaves1;
     }

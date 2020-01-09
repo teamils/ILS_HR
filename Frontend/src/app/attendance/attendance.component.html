@@ -35,7 +35,7 @@
           <font color="red">&nbsp;&nbsp;*{{leaveTypeSelect2}}&nbsp;{{diffDay}}&nbsp;{{day}}</font>
           <br>
         <mat-form-field style="width:30%;">
-          <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason2" required (click)="CalculateLeaveDate(startDate2,endDate2); Checktheleave();"></textarea>
+          <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason2" required (click)="CalculateLeaveDate(startDate2,endDate2); Checktheleave(this.table.leaID,this.leaveTypeSelect2);"></textarea>
         </mat-form-field>
         <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;" (click)="SubmitData2()">Save</button>
       </div>
@@ -56,18 +56,17 @@
           <mat-radio-button class="example-margin" value="ครึ่งวันบ่าย">ครึ่งวันบ่าย</mat-radio-button>&nbsp;&nbsp;
           <mat-radio-button class="example-margin" value="ชั่วโมง">ชั่วโมง</mat-radio-button>&nbsp;&nbsp;
         </mat-radio-group>
-        <!-- <mat-checkbox [(ngModel)]="hourdis">ชั่วโมง</mat-checkbox> -->
         <br>
         <div>
           <mat-label>เวลาไป:</mat-label>
-          <input  aria-label="24hr format"  [ngxTimepicker]="startTime" [format]="24"  [(ngModel)]="startTimeSelect"  [disabled]="!hourdis" readonly>
+          <input  aria-label="24hr format"  [ngxTimepicker]="startTime" [format]="24"  [(ngModel)]="startTimeSelect" (change)="CalculateLeaveTime()" [disabled]="!hourdis" readonly>
           <ngx-material-timepicker #startTime></ngx-material-timepicker>
           &nbsp;&nbsp;
           <mat-label>เวลากลับ:</mat-label>
-          <input aria-label="24hr format" [ngxTimepicker]="endTime" [format]="24" [(ngModel)]="endTimeSelect" [disabled]="!hourdis" readonly>
+          <input aria-label="24hr format" [ngxTimepicker]="endTime" [format]="24" [(ngModel)]="endTimeSelect" (change)="CalculateLeaveTime()" [disabled]="!hourdis"  readonly>
           <ngx-material-timepicker #endTime></ngx-material-timepicker>
         </div>
-
+        <font color="red">{{this.totalTime}}</font>
         <br>
         <mat-form-field>
           <input matInput [matDatepicker]="picker" placeholder="วันที่ลา" [(ngModel)]="startDate" required >
@@ -76,7 +75,7 @@
         </mat-form-field>
         &nbsp;&nbsp;
         <mat-form-field>
-          <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason" required ></textarea>
+          <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason" (click)="Checktheleave(empId,leaveTypeSelect);CalculateLeaveTime()" required ></textarea>
         </mat-form-field>
         <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;" (click)="SubmitData()">Save</button>
       </div>

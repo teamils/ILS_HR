@@ -198,21 +198,21 @@ INSERT INTO emp_status
 VALUES (3, 'พ้นสภาพพนักงาน');
 
 INSERT INTO leave_type_for_allday 
-VALUES (1, 3, 'ลากิจ' ); 
+VALUES (1, 3.0, 'ลากิจ' ); 
 INSERT INTO leave_type_for_allday 
-VALUES (2, 30, 'ลาป่วย'); 
+VALUES (2, 30.0, 'ลาป่วย'); 
 INSERT INTO leave_type_for_allday 
-VALUES (3, 0, 'ลาพักร้อน'); 
+VALUES (3, 0.0, 'ลาพักร้อน'); 
 INSERT INTO leave_type_for_allday 
-VALUES (4, 3, 'ลาเเต่งงาน'); 
+VALUES (4, 3.0, 'ลาเเต่งงาน'); 
 INSERT INTO leave_type_for_allday 
-VALUES (5, 3, 'ลาไปงานศพ'); 
+VALUES (5, 3.0, 'ลาไปงานศพ'); 
 INSERT INTO leave_type_for_allday 
-VALUES (6, 60, 'ลาไปทหาร'); 
+VALUES (6, 60.0, 'ลาไปทหาร'); 
 INSERT INTO leave_type_for_allday 
-VALUES (7, 7, 'ลาบวช'); 
+VALUES (7, 7.0, 'ลาบวช'); 
 INSERT INTO leave_type_for_allday 
-VALUES (8, 45, 'ลาคลอด'); 
+VALUES (8, 45.0, 'ลาคลอด'); 
 
 INSERT INTO LEAVE_TYPE_FOR_ALLDAY 
 VALUES (1, 'ลากิจ', 3); 
@@ -232,27 +232,27 @@ INSERT INTO LEAVE_TYPE_FOR_ALLDAY
 VALUES (8, 'ลาคลอด', 45); 
 
 INSERT INTO master_attendance 
-VALUES (1, 0, 0); 
+VALUES (1, 0.0, 0); 
 INSERT INTO master_attendance 
-VALUES (2, 7, 1); 
+VALUES (2, 7.0, 1); 
 INSERT INTO master_attendance 
-VALUES (3, 7, 2); 
+VALUES (3, 7.0, 2); 
 INSERT INTO master_attendance 
-VALUES (4, 10, 3); 
+VALUES (4, 10.0, 3); 
 INSERT INTO master_attendance 
-VALUES (5, 10, 4); 
+VALUES (5, 10.0, 4); 
 INSERT INTO master_attendance 
-VALUES (6, 12, 5); 
+VALUES (6, 12.0, 5); 
 INSERT INTO master_attendance 
-VALUES (7, 12, 6); 
+VALUES (7, 12.0, 6); 
 INSERT INTO master_attendance 
-VALUES (8, 12, 7); 
+VALUES (8, 12.0, 7); 
 INSERT INTO master_attendance 
-VALUES (9, 12, 8); 
+VALUES (9, 12.0, 8); 
 INSERT INTO master_attendance 
-VALUES (10, 12, 9); 
+VALUES (10, 12.0, 9); 
 INSERT INTO master_attendance 
-VALUES (11, 15, 10); 
+VALUES (11, 15.0, 10); 
 
 INSERT INTO EMPLOYEE_MASTER 
 VALUES (1, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','7072698661','-',2020-01-05 12:34:20.183,'ป.ตรี', '-', '-', '180 ม.5 ต.วังซ่าน อ.เเม่วงก์ จ.นครสวรรค์','dikinakub6509@gmail.com',1997-07-30,'400234','ดิกิ','ชาย','คาวาซากิ','กิ','1600100723988',2010-12-26,'0834318890','IT Programmer','นักศึกษาฝึกงาน','1','ยังปฏิบัติงานอยู่','400234','นาย','ADMIN','diki kawasaki',2020-01-05 12:52:12.056,9); 
