@@ -61,6 +61,9 @@ import { ReasonNotApproveBygerDialog } from './approve-by-manager/approve-by-man
 import { AttendanceShowLeavenumberComponent } from './attendance-show-leavenumber/attendance-show-leavenumber.component';
 import { EditPersonalInformationComponent } from './edit-personal-information/edit-personal-information.component';
 import { EditPaymentDialog } from './attendance-data/attendance-data.component';
+import { AddDepartmentRoleComponent } from './add-department-role/add-department-role.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -82,6 +85,7 @@ import { EditPaymentDialog } from './attendance-data/attendance-data.component';
     AttendanceShowLeavenumberComponent,
     EditPersonalInformationComponent,
     EditPaymentDialog,
+    AddDepartmentRoleComponent,
   ],
 
       imports: [
@@ -127,8 +131,8 @@ import { EditPaymentDialog } from './attendance-data/attendance-data.component';
           HttpClientModule,
           MatFormFieldModule,
           NgxMaterialTimepickerModule,
-
-
+          NgSelectModule,
+          ReactiveFormsModule,
        ],
 
    entryComponents: [EmployeeEditComponent,

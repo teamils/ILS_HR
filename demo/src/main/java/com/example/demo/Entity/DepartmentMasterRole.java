@@ -47,4 +47,6 @@ public class DepartmentMasterRole {
     public void setDepartmentid(Department departmentid) {
         this.departmentid = departmentid;
     }
+
+
 }

@@ -7,6 +7,7 @@ import { NewheaderComponent } from './newheader/newheader.component';
 import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { ApproveBySupervisorComponent } from './approve-by-supervisor/approve-by-supervisor.component';
+import { AddDepartmentRoleComponent } from './add-department-role/add-department-role.component';
 
     const routes: Routes = [
        { path: '', redirectTo: '/HR-ADMIN', pathMatch: 'full' },
@@ -18,6 +19,7 @@ import { ApproveBySupervisorComponent } from './approve-by-supervisor/approve-by
        { path: 'employee-edit', component: EmployeeEditComponent },
        { path: 'attendance', component: AttendanceComponent },
        { path: 'approveBySupervisor', component: ApproveBySupervisorComponent },
+       { path: 'add-Department-Role', component: AddDepartmentRoleComponent },
 
     ];
 

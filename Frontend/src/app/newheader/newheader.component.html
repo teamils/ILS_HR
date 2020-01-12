@@ -27,7 +27,7 @@
 
         <div class="sidenav">
           <mat-accordion>
-            <mat-expansion-panel class="BG_Sidenav">
+            <mat-expansion-panel class="BG_Sidenav" *ngIf="(role == 'HR' ? true : false)||(role == 'ADMIN' ? true : false)&&(logouts == 'true' ? false : true)">
               <mat-expansion-panel-header>  <!--  เห็นเฉพาะ HR -->
                 <mat-label class="dd">
                   <mat-icon matSuffix>supervised_user_circle</mat-icon>
@@ -84,19 +84,19 @@
               <hr/>
               <a routerLink="/newheader" *ngIf="(logouts == 'true' ? false : true)">Training</a>
               <a routerLink="/newheader" *ngIf="(logouts == 'true' ? false : true)">Data Training</a>
-            </mat-expansion-panel>
+            </mat-expansion-panel> -->
 
-            <mat-expansion-panel class="BG_Sidenav">
+            <mat-expansion-panel class="BG_Sidenav" *ngIf="(role == 'ADMIN' ? true : false)&&(logouts == 'true' ? false : true)">
               <mat-expansion-panel-header>
                 <mat-label class="dd">
                   <mat-icon matSuffix>settings_applications</mat-icon>
-                  Setting
+                    Admin
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="/newheader" *ngIf="(logouts == 'true' ? false : true)">Setting1</a>
+              <a routerLink="/newheader" (click)="callAddDepartmentRole()" *ngIf="(logouts == 'true' ? false : true)">Add department role</a>
               <a routerLink="/newheader" *ngIf="(logouts == 'true' ? false : true)">Setting2</a>
-            </mat-expansion-panel> -->
+            </mat-expansion-panel>
           </mat-accordion>
         </div> <!-- ข้างๆๆๆๆ -->
 
@@ -115,6 +115,7 @@
           <app-attendance-data *ngIf="selectAttendanceDate == 'true' ? true : false"></app-attendance-data>
           <app-approve-by-supervisor *ngIf="selectApproveBySupervisor == 'true' ? true : false"></app-approve-by-supervisor>
           <app-approve-by-manager *ngIf="selectApproveByManager == 'true' ? true : false"></app-approve-by-manager>
+        <app-add-department-role *ngIf="selectAddDepartmentRole == 'true' ? true : false"></app-add-department-role>
       </div>
     </mat-sidenav-content>
 

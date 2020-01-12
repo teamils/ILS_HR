@@ -28,7 +28,7 @@ th {
   background-color: #00FF00;
 }
 tr:nth-child(even) {
-  background-color: #90EE90;
+  background-color: #DCDCDC;
 }
 table {
   font-family: arial, sans-serif;
@@ -54,6 +54,13 @@ table {
           text-align: center;
    }
 
+   td.mat-column-empFristName,
+   td.mat-column-empLastName,
+   td.mat-column-Position,
+   td.mat-column-Department,
+   td.mat-column-empType{
+      text-align: left;
+   }
 mat-grid-tile {
   background: lightblue;
 }

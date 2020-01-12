@@ -11,6 +11,7 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { AppComponent } from '../app.component';
 import {FormControl} from '@angular/forms';
 import { AttendanceComponent } from '../attendance/attendance.component';
+import { ExcelService } from '../excel.service';
 
 export interface PeriodicElement {
   name: string;
@@ -46,7 +47,8 @@ export class AttendanceDataComponent implements OnInit {
             private route:ActivatedRoute ,
             public dialog: MatDialog,
              private http: HttpClient,
-             public api : AppComponent) { }
+             public api : AppComponent,
+             private excelService:ExcelService) { }
     public API2 = this.api.API;
 
   ngOnDestroy() {
@@ -58,7 +60,7 @@ export class AttendanceDataComponent implements OnInit {
         this.service.getshowLeavesToNotComplete().subscribe(data => {
             this.leaves = data;
             this.dataSource.data = this.leaves;
-            //console.log('leaves -> ',this.leaves);
+            console.log('leaves -> ',this.leaves);
         });
         this.service.getDepartment().subscribe(data => {
                this.department = data;
@@ -110,17 +112,6 @@ export class AttendanceDataComponent implements OnInit {
               this.dataSource.data = this.leaves;
       });
     }
-    /*ConfirmByHR(row : any){
-        this.http.post(this.API + '/confirmByHR/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {
-            //console.log('Approve is successful');
-            alert("Confirm successful");
-            this.onChange();
-          },
-          error => {
-            console.log('Error', error);
-          }
-        );
-    }*/
     getEditPaymentDialog(row : any){
             const dialogRef = this.dialog.open(EditPaymentDialog, {
                   width: 'auto',
@@ -129,6 +120,24 @@ export class AttendanceDataComponent implements OnInit {
             });
             this.onChange();
 
+    }
+    exportexcel(): void{
+        let dataleave : any[] = [];
+        for(let i = 0 ; i < this.leaves.length ; i++){
+            dataleave.push({
+              สำดับ : i+1,
+              วันที่เขียนใบลา : this.leaves[i].createDate,
+              start_date : this.leaves[i].startDateForAllDay+" "+this.leaves[i].startTime,
+              end_date : this.leaves[i].endDateForAllDay+" "+this.leaves[i].endTime,
+              ประเภทการลา : this.leaves[i].leaveTypeForAllDay.leaveTypeForAlldayName,
+              จำนวนวันลา : this.leaves[i].labelLeaveHalfDay,
+              payment : this.leaves[i].isPayment,
+              เหตุผล : this.leaves[i].reasonForAllDay,
+              Approve_by_supervisor : this.leaves[i].approvedBySupervisor,
+              Approve_by_manager : this.leaves[i].approvedByManager,
+            });
+        }
+        this.excelService.exportAsExcelFile(dataleave, 'Dataleave');
     }
 }
 

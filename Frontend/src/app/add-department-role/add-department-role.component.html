@@ -1,0 +1,45 @@
+<mat-card class="example-card">
+  <span class="example-spacer"><h1 align="center">Add Department Role</h1></span>
+  <mat-card class="card">
+    ค้นหา :
+    <mat-form-field  class="searchStyle" (keydown.enter)="SearchEmpCode()">
+      <mat-label>รหัสพนักงาน</mat-label>
+      <input matInput  [(ngModel)]="empCode" >
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <table>
+      <tr>
+        <th align="right">ชื่อ : </th>
+        <td>{{employeeMasterFirstName}} &nbsp; {{employeeMasterLastName}}</td>
+      </tr>
+      <tr>
+        <th align="right">ตำเเหน่ง : </th>
+        <td>{{employeePosition}}</td>
+      </tr>
+      <tr>
+        <th align="right">เเผนก : </th>
+        <td>{{departmentName}}</td>
+      </tr>
+      <tr>
+        <th align="right">ดูแล :</th>
+        <td *ngFor="let i of departmentRoleFindByempID">{{i.departmentid.departmentName}}</td>
+      </tr>
+    </table>
+    <br>
+    <ng-select bindLabel="name"
+               placeholder="Select department"
+               appendTo="body"
+               multiple="true"
+               [(ngModel)]="departmentSelect">
+      <ng-option   *ngFor="let item of department" [value]="item.departmentName">
+        {{item.departmentName}}
+      </ng-option>
+    </ng-select>
+    <div align="center">
+      <button mat-raised-button color="accent" (click)="InsertDataDepartmentRole()" style="width:100px">Add</button>
+    </div>
+  </mat-card>
+
+
+
+</mat-card>

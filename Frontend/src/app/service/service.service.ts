@@ -97,6 +97,11 @@ export class ServiceService {
   getLeavesFindByID(leavesID : any):Observable<any>{
       return this.http.get(this.API+'/showLeavesFindByID' +'/'+ leavesID,{})
   }
-
+  getSearchEmpCode(EmpCode : String):Observable<any>{
+      return this.http.get(this.API+'/SearchEmpCode' +'/'+ EmpCode,{})
+  }
+  getDepartmentMasterRole2(employeeMasterID : any):Observable<any>{
+      return this.http.get(this.API+'/getDepartmentMasterRole' +'/'+ employeeMasterID,{})
+  }
 
 }

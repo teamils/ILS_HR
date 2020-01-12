@@ -9,6 +9,9 @@ import { HttpClient} from '@angular/common/http';
 import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import { AppComponent } from '../app.component';
+import {FormControl} from '@angular/forms';
+import { Observable } from "rxjs";
+import { map, startWith } from "rxjs/operators";
 
 @Component({
   selector: 'app-employee-add',
@@ -26,6 +29,9 @@ import { AppComponent } from '../app.component';
 
 export class EmployeeAddComponent implements OnInit {
 
+myControl = new FormControl();
+options: string[] = [];
+filteredOptions: Observable<string[]>;
 
 data:any={}
 
@@ -110,13 +116,29 @@ constructor(private route:ActivatedRoute ,
                  });
         this.service.getPosition().subscribe(data => {
                this.position = data;
+                this.addDepartment();
                //console.log('position == ',this.position);
                  });
         this.service.getRoleStatus().subscribe(data => {
                this.role_status = data;
                //console.log(this.role_status);
           });
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filter(value))
+        );
+    }
 
+    private _filter(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.options.filter(option => option.toLowerCase().includes(filterValue));
+      }
+
+    addDepartment(){
+      for(let i = 0 ; i < this.position.length ; i++){
+          this.options.push(this.position[i].positionName);
+      }
+      //console.log(this.options);
     }
 
     subtractYear:number;

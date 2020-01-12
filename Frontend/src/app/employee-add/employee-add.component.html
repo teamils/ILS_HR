@@ -132,7 +132,18 @@
                   <mat-datepicker touchUi #startwork></mat-datepicker>
                 </mat-form-field>
                 <!-- แผนก -->
-                <mat-form-field class="formcenter" hintLabel="" style="width :20%" style="width :100%" >
+               <!-- <form>
+                  <mat-form-field style="width :100%" >
+                    <input type="text" placeholder="แผนก" aria-label="Number" required [(ngModel)]="departmentSelect" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option}}
+                      </mat-option>
+                    </mat-autocomplete>
+                    <mat-icon matSuffix>work</mat-icon>
+                  </mat-form-field>
+                </form> -->
+              <mat-form-field class="formcenter" hintLabel="" style="width :20%" style="width :100%" >
                   <mat-select placeholder="แผนก" required [(ngModel)]="departmentSelect">
                     <mat-option *ngFor="let depart of department" [value]="depart.departmentName">
                       {{depart.departmentName}}
@@ -141,7 +152,18 @@
                   <mat-icon matSuffix>work</mat-icon>
                 </mat-form-field>
                 <!------ ตำแหน่ง ------>
-                <mat-form-field class="formcenter" hintLabel=""  style="width :100%" >
+                <form>
+                  <mat-form-field style="width :100%" >
+                    <input type="text" placeholder="ตำแหน่ง" aria-label="Number" required [(ngModel)]="positionSelect" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option}}
+                      </mat-option>
+                    </mat-autocomplete>
+                    <mat-icon matSuffix>work</mat-icon>
+                  </mat-form-field>
+                </form>
+                <!--<mat-form-field class="formcenter" hintLabel=""  style="width :100%" >
                   <mat-select placeholder="ตำแหน่ง" required [(ngModel)]="positionSelect">
                     <mat-option *ngFor="let pos of position" [value]="pos.positionName">
                       {{pos.positionName}}

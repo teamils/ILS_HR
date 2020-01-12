@@ -224,4 +224,12 @@ public class EmployeeMasterController {
         employeeMasterRepository.save(employeeMaster);
         return employeeMaster;
     }
+
+    @GetMapping("/SearchEmpCode/{empCode}")
+    public EmployeeMaster SearchEmpCode(@PathVariable String empCode) {
+        EmployeeMaster SearchEmpCode =  employeeMasterRepository.findByemployeeMasterCustomerCode(empCode);
+        return SearchEmpCode;
+
+    }
+
 }

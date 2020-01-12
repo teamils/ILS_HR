@@ -18,7 +18,7 @@
 
     <div class="example-container2 mat-elevation-z8" >
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-        <!-- Checkbox Column -->
+        <!-- Checkbox Column --
         <ng-container matColumnDef="select" sticky>
           <th mat-header-cell *matHeaderCellDef>
             <mat-checkbox (change)="$event ? masterToggle() : null"
@@ -34,7 +34,7 @@
                           [aria-label]="checkboxLabel(row)">
             </mat-checkbox>
           </td>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="number" >
           <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>

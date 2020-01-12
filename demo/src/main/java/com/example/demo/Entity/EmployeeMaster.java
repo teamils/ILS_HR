@@ -291,4 +291,6 @@ public class EmployeeMaster {
     public void setEmergencyContact(String emergencyContact) {
         this.emergencyContact = emergencyContact;
     }
+
+
 }
