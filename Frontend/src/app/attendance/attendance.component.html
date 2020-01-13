@@ -51,7 +51,7 @@
           </mat-select>
         </mat-form-field>
         &nbsp;&nbsp;
-        <mat-radio-group  [(ngModel)]="labelLeaveHalfDay" (change)="SettingTime()">
+        <mat-radio-group  [(ngModel)]="labelLeaveHalfDay" (change)="SettingTime(); CalculateLeaveTime()">
           <mat-radio-button class="example-margin" value="ครึ่งวันเช้า">ครึ่งวันเช้า</mat-radio-button>&nbsp;&nbsp;
           <mat-radio-button class="example-margin" value="ครึ่งวันบ่าย">ครึ่งวันบ่าย</mat-radio-button>&nbsp;&nbsp;
           <mat-radio-button class="example-margin" value="ชั่วโมง">ชั่วโมง</mat-radio-button>&nbsp;&nbsp;
@@ -65,8 +65,9 @@
           <mat-label>เวลากลับ:</mat-label>
           <input aria-label="24hr format" [ngxTimepicker]="endTime" [format]="24" [(ngModel)]="endTimeSelect" (change)="CalculateLeaveTime()" [disabled]="!hourdis"  readonly>
           <ngx-material-timepicker #endTime></ngx-material-timepicker>
+          &nbsp;&nbsp;<font color="red">*&nbsp;{{this.totalTime}}&nbsp;ชม.</font>
         </div>
-        <font color="red">{{this.totalTime}}</font>
+
         <br>
         <mat-form-field>
           <input matInput [matDatepicker]="picker" placeholder="วันที่ลา" [(ngModel)]="startDate" required >
@@ -95,7 +96,7 @@
     </ng-container>
 
     <ng-container matColumnDef="leaveType">
-      <th mat-header-cell *matHeaderCellDef><font color="black"><b>ประเภทการลา</b></font>  </th>
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>ประเภท</b></font>  </th>
       <td mat-cell *matCellDef="let element"> {{element.leaveTypeForAllDay.leaveTypeForAlldayName}} </td>
     </ng-container>
 

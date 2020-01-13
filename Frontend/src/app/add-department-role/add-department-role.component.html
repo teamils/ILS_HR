@@ -22,7 +22,7 @@
       </tr>
       <tr>
         <th align="right">ดูแล :</th>
-        <td *ngFor="let i of departmentRoleFindByempID">{{i.departmentid.departmentName}}</td>
+        <td>{{deNamesubstr}}</td>
       </tr>
     </table>
     <br>
@@ -36,10 +36,48 @@
       </ng-option>
     </ng-select>
     <div align="center">
-      <button mat-raised-button color="accent" (click)="InsertDataDepartmentRole()" style="width:100px">Add</button>
+      <button mat-raised-button color="accent" (click)="InsertDataDepartmentRole()" style="width:100px">ADD</button>&nbsp;&nbsp;
+      <button mat-raised-button color="accent" (click)="clearInput()" style="width:100px">Clean data</button>
     </div>
   </mat-card>
+  &nbsp;
+  <mat-form-field (keydown.enter)="SearchDepartmentRole()" class="mat-form-field2">
+    <input matInput  [(ngModel)]="searchDepartmentRole" placeholder="Search by employeeCode">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
 
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
+    <ng-container matColumnDef="empCode">
+      <th mat-header-cell *matHeaderCellDef>รหัสพนักงาน</th>
+      <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.employeeMasterCustomerCode}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>ชื่อ-สกุล</th>
+      <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.employeeMasterFirstName}}&nbsp;{{element.employeeMasterid.employeeMasterLastName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="po">
+      <th mat-header-cell *matHeaderCellDef>ตำเเหน่ง</th>
+      <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.employeePosition}} </td>
+    </ng-container>
+    <ng-container matColumnDef="de">
+      <th mat-header-cell *matHeaderCellDef>เเผนก</th>
+      <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.departmentid.departmentName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="depart">
+      <th mat-header-cell *matHeaderCellDef>ดูแล</th>
+      <td mat-cell *matCellDef="let element"> {{element.departmentid.departmentName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>ลบข้อมูล</th>
+      <td mat-cell *matCellDef="let element" >
+        <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="Delete(element);"  #ckeckEdit>
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[15, 30, 50, 100]" showFirstLastButtons ></mat-paginator>
 </mat-card>

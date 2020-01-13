@@ -95,7 +95,7 @@
               </mat-expansion-panel-header>
               <hr/>
               <a routerLink="/newheader" (click)="callAddDepartmentRole()" *ngIf="(logouts == 'true' ? false : true)">Add department role</a>
-              <a routerLink="/newheader" *ngIf="(logouts == 'true' ? false : true)">Setting2</a>
+              <a routerLink="/newheader" (click)="callAddDataCombobox()" *ngIf="(logouts == 'true' ? false : true)">Add Data Combobox</a>
             </mat-expansion-panel>
           </mat-accordion>
         </div> <!-- ข้างๆๆๆๆ -->
@@ -115,7 +115,8 @@
           <app-attendance-data *ngIf="selectAttendanceDate == 'true' ? true : false"></app-attendance-data>
           <app-approve-by-supervisor *ngIf="selectApproveBySupervisor == 'true' ? true : false"></app-approve-by-supervisor>
           <app-approve-by-manager *ngIf="selectApproveByManager == 'true' ? true : false"></app-approve-by-manager>
-        <app-add-department-role *ngIf="selectAddDepartmentRole == 'true' ? true : false"></app-add-department-role>
+          <app-add-department-role *ngIf="selectAddDepartmentRole == 'true' ? true : false"></app-add-department-role>
+          <app-add-data-combobox *ngIf="selectAddDataCombobox == 'true' ? true : false"></app-add-data-combobox>
       </div>
     </mat-sidenav-content>
 

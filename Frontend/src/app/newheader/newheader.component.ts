@@ -32,6 +32,7 @@ export class NewheaderComponent implements OnInit {
   selectApproveBySupervisor : String;
   selectApproveByManager : String;
   selectAddDepartmentRole : String;
+  selectAddDataCombobox : String;
 
   employee : Array<any>;
   id : String ;
@@ -131,7 +132,9 @@ export class NewheaderComponent implements OnInit {
                               this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
                           }
                           else if(this.links == 'addDepartmentRole'){
-                              localStorage.setItem('selectAddDepartmentRole', 'true');
+localStorage.setItem('selectAddDataCombobox', 'true');
+this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
+                              localStorage.setItem('selectAddDepartmentRole', 'false');
                               this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
                               localStorage.setItem('selectApproveByManager', 'false');
                               this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
@@ -188,6 +191,8 @@ export class NewheaderComponent implements OnInit {
           this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
           localStorage.setItem('selectAddDepartmentRole', 'false');
           this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+          localStorage.setItem('selectAddDataCombobox', 'false');
+          this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
 
           /*console.log(this.selectEmployeemaster);*/
       }
@@ -207,6 +212,8 @@ export class NewheaderComponent implements OnInit {
           this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
           localStorage.setItem('selectAddDepartmentRole', 'false');
           this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+          localStorage.setItem('selectAddDataCombobox', 'false');
+          this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
       }
       callAttendance(){
           localStorage.setItem('links', 'attendance');
@@ -224,6 +231,8 @@ export class NewheaderComponent implements OnInit {
           this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
           localStorage.setItem('selectAddDepartmentRole', 'false');
           this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+          localStorage.setItem('selectAddDataCombobox', 'false');
+          this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
       }
       callAttendanceData(){
           localStorage.setItem('links', 'attendance');
@@ -241,6 +250,8 @@ export class NewheaderComponent implements OnInit {
           this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
           localStorage.setItem('selectAddDepartmentRole', 'false');
           this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+          localStorage.setItem('selectAddDataCombobox', 'false');
+          this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
       }
       callApproveBySupervisor(){
           localStorage.setItem('links', 'attendance');
@@ -258,6 +269,8 @@ export class NewheaderComponent implements OnInit {
           this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
           localStorage.setItem('selectAddDepartmentRole', 'false');
           this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+          localStorage.setItem('selectAddDataCombobox', 'false');
+          this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
       }
 
       callApproveByManager(){
@@ -276,11 +289,35 @@ export class NewheaderComponent implements OnInit {
           this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
           localStorage.setItem('selectAddDepartmentRole', 'false');
           this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+          localStorage.setItem('selectAddDataCombobox', 'false');
+          this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
       }
 
       callAddDepartmentRole(){
           localStorage.setItem('links', 'addDepartmentRole');
           localStorage.setItem('selectAddDepartmentRole', 'true');
+          this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+          localStorage.setItem('selectApproveByManager', 'false');
+          this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
+          localStorage.setItem('selectApproveBySupervisor', 'false');
+          this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+          localStorage.setItem('selectAttendanceDate', 'false');
+          this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+          localStorage.setItem('selectAttendance', 'false');
+          this.selectAttendance =  localStorage.getItem('selectAttendance')
+          localStorage.setItem('selectEmployeeAdd', 'false');
+          this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
+          localStorage.setItem('selectEmployeemaster', 'false');
+          this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+          localStorage.setItem('selectAddDataCombobox', 'false');
+          this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
+      }
+
+      callAddDataCombobox(){
+          localStorage.setItem('links', 'addDepartmentRole');
+          localStorage.setItem('selectAddDataCombobox', 'true');
+          this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
+          localStorage.setItem('selectAddDepartmentRole', 'false');
           this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
           localStorage.setItem('selectApproveByManager', 'false');
           this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');

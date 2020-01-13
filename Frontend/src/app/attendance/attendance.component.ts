@@ -181,7 +181,7 @@ export class AttendanceComponent implements OnInit {
       if(this.totalMinute<0) this.totalMinute2=this.totalMinute*(-1);
       this.total = this.totalHour+'.'+this.totalMinute2;
       //console.log(this.total,'ชั่วโมง');
-
+    setTimeout(() => {
       this.http.post(this.API1  +/Time/+ this.startTimeSelect +'/'+ this.endTimeSelect ,{})
                         .subscribe(
                                        data => {
@@ -190,6 +190,7 @@ export class AttendanceComponent implements OnInit {
                                        },
                                        error => {}
       );
+    }, 100);
   }
   statusLabelLeaveHalfDay;
     SubmitData(){ // Half Day

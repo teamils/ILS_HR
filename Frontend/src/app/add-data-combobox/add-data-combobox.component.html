@@ -1,0 +1,76 @@
+<mat-card class="example-card">
+  <span class="example-spacer"><h1 align="center">Add Data Combobox</h1></span>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title><b>BANK</b></mat-panel-title>
+        <mat-panel-description>Bank information management</mat-panel-description>
+      </mat-expansion-panel-header>
+      <table  cellspacing="0" border="1">
+        <tr>
+          <th>No.</th>
+          <th width="250px">Bank name</th>
+          <th width="10px">Delete</th>
+        </tr>
+        <tr *ngFor="let value of NewBank;let i = index">
+          <td align="center">{{i+1}}.</td>
+          <td>{{value.bankName}}</td>
+          <td align="center">
+            <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="DeleteBank(value.bankID);"  #ckeckEdit>
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" colspan="2">
+            <mat-form-field class="example-form-field" appearance="outline" style="width:100%;heigth:100%">
+              <input matInput type="text" placeholder="input bank name" [(ngModel)]="bankName">
+              <button mat-button *ngIf="bankName" matSuffix mat-icon-button aria-label="Clear" (click)="bankName=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-raised-button color="primary" (click)="InsertBank()">ADD</button>
+          </td>
+        </tr>
+      </table>
+    </mat-expansion-panel> <!-- BANK -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title><b>DEPARTMENT</b></mat-panel-title>
+        <mat-panel-description>Department information management</mat-panel-description>
+      </mat-expansion-panel-header>
+      <table  cellspacing="0" border="1">
+        <tr>
+          <th>No.</th>
+          <th width="250px">Department name</th>
+          <th width="10px">Delete</th>
+        </tr>
+        <tr *ngFor="let value of department;let i = index">
+          <td align="center">{{i+1}}.</td>
+          <td>{{value.departmentName}}</td>
+          <td align="center">
+            <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="DeleteDepartment(value.departmentID);"  #ckeckEdit>
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" colspan="2">
+            <mat-form-field class="example-form-field" appearance="outline" style="width:100%;heigth:100%">
+              <input matInput type="text" placeholder="input department name" [(ngModel)]="departmentInput">
+              <button mat-button *ngIf="departmentInput" matSuffix mat-icon-button aria-label="Clear" (click)="departmentInput=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-raised-button color="primary" (click)="InsertDepartment()">ADD</button>
+          </td>
+        </tr>
+      </table>
+    </mat-expansion-panel> <!-- DEPARTMENT -->
+  </mat-accordion>
+
+</mat-card>

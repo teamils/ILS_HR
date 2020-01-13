@@ -153,7 +153,7 @@ constructor(private route:ActivatedRoute ,
     }
 
     SubmitData(){
-        this.CalculateLeaveDate(this.BirthDateSelect,new Date());
+      this.CalculateLeaveDate(this.BirthDateSelect,new Date());
        if(this.subtractYear < 18){
           alert("ต้องมีอายุ 18ปีบริบูรณ์");
         }
@@ -163,7 +163,7 @@ constructor(private route:ActivatedRoute ,
           || this.BirthDateSelect == null || this.personID == null
            || this.callContact == null
             || this.homeNo == null || this.homeNowAddress == null
-             || this.startWorks == null || this.positionSelect == null
+             || this.startWorks == null || this.myControl.value == null
               || this.departmentSelect == null || this.typeNameSelect == null
                || this.educationSelect == null || this.bankSelect == null
                 || this.bankNumbers == null || this.role_statusSelect == null){
@@ -174,7 +174,7 @@ constructor(private route:ActivatedRoute ,
        this.http.post(this.API3 + /ILS_HR/ + this.employeeMasterCustomerCode + '/' + this.prefixSelect  + '/' + this.empMasterFirstName +'/' + this.empMasterLastName
        +'/' + this.empMasterNickName +'/' + this.genderSelect  +'/' + this.BirthDateSelect
        +'/' + this.personID +'/' + this.callContact +'/' + this.emails +'/' + this.homeNo +'/' + this.homeNowAddress +'/'+ this.emergencyContact
-       +'/' + this.startWorks +'/' + this.positionSelect +'/' + this.departmentSelect +'/' + this.typeNameSelect
+       +'/' + this.startWorks +'/' + this.myControl.value +'/' + this.departmentSelect +'/' + this.typeNameSelect
        +'/' + this.educationSelect +'/' + this.bankSelect +'/'+ this.bankNumbers +'/'+ this.role_statusSelect +'/'+ this.passwordCreate +'/'+ this.fName +'/'+ this.lName,{})
                   .subscribe(
                                  data => {

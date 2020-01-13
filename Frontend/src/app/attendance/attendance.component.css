@@ -18,10 +18,41 @@
    margin-left: auto;
    margin-bottom: auto;
 }
+th.mat-column-number,
+   th.mat-column-date,
+   th.mat-column-leaveType,
+   th.mat-column-halfDay,
+   th.mat-column-startDate,
+   th.mat-column-reason,
+   th.mat-column-approvedBySupervisor,
+   th.mat-column-approvedByManager,
+   th.mat-column-leaveStatus,
+   th.mat-column-del,
+   th.mat-column-endDate2,
+   th.mat-column-total,
+   th.mat-column-reasonNotApprove,
+   th.mat-column-isPayment,
+   td.mat-column-date,
+   td.mat-column-startDate,
+   td.mat-column-endDate2,
+   td.mat-column-leaveType{
+          text-align: center;
+   }
+
+   td.mat-column-number,th.mat-column-number{width:10px;}
+   td.mat-column-date{width:150px;}
+   td.mat-column-leaveType,th.mat-column-leaveType{width:80px;}
+   td.mat-column-startDate,th.mat-column-startDate{width:120px;}
+   td.mat-column-endDate2,th.mat-column-endDate2{width:120px;}
+   td.mat-column-total,th.mat-column-total{width:70px;}
+   td.mat-column-isPayment,th.mat-column-isPayment{width:90px;}
+   td.mat-column-leaveStatus,th.mat-column-leaveStatus{width:90px;}
+   td.mat-column-del,th.mat-column-del{width:30px;}
+
 
 td{
   border: 1px solid #ffffff;
-  text-align: center;
+  //text-align: center;
 }
 th {
   border: 1px solid #ffffff;
@@ -37,30 +68,9 @@ table {
   height: auto;
 }
 
-   th.mat-column-number,
-   th.mat-column-date,
-   th.mat-column-leaveType,
-   th.mat-column-halfDay,
-   th.mat-column-startDate,
-   th.mat-column-reason,
-   th.mat-column-approvedBySupervisor,
-   th.mat-column-approvedByManager,
-   th.mat-column-leaveStatus,
-   th.mat-column-del,
-   th.mat-column-endDate2,
-   th.mat-column-total,
-   th.mat-column-reasonNotApprove,
-   th.mat-column-isPayment{
-          text-align: center;
-   }
 
-   td.mat-column-empFristName,
-   td.mat-column-empLastName,
-   td.mat-column-Position,
-   td.mat-column-Department,
-   td.mat-column-empType{
-      text-align: left;
-   }
+
+
 mat-grid-tile {
   background: lightblue;
 }

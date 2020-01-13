@@ -152,9 +152,9 @@
                   <mat-icon matSuffix>work</mat-icon>
                 </mat-form-field>
                 <!------ ตำแหน่ง ------>
-                <form>
+
                   <mat-form-field style="width :100%" >
-                    <input type="text" placeholder="ตำแหน่ง" aria-label="Number" required [(ngModel)]="positionSelect" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                    <input type="text" placeholder="ตำแหน่ง" aria-label="Number" required matInput [formControl]="myControl" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
                       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                         {{option}}
@@ -162,7 +162,7 @@
                     </mat-autocomplete>
                     <mat-icon matSuffix>work</mat-icon>
                   </mat-form-field>
-                </form>
+
                 <!--<mat-form-field class="formcenter" hintLabel=""  style="width :100%" >
                   <mat-select placeholder="ตำแหน่ง" required [(ngModel)]="positionSelect">
                     <mat-option *ngFor="let pos of position" [value]="pos.positionName">

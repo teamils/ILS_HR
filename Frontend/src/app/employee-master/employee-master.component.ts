@@ -6,7 +6,7 @@ import {Inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { HttpClient} from '@angular/common/http';
 import { ServiceService } from '../service/service.service';
-
+import { ExcelService } from '../excel.service';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import {MatBottomSheet,MatBottomSheetRef} from '@angular/material';
 import {  SelectionModel } from '@angular/cdk/collections';
@@ -76,17 +76,14 @@ export class EmployeeMasterComponent implements OnInit {
                 private route:ActivatedRoute ,
                 public dialog: MatDialog,
                  private http: HttpClient,
-                private service:ServiceService) { }
-
-
+                private service:ServiceService,
+                private excelService:ExcelService) { }
 
         ngOnInit() {
             this.service.getemployee().subscribe(data => {
                    this.employee = data;
                     this.dataSource.data = this.employee;
                     //console.log('employee->',this.employee);
-                    //console.log(this.employee.length);
-                    //this.datemmddyy(data);
               });
              this.dataSource.paginator = this.paginator;
              this.dataSource.sort = this.sort;
@@ -116,8 +113,35 @@ export class EmployeeMasterComponent implements OnInit {
               });
           }
 
-
-
+ exportexcel(): void{
+        let dataemployee : any[] = [];
+        for(let i = 0 ; i < this.employee.length ; i++){
+            dataemployee.push({
+              สำดับ : i+1,
+              คำนำหน้า : this.employee[i].prefix,
+              รหัสพนักงาน : this.employee[i].employeeMasterCustomerCode,
+              ชื่อ_สกุล : this.employee[i].employeeMasterFirstName+" "+this.employee[i].employeeMasterLastName,
+              ชื่อเล่น : this.employee[i].employeeMasterNickName,
+              เพศ : this.employee[i].employeeMasterGender,
+              วันเกิด : this.employee[i].employeeMasterBirthDate,
+              สถานะทำงาน : this.employee[i].maritalStatus,
+              รหัสประจำตัวประชาชน : this.employee[i].employeeMasterPersonID,
+              เบอร์โทร : this.employee[i].employeeMasterTel1,
+              อีเมล : this.employee[i].empEmail,
+              วันเริ่มงาน : this.employee[i].employeeMasterStartDate,
+              ที่อยู่ตามบัตรประชาชน : this.employee[i].empAddressReal,
+              ที่อยู่ปัจจุบัน : this.employee[i].empAddressPerson,
+              ผู้ที่ติดต่อในกรณีฉุกเฉิน : this.employee[i].emergencyContact,
+              เเผนก : this.employee[i].departmentid.departmentName,
+              ตำเเหน่ง : this.employee[i].employeePosition,
+              ประเภทการทำงาน : this.employee[i].employeeType,
+              วุฒิการศึกษา : this.employee[i].education,
+              ธนาคาร : this.employee[i].bank,
+              เลขบัญชี : this.employee[i].bankNumber,
+            });
+        }
+        this.excelService.exportAsExcelFile(dataemployee, 'Data-Employee');
+    }
 
 
 }

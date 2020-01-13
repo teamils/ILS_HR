@@ -103,5 +103,9 @@ export class ServiceService {
   getDepartmentMasterRole2(employeeMasterID : any):Observable<any>{
       return this.http.get(this.API+'/getDepartmentMasterRole' +'/'+ employeeMasterID,{})
   }
+  getDepartmentMasterRoleFindByEmpCode(empCode : String):Observable<any>{
+      return this.http.get(this.API+'/getDepartmentMasterRoleFindByEmpCode' +'/'+ empCode,{})
+  }
+
 
 }

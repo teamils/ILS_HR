@@ -69,5 +69,32 @@ public class GetToComboboxController {
         return empStatusRepository.findAll().stream().collect(Collectors.toList());
     }
 
+    @PostMapping(path = "/insertBank/{bankName}")
+    public Bank insertBank(@PathVariable String bankName) {
+       Bank bank = new Bank();
+       bank.setBankName(bankName);
+       bankRepository.save(bank);
+       return null;
+    }
+    @DeleteMapping("/deleteBank/{bankID}")
+    public Bank deleteBank(@PathVariable long bankID) {
+        Bank bank = bankRepository.findById(bankID).get();
+        bankRepository.delete(bank);
+        return null;
+    }
+
+    @PostMapping(path = "/insertDepartment/{departmentInput}")
+    public Department insertDepartment(@PathVariable String departmentInput) {
+        Department insertDepartment = new Department();
+        insertDepartment.setDepartmentName(departmentInput);
+        departmentRepository.save(insertDepartment);
+        return null;
+    }
+    @DeleteMapping("/deleteDepartment/{departmentID}")
+    public Department deleteDepartment(@PathVariable long departmentID) {
+        Department department = departmentRepository.findById(departmentID).get();
+        departmentRepository.delete(department);
+        return null;
+    }
 
 }
