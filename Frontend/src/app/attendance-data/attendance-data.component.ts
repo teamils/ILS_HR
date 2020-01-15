@@ -8,7 +8,7 @@ import { ServiceService } from '../service/service.service';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
-import { AppComponent } from '../app.component';
+import { API1 } from '../app.component';
 import {FormControl} from '@angular/forms';
 import { AttendanceComponent } from '../attendance/attendance.component';
 import { ExcelService } from '../excel.service';
@@ -26,7 +26,6 @@ export interface PeriodicElement {
   styleUrls: ['./attendance-data.component.css']
 })
 export class AttendanceDataComponent implements OnInit {
-  public API = '//localhost:8080';
   leaves  : Array<any>;
   department: Array<any>;
   departmentSelect:any;
@@ -35,6 +34,7 @@ export class AttendanceDataComponent implements OnInit {
   interval:any;
   dis;
   dataSearch;
+  progressBar=false;
   firstNameOnLogin = localStorage.getItem('fName');
   lastNameOnLogin  = localStorage.getItem('lName');
   empId = localStorage.getItem('empId');
@@ -47,9 +47,8 @@ export class AttendanceDataComponent implements OnInit {
             private route:ActivatedRoute ,
             public dialog: MatDialog,
              private http: HttpClient,
-             public api : AppComponent,
              private excelService:ExcelService) { }
-    public API2 = this.api.API;
+
 
   ngOnDestroy() {
     if (this.interval) { // show table Leave
@@ -57,10 +56,12 @@ export class AttendanceDataComponent implements OnInit {
     }
   }
   ngOnInit() {
+        this.progressBar = true;
         this.service.getshowLeavesToNotComplete().subscribe(data => {
+            this.progressBar = false;
             this.leaves = data;
             this.dataSource.data = this.leaves;
-            console.log('leaves -> ',this.leaves);
+            //console.log('leaves -> ',this.leaves);
         });
         this.service.getDepartment().subscribe(data => {
                this.department = data;
@@ -79,10 +80,12 @@ export class AttendanceDataComponent implements OnInit {
             this.onChange();
           }
         onChange(){
+          this.progressBar = true;
            this.interval = setTimeout(() => {  //show table Leave
               if(this.isChecked == true){
                 this.dis=true;
                 this.service.getshowLeavesToComplete().subscribe(dataLeavesToComplete => {
+                      this.progressBar = false;
                       this.leaves = dataLeavesToComplete;
                       this.dataSource.data = this.leaves;
                       //console.log('leaves -> ',this.leaves);
@@ -92,6 +95,7 @@ export class AttendanceDataComponent implements OnInit {
               else{
                 this.dis=false;
                   this.service.getshowLeavesToNotComplete().subscribe(data => {
+                    this.progressBar = false;
                     this.leaves = data;
                     this.dataSource.data = this.leaves;
                     //console.log('leaves -> ',this.leaves);
@@ -108,6 +112,7 @@ export class AttendanceDataComponent implements OnInit {
     }
     SearchEmployeeByDepartmentID(){
       this.service.getSearchEmployeeByDepartmentID(this.departmentSelect).subscribe(data => {
+              //console.log(data);
               this.leaves = data;
               this.dataSource.data = this.leaves;
       });
@@ -152,7 +157,6 @@ export interface DialogData {
     templateUrl: 'attendanceDelete.html',
   })
   export class AttendanceDeleteDialog {
-    public API = '//localhost:8080/';
     leavesID: string;
     isActiveAttendance:string;
     selectAttendanceDate : String;
@@ -171,7 +175,7 @@ export interface DialogData {
     }
 
     DeleteAttendance(){
-               this.http.post(this.API + '/deleteAttendance/' + this.leavesID ,{})
+               this.http.post(API1 + '/deleteAttendance/' + this.leavesID ,{})
                                      .subscribe(
                                          data => {
                                              console.log('PUT Request is successful');
@@ -202,7 +206,6 @@ export interface EditPaymentDialogData {
     templateUrl: 'editPayment.html',
   })
   export class EditPaymentDialog {
-    public API = '//localhost:8080';
     empId = localStorage.getItem('empId');
     firstNameOnLogin = localStorage.getItem('fName');
     lastNameOnLogin  = localStorage.getItem('lName');
@@ -266,7 +269,7 @@ export interface EditPaymentDialogData {
     }
 
     ConfirmByHR(){
-        this.http.post(this.API + '/confirmByHR/' + this.leavesID +'/'+ this.isPayments +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin +'/'+ this.paymentReson ,{}).subscribe(data => {
+        this.http.post(API1 + '/confirmByHR/' + this.leavesID +'/'+ this.isPayments +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin +'/'+ this.paymentReson ,{}).subscribe(data => {
             //console.log('Approve is successful');
             alert("Confirm successful");
              this.dialogRef.close();
@@ -282,7 +285,7 @@ export interface EditPaymentDialogData {
     }
 
     UpdateLeaveNumber(){
-        this.http.post(this.API + '/UpdateLeaveNumber/' + this.leavesNumbersID +'/'+ this.diffDay  +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin +'/'+ this.statusLabelLeaveHalfDay ,{}).subscribe(
+        this.http.post(API1 + '/UpdateLeaveNumber/' + this.leavesNumbersID +'/'+ this.diffDay  +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin +'/'+ this.statusLabelLeaveHalfDay ,{}).subscribe(
           dataupdate => {
             console.log('Update Leave Number is successful');
           },

@@ -1,5 +1,5 @@
 <mat-card class="example-card">
-  <span class="example-spacer"><h1 align="center">Add Data Combobox</h1></span>
+  <span class="example-spacer"><h1 align="center">ADD MAIN DATA</h1></span>
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -71,6 +71,256 @@
         </tr>
       </table>
     </mat-expansion-panel> <!-- DEPARTMENT -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title><b>POSITION</b></mat-panel-title>
+        <mat-panel-description>Position information management</mat-panel-description>
+      </mat-expansion-panel-header>
+      <table  cellspacing="0" border="1">
+        <tr>
+          <th>No.</th>
+          <th width="250px">Position name</th>
+          <th width="10px">Delete</th>
+        </tr>
+        <tr *ngFor="let value of position;let i = index">
+          <td align="center">{{i+1}}.</td>
+          <td>{{value.positionName}}</td>
+          <td align="center">
+            <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="DeletePosition(value.positionID);"  #ckeckEdit>
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" colspan="2">
+            <mat-form-field class="example-form-field" appearance="outline" style="width:100%;heigth:100%">
+              <input matInput type="text" placeholder="input position name" [(ngModel)]="positionInput">
+              <button mat-button *ngIf="positionInput" matSuffix mat-icon-button aria-label="Clear" (click)="positionInput=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-raised-button color="primary" (click)="InsertPosition()">ADD</button>
+          </td>
+        </tr>
+      </table>
+    </mat-expansion-panel> <!-- POSITION -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title><b>EDUCTION</b></mat-panel-title>
+        <mat-panel-description>Education information management</mat-panel-description>
+      </mat-expansion-panel-header>
+      <table  cellspacing="0" border="1">
+        <tr>
+          <th>No.</th>
+          <th width="250px">Education name</th>
+          <th width="10px">Delete</th>
+        </tr>
+        <tr *ngFor="let value of education;let i = index">
+          <td align="center">{{i+1}}.</td>
+          <td>{{value.educationName}}</td>
+          <td align="center">
+            <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="Deleteeducation(value.educationID);"  #ckeckEdit>
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" colspan="2">
+            <mat-form-field class="example-form-field" appearance="outline" style="width:100%;heigth:100%">
+              <input matInput type="text" placeholder="input education name" [(ngModel)]="educationInput">
+              <button mat-button *ngIf="educationInput" matSuffix mat-icon-button aria-label="Clear" (click)="educationInput=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-raised-button color="primary" (click)="Inserteducation()">ADD</button>
+          </td>
+        </tr>
+      </table>
+    </mat-expansion-panel> <!-- EDUCTION -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title><b>EMPLOYEE TYPE</b></mat-panel-title>
+        <mat-panel-description>EmployeeType information management</mat-panel-description>
+      </mat-expansion-panel-header>
+      <table  cellspacing="0" border="1">
+        <tr>
+          <th>No.</th>
+          <th width="250px">EmployeeType name</th>
+          <th width="10px">Delete</th>
+        </tr>
+        <tr *ngFor="let value of employeeType;let i = index">
+          <td align="center">{{i+1}}.</td>
+          <td>{{value.employeeTypeName}}</td>
+          <td align="center">
+            <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="DeleteEmployeeType(value.employeeTypeID);"  #ckeckEdit>
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" colspan="2">
+            <mat-form-field class="example-form-field" appearance="outline" style="width:100%;heigth:100%">
+              <input matInput type="text" placeholder="input employee type name" [(ngModel)]="employeeTypeInput">
+              <button mat-button *ngIf="employeeTypeInput" matSuffix mat-icon-button aria-label="Clear" (click)="employeeTypeInput=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-raised-button color="primary" (click)="InsertEmployeeType()">ADD</button>
+          </td>
+        </tr>
+      </table>
+    </mat-expansion-panel> <!-- EMPLOYEE TYPE -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title><b>EMPLOYEE STATUS</b></mat-panel-title>
+        <mat-panel-description>Employee status information management</mat-panel-description>
+      </mat-expansion-panel-header>
+      <table  cellspacing="0" border="1">
+        <tr>
+          <th>No.</th>
+          <th width="250px">Employee status name</th>
+          <th width="10px">Delete</th>
+        </tr>
+        <tr *ngFor="let value of empStatus;let i = index">
+          <td align="center">{{i+1}}.</td>
+          <td>{{value.empStatusName}}</td>
+          <td align="center">
+            <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="DeleteEmpStatus(value.empStatusID);"  #ckeckEdit>
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" colspan="2">
+            <mat-form-field class="example-form-field" appearance="outline" style="width:100%;heigth:100%">
+              <input matInput type="text" placeholder="input employee status name" [(ngModel)]="empStatusInput">
+              <button mat-button *ngIf="empStatusInput" matSuffix mat-icon-button aria-label="Clear" (click)="empStatusInput=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-raised-button color="primary" (click)="InsertEmpStatus()">ADD</button>
+          </td>
+        </tr>
+      </table>
+    </mat-expansion-panel> <!-- EMPLOYEE STATUS -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title><b>GENDER</b></mat-panel-title>
+        <mat-panel-description>Gender information management</mat-panel-description>
+      </mat-expansion-panel-header>
+      <table  cellspacing="0" border="1">
+        <tr>
+          <th>No.</th>
+          <th width="250px">Gender name</th>
+          <th width="10px">Delete</th>
+        </tr>
+        <tr *ngFor="let value of gender;let i = index">
+          <td align="center">{{i+1}}.</td>
+          <td>{{value.genderName}}</td>
+          <td align="center">
+            <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="DeleteGender(value.genderID);"  #ckeckEdit>
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" colspan="2">
+            <mat-form-field class="example-form-field" appearance="outline" style="width:100%;heigth:100%">
+              <input matInput type="text" placeholder="input gender name" [(ngModel)]="genderInput">
+              <button mat-button *ngIf="genderInput" matSuffix mat-icon-button aria-label="Clear" (click)="genderInput=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-raised-button color="primary" (click)="InsertGender()">ADD</button>
+          </td>
+        </tr>
+      </table>
+    </mat-expansion-panel> <!-- GENDER -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title><b>PREFIX</b></mat-panel-title>
+        <mat-panel-description>Prefix information management</mat-panel-description>
+      </mat-expansion-panel-header>
+      <table  cellspacing="0" border="1">
+        <tr>
+          <th>No.</th>
+          <th width="250px">Prefix name</th>
+          <th width="10px">Delete</th>
+        </tr>
+        <tr *ngFor="let value of prefix;let i = index">
+          <td align="center">{{i+1}}.</td>
+          <td>{{value.prefixName}}</td>
+          <td align="center">
+            <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="DeletePrefix(value.prefixID);"  #ckeckEdit>
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" colspan="2">
+            <mat-form-field class="example-form-field" appearance="outline" style="width:100%;heigth:100%">
+              <input matInput type="text" placeholder="input prefix name" [(ngModel)]="prefixInput">
+              <button mat-button *ngIf="prefixInput" matSuffix mat-icon-button aria-label="Clear" (click)="prefixInput=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-raised-button color="primary" (click)="InsertPrefix()">ADD</button>
+          </td>
+        </tr>
+      </table>
+    </mat-expansion-panel> <!-- PREFIX -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title><b>MASTER VACATION DAY</b></mat-panel-title>
+        <mat-panel-description>Master vacation day information management</mat-panel-description>
+      </mat-expansion-panel-header>
+      <table  cellspacing="0" border="1">
+        <tr>
+          <th width="5px">No.</th>
+          <th width="100px">Year</th>
+          <th width="100px">วันลาพักร้อน</th>
+          <th width="10px">Delete</th>
+        </tr>
+        <tr *ngFor="let value of masterAttendance;let i = index">
+          <td align="center">{{i+1}}.</td>
+          <td align="center">{{value.year}}</td>
+          <td align="center">{{value.dayLeave}}</td>
+          <td align="center">
+            <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="DeleteMasterAttendance(value.masterAttendanceID);"  #ckeckEdit>
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td valign="middle">
+            <mat-form-field class="example-form-field" appearance="outline" style="width:100px;">
+              <input matInput type="number" placeholder="input year" [(ngModel)]="masterAttendance_year">
+            </mat-form-field>
+          </td>
+          <td valign="middle">
+            <mat-form-field class="example-form-field" appearance="outline" style="width:100px;">
+              <input matInput type="number" placeholder="input leaves day" [(ngModel)]="masterAttendance_leaveDay">
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-raised-button color="primary" (click)="InsertMasterAttendance()">ADD</button>
+          </td>
+        </tr>
+      </table>
+    </mat-expansion-panel> <!-- MASTER VACATION DAY -->
   </mat-accordion>
 
 </mat-card>

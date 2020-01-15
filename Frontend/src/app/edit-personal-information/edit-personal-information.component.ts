@@ -6,6 +6,7 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef,  OnDestroy} from '@angular/core';
 import { ServiceService } from '../service/service.service';
 import { HttpClient} from '@angular/common/http';
+import { API1 } from '../app.component';
 
 @Component({
   selector: 'app-edit-personal-information',
@@ -13,8 +14,6 @@ import { HttpClient} from '@angular/common/http';
   styleUrls: ['./edit-personal-information.component.css']
 })
 export class EditPersonalInformationComponent implements OnInit {
-    //public API = 'http://192.168.1.47:8080';
-    public API = '//localhost:8080';
     employee: Array<any>;
     empId = localStorage.getItem('empId');
     fName = localStorage.getItem('fName');
@@ -52,6 +51,7 @@ export class EditPersonalInformationComponent implements OnInit {
     prefix: Array<any>;
     empStatus: Array<any>;
     NewRoleStatus:string;
+    hide: any;
     constructor(
       public dialogRef: MatDialogRef<EditPersonalInformationComponent>
                       ,changeDetectorRef: ChangeDetectorRef
@@ -110,7 +110,7 @@ export class EditPersonalInformationComponent implements OnInit {
                  });
     }
     EditEmployee(){
-            this.http.post(this.API + '/editemployee/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
+            this.http.post(API1 + '/editemployee/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
                                                     +'/'+ this.NewemployeeMasterLastName +'/'+ this.NewemployeeMasterNickName +'/'+ this.NewemployeeMasterGender
                                                     +'/'+ this.NewmaritalStatus +'/'+ this.NewemployeeMasterBirthDate +'/'+ this.NewemployeeMasterPersonID
                                                     +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewempEmail +'/'+ this.NewempAddressReal +'/'+ this.NewempAddressPerson +'/'+ this.NewemergencyContact
@@ -130,7 +130,7 @@ export class EditPersonalInformationComponent implements OnInit {
       }
 
     BackupEmployeeMaster(){
-            this.http.post(this.API + '/BackupEmployeeMaster/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
+            this.http.post(API1 + '/BackupEmployeeMaster/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
                                                     +'/'+ this.NewemployeeMasterLastName +'/'+ this.NewemployeeMasterNickName +'/'+ this.NewemployeeMasterGender
                                                     +'/'+ this.NewmaritalStatus +'/'+ this.NewemployeeMasterBirthDate +'/'+ this.NewemployeeMasterPersonID
                                                     +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewempEmail +'/'+ this.NewempAddressReal +'/'+ this.NewempAddressPerson +'/'+ this.NewemergencyContact

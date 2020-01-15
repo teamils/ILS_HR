@@ -1,8 +1,15 @@
-<mat-progress-bar mode="indeterminate" *ngIf="x"></mat-progress-bar>
+<mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
 <mat-toolbar color="primary">
   <span>Approve(Attendance) by manager</span>&nbsp;&nbsp;&nbsp;&nbsp;
   <span class="example-fill-remaining-space" style="align:center;"></span>
   <span>
+     ค้นหา :
+    <mat-form-field (keyup)="SearchEmployeeByCodeAndNameInApproveByManager()">
+       <mat-label></mat-label>
+      <input matInput placeholder="รหัสพนักงาน/ชื่อ-สกุล" [(ngModel)]="dataSearch">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    &nbsp;&nbsp;&nbsp;&nbsp;
       <mat-slide-toggle (change)="onChange()" [(ngModel)]="isChecked">Approve</mat-slide-toggle>
   </span>
 </mat-toolbar>

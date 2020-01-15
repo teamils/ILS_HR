@@ -1,19 +1,27 @@
-
+<mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
 <mat-toolbar color="primary">
   <span>Approve(Attendance) by supervisor</span>&nbsp;&nbsp;&nbsp;&nbsp;
   <span class="example-fill-remaining-space" style="align:center;"></span>
   <span>
-      <mat-slide-toggle (change)="onChange()" [(ngModel)]="isChecked">Approve</mat-slide-toggle>
+    ค้นหา :
+    <mat-form-field (keyup)="SearchEmployeeByCodeAndNameInApproveBySup()">
+       <mat-label></mat-label>
+      <input matInput placeholder="รหัสพนักงาน/ชื่อ-สกุล" [(ngModel)]="dataSearch">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <mat-slide-toggle (change)="onChange()" [(ngModel)]="isChecked">Approve</mat-slide-toggle>
   </span>
 </mat-toolbar>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" disabled="true">
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort >
   <ng-container matColumnDef="number" >
     <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>
     <td mat-cell *matCellDef="let element ; let i = index">{{i+1}}.</td>
   </ng-container>
   <!-- Position Column -->
-  <ng-container matColumnDef="employeeCode">
-    <th mat-header-cell *matHeaderCellDef><font color="black"><b>รหัสพนักงาน</b></font></th>
+  <ng-container matColumnDef="employeeCode" >
+    <th mat-header-cell *matHeaderCellDef mat-sort-header><font color="black"><b>รหัสพนักงาน</b></font></th>
     <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.employeeMasterCustomerCode}} </td>
   </ng-container>
 

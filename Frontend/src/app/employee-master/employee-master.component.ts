@@ -17,7 +17,7 @@ import { EmployeeDeleteComponent } from '../employee-delete/employee-delete.comp
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import { AppComponent } from '../app.component';
+import { API1 } from '../app.component';
 
 
 export interface Emp{
@@ -39,6 +39,7 @@ export class EmployeeMasterComponent implements OnInit {
     employeeSelect : '';
     dataSearch: null;
     accountuser : Array<any>;
+    progressBar=false;
     pipe = new DatePipe('en-TH');
     displayedColumns: string[] = [/*'select',*/'number','empCodeID'/*,'prefix'*/,'empFristName','empLastName',/*'NickName',*/'Gender'/*,'Status','BirthDate'*/ /*,'Age'*/ ,'PersonID','Tel1'/*,'Email','AddressReal','AddressPerson'*/,'StartDate','Position','Department','empType'/*,'educations'*//*,'bank','bankNumber'*/,'del','Edit'];
     dataSource = new MatTableDataSource<Emp>(this.employee);
@@ -80,13 +81,16 @@ export class EmployeeMasterComponent implements OnInit {
                 private excelService:ExcelService) { }
 
         ngOnInit() {
+            this.progressBar=true;
             this.service.getemployee().subscribe(data => {
+                    this.progressBar=false;
                    this.employee = data;
                     this.dataSource.data = this.employee;
                     //console.log('employee->',this.employee);
               });
              this.dataSource.paginator = this.paginator;
              this.dataSource.sort = this.sort;
+
 
         }
         startwork: Array<any>;
@@ -113,7 +117,7 @@ export class EmployeeMasterComponent implements OnInit {
               });
           }
 
- exportexcel(): void{
+    exportexcel(): void{
         let dataemployee : any[] = [];
         for(let i = 0 ; i < this.employee.length ; i++){
             dataemployee.push({

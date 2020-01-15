@@ -7,7 +7,7 @@ import {ChangeDetectorRef,  OnDestroy} from '@angular/core';
 import { ServiceService } from '../service/service.service';
 import { HttpClient} from '@angular/common/http';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
-import { AppComponent } from '../app.component';
+import { API1 } from '../app.component';
 
 @Component({
   selector: 'app-attendance-show-leavenumber',
@@ -16,7 +16,6 @@ import { AppComponent } from '../app.component';
 })
 
 export class AttendanceShowLeavenumberComponent implements OnInit {
-  public API = '//localhost:8080';
   leaveNumber : Array<any>;
   leave : Array<any>;
   employeeID;
@@ -30,7 +29,6 @@ export class AttendanceShowLeavenumberComponent implements OnInit {
                       ,private route:ActivatedRoute
                       ,private service:ServiceService
                       ,private http: HttpClient) { }
-
 
   ngOnInit() {
       this.service.getShowLeavesNumber(this.empId).subscribe(data => {

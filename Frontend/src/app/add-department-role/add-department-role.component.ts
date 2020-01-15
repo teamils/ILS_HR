@@ -9,7 +9,7 @@ import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/mater
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { ReasonNotApproveDialog } from '../approve-by-supervisor/approve-by-supervisor.component';
-import { AppComponent } from '../app.component';
+import { API1 } from '../app.component';
 import {FormControl} from '@angular/forms';
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
@@ -46,9 +46,7 @@ export class AddDepartmentRoleComponent implements OnInit {
               private router:Router,
               private route:ActivatedRoute ,
               public dialog: MatDialog,
-               private http: HttpClient,
-               public api : AppComponent) { }
-      public APIs = this.api.API;
+               private http: HttpClient) { }
 
   ngOnInit() {
         this.service.getDepartment().subscribe(data => {
@@ -102,14 +100,14 @@ deNamesubstr;
 
   InsertDataDepartmentRole(){
     for (let i = 0; i < this.departmentSelect.length; i++) {
-        this.http.get(this.APIs + '/DepartmentMasterRoleFindByEmpIDAndDepartmentID/' + this.employeeMasterID +'/'+ this.departmentSelect[i] ,{})
+        this.http.get(API1 + '/DepartmentMasterRoleFindByEmpIDAndDepartmentID/' + this.employeeMasterID +'/'+ this.departmentSelect[i] ,{})
                 .subscribe(
                     data => {
                         if(data!=null){
                             alert("คุณ"+this.employeeMasterFirstName+" "+this.employeeMasterLastName+" มีเเผนก"+this.departmentSelect[i]+"อยู่ภายใต้การดูแลอยู่แล้ว");
                         }
                         else{
-                            this.http.post(this.APIs + '/insertDataDepartmentRole/' + this.employeeMasterID +'/'+ this.departmentSelect[i] ,{})
+                            this.http.post(API1 + '/insertDataDepartmentRole/' + this.employeeMasterID +'/'+ this.departmentSelect[i] ,{})
                               .subscribe(
                                   data => {
                                       console.log(data);
@@ -129,7 +127,7 @@ deNamesubstr;
 
   Delete(row : any){
     //console.log(row.departmentMasterRoleID);
-    this.http.delete(this.APIs + '/deleteRole/' + row.departmentMasterRoleID ,{})
+    this.http.delete(API1 + '/deleteRole/' + row.departmentMasterRoleID ,{})
                               .subscribe(
                                   data => {
                                       alert("Delete is successful");

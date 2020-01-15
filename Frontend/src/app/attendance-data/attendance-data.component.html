@@ -1,4 +1,4 @@
-
+<mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
 <mat-toolbar color="primary">
   <span>Attendance Information</span>&nbsp;&nbsp;&nbsp;&nbsp;
   <span class="example-fill-remaining-space" style="align:center;">
@@ -15,29 +15,26 @@
 <mat-card>
   <mat-toolbar-row>
   ค้นหา :
-    <mat-form-field  class="searchStyle" (keydown.enter)="SearchEmployeeByCodeAndName()">
+    <mat-form-field  class="searchStyle" (keyup)="SearchEmployeeByCodeAndName()">
       <mat-label>Search</mat-label>
       <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
+    &nbsp; &nbsp;
+    ค้นหาโดยเเผนก :
+    <mat-form-field class="formcenter" hintLabel="" style="width :200px" (keyup)="SearchEmployeeByDepartmentID()">
+      <mat-select placeholder="Search by department"  [(ngModel)]="departmentSelect">
+        <mat-option *ngFor="let depart of department" [value]="depart.departmentID">
+          {{depart.departmentName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>&nbsp;
+    <button mat-raised-button (click)="SearchEmployeeByDepartmentID()"><mat-icon matSuffix>search</mat-icon></button>
     <span class="example-spacer"></span>
     <mat-chip color="accent" matTooltip="นำข้อมูลออก" (click)="exportexcel()" selected>Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></mat-chip>
   </mat-toolbar-row>
-
-
-  <!-- &nbsp; &nbsp;
-  <mat-form-field class="formcenter" hintLabel="" style="width :200px">
-    <mat-select placeholder="Search by department"  [(ngModel)]="departmentSelect">
-      <mat-option *ngFor="let depart of department" [value]="depart.departmentID">
-        {{depart.departmentName}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  &nbsp;
-  <button mat-raised-button (click)="SearchEmployeeByDepartmentID()"><mat-icon matSuffix>search</mat-icon></button>
-  {{departmentSelect}} -->
 </mat-card>
-
+<div class="example-container mat-elevation-z8">
 <table mat-table [dataSource]="dataSource" matSort  class="mat-elevation-z8">
   <ng-container matColumnDef="number">
     <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>
@@ -96,7 +93,7 @@
   </ng-container>
 
   <ng-container matColumnDef="reason">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header><font color="black"><b>เหตุผล</b></font></th>
+    <th mat-header-cell *matHeaderCellDef ><font color="black"><b>เหตุผล</b></font></th>
     <td mat-cell *matCellDef="let element"> {{element.reasonForAllDay}} </td>
   </ng-container>
 
@@ -120,13 +117,13 @@
     <td mat-cell *matCellDef="let element"> {{element.isPayment}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="leaveStatus">
+  <ng-container matColumnDef="leaveStatus" >
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>สถานะ</b></font>  </th>
     <td mat-cell *matCellDef="let element"> {{element.leaveStatus}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="confirm">
-    <th mat-header-cell *matHeaderCellDef><font  color="black"><b></b></font></th>
+  <ng-container matColumnDef="confirm" stickyEnd>
+    <th mat-header-cell *matHeaderCellDef ><font  color="black"><b></b></font></th>
     <td mat-cell *matCellDef="let element">
         <button mat-icon-button style="color: green;" matTooltip="ยืนยัน" matTooltipPosition="left"  [disabled]="dis" (click)="getEditPaymentDialog(element);" aria-label="Example icon-button with a heart icon">
           <mat-icon>check_circle_outline</mat-icon>
@@ -134,8 +131,8 @@
     </td>
   </ng-container>
 
-  <ng-container matColumnDef="del">
-    <th mat-header-cell *matHeaderCellDef><font  color="black"><b></b></font></th>
+  <ng-container matColumnDef="del" stickyEnd>
+    <th mat-header-cell *matHeaderCellDef ><font  color="black"><b></b></font></th>
     <td mat-cell *matCellDef="let element" >
       <button mat-icon-button style="color: red;" matTooltip="ยกเลิกการลา" matTooltipPosition="left" (click)="DeleteAttendance(element);" [disabled]="dis" #ckeckEdit>
         <mat-icon>highlight_off</mat-icon>
@@ -155,4 +152,6 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+</div>
   <mat-paginator [pageSizeOptions]="[15, 30, 50, 100]" showFirstLastButtons ></mat-paginator>
+

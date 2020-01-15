@@ -6,6 +6,7 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef,  OnDestroy} from '@angular/core';
 import { ServiceService } from '../service/service.service';
 import { HttpClient} from '@angular/common/http';
+import { API1 } from '../app.component';
 
 export interface DialogData {
   employeeMasterID : null;
@@ -18,8 +19,6 @@ export interface DialogData {
   styleUrls: ['./employee-delete.component.css']
 })
 export class EmployeeDeleteComponent implements OnInit {
-    //public API = 'http://192.168.1.47:8080';
-    public API = '//localhost:8080';
     hide : boolean;
     panelOpenState : boolean=true;
     NewIsActive: string;
@@ -46,7 +45,7 @@ export class EmployeeDeleteComponent implements OnInit {
   }
 
   DeleteEmployee(){
-             this.http.post(this.API + '/deleteEmployee/' + this.NewemployeeMasterID +'/'+ this.NewIsActive ,{})
+             this.http.post(API1 + '/deleteEmployee/' + this.NewemployeeMasterID +'/'+ this.NewIsActive ,{})
                                    .subscribe(
                                        data => {
                                            console.log('PUT Request is successful');

@@ -3,12 +3,11 @@ import {ActivatedRoute} from "@angular/router";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { ServiceService } from '../service/service.service';
 import { HttpClient} from '@angular/common/http';
-
+import { ServiceService } from '../service/service.service';
 import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
-import { AppComponent } from '../app.component';
+import { API1 } from '../app.component';
 import {FormControl} from '@angular/forms';
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
@@ -73,7 +72,7 @@ bankNumbers : null;
 role_status : Array<any>;
 role_statusSelect = '';
 passwordCreate : null;
-x:any=false;
+progressBar=false;
 empId = localStorage.getItem('empId');
 fName = localStorage.getItem('fName');
 lName = localStorage.getItem('lName');
@@ -81,9 +80,7 @@ lName = localStorage.getItem('lName');
 constructor(private route:ActivatedRoute ,
             public dialog: MatDialog,
             private http: HttpClient,
-            private service:ServiceService,
-            public api : AppComponent) { }
-    public API3 = this.api.API;
+            private service:ServiceService) { }
 
     ngOnInit() {
         this.route.params.subscribe(prams=>{
@@ -169,9 +166,8 @@ constructor(private route:ActivatedRoute ,
                 || this.bankNumbers == null || this.role_statusSelect == null){
                               alert("กรุณากรอกข้อมูลให้ครบ");
         }
-
         else{
-       this.http.post(this.API3 + /ILS_HR/ + this.employeeMasterCustomerCode + '/' + this.prefixSelect  + '/' + this.empMasterFirstName +'/' + this.empMasterLastName
+       this.http.post(API1 + /ILS_HR/ + this.employeeMasterCustomerCode + '/' + this.prefixSelect  + '/' + this.empMasterFirstName +'/' + this.empMasterLastName
        +'/' + this.empMasterNickName +'/' + this.genderSelect  +'/' + this.BirthDateSelect
        +'/' + this.personID +'/' + this.callContact +'/' + this.emails +'/' + this.homeNo +'/' + this.homeNowAddress +'/'+ this.emergencyContact
        +'/' + this.startWorks +'/' + this.myControl.value +'/' + this.departmentSelect +'/' + this.typeNameSelect
@@ -182,11 +178,13 @@ constructor(private route:ActivatedRoute ,
                                      alert("บันทึกสำเร็จ");
                                      window.location.reload(true);
                                       localStorage.setItem('links', 'employeeMaster');
+                                      this.progressBar=false;
                                  },
                                  error => {
                                      console.log('Error', error);
                                  }
                    );
+                  this.progressBar=true;
           }
 
     }

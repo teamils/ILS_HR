@@ -135,6 +135,7 @@ import { AddDataComboboxComponent } from './add-data-combobox/add-data-combobox.
           NgxMaterialTimepickerModule,
           NgSelectModule,
           ReactiveFormsModule,
+
        ],
 
    entryComponents: [EmployeeEditComponent,

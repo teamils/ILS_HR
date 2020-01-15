@@ -20,4 +20,20 @@ public class Education {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Education_seq")
     private Long educationID;
     private String educationName;
+
+    public Long getEducationID() {
+        return educationID;
+    }
+
+    public void setEducationID(Long educationID) {
+        this.educationID = educationID;
+    }
+
+    public String getEducationName() {
+        return educationName;
+    }
+
+    public void setEducationName(String educationName) {
+        this.educationName = educationName;
+    }
 }

@@ -21,18 +21,6 @@ public class LeaveTypeForAllday {
     private String leaveTypeForAlldayName;
     private double defaultLeaveDay;
 
-    public double getDefaultLeaveDay() {
-        return defaultLeaveDay;
-    }
-
-    public void setDefaultLeaveDay(double defaultLeaveDay) {
-        this.defaultLeaveDay = defaultLeaveDay;
-    }
-
-    public void setDefaultLeaveDay(int defaultLeaveDay) {
-        this.defaultLeaveDay = defaultLeaveDay;
-    }
-
     public Long getLeaveTypeForAlldayID() {
         return leaveTypeForAlldayID;
     }
@@ -47,5 +35,13 @@ public class LeaveTypeForAllday {
 
     public void setLeaveTypeForAlldayName(String leaveTypeForAlldayName) {
         this.leaveTypeForAlldayName = leaveTypeForAlldayName;
+    }
+
+    public double getDefaultLeaveDay() {
+        return defaultLeaveDay;
+    }
+
+    public void setDefaultLeaveDay(double defaultLeaveDay) {
+        this.defaultLeaveDay = defaultLeaveDay;
     }
 }

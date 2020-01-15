@@ -6,7 +6,7 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef,  OnDestroy} from '@angular/core';
 import { ServiceService } from '../service/service.service';
 import { HttpClient} from '@angular/common/http';
-import { AppComponent } from '../app.component';
+import { API1 } from '../app.component';
 
 export interface DialogData {
   employee : Array<any>;
@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
     NewPassword : String = null ;
     x:any=false;
     leaveTypeForAlldays: Array<any>;
+    progressBar=false;
     table : any = {
       leaID : '',
       empCode : '',
@@ -50,12 +51,20 @@ export class HomeComponent implements OnInit {
     }
 
     login(id,NewPassword){
-        if(this.id == null) alert("Please enter username");
-        else if(this.NewPassword == null) alert("Please enter password");
+        if(this.id == null){
+            alert("Please enter username");
+            this.progressBar=false;
+        }
+        else if(this.NewPassword == null){
+            alert("Please enter password");
+            this.progressBar=false;
+        }
         else{
-              this.x=true;
               this.service.getUserPassword(id,NewPassword).subscribe(data => {
-                if(data == null) alert("UserID and password not complete");
+                if(data == null){
+                    alert("UserID and password not complete");
+                    this.progressBar=false;
+                }
                 this.employee = data;
                 //console.table(data);
                 this.table.leaID = data.employeeMasterID;
@@ -71,7 +80,7 @@ export class HomeComponent implements OnInit {
                 localStorage.setItem('startDateInLogin', data.employeeMasterStartDate);
 
                 if(data != null){
-                    this.x=true;
+                    this.progressBar=false;
                     this.router.navigate(['newheader']);
                     localStorage.setItem('logouts', 'false');
                     if(data.roleStatus == "EMPLOYEE"){
@@ -96,10 +105,11 @@ export class HomeComponent implements OnInit {
                     }
                 }
               });
+              this.progressBar=true;
               this.id = null;
               this.NewPassword = null;
         }
-        this.x=false;
+
     }
 
 

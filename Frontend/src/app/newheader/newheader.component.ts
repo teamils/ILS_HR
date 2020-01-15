@@ -5,7 +5,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import {Router,ActivatedRoute} from "@angular/router";
 import { ServiceService } from '../service/service.service';
 import { Inject} from '@angular/core';
-import { AppComponent } from '../app.component';
+import { API1 } from '../app.component';
 import { EditPersonalInformationComponent } from '../edit-personal-information/edit-personal-information.component';
 
 export interface DialogData {
@@ -132,9 +132,7 @@ export class NewheaderComponent implements OnInit {
                               this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
                           }
                           else if(this.links == 'addDepartmentRole'){
-localStorage.setItem('selectAddDataCombobox', 'true');
-this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
-                              localStorage.setItem('selectAddDepartmentRole', 'false');
+                              localStorage.setItem('selectAddDepartmentRole', 'true');
                               this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
                               localStorage.setItem('selectApproveByManager', 'false');
                               this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');

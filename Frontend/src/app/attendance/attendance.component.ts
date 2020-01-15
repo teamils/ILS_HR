@@ -8,7 +8,7 @@ import { ServiceService } from '../service/service.service';
 import {  MatPaginator, MatTableDataSource } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
-import { AppComponent } from '../app.component';
+import { API1 } from '../app.component';
 import { Pipe, PipeTransform} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { AttendanceShowLeavenumberComponent } from '../attendance-show-leavenumber/attendance-show-leavenumber.component';
@@ -101,9 +101,8 @@ export class AttendanceComponent implements OnInit {
             private router:Router,
             private route:ActivatedRoute,
             public dialog: MatDialog,
-             private http: HttpClient,
-             public api : AppComponent) { }
-    public API1 = this.api.API;
+             private http: HttpClient) { }
+
 
   ngOnDestroy() {
     if (this.interval) { // show table Leave
@@ -112,8 +111,10 @@ export class AttendanceComponent implements OnInit {
   }
 
   ngOnInit() {
+      this.x=true;
       this.service.getleaveTypeForAlldays().subscribe(data => {
         this.leaveTypeForAlldays = data;
+        this.x=false;
         //console.table(this.leaveTypeForAlldays);
       });
 
@@ -182,7 +183,7 @@ export class AttendanceComponent implements OnInit {
       this.total = this.totalHour+'.'+this.totalMinute2;
       //console.log(this.total,'ชั่วโมง');
     setTimeout(() => {
-      this.http.post(this.API1  +/Time/+ this.startTimeSelect +'/'+ this.endTimeSelect ,{})
+      this.http.post(API1  +/Time/+ this.startTimeSelect +'/'+ this.endTimeSelect ,{})
                         .subscribe(
                                        data => {
                                            console.log(data);
@@ -207,7 +208,7 @@ export class AttendanceComponent implements OnInit {
         else if(this.startDate == null) alert("กรุณาเลือกวันลา");
         else if(this.reason == null) alert("กรุณากรอกเหตุผล");
         else{
-             this.http.post(this.API1  +/SaveLeaveHalfDay/+ this.table.leaID +'/'+ this.leaveTypeSelect
+             this.http.post(API1  +/SaveLeaveHalfDay/+ this.table.leaID +'/'+ this.leaveTypeSelect
                               +'/'+ this.labelLeaveHalfDay +'/'+ this.startDate  +'/'+ this.reason +'/'+
                               this.startTimeSelect +'/'+ this.endTimeSelect +'/'+ this.totalTime +'/'+
                               this.statusLabelLeaveHalfDay +'/'+ this.departmentIDLogin +'/'+ this.leavetatelAll.leavesNumbersID,{})
@@ -247,7 +248,7 @@ export class AttendanceComponent implements OnInit {
             alert("*คุณมีวัน"+this.leaveTypeSelect2+" = "+this.leavetatelAll.BalanceDay+"วัน\n"+"หากคุณต้องการ"+this.leaveTypeSelect2+" "+this.diffDay+"วัน คุณต้องคีย์ลา "+this.leavetatelAll.BalanceDay+"วัน หนึ่งครั้งและ "+this.diff+"วัน อีกหนึ่งครั้ง!");
         }
         else{
-             this.http.post(this.API1  +/SaveLeaveFullDay/+ this.table.leaID +'/'+ this.leaveTypeSelect2 +'/'+ this.startDate2 +'/'+  this.endDate2 +'/'+ this.reason2 +'/'+ this.diffDay +'/'+ this.leavetatelAll.leavesNumbersID +'/'+ this.departmentIDLogin ,{})
+             this.http.post(API1  +/SaveLeaveFullDay/+ this.table.leaID +'/'+ this.leaveTypeSelect2 +'/'+ this.startDate2 +'/'+  this.endDate2 +'/'+ this.reason2 +'/'+ this.diffDay +'/'+ this.leavetatelAll.leavesNumbersID +'/'+ this.departmentIDLogin ,{})
                         .subscribe(
                                        dataLeave => {
                                            console.log('PUT Request is successful', dataLeave);
@@ -277,8 +278,13 @@ export class AttendanceComponent implements OnInit {
            this.service.getShowLeavesNumber(this.empId).subscribe(data => {
                 //console.table(data);
                 if(data.length==0){
-                        this.http.post(this.API1  +/saveleaveNumber/+ this.empId +'/'+ this.sumDay_365 +'/'+ this.leaveTypeForAlldays.length +'/'+ this.table.fName +'/'+ this.table.lName ,{})
-                               .subscribe(dataleaveNumber => {console.log('PUT Request is successful');},error => {console.log('Error', error);});
+                        this.http.post(API1  +/saveleaveNumber/+ this.empId +'/'+ this.sumDay_365 +'/'+ this.leaveTypeForAlldays.length +'/'+ this.table.fName +'/'+ this.table.lName ,{})
+                               .subscribe(dataleaveNumber => {
+                                  console.log('PUT Request is successful');
+                                  window.location.reload(true);
+                               },error => {
+                                  console.log('Error', error);
+                               });
                 }
                 else{
                     this.leaveNumber = data;
@@ -388,7 +394,6 @@ export interface DialogData {
     templateUrl: 'attendanceDelete.html',
   })
   export class AttendanceCancelDialog {
-    public API = '//localhost:8080/';
     leavesID: string;
     isActiveAttendance:string;
     selectAttendanceDate : String;
@@ -404,7 +409,7 @@ export interface DialogData {
     }
 
     DeleteAttendance(){
-               this.http.post(this.API + '/CancelLeave/' + this.leavesID ,{})
+               this.http.post(API1 + '/CancelLeave/' + this.leavesID ,{})
                                      .subscribe(
                                          data => {
                                              console.log('PUT Request is successful');

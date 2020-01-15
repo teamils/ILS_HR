@@ -42,7 +42,8 @@
   </mat-card>
   &nbsp;
   <mat-form-field (keydown.enter)="SearchDepartmentRole()" class="mat-form-field2">
-    <input matInput  [(ngModel)]="searchDepartmentRole" placeholder="Search by employeeCode">
+    <mat-label>Search by employeeCode</mat-label>
+    <input matInput  [(ngModel)]="searchDepartmentRole" placeholder="รหัสพนักงานเท่านั้น!">
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 

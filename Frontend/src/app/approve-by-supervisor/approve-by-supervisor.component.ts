@@ -2,20 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { ViewChild,Inject  } from '@angular/core';
 import {Router} from "@angular/router";
 import {ActivatedRoute} from "@angular/router";
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { HttpClient} from '@angular/common/http';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ServiceService } from '../service/service.service';
-import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { ExcelService } from '../excel.service';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
-import { AppComponent } from '../app.component';
+import {MatBottomSheet,MatBottomSheetRef} from '@angular/material';
+import {  SelectionModel } from '@angular/cdk/collections';
+import {  DatePipe} from '@angular/common';
+import { EmployeeEditComponent } from '../employee-edit/employee-edit.component';
+import { NewheaderComponent } from '../newheader/newheader.component';
+import { EmployeeDeleteComponent } from '../employee-delete/employee-delete.component';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import { API1 } from '../app.component';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+export interface Emp{
+    empCodeIDxx : number;
+    employeeMasterCustomerCode : String;
 }
+
 @Component({
   selector: 'app-approve-by-supervisor',
   templateUrl: './approve-by-supervisor.component.html',
@@ -29,21 +37,25 @@ export class ApproveBySupervisorComponent implements OnInit {
   interval:any;
   leaveID;
   dis;
+  dataSearch='';
   empId = localStorage.getItem('empId');
   firstNameOnLogin = localStorage.getItem('fName');
   lastNameOnLogin  = localStorage.getItem('lName');
   departmentOnLogin = localStorage.getItem('departmentlogin');
-
+  progressBar=false;
   displayedColumns: string[] = ['number','employeeCode', 'name','department','date', 'leaveType','startDate', 'endDate','total','reason', /*'approvedBySupervisor', 'approvedByManager',*/'leaveStatus','approve','notApprove'];
-  dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
+  dataSource = new MatTableDataSource<Emp>(this.leaves);
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
+  @ViewChild(MatSort, {static : true}) sort: MatSort;
+
+public doFilter = (value: string) => {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
+  }
   constructor(private service:ServiceService,
             private router:Router,
             private route:ActivatedRoute ,
             public dialog: MatDialog,
-             private http: HttpClient,
-            public api : AppComponent) { }
-    public API = this.api.API;
+             private http: HttpClient) { }
 
   ngOnDestroy() {
     if (this.interval) {
@@ -51,17 +63,22 @@ export class ApproveBySupervisorComponent implements OnInit {
       }
   }
   ngOnInit() {
+        this.progressBar = true;
         this.service.getLeavesToNotCompleteBySupervisor(this.empId).subscribe(data => {
+             this.progressBar = false;
             this.leaves = data;
             this.dataSource.data = this.leaves;
             //console.log('leaves -> ',this.leaves);
         });
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
   }
   approve(row : any){
-        this.http.post(this.API + '/approveBySupervisor/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {
+         this.progressBar = true;
+        this.http.post(API1 + '/approveBySupervisor/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {
             console.log('Approve is successful');
             alert("Approve successful");
+             this.progressBar = false;
           },
           error => {
             console.log('Error', error);
@@ -77,14 +94,14 @@ export class ApproveBySupervisorComponent implements OnInit {
         this.onChange();
   }
 
-
-
   onChange(){
+           this.progressBar = true;
            this.interval = setTimeout(() => {  //show table Leave
               if(this.isChecked == true){
                 this.service.getLeavesSelectDepartment(this.empId).subscribe(dataLeavesToComplete => {
                       this.leaves = dataLeavesToComplete;
                       this.dataSource.data = this.leaves;
+                      this.progressBar = false;
                       //console.log('leaves -> ',this.leaves);
                   });
                   this.dis=true;
@@ -93,11 +110,19 @@ export class ApproveBySupervisorComponent implements OnInit {
                   this.service.getLeavesToNotCompleteBySupervisor(this.empId).subscribe(data => {
                     this.leaves = data;
                     this.dataSource.data = this.leaves;
+                    this.progressBar = false;
                     //console.log('leaves -> ',this.leaves);
                   });
                   this.dis=false;
               }
             }, 1000);
+  }
+
+  SearchEmployeeByCodeAndNameInApproveBySup(){
+      this.service.getSearchEmployeeByCodeAndNameInApproveBySup(this.dataSearch).subscribe(data => {
+              this.leaves = data;
+              this.dataSource.data = this.leaves;
+      });
   }
 
 
@@ -115,7 +140,6 @@ export interface DialogData {
     templateUrl: 'reasonNotApprove.html',
   })
   export class ReasonNotApproveDialog {
-    public API = '//localhost:8080/';
     leavesID: string;
     isActiveAttendance:string;
     reasonNotapprove=null;
@@ -129,8 +153,7 @@ export interface DialogData {
     }
 
   notApprove(){
-
-        this.http.post(this.API + '/notApproveBySupervisor/' + this.leavesID +'/'+ this.reasonNotapprove,{}).subscribe(data => {
+        this.http.post(API1 + '/notApproveBySupervisor/' + this.leavesID +'/'+ this.reasonNotapprove,{}).subscribe(data => {
             console.log('Not approve is successful');
             alert("Not approve successful");
           },

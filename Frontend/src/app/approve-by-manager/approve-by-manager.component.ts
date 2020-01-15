@@ -9,7 +9,7 @@ import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/mater
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { ReasonNotApproveDialog } from '../approve-by-supervisor/approve-by-supervisor.component';
-import { AppComponent } from '../app.component';
+import { API1 } from '../app.component';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -22,8 +22,6 @@ export interface PeriodicElement {
   styleUrls: ['./approve-by-manager.component.css']
 })
 export class ApproveByManagerComponent implements OnInit {
-  public API = '//localhost:8080';
-  //public API = 'http://192.168.1.47:8080/ILS_HR';
   leaves  : Array<any>;
   LeavesToComplete: Array<any>;
   departmentMasterRole: Array<any>;
@@ -31,8 +29,8 @@ export class ApproveByManagerComponent implements OnInit {
   interval:any;
   leaveID;
   dis;
-  x=false;
-  dataSearch;
+  progressBar=false;
+  dataSearch='';
   empId = localStorage.getItem('empId');
   firstNameOnLogin = localStorage.getItem('fName');
   lastNameOnLogin  = localStorage.getItem('lName');
@@ -45,9 +43,7 @@ constructor(private service:ServiceService,
             private router:Router,
             private route:ActivatedRoute ,
             public dialog: MatDialog,
-             private http: HttpClient,
-             public api : AppComponent) { }
-    public APIs = this.api.API;
+             private http: HttpClient) { }
 
   ngOnDestroy() {
     if (this.interval) {
@@ -56,10 +52,12 @@ constructor(private service:ServiceService,
   }
 
   ngOnInit() {
+        this.progressBar = true;
         this.service.getShowLeavesNotApproveBySup(this.empId).subscribe(data => {
             //console.log('leaves -> ', data.leaveStatus);
             this.leaves = data;
             this.dataSource.data = this.leaves;
+            this.progressBar = false;
             //console.log('leaves -> ',this.leaves);
         });
         this.dataSource.paginator = this.paginator;
@@ -70,9 +68,11 @@ constructor(private service:ServiceService,
         });
   }
   approve(row : any){
-        this.http.post(this.APIs + '/approveByManager/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {
+        this.progressBar = true;
+        this.http.post(API1 + '/approveByManager/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {
             console.log('Approve is successful');
             alert("Approve successful");
+            this.progressBar = false;
           },
           error => {
             console.log('Error', error);
@@ -88,12 +88,14 @@ constructor(private service:ServiceService,
       this.onChange();
   }
   onChange(){
+          this.progressBar = true;
            this.interval = setTimeout(() => {  //show table Leave
               if(this.isChecked == true){
                 this.dis=true;
                 this.service.getLeavesSelectDepartment(this.empId).subscribe(dataLeavesToComplete => {
                       this.leaves = dataLeavesToComplete;
                       this.dataSource.data = this.leaves;
+                      this.progressBar = false;
                       //console.log('leaves -> ',this.leaves);
                   });
               }
@@ -102,10 +104,18 @@ constructor(private service:ServiceService,
                   this.service.getShowLeavesNotApproveBySup(this.empId).subscribe(data => {
                     this.leaves = data;
                     this.dataSource.data = this.leaves;
+                    this.progressBar = false;
                     //console.log('leaves -> ',this.leaves);
                   });
               }
             }, 1000);
+  }
+
+  SearchEmployeeByCodeAndNameInApproveByManager(){
+      this.service.getSearchEmployeeByCodeAndNameInApproveByManager(this.dataSearch).subscribe(data => {
+              this.leaves = data;
+              this.dataSource.data = this.leaves;
+      });
   }
 
 }
@@ -122,7 +132,6 @@ export interface DialogData {
   })
 
 export class ReasonNotApproveBygerDialog {
-    public API = '//localhost:8080/';
     leavesID: string;
     isActiveAttendance:string;
     reasonNotapprove=null;
@@ -136,7 +145,7 @@ export class ReasonNotApproveBygerDialog {
     }
 
    notApprove(){
-        this.http.post(this.API + '/notApproveByManager/' + this.leavesID +'/'+ this.reasonNotapprove,{}).subscribe(data => {
+        this.http.post(API1 + '/notApproveByManager/' + this.leavesID +'/'+ this.reasonNotapprove,{}).subscribe(data => {
             console.log('Not approve is successful');
             alert("Not approve successful");
           },

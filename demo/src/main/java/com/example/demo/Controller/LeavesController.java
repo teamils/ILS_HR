@@ -244,8 +244,18 @@ public class LeavesController {
         return this.leavesRepository.SearchEmployeeByCodeAndName(empCode);
     }
     @GetMapping("/SearchEmployeeByDepartmentID/{departmentID}")
-    public Iterable<Leaves> searchEmployeeByDepartmentID(@PathVariable String departmentID){
-        return this.leavesRepository.getLeavesSelectDepartment(departmentID);
+    public Iterable<Leaves> SearchEmployeeByDepartmentID(@PathVariable String departmentID){
+        return this.leavesRepository.SearchEmployeeByDepartmentID(departmentID);
+    }
+
+    @GetMapping("/SearchEmployeeByCodeAndNameInApproveBySup/{dataSearch}")
+    public Iterable<Leaves> SearchEmployeeByCodeAndNameInApproveBySup(@PathVariable String dataSearch){
+        return this.leavesRepository.SearchEmployeeByCodeAndNameInApproveBySup(dataSearch);
+    }
+
+    @GetMapping("/SearchEmployeeByCodeAndNameInApproveByManager/{dataSearch}")
+    public Iterable<Leaves> SearchEmployeeByCodeAndNameInApproveByManager(@PathVariable String dataSearch){
+        return this.leavesRepository.SearchEmployeeByCodeAndNameInApproveByManager(dataSearch);
     }
 
 
