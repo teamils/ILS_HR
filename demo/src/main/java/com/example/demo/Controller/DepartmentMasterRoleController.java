@@ -23,9 +23,9 @@ public class DepartmentMasterRoleController {
     }
 
     @PostMapping(path = "/insertDataDepartmentRole/{employeeMasterID}/{departmentSelect}")
-    public DepartmentMasterRole departmentMasterRole(@PathVariable Long employeeMasterID,@PathVariable String departmentSelect) {
+    public DepartmentMasterRole departmentMasterRole(@PathVariable long employeeMasterID,@PathVariable long departmentSelect) {
             EmployeeMaster employeeMaster = employeeMasterRepository.findById(employeeMasterID).get();
-            Department department = departmentRepository.findByDepartmentName(departmentSelect);
+            Department department = departmentRepository.findById(departmentSelect).get();
             DepartmentMasterRole departmentMasterRole = new DepartmentMasterRole();
             departmentMasterRole.setEmployeeMasterid(employeeMaster);
             departmentMasterRole.setDepartmentid(department);
@@ -33,9 +33,9 @@ public class DepartmentMasterRoleController {
     }
 
     @GetMapping("/DepartmentMasterRoleFindByEmpIDAndDepartmentID/{employeeMasterID}/{departmentSelect}")
-    public DepartmentMasterRole DepartmentMasterRoleFindByEmpIDAndDepartmentID(@PathVariable long employeeMasterID,@PathVariable String departmentSelect) {
+    public DepartmentMasterRole DepartmentMasterRoleFindByEmpIDAndDepartmentID(@PathVariable long employeeMasterID,@PathVariable long departmentSelect) {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(employeeMasterID).get();
-        Department department = departmentRepository.findByDepartmentName(departmentSelect);
+        Department department = departmentRepository.findById(departmentSelect).get();
         DepartmentMasterRole departmentMasterRole = departmentMasterRoleRepository.findByEmployeeMasteridAndDepartmentid(employeeMaster,department);
         return departmentMasterRole;
     }
@@ -44,10 +44,9 @@ public class DepartmentMasterRoleController {
     public Iterable<DepartmentMasterRole> getDepartmentMasterRole(@PathVariable long employeeMasterID) {
         return this.departmentMasterRoleRepository.queryDepartmentMasterRole(employeeMasterID);
     }
-    @GetMapping("/getDepartmentMasterRoleFindByEmpCode/{empCode}")
-    public Iterable<DepartmentMasterRole> getDepartmentMasterRoleFindByEmpCode(@PathVariable String empCode) {
-        EmployeeMaster employeeMaster = employeeMasterRepository.findByemployeeMasterCustomerCode(empCode);
-        return this.departmentMasterRoleRepository.queryDepartmentMasterRole(employeeMaster.getEmployeeMasterID());
+    @GetMapping("/getDepartmentMasterRoleFindByEmpCode/{keyword}")
+    public Iterable<DepartmentMasterRole> getDepartmentMasterRoleFindByEmpCode(@PathVariable String keyword) {
+        return this.departmentMasterRoleRepository.queryDepartmentMasterRole2(keyword);
     }
 
     @DeleteMapping("/deleteRole/{departmentRoleID}")

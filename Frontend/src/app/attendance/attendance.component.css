@@ -58,9 +58,8 @@ th {
   border: 1px solid #ffffff;
   background-color: #00FF00;
 }
-tr:nth-child(even) {
-  background-color: #DCDCDC;
-}
+
+tr:hover {background-color: #DCDCDC;}
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;

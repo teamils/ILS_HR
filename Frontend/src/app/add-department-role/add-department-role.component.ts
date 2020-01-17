@@ -34,7 +34,6 @@ export class AddDepartmentRoleComponent implements OnInit {
   departmentRole: Array<any>;
   departmentRoleFindByempID: Array<any>;
   departmentSelect:any;
-  empCode:String;
 
   employeeMasterFirstName;
   employeeMasterLastName;
@@ -42,6 +41,11 @@ export class AddDepartmentRoleComponent implements OnInit {
   departmentName;
   employeeMasterID;
   searchDepartmentRole;
+  employeeMasterCustomerCode;
+  dataSearch='';
+  toppings:Array<any>;
+  progressBar=false;
+
   constructor(private service:ServiceService,
               private router:Router,
               private route:ActivatedRoute ,
@@ -53,75 +57,63 @@ export class AddDepartmentRoleComponent implements OnInit {
                this.department = data;
                //console.log('department == ',this.department);
         });
-        this.service.getDepartmentMasterRole().subscribe(data => {
-               this.departmentRole = data;
-               this.dataSource.data = this.departmentRole;
-                this.dataSource.paginator = this.paginator;
-               //console.log('departmentRole == ',this.departmentRole);
-        });
   }
 
   displayedColumns: string[] = ['empCode','name','po','de','depart','delete'];
   dataSource = new MatTableDataSource<PeriodicElement>(this.departmentRole);
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
 
-  SearchEmpCode(){
-        this.service.getSearchEmpCode(this.empCode).subscribe(
-        data => {
+  ShowDataRole(){
+      this.progressBar = true;
+      this.service.getSearchEmpCode(this.dataSearch).subscribe(data => {
           if(data==null){
-            alert("ไม่มีรหัสพนักงาน "+this.empCode+" ในระบบ!");
+              alert("รหัสพนักงานไม่ถูกต้อง!");
           }
           else{
             this.employee = data;
+            this.employeeMasterID = data.employeeMasterID;
             this.employeeMasterFirstName = data.employeeMasterFirstName;
             this.employeeMasterLastName = data.employeeMasterLastName;
             this.employeePosition = data.employeePosition;
             this.departmentName = data.departmentid.departmentName;
-            this.employeeMasterID = data.employeeMasterID;
-            //console.log('this.employee -> ',this.employee);
-            this.getDepartmentMasterRole();
+            this.employeeMasterCustomerCode = data.employeeMasterCustomerCode;
+            this.SearchDepartmentRole();
+            //console.log(this.employee);
           }
-        });
-  }
-
-deName='';
-deNamesubstr;
-  getDepartmentMasterRole(){
-      this.service.getDepartmentMasterRole2(this.employeeMasterID).subscribe(data => {
-               this.departmentRoleFindByempID = data;
-               //console.log('departmentRoleFindByempID == ',this.departmentRoleFindByempID);
-                for(let i of data){
-                  this.deName = this.deName+','+i.departmentid.departmentName;
-                }
-                this.deNamesubstr = this.deName.substr(1, 10000);
-                //console.log(this.deNamesubstr);
-        });
+          this.progressBar = false;
+      });
   }
 
   InsertDataDepartmentRole(){
-    for (let i = 0; i < this.departmentSelect.length; i++) {
-        this.http.get(API1 + '/DepartmentMasterRoleFindByEmpIDAndDepartmentID/' + this.employeeMasterID +'/'+ this.departmentSelect[i] ,{})
-                .subscribe(
-                    data => {
-                        if(data!=null){
-                            alert("คุณ"+this.employeeMasterFirstName+" "+this.employeeMasterLastName+" มีเเผนก"+this.departmentSelect[i]+"อยู่ภายใต้การดูแลอยู่แล้ว");
-                        }
-                        else{
-                            this.http.post(API1 + '/insertDataDepartmentRole/' + this.employeeMasterID +'/'+ this.departmentSelect[i] ,{})
-                              .subscribe(
-                                  data => {
-                                      console.log(data);
-                                      alert("Add Role "+this.departmentSelect[i]+" successful");
-                                      this.clearInput();
-                                      this.RefreshTable();
-                                  },
-                                  error => {
-                                      console.log('Error', error);
-                                  }
-                            );
-                        }
-                    }
-        );
+    this.progressBar = true;
+    if(this.dataSearch == ''){alert("กรุณากรอกรหัสพนักงาน");this.progressBar = false;}
+    else if(this.toppings==null){alert("กรุณาเลือก Department Role"); this.progressBar = false;}
+    else{
+      for (let i = 0; i < this.toppings.length; i++) {
+          //console.log(this.toppings[i].departmentID);
+          this.http.get(API1 + '/DepartmentMasterRoleFindByEmpIDAndDepartmentID/' + this.employeeMasterID +'/'+ this.toppings[i].departmentID ,{})
+                  .subscribe(
+                      data => {
+                          if(data!=null){
+                              alert("คุณ"+this.employeeMasterFirstName+" "+this.employeeMasterLastName+" มีเเผนก"+this.toppings[i].departmentName+" อยู่ภายใต้การดูแลอยู่แล้ว");
+                              this.progressBar = false;
+                          }
+                          else{
+                              this.http.post(API1 + '/insertDataDepartmentRole/' + this.employeeMasterID +'/'+ this.toppings[i].departmentID ,{})
+                                .subscribe(
+                                    data => {
+                                        console.log(data);
+                                        this.progressBar = false;
+                                        this.RefreshTable();
+                                    },
+                                    error => {
+                                        console.log('Error', error);
+                                    }
+                              );
+                          }
+                      }
+          );
+      }
     }
   }
 
@@ -130,14 +122,14 @@ deNamesubstr;
     this.http.delete(API1 + '/deleteRole/' + row.departmentMasterRoleID ,{})
                               .subscribe(
                                   data => {
-                                      alert("Delete is successful");
+                                      //alert("Delete is successful");
                                       this.RefreshTable();
                                   }
                             );
   }
 
   SearchDepartmentRole(){
-      this.service.getDepartmentMasterRoleFindByEmpCode(this.searchDepartmentRole).subscribe(data => {
+      this.service.getDepartmentMasterRoleFindByEmpCode(this.dataSearch).subscribe(data => {
                this.departmentRole = data;
                this.dataSource.data = this.departmentRole;
                 this.dataSource.paginator = this.paginator;
@@ -146,11 +138,11 @@ deNamesubstr;
   }
   RefreshTable(){
              setTimeout(() => {
-                this.service.getDepartmentMasterRole().subscribe(data => {
-                     this.departmentRole = data;
-                     this.dataSource.data = this.departmentRole;
-                     this.dataSource.paginator = this.paginator;
-                     //console.log('departmentRole == ',this.departmentRole);
+                this.service.getDepartmentMasterRoleFindByEmpCode(this.dataSearch).subscribe(data => {
+                   this.departmentRole = data;
+                   this.dataSource.data = this.departmentRole;
+                    this.dataSource.paginator = this.paginator;
+                   //console.log('departmentRole == ',this.departmentRole);
                 });
              }, 1000);
   }
@@ -162,9 +154,6 @@ deNamesubstr;
     this.departmentName = '';
     this.employeeMasterID = '';
     this.departmentSelect = '';
-    this.empCode  = '';
-    this.deNamesubstr = '';
-    this.deName='';
     this.departmentRoleFindByempID = [];
   }
 

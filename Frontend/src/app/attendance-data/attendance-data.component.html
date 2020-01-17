@@ -24,6 +24,7 @@
     ค้นหาโดยเเผนก :
     <mat-form-field class="formcenter" hintLabel="" style="width :200px" (keyup)="SearchEmployeeByDepartmentID()">
       <mat-select placeholder="Search by department"  [(ngModel)]="departmentSelect">
+        <mat-option>None</mat-option>
         <mat-option *ngFor="let depart of department" [value]="depart.departmentID">
           {{depart.departmentName}}
         </mat-option>

@@ -1,0 +1,17 @@
+.example-card {
+  max-width: 100%;
+  height:auto;
+}
+
+table {
+  width: 100%;
+   background-color: #E6E6FA;
+}
+
+.pattern{
+    width: 50%;
+}
+
+tr:hover {
+  background-color: #DCDCDC;
+}

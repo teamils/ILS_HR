@@ -1,0 +1,53 @@
+<mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
+<mat-card class="example-card">
+  <h1 align="center">Add User Role</h1>
+    Employee Code :
+    <mat-form-field  class="searchStyle" (keydown.enter)="ShowDataRole()">
+      <mat-label>Enter Employee Code</mat-label>
+      <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  &nbsp;&nbsp;{{employeeMasterFirstName}}&nbsp;&nbsp;{{employeeMasterLastName}}&nbsp;&nbsp;&nbsp;({{roleStatus}})
+  <br>
+  Add User Role :
+  <mat-form-field class="pattern">
+    <mat-label>Select user role</mat-label>
+    <mat-select [(ngModel)]="toppings" multiple>
+      <mat-option *ngFor="let topping of masterRole" [value]="topping">{{topping.id}}.{{topping.masterRoleName}}</mat-option>
+    </mat-select>
+  </mat-form-field>&nbsp;&nbsp;
+  <button mat-raised-button color="accent" (click)="InsertUserRole()">ADD</button>&nbsp;&nbsp;
+  <button mat-raised-button color="accent" (click)="toppings=''">Cleared field</button>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="no">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.empID.employeeMasterFirstName}}&nbsp;&nbsp;{{element.empID.employeeMasterLastName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef> Role </th>
+      <td mat-cell *matCellDef="let element">{{element.masterRoleID.id}}.&nbsp;{{element.masterRoleID.masterRoleName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> delete </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="DeleteUserRole(element.id);"  #ckeckEdit>
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+
+</mat-card>

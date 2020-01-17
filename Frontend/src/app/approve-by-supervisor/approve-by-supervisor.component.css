@@ -3,9 +3,7 @@ td {
   text-align: center;
 
 }
-tr:nth-child(even) {
-  background-color: #DCDCDC;
-}
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -19,6 +17,7 @@ table {
      text-align: center;
      position: sticky;
   }
+tr:hover {background-color: #DCDCDC;}
 
    th.mat-column-number,
    th.mat-column-employeeCode,

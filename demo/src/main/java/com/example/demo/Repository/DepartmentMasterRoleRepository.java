@@ -17,4 +17,9 @@ public interface DepartmentMasterRoleRepository extends JpaRepository<Department
         @Query(value = "SELECT * FROM DEPARTMENT_MASTER_ROLE where EMPLOYEE_MASTERID = :employeeID",nativeQuery = true)
         Collection<DepartmentMasterRole> queryDepartmentMasterRole(@Param("employeeID") long employeeID);
 
+        @Query(value = "SELECT * FROM DEPARTMENT_MASTER_ROLE d,employee_master e\n" +
+                "where (e.employee_master_customer_code LIKE %:keyword%  or e.employee_master_first_name LIKE %:keyword%  or e.employee_master_last_name LIKE %:keyword%)\n" +
+                "and e.employee_masterid = d.employee_masterid",nativeQuery = true)
+        Collection<DepartmentMasterRole> queryDepartmentMasterRole2(@Param("keyword") String keyword);
+
 }

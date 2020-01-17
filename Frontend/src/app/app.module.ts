@@ -65,6 +65,7 @@ import { AddDepartmentRoleComponent } from './add-department-role/add-department
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule } from "@angular/forms";
 import { AddDataComboboxComponent } from './add-data-combobox/add-data-combobox.component';
+import { AddUserroleComponent } from './add-userrole/add-userrole.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { AddDataComboboxComponent } from './add-data-combobox/add-data-combobox.
     EditPaymentDialog,
     AddDepartmentRoleComponent,
     AddDataComboboxComponent,
+    AddUserroleComponent,
   ],
 
       imports: [

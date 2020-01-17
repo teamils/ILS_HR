@@ -254,6 +254,31 @@ VALUES (10, 12.0, 9);
 INSERT INTO master_attendance 
 VALUES (11, 15.0, 10); 
 
+INSERT INTO master_role 
+VALUES (1,'<<--Employee Main-->>'); 
+INSERT INTO master_role 
+VALUES (2,'EmployeeMaster'); 
+INSERT INTO master_role 
+VALUES (3,'NewEmployee'); 
+INSERT INTO master_role 
+VALUES (4,'<<--Attendance Main-->>'); 
+INSERT INTO master_role 
+VALUES (5,'Attendance'); 
+INSERT INTO master_role 
+VALUES (6,'DataAttendance'); 
+INSERT INTO master_role 
+VALUES (7,'ApproveBySupervisor'); 
+INSERT INTO master_role 
+VALUES (8,'ApproveByManager'); 
+INSERT INTO master_role 
+VALUES (9,'<<--Admin Main-->>'); 
+INSERT INTO master_role 
+VALUES (10,'AddDepartmentRole'); 
+INSERT INTO master_role 
+VALUES (11,'AddMainData'); 
+INSERT INTO master_role 
+VALUES (12,'AddUserRole'); 
+
 INSERT INTO EMPLOYEE_MASTER 
 VALUES (1, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','7072698661','-',2020-01-05 12:34:20.183,'ป.ตรี', '-', '-', '180 ม.5 ต.วังซ่าน อ.เเม่วงก์ จ.นครสวรรค์','dikinakub6509@gmail.com',1997-07-30,'400234','ดิกิ','ชาย','คาวาซากิ','กิ','1600100723988',2010-12-26,'0834318890','IT Programmer','นักศึกษาฝึกงาน','1','ยังปฏิบัติงานอยู่','400234','นาย','ADMIN','diki kawasaki',2020-01-05 12:52:12.056,9); 
 INSERT INTO EMPLOYEE_MASTER 

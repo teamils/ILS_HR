@@ -1,51 +1,29 @@
+<mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
 <mat-card class="example-card">
   <span class="example-spacer"><h1 align="center">Add Department Role</h1></span>
-  <mat-card class="card">
-    ค้นหา :
-    <mat-form-field  class="searchStyle" (keydown.enter)="SearchEmpCode()">
-      <mat-label>รหัสพนักงาน</mat-label>
-      <input matInput  [(ngModel)]="empCode" >
+    Employee Code :
+    <mat-form-field  class="searchStyle" (keydown.enter)="ShowDataRole()">
+      <mat-label>Enter Employee Code</mat-label>
+      <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
-    <table>
-      <tr>
-        <th align="right">ชื่อ : </th>
-        <td>{{employeeMasterFirstName}} &nbsp; {{employeeMasterLastName}}</td>
-      </tr>
-      <tr>
-        <th align="right">ตำเเหน่ง : </th>
-        <td>{{employeePosition}}</td>
-      </tr>
-      <tr>
-        <th align="right">เเผนก : </th>
-        <td>{{departmentName}}</td>
-      </tr>
-      <tr>
-        <th align="right">ดูแล :</th>
-        <td>{{deNamesubstr}}</td>
-      </tr>
-    </table>
+    &nbsp;&nbsp;{{employeeMasterFirstName}}&nbsp;&nbsp;{{employeeMasterLastName}}&nbsp;&nbsp;&nbsp;({{employeePosition}}-{{departmentName}})
     <br>
-    <ng-select bindLabel="name"
-               placeholder="Select department"
-               appendTo="body"
-               multiple="true"
-               [(ngModel)]="departmentSelect">
-      <ng-option   *ngFor="let item of department" [value]="item.departmentName">
-        {{item.departmentName}}
-      </ng-option>
-    </ng-select>
-    <div align="center">
-      <button mat-raised-button color="accent" (click)="InsertDataDepartmentRole()" style="width:100px">ADD</button>&nbsp;&nbsp;
-      <button mat-raised-button color="accent" (click)="clearInput()" style="width:100px">Clean data</button>
-    </div>
-  </mat-card>
-  &nbsp;
-  <mat-form-field (keydown.enter)="SearchDepartmentRole()" class="mat-form-field2">
+    Add Department Role :
+    <mat-form-field class="pattern">
+      <mat-label>Select department role</mat-label>
+      <mat-select [(ngModel)]="toppings" multiple>
+        <mat-option *ngFor="let topping of department" [value]="topping">{{topping.departmentID}}.{{topping.departmentName}}</mat-option>
+      </mat-select>
+    </mat-form-field>&nbsp;&nbsp;
+    <button mat-raised-button color="accent" (click)="InsertDataDepartmentRole()">ADD</button>&nbsp;&nbsp;
+    <button mat-raised-button color="accent" (click)="toppings=''">Cleared field</button>
+
+ <!-- <mat-form-field (keyup)="SearchDepartmentRole()" class="mat-form-field2">
     <mat-label>Search by employeeCode</mat-label>
-    <input matInput  [(ngModel)]="searchDepartmentRole" placeholder="รหัสพนักงานเท่านั้น!">
+    <input matInput  [(ngModel)]="searchDepartmentRole" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
     <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
+  </mat-form-field> -->
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
     <ng-container matColumnDef="empCode">
@@ -80,5 +58,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[15, 30, 50, 100]" showFirstLastButtons ></mat-paginator>
 </mat-card>

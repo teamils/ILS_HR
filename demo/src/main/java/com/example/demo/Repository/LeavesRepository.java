@@ -79,7 +79,7 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "where l.departmentid = d.departmentid\n" +
             "and l.leave_status = 'Pending'\n" +
             "and l.is_active_attendance=1\n" +
-            "and (e.employee_master_customer_code LIKE %:dataSearch% or e.employee_master_first_name LIKE %:dataSearch% or e.employee_master_last_name LIKE %:dataSearch%)\n" +
+            "and (e.employee_master_customer_code LIKE %:dataSearch% or e.employee_master_first_name LIKE %:dataSearch% or e.employee_master_last_name LIKE %:dataSearch% or d.department_name LIKE %:dataSearch%)\n" +
             "and e.employee_masterid = l.employee_masterid_employee_masterid\n" +
             "and l.departmentid in ( \n" +
             "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
@@ -92,7 +92,7 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "where l.departmentid = d.departmentid\n" +
             "and l.leave_status = 'Waiting approve' and l.approved_by_supervisor <> 'Pending'" +
             "and l.is_active_attendance=1\n" +
-            "and (e.employee_master_customer_code LIKE %:dataSearch% or e.employee_master_first_name LIKE %:dataSearch% or e.employee_master_last_name LIKE %:dataSearch%)\n" +
+            "and (e.employee_master_customer_code LIKE %:dataSearch% or e.employee_master_first_name LIKE %:dataSearch% or e.employee_master_last_name LIKE %:dataSearch% or d.department_name LIKE %:dataSearch%)\n" +
             "and e.employee_masterid = l.employee_masterid_employee_masterid\n" +
             "and l.departmentid in ( \n" +
             "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
