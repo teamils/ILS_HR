@@ -38,7 +38,7 @@ spring.datasource.username= <<-- Your Username
 
 spring.datasource.password= <<-- Your Password
 
-## Microsoft sql server
+### Microsoft sql server
 
 > spring.datasource.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
 
