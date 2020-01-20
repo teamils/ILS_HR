@@ -38,6 +38,8 @@ spring.datasource.username= <<-- Your Username
 
 spring.datasource.password= <<-- Your Password
 
+## Microsoft sql server
+
 > spring.datasource.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
 
 > spring.datasource.url=jdbc:sqlserver://192.168.1.47:1433;databaseName=ILS_HR
