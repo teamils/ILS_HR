@@ -36,8 +36,8 @@ export class AddDataComboboxComponent implements OnInit {
   prefix:Array<any>;
   prefixInput:String='';
   masterAttendance:Array<any>;
-  masterAttendance_year:any;
-  masterAttendance_leaveDay:any;
+  masterAttendance_year:number;
+  masterAttendance_leaveDay:number;
 
   constructor(private service:ServiceService,
             private router:Router,
@@ -245,23 +245,48 @@ export class AddDataComboboxComponent implements OnInit {
   }
   /*--------------------------------------------------------------------------------*/
   /*--------------------------------MasterAttendance-------------------------------------------*/
+  num:Array<any> = [];
+  sortEggsInNest(a, b) {
+    return a > b ? 1 : b > a ? -1 : 0;
+  }
   InsertMasterAttendance(){
-    this.http.post(API1 + '/MasterAttendance123/' + this.masterAttendance_year +'/'+ this.masterAttendance_leaveDay ,{})
-      .subscribe(
-        data => {
-          this.RefreshTable();
-          this.masterAttendance_year='';
-          this.masterAttendance_leaveDay='';
-        }
-    );
+      for(let i=0;i<this.masterAttendance.length;i++){
+          this.num[i] = this.masterAttendance[i].year;
+      }
+      this.num.sort(this.sortEggsInNest);
+      if(this.masterAttendance_year > this.num.length){
+          alert("คุณต้องADDข้อมูลของ"+this.num.length+" ปี");
+      }
+      else if(this.masterAttendance_year < this.num.length){
+          alert("คุณต้องADDข้อมูลของ"+this.num.length+" ปี");
+      }
+      else{
+          this.http.post(API1 + '/insertMasterAttendance/' + this.masterAttendance_year +'/'+ this.masterAttendance_leaveDay ,{})
+            .subscribe(
+              data => {
+                this.RefreshTable();
+                console.log(data);
+                this.masterAttendance_year=null;
+                this.masterAttendance_leaveDay=null;
+              }
+          );
+      }
+  }
+  OpenDaialog_EditMasterAttendanceDialog(row : any){
+              const dialogRef = this.dialog.open(EditMasterAttendanceDialog, {
+                    width: '400px',
+                    height:'400px',
+                    data: row,
+              });
+              this.RefreshTable();
   }
   DeleteMasterAttendance(row : any){
     this.http.delete(API1 + '/deleteMasterAttendance/' + row ,{})
       .subscribe(
         data => {
           this.RefreshTable();
-          this.masterAttendance_year='';
-          this.masterAttendance_leaveDay='';
+          this.masterAttendance_year=null;
+          this.masterAttendance_leaveDay=null;
         }
     );
   }
@@ -307,5 +332,48 @@ export class AddDataComboboxComponent implements OnInit {
       });
     }, 200);
   }
+
+}
+
+
+
+//Dialog EditMasterAttendanceDialog
+export interface DialogData {
+    year: any;
+    dayLeave: any;
+    masterAttendanceID: any;
+}
+@Component({
+    selector: 'editMasterAttendanceDialog',
+    templateUrl: 'editMasterAttendanceDialog.html',
+  })
+export class EditMasterAttendanceDialog {
+
+    year:any;
+    dayLeave:any;
+    masterAttendanceID:any;
+
+    constructor(public dialogRef: MatDialogRef<EditMasterAttendanceDialog> , public service:ServiceService,@Inject(MAT_DIALOG_DATA)  public data: DialogData,private http: HttpClient){
+          dialogRef.disableClose = false;
+          this.masterAttendanceID = data.masterAttendanceID;
+          this.year = data.year;
+          this.dayLeave = data.dayLeave;
+    }
+
+    closeDialog(): void {
+      this.dialogRef.close();
+    }
+
+    EditVacationDay(){
+        this.http.post(API1 + '/editmasterAttendance/' + this.masterAttendanceID +'/'+ this.dayLeave ,{})
+            .subscribe(
+              data => {
+                    alert("Edit successfull");
+                    console.log(data);
+                    this.dialogRef.close();
+              }
+          );
+    }
+
 
 }

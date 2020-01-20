@@ -66,6 +66,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule } from "@angular/forms";
 import { AddDataComboboxComponent } from './add-data-combobox/add-data-combobox.component';
 import { AddUserroleComponent } from './add-userrole/add-userrole.component';
+import { EditMasterAttendanceDialog } from './add-data-combobox/add-data-combobox.component';
+import { ExportDataDialog } from './attendance-data/attendance-data.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +92,8 @@ import { AddUserroleComponent } from './add-userrole/add-userrole.component';
     AddDepartmentRoleComponent,
     AddDataComboboxComponent,
     AddUserroleComponent,
+    EditMasterAttendanceDialog,
+    ExportDataDialog,
   ],
 
       imports: [
@@ -149,6 +153,8 @@ import { AddUserroleComponent } from './add-userrole/add-userrole.component';
                     AttendanceShowLeavenumberComponent,
                     EditPersonalInformationComponent,
                     EditPaymentDialog,
+                    EditMasterAttendanceDialog,
+                    ExportDataDialog,
    ],
   providers: [],
   bootstrap: [AppComponent]

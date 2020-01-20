@@ -1,0 +1,14 @@
+<h2 align="center">Edit Vacation Day</h2>
+<br>
+<div align="center">
+  <mat-form-field appearance="outline">
+    <mat-label>ทำงาน(ปี)</mat-label>
+    <input matInput placeholder="Placeholder" [(ngModel)]="year" disabled>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>ได้วันลาพักร้อน(วัน)</mat-label>
+    <input matInput placeholder="Placeholder" [(ngModel)]="dayLeave" >
+  </mat-form-field><br>
+  <mat-chip color="primary" (click)="EditVacationDay()" selected><mat-icon matSuffix>edit</mat-icon>&nbsp;Edit</mat-chip>&nbsp;
+  <mat-chip color="warn" (click)="closeDialog()" selected><mat-icon matSuffix>cancel</mat-icon>&nbsp;Cancel</mat-chip>&nbsp;
+</div>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.Date;
 import java.time.LocalDate;
@@ -66,16 +67,21 @@ public class EmployeeMasterController {
         return employeeMaster;
     }
 
-    @PostMapping("/ILS_HR/{employeeMasterCustomerCode}/{prefixSelect}/{employeeMasterFirstName}/{employeeMasterLastName}/{employeeMasterNickName}" +
-            "/{employeeMasterGender}/{employeeMasterBirthDate}/{employeeMasterPersonID}/{employeeMasterTel1}/{empEmail}" +
-            "/{empAddressReal}/{empAddressPerson}/{emergencyContact}/{employeeMasterStartDate}/{employeePosition}/{employeeDepartment}/{employeeType}/{education}/{bank}/{bankNumber}/{role_statusSelect}/{passwordCreate}/{fName}/{lName}") //Employee ADD
-    public EmployeeMaster employeeMaster(@PathVariable String employeeMasterCustomerCode , @PathVariable String prefixSelect ,@PathVariable String employeeMasterFirstName
+    @PostMapping("/addEmployeeMaster/{employeeMasterCustomerCode}/{prefixSelect}/{employeeMasterFirstName}/{employeeMasterLastName}/{employeeMasterNickName}" +
+            "/{employeeMasterGender}/{employeeMasterBirthDate}/{employeeMasterPersonID}/{employeeMasterTel1}" +
+            "/{employeeMasterStartDate}/{employeePosition}/{employeeDepartment}/{employeeType}/{education}" +
+            "/{bank}/{bankNumber}/{role_statusSelect}/{passwordCreate}/{fName}/{lName}") //Employee ADD
+    public Collection<EmployeeMaster> employeeMaster(@RequestBody Map<String,String> body,@PathVariable String employeeMasterCustomerCode , @PathVariable String prefixSelect ,@PathVariable String employeeMasterFirstName
             , @PathVariable String employeeMasterLastName , @PathVariable String employeeMasterNickName , @PathVariable String employeeMasterGender
             , @PathVariable Date employeeMasterBirthDate , @PathVariable String employeeMasterPersonID
-            , @PathVariable String employeeMasterTel1, @PathVariable String empEmail , @PathVariable String empAddressReal
-            , @PathVariable String empAddressPerson , @PathVariable String emergencyContact,@PathVariable Date employeeMasterStartDate , @PathVariable String employeePosition
+            , @PathVariable String employeeMasterTel1,@PathVariable Date employeeMasterStartDate , @PathVariable String employeePosition
             , @PathVariable String employeeDepartment , @PathVariable String employeeType  , @PathVariable String education
             , @PathVariable String bank , @PathVariable String bankNumber ,@PathVariable String role_statusSelect ,@PathVariable String fName ,@PathVariable String lName ) throws ParseException {
+
+        String empEmailJson = body.get("empEmail").toString();
+        String empAddressRealJson = body.get("empAddressReal").toString();
+        String empAddressPersonJson = body.get("empAddressPerson").toString();
+        String emergencyContactJson = body.get("emergencyContact").toString();
 
         Department department = departmentRepository.findByDepartmentName(employeeDepartment);
         EmployeeMaster employeeMaster1 = new EmployeeMaster();
@@ -103,10 +109,10 @@ public class EmployeeMasterController {
 
         employeeMaster1.setEmployeeMasterPersonID(employeeMasterPersonID);
         employeeMaster1.setEmployeeMasterTel1(employeeMasterTel1);
-        employeeMaster1.setEmpEmail(empEmail);
-        employeeMaster1.setEmpAddressReal(empAddressReal);
-        employeeMaster1.setEmpAddressPerson(empAddressPerson);
-        employeeMaster1.setEmergencyContact(emergencyContact);
+        employeeMaster1.setEmpEmail(empEmailJson);
+        employeeMaster1.setEmpAddressReal(empAddressRealJson);
+        employeeMaster1.setEmpAddressPerson(empAddressPersonJson);
+        employeeMaster1.setEmergencyContact(emergencyContactJson);
         employeeMaster1.setEmployeeMasterStartDate(employeeMasterStartDate); // Stratdate
         employeeMaster1.setEmployeePosition(employeePosition);
         employeeMaster1.setDepartmentid(department);
@@ -117,30 +123,32 @@ public class EmployeeMasterController {
         employeeMaster1.setIsActive("1");
         employeeMaster1.setRoleStatus(role_statusSelect);
         employeeMaster1.setPassword(employeeMasterCustomerCode);
-
         employeeMasterRepository.save(employeeMaster1);
-        return employeeMaster1;
+        return null;
     }
 
     @PostMapping(path = "/editemployee/{NewemployeeMasterID}/{NewemployeeMasterCustomerCode}/{Newprefix}/{NewemployeeMasterFirstName}" +
             "/{NewemployeeMasterLastName}/{NewemployeeMasterNickName}/{NewemployeeMasterGender}/{NewmaritalStatus}" +
-            "/{NewemployeeMasterBirthDate}/{NewemployeeMasterPersonID}/{NewemployeeMasterTel1}/{NewempEmail}/{NewempAddressReal}" +
-            "/{NewempAddressPerson}/{NewemergencyContact}/{NewemployeeMasterStartDate}/{NewemployeePosition}/{NewemployeeDepartment}/{NewemployeeType}" +
+            "/{NewemployeeMasterBirthDate}/{NewemployeeMasterPersonID}/{NewemployeeMasterTel1}" +
+            "/{NewemployeeMasterStartDate}/{NewemployeePosition}/{NewemployeeDepartment}/{NewemployeeType}" +
             "/{Neweducation}/{Newbank}/{NewbankNumber}/{Newpassword}/{fName}/{lName}") // Edit Employee
-    public EmployeeMaster employeeMaster(@PathVariable Long NewemployeeMasterID, @PathVariable String NewemployeeMasterCustomerCode,
+    public EmployeeMaster employeeMaster(@RequestBody Map<String,String> body,@PathVariable Long NewemployeeMasterID, @PathVariable String NewemployeeMasterCustomerCode,
                                          @PathVariable String Newprefix, @PathVariable String NewemployeeMasterFirstName,
                                          @PathVariable String NewemployeeMasterLastName, @PathVariable String NewemployeeMasterNickName,
                                          @PathVariable String NewemployeeMasterGender, @PathVariable String NewmaritalStatus,
                                          @PathVariable String NewemployeeMasterBirthDate, @PathVariable String NewemployeeMasterPersonID,
-                                         @PathVariable String NewemployeeMasterTel1, @PathVariable String NewempEmail,
-                                         @PathVariable String NewempAddressReal, @PathVariable String NewempAddressPerson, @PathVariable String NewemergencyContact,
-                                         @PathVariable String NewemployeeMasterStartDate, @PathVariable String NewemployeePosition,
-                                         @PathVariable String NewemployeeDepartment, @PathVariable String NewemployeeType,
-                                         @PathVariable String Neweducation, @PathVariable String Newbank,
+                                         @PathVariable String NewemployeeMasterTel1, @PathVariable String NewemployeeMasterStartDate,
+                                         @PathVariable String NewemployeePosition, @PathVariable String NewemployeeDepartment,
+                                         @PathVariable String NewemployeeType, @PathVariable String Neweducation, @PathVariable String Newbank,
                                          @PathVariable String NewbankNumber,@PathVariable String Newpassword,
                                          @PathVariable String fName ,@PathVariable String lName) throws ParseException {
         Department department = departmentRepository.findByDepartmentName(NewemployeeDepartment);
         EmployeeMaster employeeMaster2 = employeeMasterRepository.findById(NewemployeeMasterID).get();
+
+        String NewempEmail = body.get("NewempEmail").toString();
+        String NewempAddressReal = body.get("NewempAddressReal").toString();
+        String NewempAddressPerson = body.get("NewempAddressPerson").toString();
+        String NewemergencyContact = body.get("NewemergencyContact").toString();
 
         String[] birthdatesplit;
         String[] startdatesplit;

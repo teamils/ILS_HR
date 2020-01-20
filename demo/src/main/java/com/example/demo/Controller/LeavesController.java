@@ -243,6 +243,10 @@ public class LeavesController {
     public Iterable<Leaves> searchEmployeeByCodeAndName(@PathVariable String empCode){
         return this.leavesRepository.SearchEmployeeByCodeAndName(empCode);
     }
+    @GetMapping("/SearchEmployeeByCodeAndName2/{empCode}")
+    public Iterable<Leaves> searchEmployeeByCodeAndName2(@PathVariable String empCode){
+        return this.leavesRepository.SearchEmployeeByCodeAndName2(empCode);
+    }
     @GetMapping("/SearchEmployeeByDepartmentID/{departmentID}")
     public Iterable<Leaves> SearchEmployeeByDepartmentID(@PathVariable String departmentID){
         return this.leavesRepository.SearchEmployeeByDepartmentID(departmentID);

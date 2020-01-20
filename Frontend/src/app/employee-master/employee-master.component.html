@@ -9,7 +9,10 @@
       </mat-form-field>
 
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <mat-chip color="primary" matTooltip="นำข้อมูลเข้า" selected>Import Data &nbsp;<mat-icon matSuffix>cloud_download</mat-icon></mat-chip>&nbsp;
+      <mat-chip color="primary" matTooltip="นำข้อมูลเข้า" selected>
+        <input class="ng-hide" id="input-file-id" multiple type="file" />&nbsp;
+        <mat-icon matSuffix>cloud_download</mat-icon>
+      </mat-chip>&nbsp;
       <mat-chip color="accent" matTooltip="นำข้อมูลออก" (click)="exportexcel()" selected>Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></mat-chip>&nbsp;
      <!-- <mat-chip color="accent" matTooltip="นำข้อมูลออก ทั้งหมด" selected>Export Data All&nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></mat-chip> -->
   </div>

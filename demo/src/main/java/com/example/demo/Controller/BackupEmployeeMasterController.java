@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.Date;
 import java.time.LocalDate;
@@ -23,22 +24,25 @@ public class BackupEmployeeMasterController {
 
     @PostMapping(path = "/BackupEmployeeMaster/{NewemployeeMasterID}/{NewemployeeMasterCustomerCode}/{Newprefix}/{NewemployeeMasterFirstName}" +
             "/{NewemployeeMasterLastName}/{NewemployeeMasterNickName}/{NewemployeeMasterGender}/{NewmaritalStatus}" +
-            "/{NewemployeeMasterBirthDate}/{NewemployeeMasterPersonID}/{NewemployeeMasterTel1}/{NewempEmail}/{NewempAddressReal}" +
-            "/{NewempAddressPerson}/{NewemergencyContact}/{NewemployeeMasterStartDate}/{NewemployeePosition}/{NewemployeeDepartment}/{NewemployeeType}" +
+            "/{NewemployeeMasterBirthDate}/{NewemployeeMasterPersonID}/{NewemployeeMasterTel1}"+
+            "/{NewemployeeMasterStartDate}/{NewemployeePosition}/{NewemployeeDepartment}/{NewemployeeType}" +
             "/{Neweducation}/{Newbank}/{NewbankNumber}/{Newpassword}/{fName}/{lName}/{NewRoleStatus}")
-    public BackupEmployeeMaster backupEmployeeMaster(@PathVariable Long NewemployeeMasterID, @PathVariable String NewemployeeMasterCustomerCode,
-                                         @PathVariable String Newprefix, @PathVariable String NewemployeeMasterFirstName,
-                                         @PathVariable String NewemployeeMasterLastName, @PathVariable String NewemployeeMasterNickName,
-                                         @PathVariable String NewemployeeMasterGender, @PathVariable String NewmaritalStatus,
-                                         @PathVariable String NewemployeeMasterBirthDate, @PathVariable String NewemployeeMasterPersonID,
-                                         @PathVariable String NewemployeeMasterTel1, @PathVariable String NewempEmail,
-                                         @PathVariable String NewempAddressReal, @PathVariable String NewempAddressPerson, @PathVariable String NewemergencyContact,
-                                         @PathVariable String NewemployeeMasterStartDate, @PathVariable String NewemployeePosition,
-                                         @PathVariable String NewemployeeDepartment, @PathVariable String NewemployeeType,
-                                         @PathVariable String Neweducation, @PathVariable String Newbank,
-                                         @PathVariable String NewbankNumber,@PathVariable String Newpassword,
-                                         @PathVariable String fName ,@PathVariable String lName,@PathVariable String NewRoleStatus) throws ParseException {
+    public BackupEmployeeMaster backupEmployeeMaster(@RequestBody Map<String,String> body, @PathVariable Long NewemployeeMasterID, @PathVariable String NewemployeeMasterCustomerCode,
+                                                     @PathVariable String Newprefix, @PathVariable String NewemployeeMasterFirstName,
+                                                     @PathVariable String NewemployeeMasterLastName, @PathVariable String NewemployeeMasterNickName,
+                                                     @PathVariable String NewemployeeMasterGender, @PathVariable String NewmaritalStatus,
+                                                     @PathVariable String NewemployeeMasterBirthDate, @PathVariable String NewemployeeMasterPersonID,
+                                                     @PathVariable String NewemployeeMasterTel1, @PathVariable String NewemployeeMasterStartDate, @PathVariable String NewemployeePosition,
+                                                     @PathVariable String NewemployeeDepartment, @PathVariable String NewemployeeType,
+                                                     @PathVariable String Neweducation, @PathVariable String Newbank,
+                                                     @PathVariable String NewbankNumber, @PathVariable String Newpassword,
+                                                     @PathVariable String fName , @PathVariable String lName, @PathVariable String NewRoleStatus) throws ParseException {
         Department department = departmentRepository.findByDepartmentName(NewemployeeDepartment);
+
+        String NewempEmail = body.get("NewempEmail").toString();
+        String NewempAddressReal = body.get("NewempAddressReal").toString();
+        String NewempAddressPerson = body.get("NewempAddressPerson").toString();
+        String NewemergencyContact = body.get("NewemergencyContact").toString();
 
         String[] birthdatesplit;
         String[] startdatesplit;

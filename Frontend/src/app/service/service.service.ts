@@ -91,6 +91,9 @@ export class ServiceService {
   getSearchEmployeeByCodeAndName(empID:String):Observable<any>{
       return this.http.get(API1+'/SearchEmployeeByCodeAndName' +'/'+ empID,{})
   }
+  getSearchEmployeeByCodeAndName2(empID:String):Observable<any>{
+      return this.http.get(API1+'/SearchEmployeeByCodeAndName2' +'/'+ empID,{})
+  }
   getSearchEmployeeByDepartmentID(departmentID:String):Observable<any>{
       return this.http.get(API1+'/SearchEmployeeByDepartmentID' +'/'+ departmentID,{})
   }

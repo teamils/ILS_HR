@@ -46,10 +46,11 @@ public class UserRolesController {
     }
 
     @GetMapping("/getUserRoleByempIDAndMasterRoleID/{employeeMasterID}/{masterRoleID}")
-    public Iterable<UserRole> userRoleRoleFindByEmployeeMasterIdAndID(@PathVariable long employeeMasterID,@PathVariable long masterRoleID) {
+    public UserRole userRoleRoleFindByEmployeeMasterIdAndID(@PathVariable long employeeMasterID,@PathVariable long masterRoleID) {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(employeeMasterID).get();
         MasterRole masterRole = masterRoleRepository.findById(masterRoleID).get();
-        return this.userRolesRepository.SearchUserRolesByempIDandmasterRoleID(employeeMaster.getEmployeeMasterID(),masterRole.getId());
+        UserRole userRole = userRolesRepository.findByEmpIDAndMasterRoleID(employeeMaster,masterRole);
+        return userRole;
     }
 
 }

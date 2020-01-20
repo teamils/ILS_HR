@@ -59,25 +59,31 @@ export class AddUserroleComponent implements OnInit {
 
   ShowDataRole(){
       this.progressBar = true;
-      this.service.getSearchEmpCode(this.dataSearch).subscribe(data => {
-          if(data==null){
-              alert("รหัสพนักงานไม่ถูกต้อง!");
-          }
-          else{
-            this.employee = data;
-            this.employeeMasterID = data.employeeMasterID;
-            this.employeeMasterFirstName = data.employeeMasterFirstName;
-            this.employeeMasterLastName = data.employeeMasterLastName;
-            this.roleStatus = data.roleStatus;
-            //console.log(this.employee);
-            this.service.getUserRolesByEmpCode(this.dataSearch).subscribe(data => {
-                this.userRole = data;
-                this.dataSource.data = this.userRole;
-                //console.log('userRole -> ',this.userRole);
-            });
-          }
+      if(this.dataSearch == ''){
           this.progressBar = false;
-      });
+          alert("กรุณากรอกรหัสพนักงาน!");
+      }
+      else{
+        this.service.getSearchEmpCode(this.dataSearch).subscribe(data => {
+            if(data==null){
+                alert("รหัสพนักงานไม่ถูกต้อง!");
+            }
+            else{
+              this.employee = data;
+              this.employeeMasterID = data.employeeMasterID;
+              this.employeeMasterFirstName = data.employeeMasterFirstName;
+              this.employeeMasterLastName = data.employeeMasterLastName;
+              this.roleStatus = data.roleStatus;
+              //console.log(this.employee);
+              this.service.getUserRolesByEmpCode(this.dataSearch).subscribe(data => {
+                  this.userRole = data;
+                  this.dataSource.data = this.userRole;
+                  //console.log('userRole -> ',this.userRole);
+              });
+            }
+            this.progressBar = false;
+        });
+      }
 
   }
 
@@ -88,14 +94,26 @@ export class AddUserroleComponent implements OnInit {
       else{
         for(let i=0;i<this.toppings.length;i++){
           //console.log(this.toppings[i]);
-          this.http.post(API1 + '/insertUserRole/' + this.employeeMasterID +'/'+ this.toppings[i].id ,{})
+          this.http.get(API1 + '/getUserRoleByempIDAndMasterRoleID/' + this.employeeMasterID +'/'+ this.toppings[i].id ,{})
             .subscribe(
               data => {
-                this.RefreshTable();
-                this.progressBar = false;
-                this.toppings = null;
+                 if(data!=null){
+                              alert("คุณ"+this.employeeMasterFirstName+" "+this.employeeMasterLastName+" มีสิทธิ์เข้าถึง "+this.toppings[i].masterRoleName+" อยู่แล้ว");
+                              this.progressBar = false;
+                 }
+                 else{
+                      this.http.post(API1 + '/insertUserRole/' + this.employeeMasterID +'/'+ this.toppings[i].id ,{})
+                        .subscribe(
+                            data => {
+                              this.RefreshTable();
+                              this.progressBar = false;
+                              this.toppings = null;
+                            }
+                      );
+                 }
               }
           );
+
         }
       }
   }

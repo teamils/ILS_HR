@@ -52,6 +52,7 @@ export class EditPersonalInformationComponent implements OnInit {
     empStatus: Array<any>;
     NewRoleStatus:string;
     hide: any;
+    select:any;
     constructor(
       public dialogRef: MatDialogRef<EditPersonalInformationComponent>
                       ,changeDetectorRef: ChangeDetectorRef
@@ -110,18 +111,28 @@ export class EditPersonalInformationComponent implements OnInit {
                  });
     }
     EditEmployee(){
+           this.select = {
+              NewempEmail:this.NewempEmail ,
+              NewempAddressReal:this.NewempAddressReal,
+              NewempAddressPerson:this.NewempAddressPerson,
+              NewemergencyContact: this.NewemergencyContact,
+            };
             this.http.post(API1 + '/editemployee/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
                                                     +'/'+ this.NewemployeeMasterLastName +'/'+ this.NewemployeeMasterNickName +'/'+ this.NewemployeeMasterGender
                                                     +'/'+ this.NewmaritalStatus +'/'+ this.NewemployeeMasterBirthDate +'/'+ this.NewemployeeMasterPersonID
-                                                    +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewempEmail +'/'+ this.NewempAddressReal +'/'+ this.NewempAddressPerson +'/'+ this.NewemergencyContact
-                                                    +'/'+ this.NewemployeeMasterStartDate +'/'+ this.NewemployeePosition +'/'+ this.NewemployeeDepartment
-                                                    +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber +'/'+ this.Newpassword +'/'+ this.fName +'/'+ this.lName ,{})
+                                                    +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewemployeeMasterStartDate +'/'+ this.NewemployeePosition +'/'+ this.NewemployeeDepartment
+                                                    +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber
+                                                    +'/'+ this.Newpassword +'/'+ this.fName +'/'+ this.lName , JSON.stringify(this.select),{
+                                                      headers: {"Content-Type": "application/json"}
+                                                    })
                                    .subscribe(
                                        data => {
                                            console.log('EditEmployee is successful');
                                            alert("Edit Success!");
                                             this.BackupEmployeeMaster();
+                                            localStorage.setItem('links', 'employeeMaster');
                                            window.location.reload(true);
+
                                        },
                                        error => {
                                            console.log('Error', error);
@@ -130,13 +141,20 @@ export class EditPersonalInformationComponent implements OnInit {
       }
 
     BackupEmployeeMaster(){
-            this.http.post(API1 + '/BackupEmployeeMaster/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
+            this.select = {
+                NewempEmail:this.NewempEmail ,
+                NewempAddressReal:this.NewempAddressReal,
+                NewempAddressPerson:this.NewempAddressPerson,
+                NewemergencyContact: this.NewemergencyContact,
+            };
+           this.http.post(API1 + '/BackupEmployeeMaster/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
                                                     +'/'+ this.NewemployeeMasterLastName +'/'+ this.NewemployeeMasterNickName +'/'+ this.NewemployeeMasterGender
                                                     +'/'+ this.NewmaritalStatus +'/'+ this.NewemployeeMasterBirthDate +'/'+ this.NewemployeeMasterPersonID
-                                                    +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewempEmail +'/'+ this.NewempAddressReal +'/'+ this.NewempAddressPerson +'/'+ this.NewemergencyContact
-                                                    +'/'+ this.NewemployeeMasterStartDate +'/'+ this.NewemployeePosition +'/'+ this.NewemployeeDepartment
+                                                    +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewemployeeMasterStartDate +'/'+ this.NewemployeePosition +'/'+ this.NewemployeeDepartment
                                                     +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber +'/'+ this.Newpassword
-                                                    +'/'+ this.fName +'/'+ this.lName +'/'+ this.NewRoleStatus,{})
+                                                    +'/'+ this.fName +'/'+ this.lName +'/'+ this.NewRoleStatus, JSON.stringify(this.select),{
+                                                      headers: {"Content-Type": "application/json"}
+                                                    })
                                    .subscribe(
                                        data => {
                                            console.log('BackupEmployeeMaster is successful');

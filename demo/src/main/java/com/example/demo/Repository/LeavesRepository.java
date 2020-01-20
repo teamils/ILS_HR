@@ -66,6 +66,9 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
     @Query(value = "select * from leaves,employee_master where (employee_master_customer_code LIKE %:empCode% or employee_master_first_name like %:empCode% or employee_master_last_name like %:empCode%) and leaves.employee_masterid_employee_masterid = employee_master.employee_masterid " +
             "and leaves.leave_status = 'Approve'",nativeQuery = true)
     Collection<Leaves> SearchEmployeeByCodeAndName(@Param("empCode") String empCode );
+    @Query(value = "select * from leaves,employee_master where (employee_master_customer_code LIKE %:empCode% or employee_master_first_name like %:empCode% or employee_master_last_name like %:empCode%) and leaves.employee_masterid_employee_masterid = employee_master.employee_masterid " +
+            "and leaves.leave_status = 'Not approve'",nativeQuery = true)
+    Collection<Leaves> SearchEmployeeByCodeAndName2(@Param("empCode") String empCode );
 
     //Data Attendance ค้นหา By departmentID
     @Query(value = "select * from leaves l,employee_master e\n" +

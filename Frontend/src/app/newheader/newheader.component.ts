@@ -40,11 +40,11 @@ export class NewheaderComponent implements OnInit {
   NewPassword : String ;
   role : string;
   userRoles: Array<any>;
+  open = false;
   logouts = localStorage.getItem('logouts');
   empId = localStorage.getItem('empId');
   NewemployeeMasterFirstName =  localStorage.getItem('fName');
   NewemployeeMasterLastName =  localStorage.getItem('lName');
-  NewRoleStatus =  localStorage.getItem('role');
   links = localStorage.getItem('links');
   role1 : boolean = false;
   role2 : boolean = false;
@@ -175,7 +175,6 @@ export class NewheaderComponent implements OnInit {
 
       }
 
-
       getroles(){
         for(let i = 0 ; i < this.userRoles.length ; i++){
             if(this.userRoles[i].masterRoleID.id == 1)
@@ -203,6 +202,7 @@ export class NewheaderComponent implements OnInit {
             else
               this.role12 = true;
         }
+        this.open=true;
       }
       shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
 
@@ -285,7 +285,7 @@ export class NewheaderComponent implements OnInit {
           this.selectAddUserRole =  localStorage.getItem('selectAddUserRole');
       }
       callAttendanceData(){
-          localStorage.setItem('links', 'attendance');
+          localStorage.setItem('links', 'attendanceData');
           localStorage.setItem('selectAttendanceDate', 'true');
           this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
           localStorage.setItem('selectAttendance', 'false');

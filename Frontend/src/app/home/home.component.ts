@@ -20,6 +20,14 @@ export interface DialogData {
 })
 export class HomeComponent implements OnInit {
     employee : Array<any>;
+    userRole : Array<any>;
+    masterRole: Array<any>;
+
+    RoleEmployee = [4, 5];
+    RoleManager = [4, 5, 8];
+    RoleSupervisor = [4, 5, 7];
+    RoleHR = [1, 2, 3, 4, 5, 6];
+
     hide:any;
     id : String = null;
     NewPassword : String = null ;
@@ -47,7 +55,10 @@ export class HomeComponent implements OnInit {
            ) { }
 
     ngOnInit() {
-
+          this.service.getMasterRole().subscribe(data => {
+          this.masterRole = data;
+          //console.log('masterRole == ',this.masterRole);
+      });
     }
 
     login(id,NewPassword){
@@ -65,44 +76,78 @@ export class HomeComponent implements OnInit {
                     alert("UserID and password not complete");
                     this.progressBar=false;
                 }
-                this.employee = data;
-                //console.table(data);
-                this.table.leaID = data.employeeMasterID;
-                this.table.empCode = data.employeeMasterCustomerCode;
-                this.table.fName = data.employeeMasterFirstName;
-                this.table.lName = data.employeeMasterLastName;
-
-                localStorage.setItem('empId', this.table.leaID);
-                localStorage.setItem('empCode', this.table.empCode);
-                localStorage.setItem('fName', this.table.fName);
-                localStorage.setItem('lName', this.table.lName);
-                localStorage.setItem('departmentIDLogin', data.departmentid.departmentID);
-                localStorage.setItem('startDateInLogin', data.employeeMasterStartDate);
-
-                if(data != null){
+                else if(data != null){
+                    this.employee = data;
+                    //console.table(data);
+                    this.table.leaID = data.employeeMasterID;
+                    this.table.empCode = data.employeeMasterCustomerCode;
+                    this.table.fName = data.employeeMasterFirstName;
+                    this.table.lName = data.employeeMasterLastName;
+                    this.table.rolestatus = data.roleStatus;
+                    localStorage.setItem('empId', this.table.leaID);
+                    localStorage.setItem('empCode', this.table.empCode);
+                    localStorage.setItem('fName', this.table.fName);
+                    localStorage.setItem('lName', this.table.lName);
+                    localStorage.setItem('departmentIDLogin', data.departmentid.departmentID);
+                    localStorage.setItem('startDateInLogin', data.employeeMasterStartDate);
+                    console.log(this.table.rolestatus);
                     this.progressBar=false;
-                    this.router.navigate(['newheader']);
+
+                    this.service.getUserRoles(data.employeeMasterID).subscribe(data => {
+                        //this.userRole = data;
+                        //console.log('userRole -> ',this.userRole);
+                        if(data.length==0){
+                          if(this.table.rolestatus == "ADMIN"){
+                            for(let i=1;i<=this.masterRole.length;i++){
+                                this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ i ,{})
+                                .subscribe(data => {
+                                    console.log(i," InsertUserRole is successfull");
+                                    this.router.navigate(['newheader']);
+                                });
+                            }
+                          }
+                          else if(this.table.rolestatus == "EMPLOYEE"){
+                            for(let i=0;i<this.RoleEmployee.length;i++){
+                                this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleEmployee[i] ,{})
+                                .subscribe(data => {
+                                    console.log(this.RoleEmployee[i]," InsertUserRole is successfull");
+                                    this.router.navigate(['newheader']);
+                                });
+                            }
+                          }
+                          else if(this.table.rolestatus == "MANAGER"){
+                            for(let i=0;i<this.RoleManager.length;i++){
+                                this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleManager[i] ,{})
+                                .subscribe(data => {
+                                    console.log(this.RoleManager[i]," InsertUserRole is successfull");
+                                    this.router.navigate(['newheader']);
+                                });
+                            }
+                          }
+                          else if(this.table.rolestatus == "SUPERVISOR"){
+                            for(let i=0;i<this.RoleSupervisor.length;i++){
+                                this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleSupervisor[i] ,{})
+                                .subscribe(data => {
+                                    console.log(this.RoleSupervisor[i]," InsertUserRole is successfull");
+                                    this.router.navigate(['newheader']);
+                                });
+                            }
+                          }
+                          else if(this.table.rolestatus == "HR"){
+                            for(let i=0;i<this.RoleHR.length;i++){
+                                this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleHR[i] ,{})
+                                .subscribe(data => {
+                                    console.log(this.RoleHR[i]," InsertUserRole is successfull");
+                                    this.router.navigate(['newheader']);
+                                });
+                            }
+                          }
+                        }
+                        else{
+                            this.router.navigate(['newheader']);
+                        }
+                    });
                     localStorage.setItem('logouts', 'false');
-                    if(data.roleStatus == "EMPLOYEE"){
-                      localStorage.setItem('role', 'EMPLOYEE');
-                      console.log('role ->',localStorage.getItem('role'));
-                    }
-                    else if(data.roleStatus == "MANAGER"){
-                      localStorage.setItem('role', 'MANAGER');
-                      console.log('role ->',localStorage.getItem('role'));
-                    }
-                    else if(data.roleStatus == "HR"){
-                      localStorage.setItem('role', 'HR');
-                      console.log('role ->',localStorage.getItem('role'));
-                    }
-                    else if(data.roleStatus == "SUPERVISOR"){
-                      localStorage.setItem('role', 'SUPERVISOR');
-                      console.log('role ->',localStorage.getItem('role'));
-                    }
-                    else /*if(data.roleStatus == "ADMIN")*/{
-                      localStorage.setItem('role', 'ADMIN');
-                      console.log('role ->',localStorage.getItem('role'));
-                    }
                 }
               });
               this.progressBar=true;

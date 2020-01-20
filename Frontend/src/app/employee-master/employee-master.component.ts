@@ -19,10 +19,36 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { API1 } from '../app.component';
 
-
 export interface Emp{
-  empCodeIDxx : number;
-  employeeMasterCustomerCode : String;
+    employeeMasterID : any;
+    create_date: any;
+    create_by: any;
+    update_date: any;
+    update_by: any;
+    employeeMasterCustomerCode: any;
+    prefix: any;
+    employeeMasterFirstName: any;
+    employeeMasterLastName: any;
+    employeeMasterNickName: any;
+    employeeMasterGender: any;
+    maritalStatus: any;
+    employeeMasterBirthDate: any;
+    employeeMasterPersonID: any;
+    employeeMasterTel1: any;
+    empEmail: any;
+    empAddressReal: any;
+    empAddressPerson: any;
+    emergencyContact: any;
+    employeeMasterStartDate: any;
+    employeePosition: any;
+    departmentid: any;
+    employeeType: any;
+    education: any;
+    bank: any;
+    bankNumber: any;
+    isActive: any;
+    roleStatus: any;
+    password: any;
 }
 
 @Component({
@@ -62,12 +88,7 @@ export class EmployeeMasterComponent implements OnInit {
       }
 
       /** The label for the checkbox on the passed row */
-      checkboxLabel(row?: Emp): string {
-        if (!row) {
-          return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-        }
-        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.empCodeIDxx + 1}`;
-      }
+
 
      applyFilter(filterValue: string) {
         this.dataSource.filter = filterValue.trim().toLowerCase();

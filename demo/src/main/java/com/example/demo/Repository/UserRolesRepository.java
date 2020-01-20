@@ -15,8 +15,6 @@ public interface UserRolesRepository extends JpaRepository<UserRole,Long>{
             "where u.empid = :empID",nativeQuery = true)
     Collection<UserRole> SearchUserRoles(@Param("empID") long empID );
 
-    @Query(value = "select * from user_role u\n" +
-            "where u.empid = :empID and u.master_roleid = :masterRoleID",nativeQuery = true)
-    Collection<UserRole> SearchUserRolesByempIDandmasterRoleID(@Param("empID") long empID ,@Param("empID") long masterRoleID );
+    UserRole findByEmpIDAndMasterRoleID(EmployeeMaster empID,MasterRole masterRoleID);
 
 }

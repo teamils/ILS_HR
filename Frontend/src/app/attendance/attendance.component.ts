@@ -77,6 +77,7 @@ export class AttendanceComponent implements OnInit {
   leaveTypeForAlldays : Array<any>;
   leaveTypeSelect : string;
   leaves2 : Array<any>;
+  masterAttendance:Array<any>;
   interval:any;
   diffTime1:number;
   diffDay:number;
@@ -111,6 +112,9 @@ export class AttendanceComponent implements OnInit {
   }
 
   ngOnInit() {
+      var CDate = new Date(this.startDateInLogin);
+      this.CalculateStartWorkDate(CDate,new Date());
+
       this.x=true;
       this.service.getleaveTypeForAlldays().subscribe(data => {
         this.leaveTypeForAlldays = data;
@@ -128,6 +132,7 @@ export class AttendanceComponent implements OnInit {
               this.table.empPos = data1.employeePosition;
 
               this.SaveLeaveNumber();
+
               this.service.getShowLeaves2(this.table.leaID).subscribe(dataleave => {
                     this.leaves2 = dataleave;
                     this.dataSource2.data = this.leaves2;
@@ -150,7 +155,6 @@ export class AttendanceComponent implements OnInit {
                   this.table.lName = data1.employeeMasterLastName;
                   this.table.empDep = data1.employeeDepartment;
                   this.table.empPos = data1.employeePosition;
-                  this.SaveLeaveNumber();
                   this.service.getShowLeaves2(this.table.leaID).subscribe(dataleave => {
                         this.leaves2 = dataleave;
                         this.dataSource2.data = this.leaves2;
@@ -271,10 +275,7 @@ export class AttendanceComponent implements OnInit {
     }
 
     SaveLeaveNumber(){ //function
-          this.todayDate = new Date();
-          var CDate = new Date(this.startDateInLogin);
-          this.CalculateStartWorkDate(CDate,this.todayDate);
-
+           console.log('work year ปัดเศษลง =>',this.sumDay_365);
            this.service.getShowLeavesNumber(this.empId).subscribe(data => {
                 //console.table(data);
                 if(data.length==0){
@@ -317,23 +318,35 @@ export class AttendanceComponent implements OnInit {
         //console.log('Leave Day =>',this.diffDay);
     }
 
+    sortEggsInNest(a, b) {
+      return a > b ? 1 : b > a ? -1 : 0;
+    }
+    num:Array<any> = [];
     CalculateStartWorkDate(date1:any,date2:any){
         this.diffTime2 = (date2 - date1);
         this.sumDay = Math.ceil((this.diffTime2 / (1000 * 60 * 60 * 24))-1);
         //console.log('start work =>',this.sumDay);
         this.sumDay_365 = this.sumDay/365.0;
         //console.log('work year =>',this.sumDay_365);
-        if(this.sumDay_365<1) this.sumDay_365=0;
-        else if(this.sumDay_365<2) this.sumDay_365=1;
-        else if(this.sumDay_365<3) this.sumDay_365=2;
-        else if(this.sumDay_365<4) this.sumDay_365=3;
-        else if(this.sumDay_365<5) this.sumDay_365=4;
-        else if(this.sumDay_365<6) this.sumDay_365=5;
-        else if(this.sumDay_365<7) this.sumDay_365=6;
-        else if(this.sumDay_365<8) this.sumDay_365=7;
-        else if(this.sumDay_365<9) this.sumDay_365=8;
-        else if(this.sumDay_365<10) this.sumDay_365=9;
-        else this.sumDay_365=10;
+        this.service.getMasterAttendance().subscribe(data => {
+            this.masterAttendance = data;
+            //console.log('masterAttendance == ',this.masterAttendance);
+            for(let i=0;i<data.length;i++){
+                this.num[i] = data[i].year;
+            }
+            this.num.sort(this.sortEggsInNest);
+            for(let i=0;i<this.num.length;i++){
+                if(this.sumDay_365<this.num[i]){
+                    this.sumDay_365 = this.num[i-1];
+                    break;
+                }
+                else if(this.sumDay_365>this.num[this.num.length-1]){
+                    this.sumDay_365 = this.num[this.num.length-1];
+                    break;
+                }
+            }
+        });
+
     }
 
     ClearTextInput(){

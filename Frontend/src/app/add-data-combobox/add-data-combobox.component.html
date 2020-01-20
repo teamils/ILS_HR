@@ -289,17 +289,17 @@
       <table  cellspacing="0" border="1">
         <tr>
           <th width="5px">No.</th>
-          <th width="100px">Year</th>
-          <th width="100px">วันลาพักร้อน</th>
-          <th width="10px">Delete</th>
+          <th width="100px">ทำงานมาแล้ว (ปี)</th>
+          <th width="100px">ได้รับวันลาพักร้อน (วัน)</th>
+          <th width="10px">Edit</th>
         </tr>
         <tr *ngFor="let value of masterAttendance;let i = index">
           <td align="center">{{i+1}}.</td>
           <td align="center">{{value.year}}</td>
           <td align="center">{{value.dayLeave}}</td>
           <td align="center">
-            <button mat-icon-button matTooltip="ลบข้อมูล" matTooltipPosition="right" (click)="DeleteMasterAttendance(value.masterAttendanceID);"  #ckeckEdit>
-              <mat-icon>delete_forever</mat-icon>
+            <button mat-icon-button matTooltip="เเก้ไขจำนวนวันลา" matTooltipPosition="right" (click)="OpenDaialog_EditMasterAttendanceDialog(value)" #ckeckEdit>
+              <mat-icon>edit</mat-icon>
             </button>
           </td>
         </tr>
@@ -315,11 +315,12 @@
               <input matInput type="number" placeholder="input leaves day" [(ngModel)]="masterAttendance_leaveDay">
             </mat-form-field>
           </td>
-          <td>
+          <td align="center">
             <button mat-raised-button color="primary" (click)="InsertMasterAttendance()">ADD</button>
           </td>
         </tr>
       </table>
+      <font color="red">*หมายเหตุ : ต้องเพิ่มข้อมูลของทุกปี เช่น ถ้าต้องเพิ่ม 15ปี ได้วันลาพักร้อน 20วัน จะต้องเพิ่ม 1ปี-14ปี ด้วย</font>
     </mat-expansion-panel> <!-- MASTER VACATION DAY -->
   </mat-accordion>
 

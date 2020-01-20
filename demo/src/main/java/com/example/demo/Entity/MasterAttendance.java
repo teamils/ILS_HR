@@ -17,7 +17,10 @@ import java.util.Date;
 @EqualsAndHashCode
 public class MasterAttendance {
     @Id
+    @SequenceGenerator(name = "MasterAttendance_seq", sequenceName = "MasterAttendance_seq",initialValue = 1, allocationSize = 1)
+    @GeneratedValue(generator ="MasterAttendance_seq")
     private Long MasterAttendanceID;
+
     private int year;
     private int dayLeave;
 

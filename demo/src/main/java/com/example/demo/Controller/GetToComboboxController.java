@@ -189,13 +189,13 @@ public class GetToComboboxController {
     }
 
 
-    @PostMapping(path = "/MasterAttendance123/{masterAttendance_year}/{masterAttendance_leaveDay}")
+    @PostMapping(path = "/insertMasterAttendance/{masterAttendance_year}/{masterAttendance_leaveDay}")
     public MasterAttendance insertMasterAttendance(@PathVariable int masterAttendance_year,@PathVariable int masterAttendance_leaveDay) {
         MasterAttendance insertMasterAttendance = new MasterAttendance();
         insertMasterAttendance.setYear(masterAttendance_year);
         insertMasterAttendance.setDayLeave(masterAttendance_leaveDay);
         masterAttendanceRepository.save(insertMasterAttendance);
-        return null;
+        return insertMasterAttendance;
     }
     @DeleteMapping("/deleteMasterAttendance//{masterAttendanceID}")
     public MasterAttendance deleteMasterAttendance(@PathVariable long masterAttendanceID) {
@@ -203,7 +203,13 @@ public class GetToComboboxController {
         masterAttendanceRepository.delete(deleteMasterAttendance);
         return null;
     }
-
+    @PostMapping(path = "/editmasterAttendance/{masterAttendanceID}/{dayLeave}")
+    public MasterAttendance editmasterAttendance(@PathVariable long masterAttendanceID,@PathVariable int dayLeave) {
+        MasterAttendance editmasterAttendance = masterAttendanceRepository.findById(masterAttendanceID).get();
+        editmasterAttendance.setDayLeave(dayLeave);
+        masterAttendanceRepository.save(editmasterAttendance);
+        return editmasterAttendance;
+    }
 
 
 

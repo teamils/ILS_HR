@@ -65,23 +65,29 @@ export class AddDepartmentRoleComponent implements OnInit {
 
   ShowDataRole(){
       this.progressBar = true;
-      this.service.getSearchEmpCode(this.dataSearch).subscribe(data => {
-          if(data==null){
-              alert("รหัสพนักงานไม่ถูกต้อง!");
-          }
-          else{
-            this.employee = data;
-            this.employeeMasterID = data.employeeMasterID;
-            this.employeeMasterFirstName = data.employeeMasterFirstName;
-            this.employeeMasterLastName = data.employeeMasterLastName;
-            this.employeePosition = data.employeePosition;
-            this.departmentName = data.departmentid.departmentName;
-            this.employeeMasterCustomerCode = data.employeeMasterCustomerCode;
-            this.SearchDepartmentRole();
-            //console.log(this.employee);
-          }
+      if(this.dataSearch == ''){
           this.progressBar = false;
-      });
+          alert("กรุณากรอกรหัสพนักงาน!");
+      }
+      else{
+        this.service.getSearchEmpCode(this.dataSearch).subscribe(data => {
+            if(data==null){
+                alert("รหัสพนักงานไม่ถูกต้อง!");
+            }
+            else{
+              this.employee = data;
+              this.employeeMasterID = data.employeeMasterID;
+              this.employeeMasterFirstName = data.employeeMasterFirstName;
+              this.employeeMasterLastName = data.employeeMasterLastName;
+              this.employeePosition = data.employeePosition;
+              this.departmentName = data.departmentid.departmentName;
+              this.employeeMasterCustomerCode = data.employeeMasterCustomerCode;
+              this.SearchDepartmentRole();
+              //console.log(this.employee);
+            }
+            this.progressBar = false;
+        });
+      }
   }
 
   InsertDataDepartmentRole(){
@@ -118,12 +124,14 @@ export class AddDepartmentRoleComponent implements OnInit {
   }
 
   Delete(row : any){
+    this.progressBar = true;
     //console.log(row.departmentMasterRoleID);
     this.http.delete(API1 + '/deleteRole/' + row.departmentMasterRoleID ,{})
                               .subscribe(
                                   data => {
                                       //alert("Delete is successful");
                                       this.RefreshTable();
+                                      this.progressBar = false;
                                   }
                             );
   }

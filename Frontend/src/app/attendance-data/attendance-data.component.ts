@@ -14,10 +14,29 @@ import { AttendanceComponent } from '../attendance/attendance.component';
 import { ExcelService } from '../excel.service';
 
 export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  leavesID: any;
+  createDate: any;
+  updateLeave_date: any;
+  updateLeave_by: any;
+  createLeave_by: any;
+  labelLeaveHalfDay: any;
+  reasonForAllDay: any;
+  startDateForAllDay: any;
+  endDateForAllDay: any;
+  startTime: any;
+  endTime: any;
+  leaveTypeForAllDay: any;
+  approvedBySupervisor: any;
+  approvedByManager: any;
+  confirmByHR: any;
+  isActiveAttendance: any;
+  employeeMasterid: any;
+  leaveStatus: any;
+  reasonNotApprove: any;
+  isPayment: any;
+  paymentReson: any;
+  leavesNumbersid: any;
+  departmentid: any;
 }
 
 @Component({
@@ -32,6 +51,7 @@ export class AttendanceDataComponent implements OnInit {
   LeavesToComplete: Array<any>;
   isChecked;
   interval:any;
+  interval2:any;
   dis;
   dataSearch;
   progressBar=false;
@@ -54,15 +74,15 @@ export class AttendanceDataComponent implements OnInit {
     if (this.interval) { // show table Leave
       clearInterval(this.interval);
     }
+    if (this.interval2) { // show table Leave
+      clearInterval(this.interval2);
+    }
   }
   ngOnInit() {
         this.progressBar = true;
-        this.service.getshowLeavesToNotComplete().subscribe(data => {
-            this.progressBar = false;
-            this.leaves = data;
-            this.dataSource.data = this.leaves;
-            //console.log('leaves -> ',this.leaves);
-        });
+        //this.interval2 = setInterval(() => {
+          this.onChange();
+        //}, 1000);
         this.service.getDepartment().subscribe(data => {
                this.department = data;
               //console.log('department == ',this.department);
@@ -80,7 +100,7 @@ export class AttendanceDataComponent implements OnInit {
             this.onChange();
           }
         onChange(){
-          this.progressBar = true;
+          //this.progressBar = true;
            this.interval = setTimeout(() => {  //show table Leave
               if(this.isChecked == true){
                 this.dis=true;
@@ -89,10 +109,9 @@ export class AttendanceDataComponent implements OnInit {
                       this.leaves = dataLeavesToComplete;
                       this.dataSource.data = this.leaves;
                       //console.log('leaves -> ',this.leaves);
-              });
-
+                });
               }
-              else{
+              else if(this.isChecked == false){
                 this.dis=false;
                   this.service.getshowLeavesToNotComplete().subscribe(data => {
                     this.progressBar = false;
@@ -110,11 +129,18 @@ export class AttendanceDataComponent implements OnInit {
               this.dataSource.data = this.leaves;
       });
     }
+    SearchEmployeeByCodeAndName2(){
+      this.service.getSearchEmployeeByCodeAndName2(this.dataSearch).subscribe(data => {
+              this.leaves = data;
+              this.dataSource.data = this.leaves;
+      });
+    }
     SearchEmployeeByDepartmentID(){
       this.service.getSearchEmployeeByDepartmentID(this.departmentSelect).subscribe(data => {
               //console.log(data);
               this.leaves = data;
               this.dataSource.data = this.leaves;
+              this.dataSearch=null;
       });
     }
     getEditPaymentDialog(row : any){
@@ -123,8 +149,15 @@ export class AttendanceDataComponent implements OnInit {
                   height:'auto',
                   data: row,
             });
-            this.onChange();
+            //this.onChange();
 
+    }
+    GetExportDataDailog(){
+            const dialogRef = this.dialog.open(ExportDataDialog, {
+                  width: 'auto',
+                  height:'auto',
+            });
+            //this.onChange();
     }
     exportexcel(): void{
         let dataleave : any[] = [];
@@ -146,6 +179,34 @@ export class AttendanceDataComponent implements OnInit {
     }
 }
 
+//Dialog ExportDataDialog
+export interface DialogData {
+  leavesID : null;
+  isActiveAttendance: string;
+}
+@Component({
+    selector: 'exportDataDialog',
+    templateUrl: 'exportDataDialog.html',
+  })
+  export class ExportDataDialog {
+    leavesID: string;
+    isActiveAttendance:string;
+    selectAttendanceDate : String;
+
+    constructor(public dialogRef: MatDialogRef<ExportDataDialog>,
+                public service:ServiceService,
+                @Inject(MAT_DIALOG_DATA)  public date: DialogData,
+                private http: HttpClient){
+          dialogRef.disableClose = false;
+
+    }
+
+    closeDialog(): void {
+      this.dialogRef.close();
+    }
+
+
+}
 
 //Dialog AttendanceDeleteDialog
 export interface DialogData {
@@ -227,7 +288,7 @@ export interface EditPaymentDialogData {
     constructor(public dialogRef: MatDialogRef<EditPaymentDialog> ,
                 public service:ServiceService,
                 private http: HttpClient,
-                @Inject(MAT_DIALOG_DATA)  public data: EditPaymentDialogData,){
+                @Inject(MAT_DIALOG_DATA)  public data: EditPaymentDialogData){
           dialogRef.disableClose = true;
           this.leavesID = this.data.leavesID;
 

@@ -28,56 +28,56 @@ import { map, startWith } from "rxjs/operators";
 
 export class EmployeeAddComponent implements OnInit {
 
-myControl = new FormControl();
-options: string[] = [];
-filteredOptions: Observable<string[]>;
+  myControl = new FormControl();
+  options: string[] = [];
+  filteredOptions: Observable<string[]>;
 
-data:any={}
+  data:any={}
 
-employeeMasterCustomerCode : null;
-prefix: Array<any>;
-prefixSelect = '';
-empMasterFirstName : null;
-empMasterLastName : null;
-empMasterNickName : null;
-gender:Array<any>;
-genderSelect = '';
+  employeeMasterCustomerCode : null;
+  prefix: Array<any>;
+  prefixSelect = '';
+  empMasterFirstName : null;
+  empMasterLastName : null;
+  empMasterNickName : null;
+  gender:Array<any>;
+  genderSelect = '';
 
 
-BirthDateSelect : String = '' ;
+  BirthDateSelect : String = '' ;
 
-personID : null;
-callContact : null;
-emails : null;
-homeNo : null;
-homeNowAddress : null;
+  personID : null;
+  callContact : null;
+  emails : null;
+  homeNo : null;
+  homeNowAddress : null;
 
-startWorks : null;
+  startWorks : null;
 
-position: Array<any>;
-positionSelect : '';
+  position: Array<any>;
+  positionSelect : '';
 
-department: Array<any>;
-departmentSelect : '';
-employeeType: Array<any>;
-typeNameSelect : '';
-education: Array<any>;
-educationSelect : '';
-emergencyContact :'';
-NewBank: Array<any>;
-bankSelect = '';
+  department: Array<any>;
+  departmentSelect : '';
+  employeeType: Array<any>;
+  typeNameSelect : '';
+  education: Array<any>;
+  educationSelect : '';
+  emergencyContact :'';
+  NewBank: Array<any>;
+  bankSelect = '';
 
-bankNumbers : null;
+  bankNumbers : null;
+  select:any;
+  role_status : Array<any>;
+  role_statusSelect = '';
+  passwordCreate : null;
+  progressBar=false;
+  empId = localStorage.getItem('empId');
+  fName = localStorage.getItem('fName');
+  lName = localStorage.getItem('lName');
 
-role_status : Array<any>;
-role_statusSelect = '';
-passwordCreate : null;
-progressBar=false;
-empId = localStorage.getItem('empId');
-fName = localStorage.getItem('fName');
-lName = localStorage.getItem('lName');
-
-constructor(private route:ActivatedRoute ,
+    constructor(private route:ActivatedRoute ,
             public dialog: MatDialog,
             private http: HttpClient,
             private service:ServiceService) { }
@@ -167,25 +167,35 @@ constructor(private route:ActivatedRoute ,
                               alert("กรุณากรอกข้อมูลให้ครบ");
         }
         else{
-       this.http.post(API1 + /ILS_HR/ + this.employeeMasterCustomerCode + '/' + this.prefixSelect  + '/' + this.empMasterFirstName +'/' + this.empMasterLastName
-       +'/' + this.empMasterNickName +'/' + this.genderSelect  +'/' + this.BirthDateSelect
-       +'/' + this.personID +'/' + this.callContact +'/' + this.emails +'/' + this.homeNo +'/' + this.homeNowAddress +'/'+ this.emergencyContact
-       +'/' + this.startWorks +'/' + this.myControl.value +'/' + this.departmentSelect +'/' + this.typeNameSelect
-       +'/' + this.educationSelect +'/' + this.bankSelect +'/'+ this.bankNumbers +'/'+ this.role_statusSelect +'/'+ this.passwordCreate +'/'+ this.fName +'/'+ this.lName,{})
-                  .subscribe(
-                                 data => {
-                                     console.log('PUT Request is successful', data);
-                                     alert("บันทึกสำเร็จ");
-                                     window.location.reload(true);
-                                      localStorage.setItem('links', 'employeeMaster');
-                                      this.progressBar=false;
-                                 },
-                                 error => {
-                                     console.log('Error', error);
-                                 }
-                   );
-                  this.progressBar=true;
-          }
+            this.select = {
+              empEmail:this.emails ,
+              empAddressReal:this.homeNo,
+              empAddressPerson:this.homeNowAddress,
+              emergencyContact: this.emergencyContact,
+            };
+           this.http.post(API1 + /addEmployeeMaster/ + this.employeeMasterCustomerCode + '/' + this.prefixSelect  + '/' + this.empMasterFirstName +'/' + this.empMasterLastName
+                         +'/' + this.empMasterNickName +'/' + this.genderSelect  +'/' + this.BirthDateSelect
+                         +'/' + this.personID +'/' + this.callContact +'/' + this.startWorks +'/' + this.myControl.value +'/' + this.departmentSelect +'/' + this.typeNameSelect
+                         +'/' + this.educationSelect +'/' + this.bankSelect +'/'+ this.bankNumbers +'/'+ this.role_statusSelect +'/'+ this.passwordCreate
+                         +'/'+ this.fName +'/'+ this.lName, JSON.stringify(this.select),{
+                          headers: {
+                              "Content-Type": "application/json"
+                            }
+                         })
+                      .subscribe(
+                                     data => {
+                                         console.log('PUT Request is successful', data);
+                                         alert("บันทึกสำเร็จ");
+                                         window.location.reload(true);
+                                          localStorage.setItem('links', 'employeeMaster');
+                                          this.progressBar=false;
+                                     },
+                                     error => {
+                                         console.log('Error', error);
+                                     }
+                       );
+                      this.progressBar=true;
+        }
 
     }
 
