@@ -15,7 +15,7 @@ BuildingProject
 ===============================
 Maven
 
-mvnw clean install package
+!mvnw clean install package
 
 Angular
 
