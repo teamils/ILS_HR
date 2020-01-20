@@ -3,12 +3,14 @@
 StartProject
 ===============================
 Maven
-mvnw spring-boot:run
+
+> mvnw spring-boot:run
 
 Angular
-npm i
 
-ng s
+> npm install
+
+> ng serve
 
 
 BuildingProject
@@ -19,9 +21,11 @@ Maven
 
 Angular
 
-ng build --prod --base-href=/yourNameProject/
+> ng build --prod --base-href=/yourNameProject/
 
-ng build --prod --base-href=/Frontend/
+> ng build --prod --base-href=/Frontend/
+
+> ng build --prod --base-href=/
 
 
 DATABASE
@@ -34,6 +38,14 @@ spring.datasource.username= <<-- Your Username
 
 spring.datasource.password= <<-- Your Password
 
+> spring.datasource.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+> spring.datasource.url=jdbc:sqlserver://192.168.1.47:1433;databaseName=ILS_HR
+> spring.datasource.username=sa
+> spring.datasource.password=1234
+> spring.jpa.properties.hibernate.format_sql = true
+> pring.jpa.properties.hibernate.dialect = org.hibernate.dialect.SQLServer2012Dialect
+> spring.jpa.hibernate.ddl-auto = update
+> #server.port=8000
 
 JPA / HIBERNATE
 ===============================
