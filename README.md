@@ -45,7 +45,7 @@ spring.datasource.password= <<-- Your Password
 > spring.jpa.properties.hibernate.format_sql = true
 > pring.jpa.properties.hibernate.dialect = org.hibernate.dialect.SQLServer2012Dialect
 > spring.jpa.hibernate.ddl-auto = update
-> #server.port=8000
+> server.port=8000
 
 JPA / HIBERNATE
 ===============================
