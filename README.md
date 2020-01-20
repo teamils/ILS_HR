@@ -59,7 +59,9 @@ spring.datasource.password= <<-- Your Password
 ### H2 Database
 
 > spring.h2.console.enabled=true
+
 ===============================
+
 > spring.h2.console.enabled=true
 
 > spring.datasource.url=jdbc:h2:file:./data/demo
