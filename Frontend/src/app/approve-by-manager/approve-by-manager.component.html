@@ -51,12 +51,12 @@
 
   <ng-container matColumnDef="startDate">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>เริ่มจากวันที่</b></font>  </th>
-    <td mat-cell *matCellDef="let element"> {{element.startDateForAllDay}}<font *ngIf="element.startTime=='null'?false:true;">{{element.startTime}}</font> </td>
+    <td mat-cell *matCellDef="let element"> {{element.startDateForAllDay}}&nbsp;<font *ngIf="element.startTime=='null'?false:true;">{{element.startTime}}</font> </td>
   </ng-container>
 
   <ng-container matColumnDef="endDate">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>ถึงวันที่</b></font>  </th>
-    <td mat-cell *matCellDef="let element"> {{element.endDateForAllDay}}<font *ngIf="element.startTime=='null'?false:true;">{{element.endTime}}</font> </td>
+    <td mat-cell *matCellDef="let element"> {{element.endDateForAllDay}}&nbsp;<font *ngIf="element.startTime=='null'?false:true;">{{element.endTime}}</font> </td>
   </ng-container>
 
   <ng-container matColumnDef="total">

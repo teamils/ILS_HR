@@ -7,12 +7,22 @@ import {ChangeDetectorRef,  OnDestroy} from '@angular/core';
 import { ServiceService } from '../service/service.service';
 import { HttpClient} from '@angular/common/http';
 import { API1 } from '../app.component';
+import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 
 @Component({
   selector: 'app-edit-personal-information',
   templateUrl: './edit-personal-information.component.html',
-  styleUrls: ['./edit-personal-information.component.css']
-})
+  styleUrls: ['./edit-personal-information.component.css'],
+  providers: [
+  {
+    provide: DateAdapter, useClass: AppDateAdapter
+  },
+  {
+    provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+  }
+  ]})
+
 export class EditPersonalInformationComponent implements OnInit {
     employee: Array<any>;
     empId = localStorage.getItem('empId');

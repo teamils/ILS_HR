@@ -69,9 +69,17 @@ public doFilter = (value: string) => {
             this.leaves = data;
             this.dataSource.data = this.leaves;
             //console.log('leaves -> ',this.leaves);
+            for(let i of this.leaves){
+              i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+              i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+            }
         });
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+  }
+  SplitDate(date:any){
+    var DateSplitted = date.split("-");
+    return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
   }
   approve(row : any){
          this.progressBar = true;
@@ -102,6 +110,10 @@ public doFilter = (value: string) => {
                       this.leaves = dataLeavesToComplete;
                       this.dataSource.data = this.leaves;
                       this.progressBar = false;
+                      for(let i of this.leaves){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                      }
                       //console.log('leaves -> ',this.leaves);
                   });
                   this.dis=true;
@@ -111,6 +123,10 @@ public doFilter = (value: string) => {
                     this.leaves = data;
                     this.dataSource.data = this.leaves;
                     this.progressBar = false;
+                    for(let i of this.leaves){
+                      i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                      i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                    }
                     //console.log('leaves -> ',this.leaves);
                   });
                   this.dis=false;
@@ -119,9 +135,13 @@ public doFilter = (value: string) => {
   }
 
   SearchEmployeeByCodeAndNameInApproveBySup(){
-      this.service.getSearchEmployeeByCodeAndNameInApproveBySup(this.dataSearch).subscribe(data => {
+      this.service.getSearchEmployeeByCodeAndNameInApproveBySup(this.dataSearch,this.empId).subscribe(data => {
               this.leaves = data;
               this.dataSource.data = this.leaves;
+              for(let i of this.leaves){
+                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+              }
       });
   }
 

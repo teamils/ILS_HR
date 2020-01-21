@@ -28,6 +28,8 @@
     "http": "0.0.0",
     "ngx-material-timepicker": "^5.2.3",
     "rxjs": "~6.4.0",
+    "ts-xlsx": "0.0.11",
+    "ts-xlsx-export": "^1.0.1",
     "tslib": "^1.10.0",
     "xlsx": "^0.15.4",
     "zone.js": "~0.9.1"

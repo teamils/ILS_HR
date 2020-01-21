@@ -52,6 +52,7 @@ export class AttendanceDataComponent implements OnInit {
   isChecked;
   interval:any;
   interval2:any;
+  interval3:any;
   dis;
   dataSearch;
   progressBar=false;
@@ -71,18 +72,24 @@ export class AttendanceDataComponent implements OnInit {
 
 
   ngOnDestroy() {
-    if (this.interval) { // show table Leave
       clearInterval(this.interval);
-    }
-    if (this.interval2) { // show table Leave
       clearInterval(this.interval2);
-    }
+      clearInterval(this.interval3);
   }
   ngOnInit() {
         this.progressBar = true;
-        //this.interval2 = setInterval(() => {
-          this.onChange();
-        //}, 1000);
+        this.interval3 = setInterval(() => {
+          this.service.getshowLeavesToNotComplete().subscribe(data => {
+                this.progressBar = false;
+                this.leaves = data;
+                this.dataSource.data = this.leaves;
+                for(let i of this.leaves){
+                  i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                  i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                }
+                //console.log('leaves -> ',this.leaves);
+          });
+        }, 1000);
         this.service.getDepartment().subscribe(data => {
                this.department = data;
               //console.log('department == ',this.department);
@@ -90,58 +97,105 @@ export class AttendanceDataComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
 
   }
-
-          DeleteAttendance(row : any){
-            const dialogRef = this.dialog.open(AttendanceDeleteDialog, {
-                  width: '320px',
-                  height:'200px',
-                  data: row,
-            });
-            this.onChange();
-          }
+  SplitDate(date:any){
+    var DateSplitted = date.split("-");
+    return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
+  }
         onChange(){
-          //this.progressBar = true;
-           this.interval = setTimeout(() => {  //show table Leave
+            this.dataSearch=null;
+            this.departmentSelect=null;
+           this.progressBar = true;
               if(this.isChecked == true){
+                clearInterval(this.interval2);
+                clearInterval(this.interval3);
                 this.dis=true;
-                this.service.getshowLeavesToComplete().subscribe(dataLeavesToComplete => {
-                      this.progressBar = false;
-                      this.leaves = dataLeavesToComplete;
-                      this.dataSource.data = this.leaves;
-                      //console.log('leaves -> ',this.leaves);
-                });
+                this.interval = setInterval(() => {
+                  this.service.getshowLeavesToComplete().subscribe(dataLeavesToComplete => {
+                        this.progressBar = false;
+                        this.leaves = dataLeavesToComplete;
+                        this.dataSource.data = this.leaves;
+                        for(let i of this.leaves){
+                          i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                          i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        }
+                        //console.log('leaves -> ',this.leaves);
+                  });
+                }, 1000);
               }
               else if(this.isChecked == false){
+                clearInterval(this.interval);
+                clearInterval(this.interval3);
                 this.dis=false;
+                this.interval2 = setInterval(() => {
                   this.service.getshowLeavesToNotComplete().subscribe(data => {
                     this.progressBar = false;
                     this.leaves = data;
                     this.dataSource.data = this.leaves;
+                    for(let i of this.leaves){
+                      i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                      i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                    }
                     //console.log('leaves -> ',this.leaves);
                   });
+                }, 1000);
               }
-            }, 1000);
         }
 
     SearchEmployeeByCodeAndName(){
+      this.ngOnDestroy();
       this.service.getSearchEmployeeByCodeAndName(this.dataSearch).subscribe(data => {
               this.leaves = data;
               this.dataSource.data = this.leaves;
+              for(let i of this.leaves){
+                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+              }
       });
     }
     SearchEmployeeByCodeAndName2(){
+      this.ngOnDestroy();
       this.service.getSearchEmployeeByCodeAndName2(this.dataSearch).subscribe(data => {
               this.leaves = data;
               this.dataSource.data = this.leaves;
+              for(let i of this.leaves){
+                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+              }
       });
     }
     SearchEmployeeByDepartmentID(){
+      this.ngOnDestroy();
       this.service.getSearchEmployeeByDepartmentID(this.departmentSelect).subscribe(data => {
               //console.log(data);
               this.leaves = data;
               this.dataSource.data = this.leaves;
               this.dataSearch=null;
+              for(let i of this.leaves){
+                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+              }
       });
+    }
+    SearchEmployeeByDepartmentID2(){
+      this.ngOnDestroy();
+      this.service.getSearchEmployeeByDepartmentID2(this.departmentSelect).subscribe(data => {
+              //console.log(data);
+              this.leaves = data;
+              this.dataSource.data = this.leaves;
+              this.dataSearch=null;
+              for(let i of this.leaves){
+                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+              }
+      });
+    }
+    DeleteAttendance(row : any){
+        const dialogRef = this.dialog.open(AttendanceDeleteDialog, {
+            width: '320px',
+            height:'200px',
+            data: row,
+        });
+        this.onChange();
     }
     getEditPaymentDialog(row : any){
             const dialogRef = this.dialog.open(EditPaymentDialog, {
@@ -150,7 +204,6 @@ export class AttendanceDataComponent implements OnInit {
                   data: row,
             });
             //this.onChange();
-
     }
     GetExportDataDailog(){
             const dialogRef = this.dialog.open(ExportDataDialog, {
@@ -164,15 +217,20 @@ export class AttendanceDataComponent implements OnInit {
         for(let i = 0 ; i < this.leaves.length ; i++){
             dataleave.push({
               สำดับ : i+1,
+              ชื่อ_สกุล : this.leaves[i].employeeMasterid.employeeMasterFirstName+"  "+this.leaves[i].employeeMasterid.employeeMasterLastName,
+              ตำแหน่ง : this.leaves[i].employeeMasterid.employeePosition,
+              แผนก : this.leaves[i].employeeMasterid.departmentid.departmentName,
               วันที่เขียนใบลา : this.leaves[i].createDate,
-              start_date : this.leaves[i].startDateForAllDay+" "+this.leaves[i].startTime,
-              end_date : this.leaves[i].endDateForAllDay+" "+this.leaves[i].endTime,
+              วันที่เริ่มลา : this.leaves[i].startDateForAllDay+" "+this.leaves[i].startTime,
+              ลาถึงวันที่ : this.leaves[i].endDateForAllDay+" "+this.leaves[i].endTime,
               ประเภทการลา : this.leaves[i].leaveTypeForAllDay.leaveTypeForAlldayName,
-              จำนวนวันลา : this.leaves[i].labelLeaveHalfDay,
-              payment : this.leaves[i].isPayment,
+              ระยะเวลาที่ลา : this.leaves[i].labelLeaveHalfDay,
               เหตุผล : this.leaves[i].reasonForAllDay,
-              Approve_by_supervisor : this.leaves[i].approvedBySupervisor,
-              Approve_by_manager : this.leaves[i].approvedByManager,
+              หัวหน้างานอนุมัติ : this.leaves[i].approvedBySupervisor,
+              ผู้จัดการอนุมัติ : this.leaves[i].approvedByManager,
+              HR_ยืนยัน : this.leaves[i].confirmByHR,
+              จ่ายเงิน : this.leaves[i].isPayment,
+              สถานะการลา : this.leaves[i].leaveStatus,
             });
         }
         this.excelService.exportAsExcelFile(dataleave, 'Dataleave');
@@ -277,6 +335,7 @@ export interface EditPaymentDialogData {
     isPayments:string='';
     labelLeaveHalfDay='';
     leaveTypeForAllDay='';
+    leaveTypeForAllDayID='';
     balanceDay;
     diffDay:String;
     splitted;
@@ -294,11 +353,13 @@ export interface EditPaymentDialogData {
 
         this.service.getLeavesFindByID(this.leavesID).subscribe(data => {
             this.leaves = data;
-            //console.log('leaves -> ',this.leaves);
+            console.log('leaves -> ',this.leaves);
             this.isPayments = data.isPayment;
             this.labelLeaveHalfDay = data.labelLeaveHalfDay
             this.leaveTypeForAllDay = data.leaveTypeForAllDay.leaveTypeForAlldayName;
+            this.leaveTypeForAllDayID = data.leaveTypeForAllDay.leaveTypeForAlldayID;
             this.leavesNumbersID = data.leavesNumbersid.leavesNumbersID;
+
 
             if(data.leavesNumbersid.balanceDay>0)
             this.balanceDay = data.leavesNumbersid.balanceDay;
@@ -346,7 +407,7 @@ export interface EditPaymentDialogData {
     }
 
     UpdateLeaveNumber(){
-        this.http.post(API1 + '/UpdateLeaveNumber/' + this.leavesNumbersID +'/'+ this.diffDay  +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin +'/'+ this.statusLabelLeaveHalfDay ,{}).subscribe(
+        this.http.post(API1 + '/UpdateLeaveNumber/' + this.leavesNumbersID +'/'+ this.diffDay +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin +'/'+ this.statusLabelLeaveHalfDay +'/'+  this.leaveTypeForAllDayID ,{}).subscribe(
           dataupdate => {
             console.log('Update Leave Number is successful');
           },

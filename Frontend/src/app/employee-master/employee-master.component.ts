@@ -107,11 +107,13 @@ export class EmployeeMasterComponent implements OnInit {
                     this.progressBar=false;
                    this.employee = data;
                     this.dataSource.data = this.employee;
-                    //console.log('employee->',this.employee);
+                    console.log('employee->',this.employee);
+                    for(let i of this.employee){
+                        i.employeeMasterStartDate = this.SplitDate(i.employeeMasterStartDate);
+                    }
               });
              this.dataSource.paginator = this.paginator;
              this.dataSource.sort = this.sort;
-
 
         }
         startwork: Array<any>;
@@ -168,6 +170,10 @@ export class EmployeeMasterComponent implements OnInit {
         this.excelService.exportAsExcelFile(dataemployee, 'Data-Employee');
     }
 
+  SplitDate(date:any){
+    var DateSplitted = date.split("-");
+    return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
+  }
 
 }
 

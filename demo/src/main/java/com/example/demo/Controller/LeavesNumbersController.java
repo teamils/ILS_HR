@@ -47,9 +47,9 @@ public class LeavesNumbersController {
         return this.leavesNumbersRepository.show1rowof1person(empID,leaveTypeForAllday.getLeaveTypeForAlldayID());
     }
 
-    @PostMapping("/UpdateLeaveNumber/{leavesNumbersID}/{diffDay}/{fName}/{lName}/{statusLabelLeaveHalfDay}")
+    @PostMapping("/UpdateLeaveNumber/{leavesNumbersID}/{diffDay}/{fName}/{lName}/{statusLabelLeaveHalfDay}/{leaveTypeForAllDayID}")
     public LeavesNumbers UpdateLeaveNumber( @PathVariable long leavesNumbersID,@PathVariable String diffDay,@PathVariable String fName,
-                                            @PathVariable String lName,@PathVariable int statusLabelLeaveHalfDay){
+                                            @PathVariable String lName,@PathVariable int statusLabelLeaveHalfDay,@PathVariable long leaveTypeForAllDayID){
         LeavesNumbers leavesNumbers = leavesNumbersRepository.findById(leavesNumbersID).get();
         if(statusLabelLeaveHalfDay==3){
             leavesNumbers.setUsedDay(leavesNumbers.getUsedDay()+0.5);
@@ -71,9 +71,13 @@ public class LeavesNumbersController {
             leavesNumbers.setBalanceDay(leavesNumbers.getBalanceDay()-newresult2);
             leavesNumbers.setDiffDay(newresult2);
         }
+        if(leaveTypeForAllDayID==3){
+            leavesNumbers.setCompoundDay(leavesNumbers.getBalanceDay());
+        }
         leavesNumbers.setUpdate_Date(new Date());
         leavesNumbers.setUpdate_by(fName+" "+lName);
         leavesNumbersRepository.save(leavesNumbers);
+
         return leavesNumbers;
     }
 

@@ -58,6 +58,10 @@ constructor(private service:ServiceService,
             this.leaves = data;
             this.dataSource.data = this.leaves;
             this.progressBar = false;
+            for(let i of this.leaves){
+              i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+              i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+            }
             //console.log('leaves -> ',this.leaves);
         });
         this.dataSource.paginator = this.paginator;
@@ -66,6 +70,10 @@ constructor(private service:ServiceService,
             this.departmentMasterRole = data;
             //console.log('departmentMasterRole -> ',this.departmentMasterRole);
         });
+  }
+  SplitDate(date:any){
+    var DateSplitted = date.split("-");
+    return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
   }
   approve(row : any){
         this.progressBar = true;
@@ -96,6 +104,10 @@ constructor(private service:ServiceService,
                       this.leaves = dataLeavesToComplete;
                       this.dataSource.data = this.leaves;
                       this.progressBar = false;
+                      for(let i of this.leaves){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                      }
                       //console.log('leaves -> ',this.leaves);
                   });
               }
@@ -105,6 +117,10 @@ constructor(private service:ServiceService,
                     this.leaves = data;
                     this.dataSource.data = this.leaves;
                     this.progressBar = false;
+                    for(let i of this.leaves){
+                      i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                      i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                    }
                     //console.log('leaves -> ',this.leaves);
                   });
               }
@@ -112,9 +128,13 @@ constructor(private service:ServiceService,
   }
 
   SearchEmployeeByCodeAndNameInApproveByManager(){
-      this.service.getSearchEmployeeByCodeAndNameInApproveByManager(this.dataSearch).subscribe(data => {
+      this.service.getSearchEmployeeByCodeAndNameInApproveByManager(this.dataSearch,this.empId).subscribe(data => {
               this.leaves = data;
               this.dataSource.data = this.leaves;
+              for(let i of this.leaves){
+                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+              }
       });
   }
 

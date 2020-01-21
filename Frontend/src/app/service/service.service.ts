@@ -97,6 +97,9 @@ export class ServiceService {
   getSearchEmployeeByDepartmentID(departmentID:String):Observable<any>{
       return this.http.get(API1+'/SearchEmployeeByDepartmentID' +'/'+ departmentID,{})
   }
+  getSearchEmployeeByDepartmentID2(departmentID:String):Observable<any>{
+      return this.http.get(API1+'/SearchEmployeeByDepartmentID2' +'/'+ departmentID,{})
+  }
   getLeavesFindByID(leavesID : any):Observable<any>{
       return this.http.get(API1+'/showLeavesFindByID' +'/'+ leavesID,{})
   }
@@ -109,11 +112,11 @@ export class ServiceService {
   getDepartmentMasterRoleFindByEmpCode(keyword : String):Observable<any>{
       return this.http.get(API1+'/getDepartmentMasterRoleFindByEmpCode' +'/'+ keyword,{})
   }
-  getSearchEmployeeByCodeAndNameInApproveBySup(dataSearch:String):Observable<any>{
-      return this.http.get(API1+'/SearchEmployeeByCodeAndNameInApproveBySup' +'/'+ dataSearch,{})
+  getSearchEmployeeByCodeAndNameInApproveBySup(dataSearch:String,empID:any):Observable<any>{
+      return this.http.get(API1+'/SearchEmployeeByCodeAndNameInApproveBySup' +'/'+ dataSearch +'/'+ empID,{})
   }
-  getSearchEmployeeByCodeAndNameInApproveByManager(dataSearch:String):Observable<any>{
-      return this.http.get(API1+'/SearchEmployeeByCodeAndNameInApproveByManager' +'/'+ dataSearch,{})
+  getSearchEmployeeByCodeAndNameInApproveByManager(dataSearch:String,empID:any):Observable<any>{
+      return this.http.get(API1+'/SearchEmployeeByCodeAndNameInApproveByManager' +'/'+ dataSearch +'/'+ empID,{})
   }
   getMasterRole():Observable<any>{
       return this.http.get(API1+'/masterRole',{})

@@ -15,14 +15,14 @@
 <mat-card>
   <mat-toolbar-row>
   ค้นหา :
-    <mat-form-field  class="searchStyle" (keyup)="SearchEmployeeByCodeAndName()">
+    <mat-form-field  class="searchStyle" (keyup)="isChecked==true?SearchEmployeeByCodeAndName2():SearchEmployeeByCodeAndName()">
       <mat-label>Search</mat-label>
       <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     &nbsp; &nbsp;
     ค้นหาโดยเเผนก :
-    <mat-form-field class="formcenter" hintLabel="" style="width :200px" (keyup)="SearchEmployeeByDepartmentID()">
+    <mat-form-field class="formcenter" hintLabel="" style="width :200px" >
       <mat-select placeholder="Search by department"  [(ngModel)]="departmentSelect">
         <mat-option>None</mat-option>
         <mat-option *ngFor="let depart of department" [value]="depart.departmentID">
@@ -30,10 +30,10 @@
         </mat-option>
       </mat-select>
     </mat-form-field>&nbsp;
-    <button mat-raised-button (click)="SearchEmployeeByDepartmentID()"><mat-icon matSuffix>search</mat-icon></button>
+    <button mat-raised-button (click)="isChecked==true?SearchEmployeeByDepartmentID2():SearchEmployeeByDepartmentID()"><mat-icon matSuffix>search</mat-icon></button>
     <span class="example-spacer"></span>
-    <mat-chip color="accent" matTooltip="นำข้อมูลออก" (click)="GetExportDataDailog()" selected>Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></mat-chip>
-  </mat-toolbar-row>
+    <mat-chip color="accent" matTooltip="นำข้อมูลออก" (click)="exportexcel()" selected>Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></mat-chip>
+   </mat-toolbar-row>
 </mat-card>
 <div class="example-container mat-elevation-z8">
 <table mat-table [dataSource]="dataSource" matSort  class="mat-elevation-z8">

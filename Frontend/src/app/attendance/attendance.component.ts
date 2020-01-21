@@ -97,6 +97,7 @@ export class AttendanceComponent implements OnInit {
 
   displayedColumns2: string[] = ['number','date','leaveType','startDate','endDate2','total', 'reason', /*'approvedBySupervisor', 'approvedByManager',*/'reasonNotApprove','isPayment','leaveStatus','del'];
   dataSource2 = new MatTableDataSource<leave2>(this.leaves2);
+  @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
 
   constructor(private service:ServiceService,
             private router:Router,
@@ -106,9 +107,7 @@ export class AttendanceComponent implements OnInit {
 
 
   ngOnDestroy() {
-    if (this.interval) { // show table Leave
       clearInterval(this.interval);
-    }
   }
 
   ngOnInit() {
@@ -132,19 +131,32 @@ export class AttendanceComponent implements OnInit {
               this.table.empPos = data1.employeePosition;
 
               this.SaveLeaveNumber();
-
+            this.interval = setInterval(() => {
               this.service.getShowLeaves2(this.table.leaID).subscribe(dataleave => {
                     this.leaves2 = dataleave;
+                    //console.log('leaves2 -> ', this.leaves2);
                     this.dataSource2.data = this.leaves2;
-                    //console.log('leaves2 -> ',this.leaves2);
+                    this.dataSource2.paginator = this.paginator;
+                    for(let i of this.leaves2){
+                      i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                      i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                    }
               });
+            }, 1000);
         });
   }
+
+  SplitDate(date:any){
+    var DateSplitted = date.split("-");
+    return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
+  }
+
   RefreshTable(){
              setTimeout(() => {  //show table Leave
                 this.service.getShowLeaves2(this.table.leaID).subscribe(data => {
                     this.leaves2 = data;
                     this.dataSource2.data = this.leaves2;
+                    this.dataSource2.paginator = this.paginator;
                     //console.log('leaves2 -> ',this.leaves2);
                 });
                 this.service.getSearchEmployeeForAttendance2(this.empId).subscribe(data1 => {
@@ -158,6 +170,7 @@ export class AttendanceComponent implements OnInit {
                   this.service.getShowLeaves2(this.table.leaID).subscribe(dataleave => {
                         this.leaves2 = dataleave;
                         this.dataSource2.data = this.leaves2;
+                        this.dataSource2.paginator = this.paginator;
                         //console.log('leaves2 -> ',this.leaves2);
                   });
                 });
@@ -231,7 +244,7 @@ export class AttendanceComponent implements OnInit {
                                        }
                                       );
             this.ClearTextInput();
-            this. RefreshTable();
+            //this. RefreshTable();
             this.x=true;
         }
     }
@@ -268,7 +281,7 @@ export class AttendanceComponent implements OnInit {
                                        }
                                       );
              this.ClearTextInput();
-              this.RefreshTable();
+              //this.RefreshTable();
               this.x=true;
         }
 
@@ -302,14 +315,14 @@ export class AttendanceComponent implements OnInit {
                   height:'200px',
                   data: row,
             });
-            this.RefreshTable();
+            //this.RefreshTable();
     }
     ShowLeaveNumberDailog(){
             const dialogRef = this.dialog.open(AttendanceShowLeavenumberComponent, {
                   width: 'auto;',
                   height:'auto;',
             });
-            this.RefreshTable();
+            //this.RefreshTable();
     }
 
     CalculateLeaveDate(date1:any,date2:any){

@@ -103,7 +103,7 @@ public class LeavesController {
         String[] arryA = datetest.split("-");
         int result = Integer.parseInt(arryA[2]);
         int arryA_3 = result-543;
-        String datetrue = arryA_3+"-"+arryA[1]+"-"+arryA[0]+" "+datetest2;
+        String datetrue = arryA[0]+"-"+arryA[1]+"-"+arryA_3+" "+datetest2;
 
         Leaves leaves1 = new Leaves();
         leaves1.setEmployeeMasterid(employeeMaster);
@@ -132,7 +132,7 @@ public class LeavesController {
     @PostMapping("/SaveLeaveFullDay/{leaID}/{leaveTypeSelect2}/{startDate2}/{endDate2}/{reason2}/{diffDay}/{leavesNumbersID}/{departmentIDLogin}") // saveLeave2 เต็มวัน
     public Leaves leaves2( @PathVariable Long leaID , @PathVariable String leaveTypeSelect2 ,@PathVariable Date startDate2
             , @PathVariable Date endDate2 , @PathVariable String reason2  , @PathVariable String diffDay, @PathVariable long leavesNumbersID
-            , @PathVariable long departmentIDLogin){
+            , @PathVariable long departmentIDLogin) throws ParseException {
 
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
         LeaveTypeForAllday leaveTypeForAllday = leaveTypeForAlldayRepository.findByLeaveTypeForAlldayName(leaveTypeSelect2);
@@ -148,8 +148,7 @@ public class LeavesController {
         String[] arryA = datetest.split("-");
         int result = Integer.parseInt(arryA[2]);
         int arryA_3 = result-543;
-        String datetrue = arryA_3+"-"+arryA[1]+"-"+arryA[0]+" "+datetest2;
-
+        String datetrue = arryA[0]+"-"+arryA[1]+"-"+arryA_3+" "+datetest2;
         Leaves leaves2 = new Leaves();
         leaves2.setEmployeeMasterid(employeeMaster);
         leaves2.setCreateDate(datetrue);
@@ -251,16 +250,70 @@ public class LeavesController {
     public Iterable<Leaves> SearchEmployeeByDepartmentID(@PathVariable String departmentID){
         return this.leavesRepository.SearchEmployeeByDepartmentID(departmentID);
     }
-
-    @GetMapping("/SearchEmployeeByCodeAndNameInApproveBySup/{dataSearch}")
-    public Iterable<Leaves> SearchEmployeeByCodeAndNameInApproveBySup(@PathVariable String dataSearch){
-        return this.leavesRepository.SearchEmployeeByCodeAndNameInApproveBySup(dataSearch);
+    @GetMapping("/SearchEmployeeByDepartmentID2/{departmentID}")
+    public Iterable<Leaves> SearchEmployeeByDepartmentID2(@PathVariable String departmentID){
+        return this.leavesRepository.SearchEmployeeByDepartmentID2(departmentID);
     }
 
-    @GetMapping("/SearchEmployeeByCodeAndNameInApproveByManager/{dataSearch}")
-    public Iterable<Leaves> SearchEmployeeByCodeAndNameInApproveByManager(@PathVariable String dataSearch){
-        return this.leavesRepository.SearchEmployeeByCodeAndNameInApproveByManager(dataSearch);
+    @GetMapping("/SearchEmployeeByCodeAndNameInApproveBySup/{dataSearch}/{empID}")
+    public Iterable<Leaves> SearchEmployeeByCodeAndNameInApproveBySup(@PathVariable String dataSearch,@PathVariable String empID){
+        return this.leavesRepository.SearchEmployeeByCodeAndNameInApproveBySup(dataSearch,empID);
     }
 
+    @GetMapping("/SearchEmployeeByCodeAndNameInApproveByManager/{dataSearch}/{empID}")
+    public Iterable<Leaves> SearchEmployeeByCodeAndNameInApproveByManager(@PathVariable String dataSearch,@PathVariable String empID){
+        return this.leavesRepository.SearchEmployeeByCodeAndNameInApproveByManager(dataSearch,empID);
+    }
+
+    /*public void calculateDate() {
+        String[] birthdatesplit;
+        String[] startdatesplit;
+        birthdatesplit = NewemployeeMasterBirthDate.split("-");
+        startdatesplit = NewemployeeMasterStartDate.split("-");
+        String bd;
+        String sd;
+
+        if (birthdatesplit.length != 3) {
+            birthdatesplit = NewemployeeMasterBirthDate.split(" ");
+            birthdatesplit[3] = String.valueOf(Integer.parseInt(birthdatesplit[3]) + 543);
+            if (birthdatesplit[1].equals("Jan")) {
+                birthdatesplit[1] = "01";
+            } else if (birthdatesplit[1].equals("Feb")) {
+                birthdatesplit[1] = "02";
+            }
+            if (birthdatesplit[1].equals("Mar")) {
+                birthdatesplit[1] = "03";
+            } else if (birthdatesplit[1].equals("Apr")) {
+                birthdatesplit[1] = "04";
+            }
+            if (birthdatesplit[1].equals("May")) {
+                birthdatesplit[1] = "05";
+            } else if (birthdatesplit[1].equals("Jun")) {
+                birthdatesplit[1] = "06";
+            }
+            if (birthdatesplit[1].equals("Jul")) {
+                birthdatesplit[1] = "07";
+            } else if (birthdatesplit[1].equals("Aug")) {
+                birthdatesplit[1] = "08";
+            }
+            if (birthdatesplit[1].equals("Sep")) {
+                birthdatesplit[1] = "09";
+            } else if (birthdatesplit[1].equals("Oct")) {
+                birthdatesplit[1] = "10";
+            }
+            if (birthdatesplit[1].equals("Nov")) {
+                birthdatesplit[1] = "11";
+            } else if (birthdatesplit[1].equals("Dec")) {
+                birthdatesplit[1] = "12";
+            }
+            bd = birthdatesplit[3] + "-" + birthdatesplit[1] + "-" + birthdatesplit[2];
+        } else {
+
+
+            birthdatesplit[0] = String.valueOf(Integer.parseInt(birthdatesplit[0]) + 543);
+            bd = birthdatesplit[0] + "-" + birthdatesplit[1] + "-" + birthdatesplit[2];
+
+        }
+    }*/
 
 }
