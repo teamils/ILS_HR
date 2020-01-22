@@ -18,7 +18,7 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { API1 } from '../app.component';
-
+import * as XLSX from 'xlsx';
 export interface Emp{
     employeeMasterID : any;
     create_date: any;
@@ -174,6 +174,33 @@ export class EmployeeMasterComponent implements OnInit {
     var DateSplitted = date.split("-");
     return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
   }
+
+
+onFileChange(ev) {
+    let workBook = null;
+    let jsonData = null;
+    const reader = new FileReader();
+    const file = ev.target.files[0];
+    reader.onload = (event) => {
+      const data = reader.result;
+      workBook = XLSX.read(data, { type: 'binary' });
+      jsonData = workBook.SheetNames.reduce((initial, name) => {
+        const sheet = workBook.Sheets[name];
+        initial[name] = XLSX.utils.sheet_to_json(sheet);
+        return initial;
+      }, {});
+      const dataString = JSON.stringify(jsonData);
+      console.log(jsonData);
+      for(let i = 0 ; i < jsonData.data.length ; i++){
+          console.log(jsonData.data[i].คำนำหน้า);
+      }
+    }
+    reader.readAsBinaryString(file);
+
+
+  }
+
+
 
 }
 
