@@ -204,7 +204,7 @@ export class NewheaderComponent implements OnInit {
         }
         this.open=true;
       }
-      shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
+
 
       OpenEditPersonalInformationComponent(){
           const dialogRef = this.dialog.open(EditPersonalInformationComponent, {

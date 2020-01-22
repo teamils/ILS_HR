@@ -84,6 +84,7 @@ export class HomeComponent implements OnInit {
                     this.table.fName = data.employeeMasterFirstName;
                     this.table.lName = data.employeeMasterLastName;
                     this.table.rolestatus = data.roleStatus;
+                    localStorage.setItem('loginstatus', 'true');
                     localStorage.setItem('empId', this.table.leaID);
                     localStorage.setItem('empCode', this.table.empCode);
                     localStorage.setItem('fName', this.table.fName);
