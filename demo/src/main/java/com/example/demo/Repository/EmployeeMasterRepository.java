@@ -27,6 +27,7 @@ public interface EmployeeMasterRepository extends JpaRepository<EmployeeMaster,L
     @Query(value = "select * from employee_master where employee_masterid=:empID and is_active=1;",nativeQuery = true)
     Collection<EmployeeMaster> QueryEmployee1person(@Param("empID") Long empID );
 
+
    /* @Query(value = "SELECT * FROM employee_master WHERE employee_master_customer_code = :dataSearch;",nativeQuery = true)
     Collection<EmployeeMaster> getEmployee(@Param("id") Long id );*/
 
