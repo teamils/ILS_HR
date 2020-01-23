@@ -4,7 +4,7 @@
   <span class="example-fill-remaining-space" style="align:center;"></span>
   <span>
     ค้นหา :
-    <mat-form-field (keyup)="SearchEmployeeByCodeAndNameInApproveBySup()">
+    <mat-form-field (keyup)="isChecked==true?SearchEmployeeByCodeAndNameInApproveBySupApprove():SearchEmployeeByCodeAndNameInApproveBySupNOTApprove();SearchInputNull()">
        <mat-label></mat-label>
       <input matInput placeholder="รหัสพนักงาน/ชื่อ-สกุล" [(ngModel)]="dataSearch">
       <mat-icon matSuffix>search</mat-icon>

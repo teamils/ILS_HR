@@ -96,6 +96,7 @@ constructor(private service:ServiceService,
       this.onChange();
   }
   onChange(){
+          this.dataSearch='';
           this.progressBar = true;
            this.interval = setTimeout(() => {  //show table Leave
               if(this.isChecked == true){
@@ -126,9 +127,25 @@ constructor(private service:ServiceService,
               }
             }, 1000);
   }
-
-  SearchEmployeeByCodeAndNameInApproveByManager(){
+  SearchInputNull(){
+    console.log(this.dataSearch);
+    if(this.dataSearch==''){
+      this.onChange();
+      this.progressBar = false;
+    }
+  }
+  SearchEmployeeByCodeAndNameInApproveByManagerNOTApprove(){
       this.service.getSearchEmployeeByCodeAndNameInApproveByManager(this.dataSearch,this.empId).subscribe(data => {
+              this.leaves = data;
+              this.dataSource.data = this.leaves;
+              for(let i of this.leaves){
+                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+              }
+      });
+  }
+  SearchEmployeeByCodeAndNameInApproveByManagerApprove(){
+      this.service.getSearchEmployeeByCodeAndNameInApprove(this.dataSearch,this.empId).subscribe(data => {
               this.leaves = data;
               this.dataSource.data = this.leaves;
               for(let i of this.leaves){

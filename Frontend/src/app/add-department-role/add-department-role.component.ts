@@ -111,6 +111,7 @@ export class AddDepartmentRoleComponent implements OnInit {
                                         console.log(data);
                                         this.progressBar = false;
                                         this.RefreshTable();
+                                        this.clearInput();
                                     },
                                     error => {
                                         console.log('Error', error);
@@ -132,6 +133,7 @@ export class AddDepartmentRoleComponent implements OnInit {
                                       //alert("Delete is successful");
                                       this.RefreshTable();
                                       this.progressBar = false;
+                                      this.clearInput();
                                   }
                             );
   }
@@ -163,6 +165,7 @@ export class AddDepartmentRoleComponent implements OnInit {
     this.employeeMasterID = '';
     this.departmentSelect = '';
     this.departmentRoleFindByempID = [];
+    this.toppings = [];
   }
 
 }

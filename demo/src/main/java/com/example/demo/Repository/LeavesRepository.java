@@ -36,8 +36,9 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "and l.employee_masterid_employee_masterid <> :empID \n" +
             "and l.is_active_attendance=1\n" +
             "and l.departmentid in ( \n" +
-            "\tselect distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
-            "\t where e.employee_masterid = dr.employee_masterid)" ,nativeQuery = true)
+            "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
+            "where e.employee_masterid=:empID\n" +
+            "and e.employee_masterid = dr.employee_masterid)" ,nativeQuery = true)
     Collection<Leaves> getLeavesToNotCompleteBySupervisor(@Param("empID") String empID );
 
     // approveByManager //เห็นตาม master department role // ตอนไม่กด Complete
@@ -47,11 +48,12 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "and l.employee_masterid_employee_masterid <> :empID2 \n" +
             "and l.is_active_attendance=1\n" +
             "and l.departmentid in ( \n" +
-            "\tselect distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
-            "\t where e.employee_masterid = dr.employee_masterid)" ,nativeQuery = true)
+            "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
+            "where e.employee_masterid=:empID2\n" +
+            "and e.employee_masterid = dr.employee_masterid)" ,nativeQuery = true)
     Collection<Leaves> getLeavesToNotApproveByManager(@Param("empID2") String empID2 );
 
-    //approveBySupervisor and approveByManager ลูกน้องตัวเอง//get leaves ที่ department=x   // ตกนกด Complete
+    //approveBySupervisor and approveByManager ลูกน้องตัวเอง//get leaves ที่ department=x   // ตกนกด Approve
     @Query(value = "select * from leaves l,department d\n" +
             "where l.departmentid = d.departmentid\n" +
             "and l.leave_status = 'Approve' \n" +
@@ -59,8 +61,22 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "and l.is_active_attendance=1\n" +
             "and l.departmentid in ( \n" +
             "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
-            "where e.employee_masterid = dr.employee_masterid)",nativeQuery = true)
+            "where e.employee_masterid=:empID3\n" +
+            "and e.employee_masterid = dr.employee_masterid)",nativeQuery = true)
     Collection<Leaves> getLeavesSelectDepartment(@Param("empID3") String empID3 );
+    //approveBySupervisor and approveByManager  ค้นหา รหัสพนักงาน ชื่อ - สกุล แผนก  ลูกน้องตัวเอง   // ตกนกด Complete
+    @Query(value = "select * from leaves l,department d, employee_master e\n" +
+            "where l.departmentid = d.departmentid\n" +
+            "and l.leave_status = 'Approve'\n" +
+            "and l.is_active_attendance=1\n" +
+            "and l.employee_masterid_employee_masterid <> :empIDSearch4 \n" +
+            "and (e.employee_master_customer_code LIKE %:dataSearch4% or e.employee_master_first_name LIKE %:dataSearch4% or e.employee_master_last_name LIKE %:dataSearch4% or d.department_name LIKE %:dataSearch4%)\n" +
+            "and e.employee_masterid = l.employee_masterid_employee_masterid\n" +
+            "and l.departmentid in ( \n" +
+            "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
+            "where e.employee_masterid=:empIDSearch4\n" +
+            "and e.employee_masterid = dr.employee_masterid)",nativeQuery = true)
+    Collection<Leaves> SearchEmployeeByCodeAndNameInApprove(@Param("dataSearch4") String dataSearch4,@Param("empIDSearch4") String empIDSearch4);
 
     //Data Attendance ค้นหา รหัสพนักงาน ชื่อ - สกุล
     @Query(value = "select * from leaves,employee_master where (employee_master_customer_code LIKE %:empCode% or employee_master_first_name like %:empCode% or employee_master_last_name like %:empCode%) and leaves.employee_masterid_employee_masterid = employee_master.employee_masterid " +
@@ -82,7 +98,7 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "and l.employee_masterid_employee_masterid = e.employee_masterid",nativeQuery = true)
     Collection<Leaves> SearchEmployeeByDepartmentID2(@Param("departmentID") String departmentID );
 
-    //Approve By Supervisor ค้นหา รหัสพนักงาน ชื่อ - สกุล
+    //Approve By Supervisor ค้นหา รหัสพนักงาน ชื่อ - สกุล เเผนก
     @Query(value = "select * from leaves l,department d, employee_master e\n" +
             "where l.departmentid = d.departmentid\n" +
             "and l.leave_status = 'Pending'\n" +
@@ -92,22 +108,22 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "and e.employee_masterid = l.employee_masterid_employee_masterid\n" +
             "and l.departmentid in ( \n" +
             "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
-            "where e.employee_masterid=1\n" +
+            "where e.employee_masterid=:empIDSearch\n" +
             "and e.employee_masterid = dr.employee_masterid)",nativeQuery = true)
     Collection<Leaves> SearchEmployeeByCodeAndNameInApproveBySup(@Param("dataSearch") String dataSearch,@Param("empIDSearch") String empIDSearch);
 
-    //Approve By Manager ค้นหา รหัสพนักงาน ชื่อ - สกุล
+    //Approve By Manager ค้นหา รหัสพนักงาน ชื่อ - สกุล เเผนก
     @Query(value = "select * from leaves l,department d, employee_master e\n" +
             "where l.departmentid = d.departmentid\n" +
             "and l.leave_status = 'Waiting approve' and l.approved_by_supervisor <> 'Pending'" +
             "and l.is_active_attendance=1\n" +
             "and l.employee_masterid_employee_masterid <> :empIDSearch2 \n" +
-            "and (e.employee_master_customer_code LIKE %:dataSearch% or e.employee_master_first_name LIKE %:dataSearch% or e.employee_master_last_name LIKE %:dataSearch% or d.department_name LIKE %:dataSearch%)\n" +
+            "and (e.employee_master_customer_code LIKE %:dataSearch2% or e.employee_master_first_name LIKE %:dataSearch2% or e.employee_master_last_name LIKE %:dataSearch2% or d.department_name LIKE %:dataSearch2%)\n" +
             "and e.employee_masterid = l.employee_masterid_employee_masterid\n" +
             "and l.departmentid in ( \n" +
             "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
-            "where e.employee_masterid=1\n" +
+            "where e.employee_masterid=:empIDSearch2\n" +
             "and e.employee_masterid = dr.employee_masterid)",nativeQuery = true)
-    Collection<Leaves> SearchEmployeeByCodeAndNameInApproveByManager(@Param("dataSearch") String dataSearch,@Param("empIDSearch2") String empIDSearch2);
+    Collection<Leaves> SearchEmployeeByCodeAndNameInApproveByManager(@Param("dataSearch2") String dataSearch2,@Param("empIDSearch2") String empIDSearch2);
 
 }

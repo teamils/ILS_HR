@@ -82,6 +82,9 @@ export class ServiceService {
   getLeavesSelectDepartment(empID:String):Observable<any>{
       return this.http.get(API1+'/LeavesSelectDepartment/'+empID,{})
   }
+  getSearchEmployeeByCodeAndNameInApprove(dataSearch:String,empID:any):Observable<any>{
+      return this.http.get(API1+'/getSearchEmployeeByCodeAndNameInApprove' +'/'+ dataSearch +'/'+ empID,{})
+  }
   show1rowof1person(empID:String,leaveID:String):Observable<any>{
       return this.http.get(API1+'/show1rowof1person/'+empID+'/'+leaveID,{})
   }

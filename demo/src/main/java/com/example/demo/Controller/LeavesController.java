@@ -68,6 +68,10 @@ public class LeavesController {
     public Iterable<Leaves> LeavesSelectDepartment(@PathVariable String empID) {
         return this.leavesRepository.getLeavesSelectDepartment(empID);
     }
+    @GetMapping("/getSearchEmployeeByCodeAndNameInApprove/{dataSearch}/{empID}")
+    public Iterable<Leaves> searchEmployeeByCodeAndNameInApprove(@PathVariable String dataSearch,@PathVariable String empID){
+        return this.leavesRepository.SearchEmployeeByCodeAndNameInApprove(dataSearch,empID);
+    }
     @PostMapping("/Time/{startTime}/{endTime}")
     public String Time(@PathVariable String startTime , @PathVariable String endTime) throws ParseException {
 
@@ -265,55 +269,6 @@ public class LeavesController {
         return this.leavesRepository.SearchEmployeeByCodeAndNameInApproveByManager(dataSearch,empID);
     }
 
-    /*public void calculateDate() {
-        String[] birthdatesplit;
-        String[] startdatesplit;
-        birthdatesplit = NewemployeeMasterBirthDate.split("-");
-        startdatesplit = NewemployeeMasterStartDate.split("-");
-        String bd;
-        String sd;
 
-        if (birthdatesplit.length != 3) {
-            birthdatesplit = NewemployeeMasterBirthDate.split(" ");
-            birthdatesplit[3] = String.valueOf(Integer.parseInt(birthdatesplit[3]) + 543);
-            if (birthdatesplit[1].equals("Jan")) {
-                birthdatesplit[1] = "01";
-            } else if (birthdatesplit[1].equals("Feb")) {
-                birthdatesplit[1] = "02";
-            }
-            if (birthdatesplit[1].equals("Mar")) {
-                birthdatesplit[1] = "03";
-            } else if (birthdatesplit[1].equals("Apr")) {
-                birthdatesplit[1] = "04";
-            }
-            if (birthdatesplit[1].equals("May")) {
-                birthdatesplit[1] = "05";
-            } else if (birthdatesplit[1].equals("Jun")) {
-                birthdatesplit[1] = "06";
-            }
-            if (birthdatesplit[1].equals("Jul")) {
-                birthdatesplit[1] = "07";
-            } else if (birthdatesplit[1].equals("Aug")) {
-                birthdatesplit[1] = "08";
-            }
-            if (birthdatesplit[1].equals("Sep")) {
-                birthdatesplit[1] = "09";
-            } else if (birthdatesplit[1].equals("Oct")) {
-                birthdatesplit[1] = "10";
-            }
-            if (birthdatesplit[1].equals("Nov")) {
-                birthdatesplit[1] = "11";
-            } else if (birthdatesplit[1].equals("Dec")) {
-                birthdatesplit[1] = "12";
-            }
-            bd = birthdatesplit[3] + "-" + birthdatesplit[1] + "-" + birthdatesplit[2];
-        } else {
-
-
-            birthdatesplit[0] = String.valueOf(Integer.parseInt(birthdatesplit[0]) + 543);
-            bd = birthdatesplit[0] + "-" + birthdatesplit[1] + "-" + birthdatesplit[2];
-
-        }
-    }*/
 
 }

@@ -15,7 +15,7 @@
 <mat-card>
   <mat-toolbar-row>
   ค้นหา :
-    <mat-form-field  class="searchStyle" (keyup)="isChecked==true?SearchEmployeeByCodeAndName2():SearchEmployeeByCodeAndName()">
+    <mat-form-field  class="searchStyle" (keyup)="isChecked==true?SearchEmployeeByCodeAndName2():SearchEmployeeByCodeAndName(); SearchInputNull()">
       <mat-label>Search</mat-label>
       <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
       <mat-icon matSuffix>search</mat-icon>

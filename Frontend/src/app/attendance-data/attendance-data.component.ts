@@ -54,7 +54,7 @@ export class AttendanceDataComponent implements OnInit {
   interval2:any;
   interval3:any;
   dis;
-  dataSearch;
+  dataSearch='';
   progressBar=false;
   firstNameOnLogin = localStorage.getItem('fName');
   lastNameOnLogin  = localStorage.getItem('lName');
@@ -140,12 +140,19 @@ export class AttendanceDataComponent implements OnInit {
                 }, 1000);
               }
         }
-
+    SearchInputNull(){
+      console.log(this.dataSearch);
+      if(this.dataSearch==''){
+          this.onChange();
+          this.progressBar = false;
+      }
+    }
     SearchEmployeeByCodeAndName(){
       this.ngOnDestroy();
       this.service.getSearchEmployeeByCodeAndName(this.dataSearch).subscribe(data => {
               this.leaves = data;
               this.dataSource.data = this.leaves;
+              this.departmentSelect = null;
               for(let i of this.leaves){
                 i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
                 i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
@@ -157,6 +164,7 @@ export class AttendanceDataComponent implements OnInit {
       this.service.getSearchEmployeeByCodeAndName2(this.dataSearch).subscribe(data => {
               this.leaves = data;
               this.dataSource.data = this.leaves;
+              this.departmentSelect = null;
               for(let i of this.leaves){
                 i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
                 i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);

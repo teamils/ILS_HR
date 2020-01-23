@@ -103,6 +103,7 @@ public doFilter = (value: string) => {
   }
 
   onChange(){
+           this.dataSearch='';
            this.progressBar = true;
            this.interval = setTimeout(() => {  //show table Leave
               if(this.isChecked == true){
@@ -133,9 +134,25 @@ public doFilter = (value: string) => {
               }
             }, 1000);
   }
-
-  SearchEmployeeByCodeAndNameInApproveBySup(){
+  SearchInputNull(){
+    console.log(this.dataSearch);
+    if(this.dataSearch==''){
+      this.onChange();
+      this.progressBar = false;
+    }
+  }
+  SearchEmployeeByCodeAndNameInApproveBySupNOTApprove(){
       this.service.getSearchEmployeeByCodeAndNameInApproveBySup(this.dataSearch,this.empId).subscribe(data => {
+              this.leaves = data;
+              this.dataSource.data = this.leaves;
+              for(let i of this.leaves){
+                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+              }
+      });
+  }
+  SearchEmployeeByCodeAndNameInApproveBySupApprove(){
+      this.service.getSearchEmployeeByCodeAndNameInApprove(this.dataSearch,this.empId).subscribe(data => {
               this.leaves = data;
               this.dataSource.data = this.leaves;
               for(let i of this.leaves){
