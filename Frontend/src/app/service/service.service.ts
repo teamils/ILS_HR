@@ -115,6 +115,9 @@ export class ServiceService {
   getDepartmentMasterRoleFindByEmpCode(keyword : String):Observable<any>{
       return this.http.get(API1+'/getDepartmentMasterRoleFindByEmpCode' +'/'+ keyword,{})
   }
+  getDepartmentMasterRoleFindByDepartmentID(departmentID : any):Observable<any>{
+      return this.http.get(API1+'/getDepartmentMasterRoleFindByDepartmentID' +'/'+ departmentID,{})
+  }
   getSearchEmployeeByCodeAndNameInApproveBySup(dataSearch:String,empID:any):Observable<any>{
       return this.http.get(API1+'/SearchEmployeeByCodeAndNameInApproveBySup' +'/'+ dataSearch +'/'+ empID,{})
   }

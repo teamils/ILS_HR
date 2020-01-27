@@ -30,7 +30,7 @@ export interface leave2{
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
   styleUrls: ['./attendance.component.css'],
-  providers: [
+  providers: [DatePipe,
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
   ]
@@ -103,7 +103,8 @@ export class AttendanceComponent implements OnInit {
             private router:Router,
             private route:ActivatedRoute,
             public dialog: MatDialog,
-             private http: HttpClient) { }
+             private http: HttpClient,
+             public datepipe: DatePipe) { }
 
 
   ngOnDestroy() {
@@ -127,7 +128,7 @@ export class AttendanceComponent implements OnInit {
               this.table.empCode = data1.employeeMasterCustomerCode;
               this.table.fName = data1.employeeMasterFirstName;
               this.table.lName = data1.employeeMasterLastName;
-              this.table.empDep = data1.employeeDepartment;
+              this.table.empDep = data1.departmentid.departmentName;
               this.table.empPos = data1.employeePosition;
 
               this.SaveLeaveNumber();
@@ -272,7 +273,9 @@ export class AttendanceComponent implements OnInit {
                                            alert(this.leaveTypeSelect2+"ลา "+this.diffDay+" วัน สำเร็จ รอการอนุมัติ");
                                             //window.location.reload(true);
                                             localStorage.setItem('links', 'attendance');
+                                            this.SentEmail(this.leaveTypeSelect2,this.startDate2,this.endDate2,'8:00','17:00','วัน');
                                             this.x=false;
+                                            this.ClearTextInput();
                                        },
                                        error => {
                                           console.log('Error', error);
@@ -280,15 +283,45 @@ export class AttendanceComponent implements OnInit {
                                           window.location.reload(true);
                                        }
                                       );
-             this.ClearTextInput();
+             //this.ClearTextInput();
               //this.RefreshTable();
               this.x=true;
         }
 
     }
+ dataToInput:any;
+    SentEmail(leaveType:any,startdate:any,enddate:any,statTime:any,endTime:any,type:any){
+        let dateAndTotel = "ในวันที่ "+this.datepipe.transform(startdate, 'dd/MM/yyyy')+" "+statTime+" น. ถึงวันที่ "+this.datepipe.transform(enddate, 'dd/MM/yyyy')+" "+endTime+" น. รวมเป็นเวลา "+this.diffDay+" "+type;
+        //console.log(dateAndTotel);
+        this.dataToInput = {
+            dateAndTotel:dateAndTotel,
+        };
 
+        this.service.getDepartmentMasterRoleFindByDepartmentID(this.departmentIDLogin).subscribe(data => {
+            //console.log(data);
+            for(let i of data){
+              this.dataToInput = {
+                  managerID:i.employeeMasterid.employeeMasterID,
+                  leaveType:leaveType,
+                  empID:this.empId,
+                  dateAndTotel:dateAndTotel,
+              };
+              this.http.post(API1 + '/sendEmail', JSON.stringify(this.dataToInput), {
+                       headers: {
+                          "Content-Type": "application/json"
+                        }
+                   }).subscribe(data2 => {
+                                  console.log("Sent Email is successfull");
+                               },error => {
+                                   console.log('Error', error);
+                               }
+              );
+            }
+        });
+
+    }
     SaveLeaveNumber(){ //function
-           console.log('work year ปัดเศษลง =>',this.sumDay_365);
+           //console.log('work year ปัดเศษลง =>',this.sumDay_365);
            this.service.getShowLeavesNumber(this.empId).subscribe(data => {
                 //console.table(data);
                 if(data.length==0){

@@ -22,4 +22,8 @@ public interface DepartmentMasterRoleRepository extends JpaRepository<Department
                 "and e.employee_masterid = d.employee_masterid",nativeQuery = true)
         Collection<DepartmentMasterRole> queryDepartmentMasterRole2(@Param("keyword") String keyword);
 
+        @Query(value = "select * from  department_master_role d\n" +
+                "where d.departmentid = :departmentID",nativeQuery = true)
+        Collection<DepartmentMasterRole> queryDepartmentMasterRoleFindByDepartmentID(@Param("departmentID") long departmentID);
+
 }

@@ -1,6 +1,5 @@
 package com.example.demo.Controller;
 import com.example.demo.Entity.Combobox.Department;
-import com.example.demo.Entity.Combobox.EmpStatus;
 import com.example.demo.Entity.DepartmentMasterRole;
 import com.example.demo.Entity.EmployeeMaster;
 import com.example.demo.Repository.*;
@@ -56,4 +55,8 @@ public class DepartmentMasterRoleController {
         return null;
     }
 
+    @GetMapping("/getDepartmentMasterRoleFindByDepartmentID/{departmentID}")
+    public Iterable<DepartmentMasterRole> getDepartmentMasterRoleFindByDepartmentID(@PathVariable long departmentID) {
+        return this.departmentMasterRoleRepository.queryDepartmentMasterRoleFindByDepartmentID(departmentID);
+    }
 }
