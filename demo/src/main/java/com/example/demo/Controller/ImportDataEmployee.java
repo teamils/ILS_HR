@@ -25,7 +25,7 @@ public class ImportDataEmployee {
     @Autowired private DepartmentRepository departmentRepository;
 
     @PostMapping(path = "/importData/{birthDate}/{startDate}") //login
-    public Collection<EmployeeMaster> employeeMaster(@RequestBody Map<String,String> body, @PathVariable Date birthDate, @PathVariable Date startDate){
+    public EmployeeMaster employeeMaster(@RequestBody Map<String,String> body, @PathVariable Date birthDate, @PathVariable Date startDate){
         String employeeMasterCustomerCode = body.get("employeeMasterCustomerCode").toString();
         String prefix = body.get("prefix").toString();
         String employeeMasterFirstName = body.get("employeeMasterFirstName").toString();
@@ -48,6 +48,7 @@ public class ImportDataEmployee {
         String bank = body.get("bank").toString();
         String bankNumber = body.get("bankNumber").toString();
         String roleStatus = body.get("roleStatus").toString();
+
         //System.out.println(body);
 
         Department departmentName = departmentRepository.findByDepartmentName(employeeDepartment);
@@ -75,9 +76,10 @@ public class ImportDataEmployee {
         employeeMaster1.setBank(bank);
         employeeMaster1.setBankNumber(bankNumber);
         employeeMaster1.setIsActive("1");
+        employeeMaster1.setPassword(employeeMasterCustomerCode);
         employeeMaster1.setRoleStatus(roleStatus);
         employeeMasterRepository.save(employeeMaster1);
-        return null;
+        return employeeMaster1;
     }
 
 

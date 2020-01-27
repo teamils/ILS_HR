@@ -1,5 +1,6 @@
 <mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
 <mat-card class="cardHeader">
+  <p align="right"><a routerLink="/newheader" (click)="FromImportDate()">Download from import data</a></p>
   <div align="center">
     ค้นหา :
       <mat-form-field appearance="outline" class="searchStyle">
@@ -177,7 +178,7 @@
       </table>
     </div>
 </div>
-<mat-paginator [pageSizeOptions]="[15, 30, 50, 100]" showFirstLastButtons ></mat-paginator>
+<mat-paginator [pageSizeOptions]="[15, 30, 50, 100,1000]" showFirstLastButtons ></mat-paginator>
 
 
 

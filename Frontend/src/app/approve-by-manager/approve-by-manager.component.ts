@@ -26,7 +26,9 @@ export class ApproveByManagerComponent implements OnInit {
   LeavesToComplete: Array<any>;
   departmentMasterRole: Array<any>;
   isChecked;
-  interval:any;
+  intervalMan:any;
+  interval2Man:any;
+  interval3Man:any;
   leaveID;
   dis;
   progressBar=false;
@@ -46,30 +48,28 @@ constructor(private service:ServiceService,
              private http: HttpClient) { }
 
   ngOnDestroy() {
-    if (this.interval) {
-      clearInterval(this.interval);
-      }
+      clearInterval(this.intervalMan);
+      clearInterval(this.interval2Man);
+      clearInterval(this.interval3Man);
   }
 
   ngOnInit() {
         this.progressBar = true;
-        this.service.getShowLeavesNotApproveBySup(this.empId).subscribe(data => {
-            //console.log('leaves -> ', data.leaveStatus);
-            this.leaves = data;
-            this.dataSource.data = this.leaves;
-            this.progressBar = false;
-            for(let i of this.leaves){
-              i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-              i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-            }
-            //console.log('leaves -> ',this.leaves);
-        });
-        this.dataSource.paginator = this.paginator;
+        this.interval3Man = setInterval(() => {
+          this.service.getShowLeavesNotApproveBySup(this.empId).subscribe(data => {
+              //console.log('leaves -> ', data.leaveStatus);
+              this.leaves = data;
+              this.dataSource.data = this.leaves;
+              this.progressBar = false;
+              for(let i of this.leaves){
+                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+              }
+              //console.log('leaves -> ',this.leaves);
+          });
+          this.dataSource.paginator = this.paginator;
+        }, 1000);
 
-        this.service.getDepartmentMasterRole().subscribe(data => {
-            this.departmentMasterRole = data;
-            //console.log('departmentMasterRole -> ',this.departmentMasterRole);
-        });
   }
   SplitDate(date:any){
     var DateSplitted = date.split("-");
@@ -93,27 +93,32 @@ constructor(private service:ServiceService,
                   height:'270px',
                   data: row,
             });
-      this.onChange();
   }
   onChange(){
           this.dataSearch='';
           this.progressBar = true;
-           this.interval = setTimeout(() => {  //show table Leave
               if(this.isChecked == true){
                 this.dis=true;
-                this.service.getLeavesSelectDepartment(this.empId).subscribe(dataLeavesToComplete => {
-                      this.leaves = dataLeavesToComplete;
-                      this.dataSource.data = this.leaves;
-                      this.progressBar = false;
-                      for(let i of this.leaves){
-                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-                      }
-                      //console.log('leaves -> ',this.leaves);
-                  });
+                 clearInterval(this.interval2Man);
+                  clearInterval(this.interval3Man);
+                  this.intervalMan = setInterval(() => {
+                  this.service.getLeavesSelectDepartment(this.empId).subscribe(dataLeavesToComplete => {
+                        this.leaves = dataLeavesToComplete;
+                        this.dataSource.data = this.leaves;
+                        this.progressBar = false;
+                        for(let i of this.leaves){
+                          i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                          i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        }
+                        //console.log('leaves -> ',this.leaves);
+                    });
+                }, 1000);
               }
               else{
-                  this.dis=false;
+                this.dis=false;
+                clearInterval(this.intervalMan);
+                clearInterval(this.interval3Man);
+                this.interval2Man = setInterval(() => {
                   this.service.getShowLeavesNotApproveBySup(this.empId).subscribe(data => {
                     this.leaves = data;
                     this.dataSource.data = this.leaves;
@@ -124,17 +129,20 @@ constructor(private service:ServiceService,
                     }
                     //console.log('leaves -> ',this.leaves);
                   });
+                }, 1000);
               }
-            }, 1000);
+
   }
   SearchInputNull(){
-    console.log(this.dataSearch);
+    this.ngOnDestroy();
+    //console.log(this.dataSearch);
     if(this.dataSearch==''){
       this.onChange();
       this.progressBar = false;
     }
   }
   SearchEmployeeByCodeAndNameInApproveByManagerNOTApprove(){
+    this.ngOnDestroy();
       this.service.getSearchEmployeeByCodeAndNameInApproveByManager(this.dataSearch,this.empId).subscribe(data => {
               this.leaves = data;
               this.dataSource.data = this.leaves;
@@ -145,6 +153,7 @@ constructor(private service:ServiceService,
       });
   }
   SearchEmployeeByCodeAndNameInApproveByManagerApprove(){
+    this.ngOnDestroy();
       this.service.getSearchEmployeeByCodeAndNameInApprove(this.dataSearch,this.empId).subscribe(data => {
               this.leaves = data;
               this.dataSource.data = this.leaves;

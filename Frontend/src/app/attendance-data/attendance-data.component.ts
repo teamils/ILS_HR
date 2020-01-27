@@ -141,7 +141,7 @@ export class AttendanceDataComponent implements OnInit {
               }
         }
     SearchInputNull(){
-      console.log(this.dataSearch);
+      //console.log(this.dataSearch);
       if(this.dataSearch==''){
           this.onChange();
           this.progressBar = false;
@@ -203,7 +203,7 @@ export class AttendanceDataComponent implements OnInit {
             height:'200px',
             data: row,
         });
-        this.onChange();
+        //this.onChange();
     }
     getEditPaymentDialog(row : any){
             const dialogRef = this.dialog.open(EditPaymentDialog, {
@@ -284,6 +284,7 @@ export interface DialogData {
     templateUrl: 'attendanceDelete.html',
   })
   export class AttendanceDeleteDialog {
+    leaves;
     leavesID: string;
     isActiveAttendance:string;
     selectAttendanceDate : String;
@@ -293,8 +294,10 @@ export interface DialogData {
                 @Inject(MAT_DIALOG_DATA)  public date: DialogData,
                 private http: HttpClient){
           dialogRef.disableClose = true;
+        this.leaves = this.date;
         this.leavesID = this.date.leavesID;
         this.isActiveAttendance = this.date.isActiveAttendance;
+        console.log(this.leaves);
     }
 
     closeDialog(): void {
@@ -302,10 +305,25 @@ export interface DialogData {
     }
 
     DeleteAttendance(){
-               this.http.post(API1 + '/deleteAttendance/' + this.leavesID ,{})
+        if(this.leaves.leaveStatus=='Complete'){
+            if(this.leaves.isPayment=='payment'){
+                    this.http.post(API1 + '/CalculateLeaveNumberBack/' + this.leaves.leavesNumbersid.leavesNumbersID +'/'+ this.leaves.leavesNumbersid.diffDay +'/'+ this.leaves.leavesID,{})
                                      .subscribe(
                                          data => {
-                                             console.log('PUT Request is successful');
+                                             console.log('CalculateLeaveNumberBack is successful',data);
+                                              this.dialogRef.close();
+                                         },
+                                         error => {
+                                             console.log('Error', error);
+                                         }
+                                      );
+            }
+        }
+        else{
+            this.http.post(API1 + '/deleteAttendance/' + this.leavesID ,{})
+                                     .subscribe(
+                                         data => {
+                                             console.log('CancelAttendance is successful');
                                               this.dialogRef.close();
                                              //window.location.reload(true);
                                               localStorage.setItem('links', 'attendanceData');
@@ -314,8 +332,8 @@ export interface DialogData {
                                              console.log('Error', error);
                                          }
                                       );
-
         }
+    }
 
   }
 
@@ -348,7 +366,7 @@ export interface EditPaymentDialogData {
     diffDay:String;
     splitted;
     diffShowFrontend;
-    paymentReson:String=null;
+    paymentReson=null;
     statusLabelLeaveHalfDay:any;
     leavesNumbersID=null;
     test;

@@ -21,8 +21,8 @@ import java.util.Date;
 
 public class EmployeeMaster {
     @Id
-    @SequenceGenerator(name = "Emp_seq1", sequenceName = "Emp_seq1",initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Emp_seq1")
+    @SequenceGenerator(name = "Emp_seq", sequenceName = "Emp_seq",initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Emp_seq")
     private Long employeeMasterID;
     private Date create_date;
     private String create_by;

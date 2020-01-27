@@ -136,7 +136,7 @@ public class GetToComboboxController {
         employeeTypeRepository.save(insertEmployeeType);
         return null;
     }
-    @DeleteMapping("/deleteEmployeeType/{educationID}")
+    @DeleteMapping("/deleteEmployeeType/{employeeTypeID}")
     public EmployeeType deleteEmployeeType(@PathVariable long employeeTypeID) {
         EmployeeType deleteEmployeeType = employeeTypeRepository.findById(employeeTypeID).get();
         employeeTypeRepository.delete(deleteEmployeeType);

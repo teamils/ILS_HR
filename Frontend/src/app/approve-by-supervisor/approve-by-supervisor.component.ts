@@ -35,6 +35,8 @@ export class ApproveBySupervisorComponent implements OnInit {
   LeavesToComplete: Array<any>;
   isChecked;
   interval:any;
+  interval2:any;
+  interval3:any;
   leaveID;
   dis;
   dataSearch='';
@@ -58,12 +60,13 @@ public doFilter = (value: string) => {
              private http: HttpClient) { }
 
   ngOnDestroy() {
-    if (this.interval) {
       clearInterval(this.interval);
-      }
+      clearInterval(this.interval2);
+      clearInterval(this.interval3);
   }
   ngOnInit() {
-        this.progressBar = true;
+      this.progressBar = true;
+      this.interval3 = setInterval(() => {
         this.service.getLeavesToNotCompleteBySupervisor(this.empId).subscribe(data => {
              this.progressBar = false;
             this.leaves = data;
@@ -76,13 +79,14 @@ public doFilter = (value: string) => {
         });
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+      }, 1000);
   }
   SplitDate(date:any){
     var DateSplitted = date.split("-");
     return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
   }
   approve(row : any){
-         this.progressBar = true;
+        this.progressBar = true;
         this.http.post(API1 + '/approveBySupervisor/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {
             console.log('Approve is successful');
             alert("Approve successful");
@@ -99,14 +103,16 @@ public doFilter = (value: string) => {
                   height:'270px',
                   data: row,
             });
-        this.onChange();
   }
 
   onChange(){
            this.dataSearch='';
            this.progressBar = true;
-           this.interval = setTimeout(() => {  //show table Leave
-              if(this.isChecked == true){
+            if(this.isChecked == true){
+              clearInterval(this.interval2);
+              clearInterval(this.interval3);
+              this.dis=true;
+              this.interval = setInterval(() => {  //show table Leave
                 this.service.getLeavesSelectDepartment(this.empId).subscribe(dataLeavesToComplete => {
                       this.leaves = dataLeavesToComplete;
                       this.dataSource.data = this.leaves;
@@ -117,9 +123,14 @@ public doFilter = (value: string) => {
                       }
                       //console.log('leaves -> ',this.leaves);
                   });
-                  this.dis=true;
-              }
-              else{
+
+              }, 1000);
+            }
+            else{
+              this.dis=false;
+              clearInterval(this.interval);
+              clearInterval(this.interval3);
+              this.interval2 = setInterval(() => {
                   this.service.getLeavesToNotCompleteBySupervisor(this.empId).subscribe(data => {
                     this.leaves = data;
                     this.dataSource.data = this.leaves;
@@ -130,18 +141,20 @@ public doFilter = (value: string) => {
                     }
                     //console.log('leaves -> ',this.leaves);
                   });
-                  this.dis=false;
-              }
-            }, 1000);
+              }, 1000);
+            }
+
   }
   SearchInputNull(){
-    console.log(this.dataSearch);
+    this.ngOnDestroy();
+    //console.log(this.dataSearch);
     if(this.dataSearch==''){
       this.onChange();
       this.progressBar = false;
     }
   }
   SearchEmployeeByCodeAndNameInApproveBySupNOTApprove(){
+      this.ngOnDestroy();
       this.service.getSearchEmployeeByCodeAndNameInApproveBySup(this.dataSearch,this.empId).subscribe(data => {
               this.leaves = data;
               this.dataSource.data = this.leaves;
@@ -152,6 +165,7 @@ public doFilter = (value: string) => {
       });
   }
   SearchEmployeeByCodeAndNameInApproveBySupApprove(){
+      this.ngOnDestroy();
       this.service.getSearchEmployeeByCodeAndNameInApprove(this.dataSearch,this.empId).subscribe(data => {
               this.leaves = data;
               this.dataSource.data = this.leaves;

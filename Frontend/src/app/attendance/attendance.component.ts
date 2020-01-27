@@ -120,7 +120,7 @@ export class AttendanceComponent implements OnInit {
         this.x=false;
         //console.table(this.leaveTypeForAlldays);
       });
-
+        this.interval = setInterval(() => {
             this.service.getSearchEmployeeForAttendance2(this.empId).subscribe(data1 => {
               //console.log('data1->',data1);
               this.table.leaID = this.empId;
@@ -131,7 +131,7 @@ export class AttendanceComponent implements OnInit {
               this.table.empPos = data1.employeePosition;
 
               this.SaveLeaveNumber();
-            this.interval = setInterval(() => {
+
               this.service.getShowLeaves2(this.table.leaID).subscribe(dataleave => {
                     this.leaves2 = dataleave;
                     //console.log('leaves2 -> ', this.leaves2);
@@ -142,8 +142,8 @@ export class AttendanceComponent implements OnInit {
                       i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
                     }
               });
-            }, 1000);
-        });
+            });
+        }, 1000);
   }
 
   SplitDate(date:any){

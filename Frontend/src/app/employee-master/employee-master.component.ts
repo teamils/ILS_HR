@@ -54,7 +54,8 @@ export interface Emp{
 @Component({
   selector: 'app-employee-master',
   templateUrl: './employee-master.component.html',
-  styleUrls: ['./employee-master.component.css']
+  styleUrls: ['./employee-master.component.css'],
+  providers: [DatePipe]
 })
 
 
@@ -99,7 +100,8 @@ export class EmployeeMasterComponent implements OnInit {
                 public dialog: MatDialog,
                  private http: HttpClient,
                 private service:ServiceService,
-                private excelService:ExcelService) { }
+                private excelService:ExcelService,
+                private datePipe: DatePipe) { }
 
         ngOnInit() {
             this.progressBar=true;
@@ -109,14 +111,16 @@ export class EmployeeMasterComponent implements OnInit {
                     this.dataSource.data = this.employee;
                     //console.log('employee->',this.employee);
                     for(let i of this.employee){
-                        i.employeeMasterBirthDate = this.SplitDate(i.employeeMasterBirthDate);
-                        i.employeeMasterStartDate = this.SplitDate(i.employeeMasterStartDate);
+                        i.employeeMasterBirthDate = this.datePipe.transform(i.employeeMasterBirthDate, 'dd-MM-yyyy')
+                        i.employeeMasterStartDate = this.datePipe.transform(i.employeeMasterStartDate, 'dd-MM-yyyy')
                     }
               });
              this.dataSource.paginator = this.paginator;
              this.dataSource.sort = this.sort;
 
+
         }
+
         startwork: Array<any>;
         datemmddyy(data : any){
             for (let i of data) {
@@ -141,6 +145,36 @@ export class EmployeeMasterComponent implements OnInit {
               });
           }
 
+    FromImportDate(): void{
+        let dataemployee : any[] = [];
+            dataemployee.push({
+              สำดับ : '1',
+              รหัสพนักงาน : '123456',
+              คำนำหน้า : 'นาย',
+              ชื่อ : 'ทดสอบ',
+              นามสกุล : 'ทดสอบ2',
+              ชื่อเล่น : 'ทด',
+              เพศ : 'ชาย',
+              รหัสประจำตัวประชาชน : '1234567890123',
+              วันเกิด : '30-01-2020',
+              เลขบัญชี : '0123456789',
+              ธนาคาร : 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)',
+              ตำเเหน่ง :'CEO',
+              เเผนก : 'AEEAIMCTITTSPOP',
+              สถานะทำงาน : 'ยังปฏิบัติงานอยู่',
+              วันเริ่มงาน : '01-01-2020',
+              เบอร์โทร : '0123456789',
+              อีเมล : 'tester@gmail.com',
+              ที่อยู่ตามบัตรประชาชน : '123 ม.2 ต.3 อ.4 จ.5 60000',
+              ที่อยู่ปัจจุบัน : '876 ม.5 ต.4 อ.3 จ.2 10000',
+              ผู้ที่ติดต่อในกรณีฉุกเฉิน : 'นางนดสอบ ไม่ผ่าน 08123456789',
+              ประเภทการทำงาน : 'รายเดือน',
+              วุฒิการศึกษา : 'ป.ตรี',
+              RoleStatus : 'EMPLOYEE',
+            });
+        this.excelService.exportAsExcelFile(dataemployee, 'From_import');
+    }
+
     exportexcel(): void{
         let dataemployee : any[] = [];
         for(let i = 0 ; i < this.employee.length ; i++){
@@ -152,31 +186,26 @@ export class EmployeeMasterComponent implements OnInit {
               นามสกุล : this.employee[i].employeeMasterLastName,
               ชื่อเล่น : this.employee[i].employeeMasterNickName,
               เพศ : this.employee[i].employeeMasterGender,
-              วันเกิด : this.employee[i].employeeMasterBirthDate,
-              สถานะทำงาน : this.employee[i].maritalStatus,
               รหัสประจำตัวประชาชน : this.employee[i].employeeMasterPersonID,
+              วันเกิด : this.employee[i].employeeMasterBirthDate,
+              เลขบัญชี : this.employee[i].bankNumber,
+              ธนาคาร : this.employee[i].bank,
+              ตำเเหน่ง : this.employee[i].employeePosition,
+              เเผนก : this.employee[i].departmentid.departmentName,
+              สถานะทำงาน : this.employee[i].maritalStatus,
+              วันเริ่มงาน : this.employee[i].employeeMasterStartDate,
               เบอร์โทร : this.employee[i].employeeMasterTel1,
               อีเมล : this.employee[i].empEmail,
-              วันเริ่มงาน : this.employee[i].employeeMasterStartDate,
               ที่อยู่ตามบัตรประชาชน : this.employee[i].empAddressReal,
               ที่อยู่ปัจจุบัน : this.employee[i].empAddressPerson,
               ผู้ที่ติดต่อในกรณีฉุกเฉิน : this.employee[i].emergencyContact,
-              เเผนก : this.employee[i].departmentid.departmentName,
-              ตำเเหน่ง : this.employee[i].employeePosition,
               ประเภทการทำงาน : this.employee[i].employeeType,
               วุฒิการศึกษา : this.employee[i].education,
-              ธนาคาร : this.employee[i].bank,
-              เลขบัญชี : this.employee[i].bankNumber,
               RoleStatus : this.employee[i].roleStatus,
             });
         }
         this.excelService.exportAsExcelFile(dataemployee, 'Data-Employee');
     }
-
-  SplitDate(date:any){
-    var DateSplitted = date.split("-");
-    return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
-  }
 
   dataExport:any;
   onFileChange(ev) {
@@ -219,12 +248,15 @@ export class EmployeeMasterComponent implements OnInit {
             bankNumber:jsonData.data[i].เลขบัญชี ,
             roleStatus:jsonData.data[i].RoleStatus ,
           };
-          //console.log(this.dataExport);
-          this.http.post(API1 +'importData/'+this.CalculateGeneralDate(this.dataExport.employeeMasterBirthDate) +'/'+ this.CalculateGeneralDate(this.dataExport.employeeMasterStartDate), JSON.stringify(this.dataExport),{headers: {"Content-Type": "application/json"}})
+          console.log('dataExport --> \n',this.dataExport);
+          console.log('employeeMasterBirthDate -->\n',this.CalculateGeneralDate(this.dataExport.employeeMasterBirthDate));
+          console.log('employeeMasterStartDate -->\n',this.CalculateGeneralDate(this.dataExport.employeeMasterStartDate));
+
+          this.http.post(API1 +'/importData/'+this.CalculateGeneralDate(this.dataExport.employeeMasterBirthDate) +'/'+ this.CalculateGeneralDate(this.dataExport.employeeMasterStartDate), JSON.stringify(this.dataExport),{headers: {"Content-Type": "application/json"}})
                       .subscribe(
                                      data => {
-                                         console.log('Import data is successful');
-                                         alert("Import Data is successful");
+                                         console.log('Import data is successful',data);
+                                         //alert("Import Data is successful");
                                      },
                                      error => {
                                          console.log('Error', error);

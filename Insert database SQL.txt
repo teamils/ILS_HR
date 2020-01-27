@@ -40,6 +40,14 @@ INSERT INTO department
 VALUES (20, 'ลาว');
 INSERT INTO department 
 VALUES (21, 'Muffy');
+INSERT INTO department 
+VALUES (22, 'Safety & Quality');
+INSERT INTO department 
+VALUES (23, 'Chevron');
+INSERT INTO department 
+VALUES (24, 'Gaojin');
+INSERT INTO department 
+VALUES (25, 'Sale');
 
 INSERT INTO bank 
 VALUES (1, 'ธนาคารกรุงศรีอยุธยา จำกัด(มหาชน)'); 
