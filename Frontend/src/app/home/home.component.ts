@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
     RoleManager = [4, 5, 8];
     RoleSupervisor = [4, 5, 7];
     RoleHR = [1, 2, 3, 4, 5, 6];
+    RoleDcManager = [13];
 
     hide:any;
     id : String = null;
@@ -139,6 +140,15 @@ export class HomeComponent implements OnInit {
                                 this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleHR[i] ,{})
                                 .subscribe(data => {
                                     console.log(this.RoleHR[i]," InsertUserRole is successfull");
+                                    this.router.navigate(['newheader']);
+                                });
+                            }
+                          }
+                          else if(this.table.rolestatus == "DC MANAGER"){
+                            for(let i=0;i<this.RoleDcManager.length;i++){
+                                this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleDcManager[i] ,{})
+                                .subscribe(data => {
+                                    console.log(this.RoleDcManager[i]," InsertUserRole is successfull");
                                     this.router.navigate(['newheader']);
                                 });
                             }

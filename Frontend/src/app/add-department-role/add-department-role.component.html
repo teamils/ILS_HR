@@ -8,7 +8,16 @@
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     &nbsp;&nbsp;{{employeeMasterFirstName}}&nbsp;&nbsp;{{employeeMasterLastName}}&nbsp;&nbsp;&nbsp;({{employeePosition}}-{{departmentName}})
-    <br>
+  <br>
+  Select position :
+  <mat-form-field>
+    <mat-label>Select position</mat-label>
+    <mat-select [(ngModel)]="usePositionSelect">
+      <mat-option value="supervisor">Supervisor</mat-option>
+      <mat-option value="manager">Manager</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
     Add Department Role :
     <mat-form-field class="pattern">
       <mat-label>Select department role</mat-label>
@@ -17,7 +26,7 @@
       </mat-select>
     </mat-form-field>&nbsp;&nbsp;
     <button mat-raised-button color="accent" (click)="InsertDataDepartmentRole()">ADD</button>&nbsp;&nbsp;
-    <button mat-raised-button color="accent" (click)="toppings=null" >Cleared field</button>
+    <button mat-raised-button color="accent" (click)="clearInput()">Cleared field</button>
 
  <!-- <mat-form-field (keyup)="SearchDepartmentRole()" class="mat-form-field2">
     <mat-label>Search by employeeCode</mat-label>

@@ -21,13 +21,14 @@ public class DepartmentMasterRoleController {
         return departmentMasterRoleRepository.findAll().stream().collect(Collectors.toList());
     }
 
-    @PostMapping(path = "/insertDataDepartmentRole/{employeeMasterID}/{departmentSelect}")
-    public DepartmentMasterRole departmentMasterRole(@PathVariable long employeeMasterID,@PathVariable long departmentSelect) {
+    @PostMapping(path = "/insertDataDepartmentRole/{employeeMasterID}/{usePositionSelect}/{departmentSelect}")
+    public DepartmentMasterRole departmentMasterRole(@PathVariable long employeeMasterID,@PathVariable String usePositionSelect,@PathVariable long departmentSelect) {
             EmployeeMaster employeeMaster = employeeMasterRepository.findById(employeeMasterID).get();
             Department department = departmentRepository.findById(departmentSelect).get();
             DepartmentMasterRole departmentMasterRole = new DepartmentMasterRole();
             departmentMasterRole.setEmployeeMasterid(employeeMaster);
             departmentMasterRole.setDepartmentid(department);
+            departmentMasterRole.setUsePosition(usePositionSelect);
             return  departmentMasterRoleRepository.save(departmentMasterRole);
     }
 

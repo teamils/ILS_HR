@@ -286,6 +286,8 @@ INSERT INTO master_role
 VALUES (11,'AddMainData'); 
 INSERT INTO master_role 
 VALUES (12,'AddUserRole'); 
+INSERT INTO master_role 
+VALUES (13,'<<--DC Manager-->>'); 
 
 INSERT INTO EMPLOYEE_MASTER 
 VALUES (1, 'ธนาคารไทยพาณิชย์ จำกัด(มหาชน)','7072698661','-',2020-01-05 12:34:20.183,'ป.ตรี', '-', '-', '180 ม.5 ต.วังซ่าน อ.เเม่วงก์ จ.นครสวรรค์','dikinakub6509@gmail.com',1997-07-30,'400234','ดิกิ','ชาย','คาวาซากิ','กิ','1600100723988',2010-12-26,'0834318890','IT Programmer','นักศึกษาฝึกงาน','1','ยังปฏิบัติงานอยู่','400234','นาย','ADMIN','diki kawasaki',2020-01-05 12:52:12.056,9); 

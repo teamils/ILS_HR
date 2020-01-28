@@ -45,6 +45,7 @@ export class AddDepartmentRoleComponent implements OnInit {
   dataSearch='';
   toppings:Array<any>;
   progressBar=false;
+  usePositionSelect;
 
   constructor(private service:ServiceService,
               private router:Router,
@@ -92,8 +93,9 @@ export class AddDepartmentRoleComponent implements OnInit {
 
   InsertDataDepartmentRole(){
     this.progressBar = true;
-    if(this.dataSearch == ''){alert("กรุณากรอกรหัสพนักงาน");this.progressBar = false;}
-    else if(this.toppings==null){alert("กรุณาเลือก Department Role"); this.progressBar = false;}
+    if(this.dataSearch == ''){alert("กรุณากรอกรหัสพนักงาน!");this.progressBar = false;}
+    else if(this.usePositionSelect==null){this.progressBar = false; alert("กรุณาเลือกตำเเหน่งของพนักงาน!");}
+    else if(this.toppings==null){alert("กรุณาเลือก Department Role!"); this.progressBar = false;}
     else{
       for (let i = 0; i < this.toppings.length; i++) {
           //console.log(this.toppings[i].departmentID);
@@ -105,7 +107,7 @@ export class AddDepartmentRoleComponent implements OnInit {
                               this.progressBar = false;
                           }
                           else{
-                              this.http.post(API1 + '/insertDataDepartmentRole/' + this.employeeMasterID +'/'+ this.toppings[i].departmentID ,{})
+                              this.http.post(API1 + '/insertDataDepartmentRole/' + this.employeeMasterID +'/'+ this.usePositionSelect +'/'+ this.toppings[i].departmentID ,{})
                                 .subscribe(
                                     data => {
                                         console.log(data);
@@ -165,6 +167,7 @@ export class AddDepartmentRoleComponent implements OnInit {
     this.employeeMasterID = '';
     this.departmentSelect = '';
     this.departmentRoleFindByempID = [];
+    this.usePositionSelect='';
     this.toppings = [];
   }
 

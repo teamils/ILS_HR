@@ -68,6 +68,7 @@ import { AddDataComboboxComponent } from './add-data-combobox/add-data-combobox.
 import { AddUserroleComponent } from './add-userrole/add-userrole.component';
 import { EditMasterAttendanceDialog } from './add-data-combobox/add-data-combobox.component';
 import { ExportDataDialog } from './attendance-data/attendance-data.component';
+import { DcManagerComponent } from './dc-manager/dc-manager.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { ExportDataDialog } from './attendance-data/attendance-data.component';
     AddUserroleComponent,
     EditMasterAttendanceDialog,
     ExportDataDialog,
+    DcManagerComponent,
   ],
 
       imports: [

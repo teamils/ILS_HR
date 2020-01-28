@@ -45,6 +45,8 @@ export class ApproveBySupervisorComponent implements OnInit {
   lastNameOnLogin  = localStorage.getItem('lName');
   departmentOnLogin = localStorage.getItem('departmentlogin');
   progressBar=false;
+  dateAndTotel;
+  dataToInput;
   displayedColumns: string[] = ['number','employeeCode', 'name','department','date', 'leaveType','startDate', 'endDate','total','reason', /*'approvedBySupervisor', 'approvedByManager',*/'leaveStatus','approve','notApprove'];
   dataSource = new MatTableDataSource<Emp>(this.leaves);
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
@@ -85,12 +87,43 @@ public doFilter = (value: string) => {
     var DateSplitted = date.split("-");
     return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
   }
+
+  SentEmail(departmentid:any,leaveType:any,empidLeave:any,startDate:any,endDate:any,diffDay:any){
+        this.service.getDepartmentMasterRoleFindByDepartmentID(departmentid).subscribe(data => {
+
+          this.dateAndTotel = "ในวันที่ "+startDate+" น. ถึงวันที่ "+endDate+" น. รวมเป็นเวลา "+diffDay;
+
+          for(let i of data){
+            if(i.usePosition=="manager"){
+              this.dataToInput = {
+                  managerID:i.employeeMasterid.employeeMasterID,
+                  leaveType:leaveType,
+                  empidLeave:empidLeave,
+                  supervisorID:this.empId,
+                  dateAndTotel:this.dateAndTotel,
+              };
+              this.http.post(API1 + '/sendEmailToManager', JSON.stringify(this.dataToInput), {headers: {"Content-Type": "application/json"}
+                   }).subscribe(data2 => {
+                                  console.log("Sent Email is successfull");
+                               },error => {
+                                   console.log('Error', error);
+                               }
+              );
+            }
+          }
+        });
+  }
+
   approve(row : any){
         this.progressBar = true;
+        let startDate = row.startDateForAllDay+' '+row.startTime;
+        let endDate = row.endDateForAllDay+' '+row.endTime;
+
         this.http.post(API1 + '/approveBySupervisor/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {
             console.log('Approve is successful');
             alert("Approve successful");
              this.progressBar = false;
+            this.SentEmail(row.departmentid.departmentID,row.leaveTypeForAllDay.leaveTypeForAlldayName,row.employeeMasterid.employeeMasterID,startDate,endDate,row.labelLeaveHalfDay);
           },
           error => {
             console.log('Error', error);
@@ -113,7 +146,7 @@ public doFilter = (value: string) => {
               clearInterval(this.interval3);
               this.dis=true;
               this.interval = setInterval(() => {  //show table Leave
-                this.service.getLeavesSelectDepartment(this.empId).subscribe(dataLeavesToComplete => {
+                this.service.getLeavesSelectDepartmentBySupervisor(this.empId).subscribe(dataLeavesToComplete => {
                       this.leaves = dataLeavesToComplete;
                       this.dataSource.data = this.leaves;
                       this.progressBar = false;
@@ -166,7 +199,7 @@ public doFilter = (value: string) => {
   }
   SearchEmployeeByCodeAndNameInApproveBySupApprove(){
       this.ngOnDestroy();
-      this.service.getSearchEmployeeByCodeAndNameInApprove(this.dataSearch,this.empId).subscribe(data => {
+      this.service.getgetSearchEmployeeByCodeAndNameInApproveBySupervisor(this.dataSearch,this.empId).subscribe(data => {
               this.leaves = data;
               this.dataSource.data = this.leaves;
               for(let i of this.leaves){

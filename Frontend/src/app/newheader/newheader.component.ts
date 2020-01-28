@@ -34,6 +34,8 @@ export class NewheaderComponent implements OnInit {
   selectAddDepartmentRole : String;
   selectAddDataCombobox : String;
   selectAddUserRole : String;
+  selectDcManager : String;
+
 
   employee : Array<any>;
   id : String ;
@@ -58,6 +60,7 @@ export class NewheaderComponent implements OnInit {
   role10 : boolean = false;
   role11 : boolean = false;
   role12 : boolean = false;
+  role13 : boolean = false;
   private _mobileQueryListener: () => void;
 
   ngOnInit() : void {
@@ -85,9 +88,6 @@ export class NewheaderComponent implements OnInit {
                           this._mobileQueryListener = () => changeDetectorRef.detectChanges();
                           this.mobileQuery.addListener(this._mobileQueryListener);
 
-                              localStorage.setItem('selectAttendance', 'true');
-                              this.selectAttendance =  localStorage.getItem('selectAttendance');
-
                           if(this.links == 'employeeMaster'){
                               localStorage.setItem('selectEmployeemaster', 'true');
                               this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
@@ -101,6 +101,8 @@ export class NewheaderComponent implements OnInit {
                               this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
                               localStorage.setItem('selectAddDepartmentRole', 'false');
                               this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+                              localStorage.setItem('selectDcManager', 'false');
+                              this.selectDcManager =  localStorage.getItem('selectDcManager');
                           }
                           else if(this.links == 'attendanceData'){
                               localStorage.setItem('selectAttendanceDate', 'true');
@@ -115,6 +117,8 @@ export class NewheaderComponent implements OnInit {
                               this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
                               localStorage.setItem('selectAddDepartmentRole', 'false');
                               this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+                              localStorage.setItem('selectDcManager', 'false');
+                              this.selectDcManager =  localStorage.getItem('selectDcManager');
                           }
                           else if(this.links == 'attendance'){
                               localStorage.setItem('selectAttendance', 'true');
@@ -129,6 +133,8 @@ export class NewheaderComponent implements OnInit {
                               this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
                               localStorage.setItem('selectAddDepartmentRole', 'false');
                               this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+                              localStorage.setItem('selectDcManager', 'false');
+                              this.selectDcManager =  localStorage.getItem('selectDcManager');
                           }
                           else if(this.links == 'approvebysupervisor'){
                               localStorage.setItem('selectApproveBySupervisor', 'true');
@@ -143,6 +149,8 @@ export class NewheaderComponent implements OnInit {
                               this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
                               localStorage.setItem('selectAddDepartmentRole', 'false');
                               this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+                              localStorage.setItem('selectDcManager', 'false');
+                              this.selectDcManager =  localStorage.getItem('selectDcManager');
                           }
                           else if(this.links == 'approvebymanager'){
                               localStorage.setItem('selectApproveByManager', 'true');
@@ -157,9 +165,29 @@ export class NewheaderComponent implements OnInit {
                               this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
                               localStorage.setItem('selectAddDepartmentRole', 'false');
                               this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+                              localStorage.setItem('selectDcManager', 'false');
+                              this.selectDcManager =  localStorage.getItem('selectDcManager');
                           }
                           else if(this.links == 'addDepartmentRole'){
                               localStorage.setItem('selectAddDepartmentRole', 'true');
+                              this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+                              localStorage.setItem('selectApproveByManager', 'false');
+                              this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
+                              localStorage.setItem('selectApproveBySupervisor', 'false');
+                              this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+                              localStorage.setItem('selectAttendance', 'false');
+                              this.selectAttendance =  localStorage.getItem('selectAttendance');
+                              localStorage.setItem('selectAttendanceDate', 'false');
+                              this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+                              localStorage.setItem('selectEmployeemaster', 'false');
+                              this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+                              localStorage.setItem('selectDcManager', 'false');
+                              this.selectDcManager =  localStorage.getItem('selectDcManager');
+                          }
+                          else if(this.links == 'addDcManager'){
+                              localStorage.setItem('selectDcManager', 'true');
+                              this.selectDcManager =  localStorage.getItem('selectDcManager');
+                              localStorage.setItem('selectAddDepartmentRole', 'false');
                               this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
                               localStorage.setItem('selectApproveByManager', 'false');
                               this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
@@ -199,8 +227,10 @@ export class NewheaderComponent implements OnInit {
               this.role10 = true;
             else if(this.userRoles[i].masterRoleID.id == 11)
               this.role11 = true;
-            else
+            else if(this.userRoles[i].masterRoleID.id == 12)
               this.role12 = true;
+            else
+              this.role13 = true;
         }
         this.open=true;
       }
@@ -262,6 +292,8 @@ export class NewheaderComponent implements OnInit {
           this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
           localStorage.setItem('selectAddUserRole', 'false');
           this.selectAddUserRole =  localStorage.getItem('selectAddUserRole');
+          localStorage.setItem('selectDcManager', 'false');
+          this.selectDcManager =  localStorage.getItem('selectDcManager');
       }
       callAttendance(){
           localStorage.setItem('links', 'attendance');
@@ -283,6 +315,8 @@ export class NewheaderComponent implements OnInit {
           this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
           localStorage.setItem('selectAddUserRole', 'false');
           this.selectAddUserRole =  localStorage.getItem('selectAddUserRole');
+          localStorage.setItem('selectDcManager', 'false');
+          this.selectDcManager =  localStorage.getItem('selectDcManager');
       }
       callAttendanceData(){
           localStorage.setItem('links', 'attendanceData');
@@ -304,6 +338,8 @@ export class NewheaderComponent implements OnInit {
           this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
           localStorage.setItem('selectAddUserRole', 'false');
           this.selectAddUserRole =  localStorage.getItem('selectAddUserRole');
+          localStorage.setItem('selectDcManager', 'false');
+          this.selectDcManager =  localStorage.getItem('selectDcManager');
       }
       callApproveBySupervisor(){
           localStorage.setItem('links', 'attendance');
@@ -325,6 +361,8 @@ export class NewheaderComponent implements OnInit {
           this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
           localStorage.setItem('selectAddUserRole', 'false');
           this.selectAddUserRole =  localStorage.getItem('selectAddUserRole');
+          localStorage.setItem('selectDcManager', 'false');
+          this.selectDcManager =  localStorage.getItem('selectDcManager');
       }
 
       callApproveByManager(){
@@ -347,6 +385,8 @@ export class NewheaderComponent implements OnInit {
           this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
           localStorage.setItem('selectAddUserRole', 'false');
           this.selectAddUserRole =  localStorage.getItem('selectAddUserRole');
+          localStorage.setItem('selectDcManager', 'false');
+          this.selectDcManager =  localStorage.getItem('selectDcManager');
       }
 
       callAddDepartmentRole(){
@@ -369,6 +409,8 @@ export class NewheaderComponent implements OnInit {
           this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
           localStorage.setItem('selectAddUserRole', 'false');
           this.selectAddUserRole =  localStorage.getItem('selectAddUserRole');
+          localStorage.setItem('selectDcManager', 'false');
+          this.selectDcManager =  localStorage.getItem('selectDcManager');
       }
 
       callAddDataCombobox(){
@@ -391,11 +433,39 @@ export class NewheaderComponent implements OnInit {
           this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
           localStorage.setItem('selectAddUserRole', 'false');
           this.selectAddUserRole =  localStorage.getItem('selectAddUserRole');
+          localStorage.setItem('selectDcManager', 'false');
+          this.selectDcManager =  localStorage.getItem('selectDcManager');
       }
 
       callAddUserRole(){
           localStorage.setItem('links', 'addDepartmentRole');
           localStorage.setItem('selectAddUserRole', 'true');
+          this.selectAddUserRole =  localStorage.getItem('selectAddUserRole');
+          localStorage.setItem('selectAddDataCombobox', 'false');
+          this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');
+          localStorage.setItem('selectAddDepartmentRole', 'false');
+          this.selectAddDepartmentRole =  localStorage.getItem('selectAddDepartmentRole');
+          localStorage.setItem('selectApproveByManager', 'false');
+          this.selectApproveByManager =  localStorage.getItem('selectApproveByManager');
+          localStorage.setItem('selectApproveBySupervisor', 'false');
+          this.selectApproveBySupervisor =  localStorage.getItem('selectApproveBySupervisor');
+          localStorage.setItem('selectAttendanceDate', 'false');
+          this.selectAttendanceDate =  localStorage.getItem('selectAttendanceDate');
+          localStorage.setItem('selectAttendance', 'false');
+          this.selectAttendance =  localStorage.getItem('selectAttendance')
+          localStorage.setItem('selectEmployeeAdd', 'false');
+          this.selectEmployeeAdd =  localStorage.getItem('selectEmployeeAdd');
+          localStorage.setItem('selectEmployeemaster', 'false');
+          this.selectEmployeemaster =  localStorage.getItem('selectEmployeemaster');
+          localStorage.setItem('selectDcManager', 'false');
+          this.selectDcManager =  localStorage.getItem('selectDcManager');
+      }
+
+      callDCManager(){
+          localStorage.setItem('links', 'addDcManager');
+          localStorage.setItem('selectDcManager', 'true');
+          this.selectDcManager =  localStorage.getItem('selectDcManager');
+          localStorage.setItem('selectAddUserRole', 'false');
           this.selectAddUserRole =  localStorage.getItem('selectAddUserRole');
           localStorage.setItem('selectAddDataCombobox', 'false');
           this.selectAddDataCombobox =  localStorage.getItem('selectAddDataCombobox');

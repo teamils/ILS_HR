@@ -45,5 +45,24 @@ public class MasterRoleController {
         notificationService.sendEmail(managername,manager.getEmpEmail(),leaveType,empname,dateAndTotel);
     }
 
+    @PostMapping(path = "/sendEmailToManager")
+    public void emailtomanager(@RequestBody Map<String,String> body) throws MessagingException, javax.mail.MessagingException {
+
+        long managerID = Integer.valueOf(body.get("managerID").toString());
+        long supervisorID = Integer.valueOf(body.get("supervisorID").toString());
+        long empidLeave = Integer.valueOf(body.get("empidLeave").toString());
+        String leaveType = body.get("leaveType").toString();
+        String dateAndTotel = body.get("dateAndTotel").toString();
+
+        EmployeeMaster manager = employeeMasterRepository.findById(managerID).get();
+        EmployeeMaster supervisor = employeeMasterRepository.findById(supervisorID).get();
+        EmployeeMaster empLeave = employeeMasterRepository.findById(empidLeave).get();
+        String managername = manager.getEmployeeMasterFirstName()+" "+manager.getEmployeeMasterLastName();
+        String supervisorname = supervisor.getEmployeeMasterFirstName()+" "+supervisor.getEmployeeMasterLastName();
+        String empLeavename = empLeave.getEmployeeMasterFirstName()+" "+empLeave.getEmployeeMasterLastName();
+
+        notificationService.sendEmailToManager(managername,supervisorname,empLeavename,leaveType,dateAndTotel,supervisor.getEmpEmail());
+    }
+
 
 }

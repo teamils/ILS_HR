@@ -68,9 +68,17 @@ public class LeavesController {
     public Iterable<Leaves> LeavesSelectDepartment(@PathVariable String empID) {
         return this.leavesRepository.getLeavesSelectDepartment(empID);
     }
+    @GetMapping("/LeavesSelectDepartmentBySupervisor/{empID}")
+    public Iterable<Leaves> LeavesSelectDepartmentBySupervisor(@PathVariable String empID) {
+        return this.leavesRepository.getLeavesSelectDepartmentBySupervisor(empID);
+    }
     @GetMapping("/getSearchEmployeeByCodeAndNameInApprove/{dataSearch}/{empID}")
     public Iterable<Leaves> searchEmployeeByCodeAndNameInApprove(@PathVariable String dataSearch,@PathVariable String empID){
         return this.leavesRepository.SearchEmployeeByCodeAndNameInApprove(dataSearch,empID);
+    }
+    @GetMapping("/getSearchEmployeeByCodeAndNameInApproveBySupervisor/{dataSearch}/{empID}")
+    public Iterable<Leaves> searchEmployeeByCodeAndNameInApproveBySupervisor(@PathVariable String dataSearch,@PathVariable String empID){
+        return this.leavesRepository.SearchEmployeeByCodeAndNameInApproveBySupervisor(dataSearch,empID);
     }
     @PostMapping("/Time/{startTime}/{endTime}")
     public String Time(@PathVariable String startTime , @PathVariable String endTime) throws ParseException {

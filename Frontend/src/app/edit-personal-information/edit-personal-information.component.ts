@@ -140,7 +140,7 @@ export class EditPersonalInformationComponent implements OnInit {
                                            console.log('EditEmployee is successful');
                                            alert("Edit Success!");
                                             this.BackupEmployeeMaster();
-                                            localStorage.setItem('links', 'employeeMaster');
+                                            //localStorage.setItem('links', 'employeeMaster');
                                            window.location.reload(true);
 
                                        },

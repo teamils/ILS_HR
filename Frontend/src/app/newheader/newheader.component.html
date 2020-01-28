@@ -54,8 +54,18 @@
               <a routerLink="/newheader" (click)="callAttendanceData()" *ngIf="(logouts == 'true' ? false : true) && (this.role6 == true)">Data Attendance</a>  <!-- เห็นทุกคน -->
               <a routerLink="/newheader" (click)="callApproveBySupervisor()" *ngIf="(logouts == 'true' ? false : true) && (this.role7 == true)">Approve By SUPERVISOR</a>   <!-- เห็นเฉพาะ SUPERVISOR -->
               <a routerLink="/newheader" (click)="callApproveByManager()" *ngIf="(logouts == 'true' ? false : true) && (this.role8 == true)">Approve By MANAGER</a>   <!-- เห็นเฉพาะ MANAGER -->
-
             </mat-expansion-panel>
+
+            <mat-expansion-panel class="BG_Sidenav" *ngIf="(logouts == 'true' ? false : true)&& (this.role13 == true)">
+              <mat-expansion-panel-header>
+                <mat-label class="dd">
+                  <mat-icon matSuffix>assignment_ind</mat-icon>
+                  DC Manager
+                </mat-label>
+              </mat-expansion-panel-header>
+              <hr/>
+              <a routerLink="/newheader" (click)="callDCManager()" *ngIf="(logouts == 'true' ? false : true)&& (this.role13 == true)">DC Manager</a>
+             </mat-expansion-panel>
 
             <!--  ขอล่วงเวลา(OT) --------------------------------------------------------------------------------->
 
@@ -119,6 +129,7 @@
           <app-add-department-role *ngIf="selectAddDepartmentRole == 'true' ? true : false"></app-add-department-role>
           <app-add-data-combobox *ngIf="selectAddDataCombobox == 'true' ? true : false"></app-add-data-combobox>
           <app-add-userrole *ngIf="selectAddUserRole == 'true' ? true : false"></app-add-userrole>
+          <app-dc-manager  *ngIf="selectDcManager == 'true' ? true : false"></app-dc-manager>
       </div>
     </mat-sidenav-content>
 

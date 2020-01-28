@@ -37,7 +37,7 @@
         <mat-form-field style="width:30%;">
           <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason2" required (click)="CalculateLeaveDate(startDate2,endDate2); Checktheleave(this.table.leaID,this.leaveTypeSelect2);"></textarea>
         </mat-form-field>
-        <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;" (click)="SubmitData2()">Save</button>
+        <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;"  (click)="SubmitData2()">Save</button>
       </div>
     </mat-tab>
     <mat-tab label="การลาไม่เต็มวัน">
@@ -78,7 +78,7 @@
         <mat-form-field>
           <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason" (click)="Checktheleave(empId,leaveTypeSelect);CalculateLeaveTime()" required ></textarea>
         </mat-form-field>
-        <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;" (click)="SubmitData()">Save</button>
+        <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;"  (click)="SubmitData()">Save</button>
       </div>
     </mat-tab>
   </mat-tab-group>

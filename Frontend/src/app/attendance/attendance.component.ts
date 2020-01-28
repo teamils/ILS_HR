@@ -90,6 +90,9 @@ export class AttendanceComponent implements OnInit {
   sumDay_365:number;
   x:any=false;
   diff;
+  dataToInput:any;
+  dateAndTotel;
+  statusLabelLeaveHalfDay;
   empId = localStorage.getItem('empId');
   startDateInLogin = localStorage.getItem('startDateInLogin');
   departmentIDLogin = localStorage.getItem('departmentIDLogin');
@@ -211,8 +214,8 @@ export class AttendanceComponent implements OnInit {
       );
     }, 100);
   }
-  statusLabelLeaveHalfDay;
-    SubmitData(){ // Half Day
+
+  SubmitData(){ // Half Day
         this.CalculateLeaveTime();
         this.Checktheleave(this.table.leaID,this.leaveTypeSelect);
         if(this.labelLeaveHalfDay=='ชั่วโมง') this.statusLabelLeaveHalfDay=1;
@@ -237,6 +240,8 @@ export class AttendanceComponent implements OnInit {
                                             //window.location.reload(true);
                                             localStorage.setItem('links', 'attendance');
                                             this.x=false;
+                                            //this.SentEmail(this.leaveTypeSelect,this.startDate,this.startDate,this.startTimeSelect,this.endTimeSelect,this.totalTime,'ชั่วโมง');
+                                            this.ClearTextInput();
                                        },
                                        error => {
                                           alert("ไม่สำเร็จ กรุณาลองใหม่");
@@ -244,13 +249,13 @@ export class AttendanceComponent implements OnInit {
                                            console.log('Error', error);
                                        }
                                       );
-            this.ClearTextInput();
+
             //this. RefreshTable();
             this.x=true;
         }
-    }
+  }
 
-    SubmitData2(){ //Full day
+  SubmitData2(){ //Full day
         this.CalculateLeaveDate(this.startDate2,this.endDate2);
         this.Checktheleave(this.table.leaID,this.leaveTypeSelect2);
         if(this.diffDay<1){
@@ -273,7 +278,7 @@ export class AttendanceComponent implements OnInit {
                                            alert(this.leaveTypeSelect2+"ลา "+this.diffDay+" วัน สำเร็จ รอการอนุมัติ");
                                             //window.location.reload(true);
                                             localStorage.setItem('links', 'attendance');
-                                            this.SentEmail(this.leaveTypeSelect2,this.startDate2,this.endDate2,'8:00','17:00','วัน');
+                                            //this.SentEmail(this.leaveTypeSelect2,this.startDate2,this.endDate2,'8:00','17:00',0,'วัน');
                                             this.x=false;
                                             this.ClearTextInput();
                                        },
@@ -288,28 +293,25 @@ export class AttendanceComponent implements OnInit {
               this.x=true;
         }
 
-    }
- dataToInput:any;
-    SentEmail(leaveType:any,startdate:any,enddate:any,statTime:any,endTime:any,type:any){
-        let dateAndTotel = "ในวันที่ "+this.datepipe.transform(startdate, 'dd/MM/yyyy')+" "+statTime+" น. ถึงวันที่ "+this.datepipe.transform(enddate, 'dd/MM/yyyy')+" "+endTime+" น. รวมเป็นเวลา "+this.diffDay+" "+type;
-        //console.log(dateAndTotel);
-        this.dataToInput = {
-            dateAndTotel:dateAndTotel,
-        };
+  }
+
+  SentEmail(leaveType:any,startdate:any,enddate:any,statTime:any,endTime:any,totalTime:any,type:any){
+        if(totalTime==0)
+           this.dateAndTotel = "ในวันที่ "+this.datepipe.transform(startdate, 'dd/MM/yyyy')+" "+statTime+" น. ถึงวันที่ "+this.datepipe.transform(enddate, 'dd/MM/yyyy')+" "+endTime+" น. รวมเป็นเวลา "+this.diffDay+" "+type;
+        else
+          this.dateAndTotel = "ในวันที่ "+this.datepipe.transform(startdate, 'dd/MM/yyyy')+" "+statTime+" น. ถึงวันที่ "+this.datepipe.transform(enddate, 'dd/MM/yyyy')+" "+endTime+" น. รวมเป็นเวลา "+this.totalTime+" "+type;
 
         this.service.getDepartmentMasterRoleFindByDepartmentID(this.departmentIDLogin).subscribe(data => {
-            //console.log(data);
-            for(let i of data){
+           // console.log(data);
+          for(let i of data){
+            if(i.usePosition=="supervisor"){
               this.dataToInput = {
                   managerID:i.employeeMasterid.employeeMasterID,
                   leaveType:leaveType,
                   empID:this.empId,
-                  dateAndTotel:dateAndTotel,
+                  dateAndTotel:this.dateAndTotel,
               };
-              this.http.post(API1 + '/sendEmail', JSON.stringify(this.dataToInput), {
-                       headers: {
-                          "Content-Type": "application/json"
-                        }
+              this.http.post(API1 + '/sendEmail', JSON.stringify(this.dataToInput), {headers: {"Content-Type": "application/json"}
                    }).subscribe(data2 => {
                                   console.log("Sent Email is successfull");
                                },error => {
@@ -317,9 +319,10 @@ export class AttendanceComponent implements OnInit {
                                }
               );
             }
+          }
         });
+  }
 
-    }
     SaveLeaveNumber(){ //function
            //console.log('work year ปัดเศษลง =>',this.sumDay_365);
            this.service.getShowLeavesNumber(this.empId).subscribe(data => {
@@ -411,7 +414,7 @@ export class AttendanceComponent implements OnInit {
     Checktheleave(empID1:any,leaveType1:any){ //checkว่าสามาถรลาได้มั้ยเมื่อเทียบกับวันลาที่มี
       setTimeout(() => {
          this.service.show1rowof1person(empID1,leaveType1).subscribe(data => {
-          console.log('show1rowof1person -> ',data);
+          //console.log('show1rowof1person -> ',data);
           for (let i of data) {
               this.leavetatelAll.leavesNumbersID = i.leavesNumbersID;
               this.leavetatelAll.BalanceDay = i.balanceDay;

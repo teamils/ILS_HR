@@ -24,6 +24,16 @@ public class DepartmentMasterRole {
     @JoinColumn(name = "departmentid", insertable = true)
     private Department departmentid;
 
+    private String usePosition;
+
+    public String getUsePosition() {
+        return usePosition;
+    }
+
+    public void setUsePosition(String usePosition) {
+        this.usePosition = usePosition;
+    }
+
     public Long getDepartmentMasterRoleID() {
         return departmentMasterRoleID;
     }

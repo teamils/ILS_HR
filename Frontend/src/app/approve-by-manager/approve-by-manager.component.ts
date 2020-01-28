@@ -10,6 +10,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { ReasonNotApproveDialog } from '../approve-by-supervisor/approve-by-supervisor.component';
 import { API1 } from '../app.component';
+
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -69,12 +70,13 @@ constructor(private service:ServiceService,
           });
           this.dataSource.paginator = this.paginator;
         }, 1000);
-
   }
+
   SplitDate(date:any){
     var DateSplitted = date.split("-");
     return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
   }
+
   approve(row : any){
         this.progressBar = true;
         this.http.post(API1 + '/approveByManager/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {

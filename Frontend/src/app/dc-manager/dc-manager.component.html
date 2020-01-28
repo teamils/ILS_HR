@@ -1,27 +1,26 @@
 <mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
 <mat-toolbar color="primary">
-  <span>Approve(Attendance) by supervisor</span>&nbsp;&nbsp;&nbsp;&nbsp;
+  <span>DC Manager</span>&nbsp;&nbsp;&nbsp;&nbsp;
   <span class="example-fill-remaining-space" style="align:center;"></span>
   <span>
-    ค้นหา :
-    <mat-form-field (keyup)="isChecked==true?SearchEmployeeByCodeAndNameInApproveBySupApprove():SearchEmployeeByCodeAndNameInApproveBySupNOTApprove();SearchInputNull()">
+     ค้นหา :
+    <mat-form-field (keyup)="isChecked==true?SearchEmployeeByCodeAndNameInApproveByManagerApprove():SearchEmployeeByCodeAndNameInApproveByManagerNOTApprove();SearchInputNull()">
        <mat-label></mat-label>
       <input matInput placeholder="รหัสพนักงาน/ชื่อ-สกุล" [(ngModel)]="dataSearch">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <mat-slide-toggle (change)="onChange()" [(ngModel)]="isChecked">Approve</mat-slide-toggle>
   </span>
 </mat-toolbar>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort >
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container matColumnDef="number" >
     <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>
     <td mat-cell *matCellDef="let element ; let i = index">{{i+1}}.</td>
   </ng-container>
   <!-- Position Column -->
-  <ng-container matColumnDef="employeeCode" >
-    <th mat-header-cell *matHeaderCellDef mat-sort-header><font color="black"><b>รหัสพนักงาน</b></font></th>
+  <ng-container matColumnDef="employeeCode">
+    <th mat-header-cell *matHeaderCellDef><font color="black"><b>รหัสพนักงาน</b></font></th>
     <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.employeeMasterCustomerCode}} </td>
   </ng-container>
 
@@ -31,11 +30,6 @@
     <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.employeeMasterFirstName}}&nbsp;&nbsp;{{element.employeeMasterid.employeeMasterLastName}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="department">
-    <th mat-header-cell *matHeaderCellDef><font color="black"><b>เเผนก</b></font>  </th>
-    <td mat-cell *matCellDef="let element"> {{element.departmentid.departmentName}} </td>
-  </ng-container>
-
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>วันที่</b></font>  </th>
     <td mat-cell *matCellDef="let element"> {{element.createDate}} </td>
@@ -43,17 +37,17 @@
 
   <ng-container matColumnDef="leaveType">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>ประเภทการลา</b></font>  </th>
-    <td mat-cell *matCellDef="let element">{{element.leaveTypeForAllDay.leaveTypeForAlldayName}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.leaveTypeForAllDay.leaveTypeForAlldayName}}</td>
   </ng-container>
 
   <ng-container matColumnDef="startDate">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>เริ่มจากวันที่</b></font>  </th>
-    <td mat-cell *matCellDef="let element"> {{element.startDateForAllDay}} <font *ngIf="element.startTime=='null'?false:true;">{{element.startTime}}</font></td>
+    <td mat-cell *matCellDef="let element"> {{element.startDateForAllDay}}&nbsp;<font *ngIf="element.startTime=='null'?false:true;">{{element.startTime}}</font> </td>
   </ng-container>
 
   <ng-container matColumnDef="endDate">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>ถึงวันที่</b></font>  </th>
-    <td mat-cell *matCellDef="let element"> {{element.endDateForAllDay}} <font *ngIf="element.startTime=='null'?false:true;">{{element.endTime}}</font></td>
+    <td mat-cell *matCellDef="let element"> {{element.endDateForAllDay}}&nbsp;<font *ngIf="element.startTime=='null'?false:true;">{{element.endTime}}</font> </td>
   </ng-container>
 
   <ng-container matColumnDef="total">
@@ -66,15 +60,15 @@
     <td mat-cell *matCellDef="let element"> {{element.reasonForAllDay}} </td>
   </ng-container>
 
-  <!--<ng-container matColumnDef="approvedBySupervisor">
-    <th mat-header-cell *matHeaderCellDef><font color="black"><b>อนุมัติโดยSupervisor</b></font>  </th>
-    <td mat-cell *matCellDef="let element"> {{element.approvedBySupervisor}} </td>
-  </ng-container>
+  <!-- <ng-container matColumnDef="approvedBySupervisor">
+     <th mat-header-cell *matHeaderCellDef><font color="black"><b>อนุมัติโดยSupervisor</b></font>  </th>
+     <td mat-cell *matCellDef="let element"> {{element.approvedBySupervisor}} </td>
+   </ng-container>
 
-  <ng-container matColumnDef="approvedByManager">
-    <th mat-header-cell *matHeaderCellDef><font color="black"><b>อนุมัติโดยManager</b></font>  </th>
-    <td mat-cell *matCellDef="let element"> {{element.approvedByManager}} </td>
-  </ng-container> -->
+   <ng-container matColumnDef="approvedByManager">
+     <th mat-header-cell *matHeaderCellDef><font color="black"><b>อนุมัติโดยManager</b></font>  </th>
+     <td mat-cell *matCellDef="let element"> {{element.approvedByManager}} </td>
+   </ng-container> -->
 
   <ng-container matColumnDef="leaveStatus">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>สถานะ</b></font>  </th>
@@ -84,7 +78,7 @@
   <ng-container matColumnDef="approve">
     <th mat-header-cell *matHeaderCellDef><font  color="black"></font></th>
     <td mat-cell *matCellDef="let element" >
-      <button mat-mini-fab color="primary" matTooltip="อนุมัติและส่งอีเมลไปยังผู้จัดการ" matTooltipPosition="right" (click)="approve(element); onChange();" [disabled]="dis"><mat-icon>check</mat-icon></button>
+      <button mat-mini-fab color="primary" matTooltip="อนุมัติ" matTooltipPosition="right" (click)="approve(element); onChange();" [disabled]="dis"><mat-icon>check</mat-icon></button>
     </td>
   </ng-container>
 
@@ -99,4 +93,3 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="[15, 30, 50, 100,1000]" showFirstLastButtons ></mat-paginator>
-

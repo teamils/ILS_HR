@@ -1,0 +1,41 @@
+td {
+  border: 1px solid #ffffff;
+  text-align: center;
+
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  height: auto;
+}
+tr:hover {background-color: #DCDCDC;}
+  th {
+   border: 1px solid #ffffff;
+    background-color: #00FF00;
+     text-align: center;
+     position: sticky;
+  }
+
+   th.mat-column-number,
+   th.mat-column-employeeCode,
+   th.mat-column-name,
+   th.mat-column-endDate,
+   th.mat-column-date,
+   th.mat-column-leaveType,
+   th.mat-column-halfDay,
+   th.mat-column-startDate,
+   th.mat-column-reason,
+   th.mat-column-approvedBySupervisor,
+   th.mat-column-approvedByManager,
+   th.mat-column-leaveStatus,
+   th.mat-column-del,
+   th.mat-column-endDate2,
+   th.mat-column-total{
+          text-align: center;
+   }
+
+.example-fill-remaining-space {
+  flex: 2 2 auto;
+}
