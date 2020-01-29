@@ -8,14 +8,35 @@ import { ServiceService } from '../service/service.service';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
-import { ReasonNotApproveDialog } from '../approve-by-supervisor/approve-by-supervisor.component';
 import { API1 } from '../app.component';
+import {FormControl} from '@angular/forms';
+import { AttendanceComponent } from '../attendance/attendance.component';
+import { ExcelService } from '../excel.service';
 
 export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  leavesID: any;
+  createDate: any;
+  updateLeave_date: any;
+  updateLeave_by: any;
+  createLeave_by: any;
+  labelLeaveHalfDay: any;
+  reasonForAllDay: any;
+  startDateForAllDay: any;
+  endDateForAllDay: any;
+  startTime: any;
+  endTime: any;
+  leaveTypeForAllDay: any;
+  approvedBySupervisor: any;
+  approvedByManager: any;
+  confirmByHR: any;
+  isActiveAttendance: any;
+  employeeMasterid: any;
+  leaveStatus: any;
+  reasonNotApprove: any;
+  isPayment: any;
+  paymentReson: any;
+  leavesNumbersid: any;
+  departmentid: any;
 }
 @Component({
   selector: 'app-dc-manager',
@@ -24,54 +45,81 @@ export interface PeriodicElement {
 })
 export class DcManagerComponent implements OnInit {
 
-  empId = localStorage.getItem('empId');
+  leaves  : Array<any>;
+  department: Array<any>;
+  departmentSelect:any;
+  LeavesToComplete: Array<any>;
+  isChecked;
+  interval:any;
+  interval2:any;
+  interval3:any;
+  dis;
+  dataSearch='';
+  progressBar=false;
   firstNameOnLogin = localStorage.getItem('fName');
   lastNameOnLogin  = localStorage.getItem('lName');
-  departmentOnLogin = localStorage.getItem('departmentlogin');
-
-  leaves  : Array<any>;
-  progressBar=false;
-  intervalMan:any;
-  interval2Man:any;
-  interval3Man:any;
-
-  displayedColumns: string[] = ['number','employeeCode', 'name','date', 'leaveType', 'startDate', 'endDate','total', 'reason', /*'approvedBySupervisor', 'approvedByManager',*/'leaveStatus','approve','notApprove'];
+  empId = localStorage.getItem('empId');
+  displayedColumns: string[] = ['number','employeeCode', 'name','position','department'/*,'employeeType'*/,'date', 'leaveType','startDate', 'endDate','total','reason'];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
 
+
   constructor(private service:ServiceService,
-              private router:Router,
-              private route:ActivatedRoute ,
-              public dialog: MatDialog,
-               private http: HttpClient) { }
+            private router:Router,
+            private route:ActivatedRoute ,
+            public dialog: MatDialog,
+             private http: HttpClient,
+             private excelService:ExcelService) { }
 
   ngOnDestroy() {
-      clearInterval(this.intervalMan);
-      clearInterval(this.interval2Man);
-      clearInterval(this.interval3Man);
+      clearInterval(this.interval);
+      clearInterval(this.interval2);
+      clearInterval(this.interval3);
   }
 
   ngOnInit() {
-        this.progressBar = true;
-        this.interval3Man = setInterval(() => {
-          this.service.getShowLeavesNotApproveBySup(this.empId).subscribe(data => {
-              //console.log('leaves -> ', data.leaveStatus);
-              this.leaves = data;
-              this.dataSource.data = this.leaves;
-              this.progressBar = false;
-              for(let i of this.leaves){
-                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-              }
-              //console.log('leaves -> ',this.leaves);
+    this.progressBar = true;
+        this.interval3 = setInterval(() => {
+          this.service.getLeaveAtManager().subscribe(data => {
+                this.progressBar = false;
+                this.leaves = data;
+                this.dataSource.data = this.leaves;
+                for(let i of this.leaves){
+                  i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                  i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                }
+                //console.log('leaves -> ',this.leaves);
           });
-          this.dataSource.paginator = this.paginator;
         }, 1000);
+        this.service.getDepartment().subscribe(data => {
+               this.department = data;
+              //console.log('department == ',this.department);
+        });
+        this.dataSource.paginator = this.paginator;
   }
-
   SplitDate(date:any){
     var DateSplitted = date.split("-");
     return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
   }
 
+  SearchLeaveAtManager(){
+    this.ngOnDestroy();
+      this.service.getSearchLeaveAtManager(this.dataSearch).subscribe(data => {
+              this.leaves = data;
+              this.dataSource.data = this.leaves;
+              for(let i of this.leaves){
+                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+              }
+      });
+  }
+
+  SearchInputNull(){
+    this.ngOnDestroy();
+    //console.log(this.dataSearch);
+    if(this.dataSearch==''){
+      this.ngOnInit();
+      this.progressBar = false;
+    }
+  }
 }

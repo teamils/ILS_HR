@@ -30,8 +30,8 @@ public class MasterRoleController {
         return masterRoleRepository.findAll().stream().collect(Collectors.toList());
     }
 
-    @PostMapping(path = "/sendEmail")
-    public void emailnakub(@RequestBody Map<String,String> body) throws MessagingException, javax.mail.MessagingException {
+    @PostMapping(path = "/sendEmailToSupervisor")
+    public void emailtosupervisor(@RequestBody Map<String,String> body) throws MessagingException, javax.mail.MessagingException {
 
         long managerID = Integer.valueOf(body.get("managerID").toString());
         String leaveType = body.get("leaveType").toString();
@@ -42,7 +42,7 @@ public class MasterRoleController {
         EmployeeMaster emp = employeeMasterRepository.findById(empID).get();
         String managername = manager.getEmployeeMasterFirstName()+" "+manager.getEmployeeMasterLastName();
         String empname = emp.getEmployeeMasterFirstName()+" "+emp.getEmployeeMasterLastName();
-        notificationService.sendEmail(managername,manager.getEmpEmail(),leaveType,empname,dateAndTotel);
+        notificationService.sendEmailToSupervisor(managername,manager.getEmpEmail(),leaveType,empname,dateAndTotel);
     }
 
     @PostMapping(path = "/sendEmailToManager")
@@ -50,18 +50,34 @@ public class MasterRoleController {
 
         long managerID = Integer.valueOf(body.get("managerID").toString());
         long supervisorID = Integer.valueOf(body.get("supervisorID").toString());
-        long empidLeave = Integer.valueOf(body.get("empidLeave").toString());
+        long empIdLeave = Integer.valueOf(body.get("empIdLeave").toString());
         String leaveType = body.get("leaveType").toString();
         String dateAndTotel = body.get("dateAndTotel").toString();
 
         EmployeeMaster manager = employeeMasterRepository.findById(managerID).get();
         EmployeeMaster supervisor = employeeMasterRepository.findById(supervisorID).get();
-        EmployeeMaster empLeave = employeeMasterRepository.findById(empidLeave).get();
+        EmployeeMaster empLeave = employeeMasterRepository.findById(empIdLeave).get();
         String managername = manager.getEmployeeMasterFirstName()+" "+manager.getEmployeeMasterLastName();
         String supervisorname = supervisor.getEmployeeMasterFirstName()+" "+supervisor.getEmployeeMasterLastName();
         String empLeavename = empLeave.getEmployeeMasterFirstName()+" "+empLeave.getEmployeeMasterLastName();
 
         notificationService.sendEmailToManager(managername,supervisorname,empLeavename,leaveType,dateAndTotel,supervisor.getEmpEmail());
+    }
+
+    @PostMapping(path = "/sendEmailToDCManager")
+    public void emailtodcmanager(@RequestBody Map<String,String> body) throws MessagingException, javax.mail.MessagingException {
+
+        long managerID = Integer.valueOf(body.get("managerID").toString());
+        String leaveType = body.get("leaveType").toString();
+        long empID = Integer.valueOf(body.get("empID").toString());
+        String dateAndTotel = body.get("dateAndTotel").toString();
+
+        EmployeeMaster manager = employeeMasterRepository.findById(managerID).get();
+        EmployeeMaster emp = employeeMasterRepository.findById(empID).get();
+        String managername = manager.getEmployeeMasterFirstName()+" "+manager.getEmployeeMasterLastName();
+        String empname = emp.getEmployeeMasterFirstName()+" "+emp.getEmployeeMasterLastName();
+        notificationService.sendEmailToDCManager(managername,manager.getEmpEmail(),leaveType,empname,dateAndTotel);
+
     }
 
 

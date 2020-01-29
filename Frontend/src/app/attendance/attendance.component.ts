@@ -55,6 +55,7 @@ export class AttendanceComponent implements OnInit {
     usedDay : '',
     BalanceDay: '',
     CompoundDay : '',
+    leaveTypeID:'',
   };
 
   employeeMasterCustomerCode : String;
@@ -93,10 +94,14 @@ export class AttendanceComponent implements OnInit {
   dataToInput:any;
   dateAndTotel;
   statusLabelLeaveHalfDay;
+  statusLabelLeaveHalfDay2;
   empId = localStorage.getItem('empId');
   startDateInLogin = localStorage.getItem('startDateInLogin');
   departmentIDLogin = localStorage.getItem('departmentIDLogin');
-
+  firstNameOnLogin = localStorage.getItem('fName');
+  lastNameOnLogin  = localStorage.getItem('lName');
+  roleStatusInLogin  = localStorage.getItem('roleStatusInLogin');
+  empRole;
 
   displayedColumns2: string[] = ['number','date','leaveType','startDate','endDate2','total', 'reason', /*'approvedBySupervisor', 'approvedByManager',*/'reasonNotApprove','isPayment','leaveStatus','del'];
   dataSource2 = new MatTableDataSource<leave2>(this.leaves2);
@@ -218,9 +223,8 @@ export class AttendanceComponent implements OnInit {
   SubmitData(){ // Half Day
         this.CalculateLeaveTime();
         this.Checktheleave(this.table.leaID,this.leaveTypeSelect);
-        if(this.labelLeaveHalfDay=='ชั่วโมง') this.statusLabelLeaveHalfDay=1;
-        else this.statusLabelLeaveHalfDay=0;
-
+          if(this.labelLeaveHalfDay=='ชั่วโมง') {this.statusLabelLeaveHalfDay=1;this.statusLabelLeaveHalfDay2=1;}
+          else{this.statusLabelLeaveHalfDay=0;this.statusLabelLeaveHalfDay2=3;}
         if(this.leaveTypeSelect == null)  alert("กรุณาเลือกประเภทการลา");
         else if(this.labelLeaveHalfDay == null) alert("กรุณาเลือกเช้า-เย็น");
         else if(this.labelLeaveHalfDay=='ชั่วโมง' && this.startTimeSelect == 'null') alert("กรุณาเลือกเวลาเริ่มต้น");
@@ -240,8 +244,9 @@ export class AttendanceComponent implements OnInit {
                                             //window.location.reload(true);
                                             localStorage.setItem('links', 'attendance');
                                             this.x=false;
-                                            //this.SentEmail(this.leaveTypeSelect,this.startDate,this.startDate,this.startTimeSelect,this.endTimeSelect,this.totalTime,'ชั่วโมง');
+                                            this.SentEmail(this.leaveTypeSelect,this.startDate,this.startDate,this.startTimeSelect,this.endTimeSelect,this.totalTime,'ชั่วโมง');
                                             this.ClearTextInput();
+                                            this.UpdateLeaveNumber();
                                        },
                                        error => {
                                           alert("ไม่สำเร็จ กรุณาลองใหม่");
@@ -250,12 +255,12 @@ export class AttendanceComponent implements OnInit {
                                        }
                                       );
 
-            //this. RefreshTable();
             this.x=true;
         }
   }
 
   SubmitData2(){ //Full day
+        this.statusLabelLeaveHalfDay2=2;
         this.CalculateLeaveDate(this.startDate2,this.endDate2);
         this.Checktheleave(this.table.leaID,this.leaveTypeSelect2);
         if(this.diffDay<1){
@@ -278,9 +283,10 @@ export class AttendanceComponent implements OnInit {
                                            alert(this.leaveTypeSelect2+"ลา "+this.diffDay+" วัน สำเร็จ รอการอนุมัติ");
                                             //window.location.reload(true);
                                             localStorage.setItem('links', 'attendance');
-                                            //this.SentEmail(this.leaveTypeSelect2,this.startDate2,this.endDate2,'8:00','17:00',0,'วัน');
+                                            this.SentEmail(this.leaveTypeSelect2,this.startDate2,this.endDate2,'8:00','17:00',0,'วัน');
                                             this.x=false;
                                             this.ClearTextInput();
+                                            this.UpdateLeaveNumber();
                                        },
                                        error => {
                                           console.log('Error', error);
@@ -288,36 +294,81 @@ export class AttendanceComponent implements OnInit {
                                           window.location.reload(true);
                                        }
                                       );
-             //this.ClearTextInput();
-              //this.RefreshTable();
+
               this.x=true;
         }
 
   }
 
   SentEmail(leaveType:any,startdate:any,enddate:any,statTime:any,endTime:any,totalTime:any,type:any){
+        this.service.getemployee1person(this.empId).subscribe(dataEmp => {for(let i of dataEmp){this.empRole = i.roleStatus;}});
         if(totalTime==0)
            this.dateAndTotel = "ในวันที่ "+this.datepipe.transform(startdate, 'dd/MM/yyyy')+" "+statTime+" น. ถึงวันที่ "+this.datepipe.transform(enddate, 'dd/MM/yyyy')+" "+endTime+" น. รวมเป็นเวลา "+this.diffDay+" "+type;
         else
           this.dateAndTotel = "ในวันที่ "+this.datepipe.transform(startdate, 'dd/MM/yyyy')+" "+statTime+" น. ถึงวันที่ "+this.datepipe.transform(enddate, 'dd/MM/yyyy')+" "+endTime+" น. รวมเป็นเวลา "+this.totalTime+" "+type;
-
         this.service.getDepartmentMasterRoleFindByDepartmentID(this.departmentIDLogin).subscribe(data => {
-           // console.log(data);
-          for(let i of data){
-            if(i.usePosition=="supervisor"){
+          //console.log(data);
+          console.log('empRole-->',this.empRole);
+          if(this.empRole=='EMPLOYEE'){ //คนส่ง
+            for(let i of data){
               this.dataToInput = {
-                  managerID:i.employeeMasterid.employeeMasterID,
-                  leaveType:leaveType,
-                  empID:this.empId,
-                  dateAndTotel:this.dateAndTotel,
+                managerID:i.employeeMasterid.employeeMasterID,
+                leaveType:leaveType,
+                empID:this.empId,
+                dateAndTotel:this.dateAndTotel,
               };
-              this.http.post(API1 + '/sendEmail', JSON.stringify(this.dataToInput), {headers: {"Content-Type": "application/json"}
-                   }).subscribe(data2 => {
-                                  console.log("Sent Email is successfull");
-                               },error => {
-                                   console.log('Error', error);
-                               }
-              );
+              if(i.employeeMasterid.roleStatus=='SUPERVISOR'){ // ส่งไปหา
+                //console.log(this.dataToInput);
+                this.http.post(API1 + '/sendEmailToSupervisor', JSON.stringify(this.dataToInput), {headers: {"Content-Type": "application/json"}
+                     }).subscribe(data2 => {
+                                    console.log('Send Email To '+i.employeeMasterid.employeeMasterNickName+' '+i.employeeMasterid.roleStatus+' '+i.departmentid.departmentName);
+                                 },error => {
+                                     console.log('Error', error);
+                                 }
+                );
+              }
+            }
+          }
+          else if(this.empRole=='SUPERVISOR'){ //คนส่ง
+            for(let i of data){
+              this.dataToInput = {
+                managerID:i.employeeMasterid.employeeMasterID,
+                leaveType:leaveType,
+                empID:this.empId,
+                dateAndTotel:this.dateAndTotel,
+              };
+              if(i.employeeMasterid.roleStatus=='MANAGER'){ // ส่งไปหา
+                //console.log(this.dataToInput);
+                this.http.post(API1 + '/sendEmailToSupervisor', JSON.stringify(this.dataToInput), {headers: {"Content-Type": "application/json"}
+                     }).subscribe(data2 => {
+                                    console.log('Send Email To '+i.employeeMasterid.employeeMasterNickName+' '+i.employeeMasterid.roleStatus+' '+i.departmentid.departmentName);
+                                 },error => {
+                                     console.log('Error', error);
+                                 }
+                );
+              }
+
+            }
+          }
+          else if(this.empRole=='MANAGER'){ //คนส่ง
+            for(let i of data){
+              this.dataToInput = {
+                managerID:i.employeeMasterid.employeeMasterID,
+                leaveType:leaveType,
+                empID:this.empId,
+                dateAndTotel:this.dateAndTotel,
+              };
+              if(i.employeeMasterid.roleStatus=='DC MANAGER'){ // ส่งไปหา
+                //console.log(this.dataToInput);
+                this.http.post(API1 + '/sendEmailToDCManager', JSON.stringify(this.dataToInput), {headers: {"Content-Type": "application/json"}
+                     }).subscribe(data2 => {
+                                    console.log('Send Email To '+i.employeeMasterid.employeeMasterNickName+' '+i.employeeMasterid.roleStatus);
+                                 },error => {
+                                     console.log('Error', error);
+                                 }
+                );
+              }
+
             }
           }
         });
@@ -344,7 +395,16 @@ export class AttendanceComponent implements OnInit {
           });
 
     }
-
+    UpdateLeaveNumber(){
+      if(this.roleStatusInLogin=='MANAGER'){
+        this.http.post(API1 + '/UpdateLeaveNumber/' + this.leavetatelAll.leavesNumbersID +'/'+ this.diffDay +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin +'/'+ this.statusLabelLeaveHalfDay2 +'/'+  this.leavetatelAll.leaveTypeID ,{}).subscribe(
+          dataupdate => {
+            console.log('Update Leave Number is successful');
+          },
+            error => {console.log('Error', error);}
+        );
+      }
+    }
     CancelDataAttendance(row : any){
             const dialogRef = this.dialog.open(AttendanceCancelDialog, {
                   width: '320px',
@@ -418,6 +478,7 @@ export class AttendanceComponent implements OnInit {
           for (let i of data) {
               this.leavetatelAll.leavesNumbersID = i.leavesNumbersID;
               this.leavetatelAll.BalanceDay = i.balanceDay;
+              this.leavetatelAll.leaveTypeID = i.leaveTypeid.leaveTypeForAlldayID;
           }
         });
       }, 100);
@@ -450,6 +511,8 @@ export class AttendanceComponent implements OnInit {
 export interface DialogData {
   leavesID : null;
   isActiveAttendance: string;
+  leavesNumbersid;
+  employeeMasterid;
 }
 @Component({
     selector: 'attendanceDelete',
@@ -459,11 +522,15 @@ export interface DialogData {
     leavesID: string;
     isActiveAttendance:string;
     selectAttendanceDate : String;
-
-    constructor(public dialogRef: MatDialogRef<AttendanceCancelDialog> , public service:ServiceService,@Inject(MAT_DIALOG_DATA)  public date: DialogData,private http: HttpClient){
+    leavesNumbersID;
+    diffDay;
+    roleStatus;
+    constructor(public dialogRef: MatDialogRef<AttendanceCancelDialog> , public service:ServiceService,@Inject(MAT_DIALOG_DATA)  public data: DialogData,private http: HttpClient){
           dialogRef.disableClose = true;
-        this.leavesID = this.date.leavesID;
-        this.isActiveAttendance = this.date.isActiveAttendance;
+        this.leavesID = this.data.leavesID;
+        this.leavesNumbersID = data.leavesNumbersid.leavesNumbersID;
+        this.diffDay = data.leavesNumbersid.diffDay;
+        this.roleStatus = data.employeeMasterid.roleStatus;
     }
 
     closeDialog(): void {
@@ -478,7 +545,7 @@ export interface DialogData {
                                              //window.location.reload(true);
                                               this.dialogRef.close();
                                               localStorage.setItem('links', 'attendance');
-
+                                              this.CalculateLeaveNumberBack();
                                          },
                                          error => {
                                              console.log('Error', error);
@@ -487,6 +554,20 @@ export interface DialogData {
 
     }
 
+    CalculateLeaveNumberBack(){
+      if(this.roleStatus == 'MANAGER'){
+        this.http.post(API1 + '/CalculateLeaveNumberBack/' + this.leavesNumbersID +'/'+ this.diffDay +'/'+ this.leavesID,{})
+                                       .subscribe(
+                                           data => {
+                                               console.log('CalculateLeaveNumberBack is successful',data);
+                                                this.dialogRef.close();
+                                           },
+                                           error => {
+                                               console.log('Error', error);
+                                           }
+                                        );
+      }
+    }
 
 
 

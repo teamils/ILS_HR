@@ -277,6 +277,13 @@ public class LeavesController {
         return this.leavesRepository.SearchEmployeeByCodeAndNameInApproveByManager(dataSearch,empID);
     }
 
-
+    @GetMapping("/getLeaveAtManager")
+    public Iterable<Leaves> getLeaveAtManager(){
+        return this.leavesRepository.getLeaveAtManager();
+    }
+    @GetMapping("/SearchLeaveAtManager/{dataSearch}")
+    public Iterable<Leaves> SearchLeaveAtManager(@PathVariable String dataSearch){
+        return this.leavesRepository.SearchLeaveAtManager(dataSearch);
+    }
 
 }

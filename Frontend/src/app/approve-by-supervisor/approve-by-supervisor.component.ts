@@ -52,7 +52,7 @@ export class ApproveBySupervisorComponent implements OnInit {
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
   @ViewChild(MatSort, {static : true}) sort: MatSort;
 
-public doFilter = (value: string) => {
+  public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
   constructor(private service:ServiceService,
@@ -88,30 +88,30 @@ public doFilter = (value: string) => {
     return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
   }
 
-  SentEmail(departmentid:any,leaveType:any,empidLeave:any,startDate:any,endDate:any,diffDay:any){
-        this.service.getDepartmentMasterRoleFindByDepartmentID(departmentid).subscribe(data => {
-
-          this.dateAndTotel = "ในวันที่ "+startDate+" น. ถึงวันที่ "+endDate+" น. รวมเป็นเวลา "+diffDay;
-
-          for(let i of data){
-            if(i.usePosition=="manager"){
+  SentEmail(element:any){
+      //console.log(element);
+      this.dateAndTotel = "ในวันที่ "+element.startDateForAllDay+" "+element.startTime+" น. ถึงวันที่ "+element.endDateForAllDay+" "+element.endTime+" น. รวม "+element.labelLeaveHalfDay+" ด้วยเหตุผล "+element.reasonForAllDay;
+      this.service.getDepartmentMasterRoleFindByDepartmentID(element.departmentid.departmentID).subscribe(data => {
+            for(let i of data){
               this.dataToInput = {
                   managerID:i.employeeMasterid.employeeMasterID,
-                  leaveType:leaveType,
-                  empidLeave:empidLeave,
+                  leaveType:element.leaveTypeForAllDay.leaveTypeForAlldayName,
+                  empIdLeave:element.employeeMasterid.employeeMasterID,
                   supervisorID:this.empId,
                   dateAndTotel:this.dateAndTotel,
               };
-              this.http.post(API1 + '/sendEmailToManager', JSON.stringify(this.dataToInput), {headers: {"Content-Type": "application/json"}
+              if(i.employeeMasterid.roleStatus=='MANAGER'){ //Send To ...
+                this.http.post(API1 + '/sendEmailToManager', JSON.stringify(this.dataToInput), {headers: {"Content-Type": "application/json"}
                    }).subscribe(data2 => {
-                                  console.log("Sent Email is successfull");
+                                  console.log('Send Email To '+i.employeeMasterid.employeeMasterNickName+' '+i.employeeMasterid.roleStatus+' '+i.departmentid.departmentName);
                                },error => {
                                    console.log('Error', error);
                                }
-              );
+                );
+              }
             }
-          }
-        });
+      });
+
   }
 
   approve(row : any){
@@ -123,7 +123,6 @@ public doFilter = (value: string) => {
             console.log('Approve is successful');
             alert("Approve successful");
              this.progressBar = false;
-            this.SentEmail(row.departmentid.departmentID,row.leaveTypeForAllDay.leaveTypeForAlldayName,row.employeeMasterid.employeeMasterID,startDate,endDate,row.labelLeaveHalfDay);
           },
           error => {
             console.log('Error', error);

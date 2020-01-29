@@ -196,4 +196,17 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "and e.employee_masterid = dr.employee_masterid)",nativeQuery = true)
     Collection<Leaves> SearchEmployeeByCodeAndNameInApproveByManager(@Param("dataSearch2") String dataSearch2,@Param("empIDSearch2") String empIDSearch2);
 
+    //***********************************************  approveByManager *******************************************//
+    //DC Manager show leave at manager
+    @Query(value = "select * from leaves l ,employee_master e\n" +
+            "where e.role_status='MANAGER'\n" +
+            "and l.employee_masterid_employee_masterid = e.employee_masterid\n" ,nativeQuery = true)
+    Collection<Leaves> getLeaveAtManager();
+
+    //DC Manager ค้นหา รหัสพนักงาน ชื่อ - สกุล
+    @Query(value = "select * from leaves l ,employee_master e\n" +
+            "where e.role_status='MANAGER'\n" +
+            "and (e.employee_master_customer_code LIKE %:dataSearch3% or e.employee_master_first_name LIKE %:dataSearch3% or e.employee_master_last_name LIKE %:dataSearch3%)\n" +
+            "and l.employee_masterid_employee_masterid = e.employee_masterid\n" ,nativeQuery = true)
+    Collection<Leaves> SearchLeaveAtManager(@Param("dataSearch3") String dataSearch3);
 }

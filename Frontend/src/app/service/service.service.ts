@@ -139,4 +139,10 @@ export class ServiceService {
   getUserRolesByEmpCode(empCode : any):Observable<any>{
       return this.http.get(API1+'/userRolesByEmpCode/' + empCode,{})
   }
+  getLeaveAtManager():Observable<any>{
+      return this.http.get(API1+'/getLeaveAtManager',{})
+  }
+  getSearchLeaveAtManager(dataSearch:String):Observable<any>{
+      return this.http.get(API1+'/SearchLeaveAtManager/'+dataSearch,{})
+  }
 }

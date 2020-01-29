@@ -92,6 +92,7 @@ export class HomeComponent implements OnInit {
                     localStorage.setItem('lName', this.table.lName);
                     localStorage.setItem('departmentIDLogin', data.departmentid.departmentID);
                     localStorage.setItem('startDateInLogin', data.employeeMasterStartDate);
+                    localStorage.setItem('roleStatusInLogin', data.roleStatus);
                     console.log(this.table.rolestatus);
                     this.progressBar=false;
 
