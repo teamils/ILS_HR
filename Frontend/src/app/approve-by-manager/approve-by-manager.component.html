@@ -1,6 +1,6 @@
 <mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
 <mat-toolbar color="primary">
-  <span>Approve(Attendance) by manager</span>&nbsp;&nbsp;&nbsp;&nbsp;
+  <span>Approve</span>&nbsp;&nbsp;&nbsp;&nbsp;
   <span class="example-fill-remaining-space" style="align:center;"></span>
   <span>
      ค้นหา :
@@ -37,6 +37,11 @@
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef><font color="black"><b>ชื่อ-สกุล</b></font></th>
     <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.employeeMasterFirstName}}&nbsp;&nbsp;{{element.employeeMasterid.employeeMasterLastName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="department">
+    <th mat-header-cell *matHeaderCellDef><font color="black"><b>เเผนก</b></font>  </th>
+    <td mat-cell *matCellDef="let element"> {{element.departmentid.departmentName}} </td>
   </ng-container>
 
   <ng-container matColumnDef="date">

@@ -7,7 +7,7 @@
     </div>
     <br><br>
     <mat-checkbox [(ngModel)]="dis">Edit employee code!</mat-checkbox>
-    <div (keydown.enter)="EditEmployee()" >
+    <div >
       <mat-form-field appearance="outline">
         <mat-label>รหัสพนักงาน</mat-label>
         <input matInput [disabled]="!dis" [(ngModel)]="NewemployeeMasterCustomerCode">

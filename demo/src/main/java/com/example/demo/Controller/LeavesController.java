@@ -99,7 +99,7 @@ public class LeavesController {
     @PostMapping("/SaveLeaveHalfDay/{leaID}/{leaveTypeSelect}/{labelLeaveHalfDay}/{startDate}/{reason}/{startTimeSelect}/{endTimeSelect}/{totalTime}/{statusLabelLeaveHalfDay}/{departmentIDLogin}/{leavesNumbersID}") // saveLeave ครึ่งวัน
     public Leaves leaves( @PathVariable Long leaID , @PathVariable String leaveTypeSelect,@PathVariable String labelLeaveHalfDay
             , @PathVariable Date startDate , @PathVariable String reason, @PathVariable String startTimeSelect
-            , @PathVariable String endTimeSelect , @PathVariable float totalTime, @PathVariable int statusLabelLeaveHalfDay
+            , @PathVariable String endTimeSelect , @PathVariable double totalTime, @PathVariable int statusLabelLeaveHalfDay
             , @PathVariable long departmentIDLogin, @PathVariable long leavesNumbersID)  {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
         LeaveTypeForAllday leaveTypeForAllday = leaveTypeForAlldayRepository.findByLeaveTypeForAlldayName(leaveTypeSelect);
@@ -128,11 +128,13 @@ public class LeavesController {
         leaves1.setReasonForAllDay(reason);
         if(statusLabelLeaveHalfDay==1) leaves1.setLabelLeaveHalfDay(totalTime+" "+labelLeaveHalfDay);// x ชั่วโมง
         else leaves1.setLabelLeaveHalfDay(labelLeaveHalfDay);
+        leaves1.setDiffDay((totalTime*0.5)/4);
         leaves1.setApprovedBySupervisor("Pending");
         leaves1.setApprovedByManager("Pending");
         leaves1.setConfirmByHR("Pending");
         leaves1.setIsActiveAttendance("1");
-        leaves1.setLeaveStatus("Pending");
+        if(employeeMaster.getRoleStatus()=="SUPERVISOR") leaves1.setLeaveStatus("Waiting approve");
+        else leaves1.setLeaveStatus("Pending");
         leaves1.setDepartmentid(department);
         leaves1.setLeavesNumbersid(leavesNumbers);
         if(leavesNumbers.getBalanceDay()>0) leaves1.setIsPayment("payment");
@@ -143,7 +145,7 @@ public class LeavesController {
 
     @PostMapping("/SaveLeaveFullDay/{leaID}/{leaveTypeSelect2}/{startDate2}/{endDate2}/{reason2}/{diffDay}/{leavesNumbersID}/{departmentIDLogin}") // saveLeave2 เต็มวัน
     public Leaves leaves2( @PathVariable Long leaID , @PathVariable String leaveTypeSelect2 ,@PathVariable Date startDate2
-            , @PathVariable Date endDate2 , @PathVariable String reason2  , @PathVariable String diffDay, @PathVariable long leavesNumbersID
+            , @PathVariable Date endDate2 , @PathVariable String reason2  , @PathVariable int diffDay, @PathVariable long leavesNumbersID
             , @PathVariable long departmentIDLogin) throws ParseException {
 
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(leaID).get();
@@ -171,11 +173,13 @@ public class LeavesController {
         leaves2.setEndTime("17:00");
         leaves2.setReasonForAllDay(reason2);
         leaves2.setLabelLeaveHalfDay(diffDay + " ว ัน");
+        leaves2.setDiffDay(diffDay);
         leaves2.setApprovedBySupervisor("Pending");
         leaves2.setApprovedByManager("Pending");
         leaves2.setConfirmByHR("Pending");
         leaves2.setIsActiveAttendance("1");
-        leaves2.setLeaveStatus("Pending");
+        if(employeeMaster.getRoleStatus()=="SUPERVISOR") leaves2.setLeaveStatus("Waiting approve");
+        else leaves2.setLeaveStatus("Pending");
         leaves2.setLeavesNumbersid(leavesNumbers);
         leaves2.setDepartmentid(department);
         if(leavesNumbers.getBalanceDay()>0) leaves2.setIsPayment("payment");

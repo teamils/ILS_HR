@@ -47,8 +47,17 @@ public class Leaves {
     private String reasonNotApprove;
     private String isPayment;
     private String paymentReson;
+    private double diffDay;
     @ManyToOne @JoinColumn(name = "leavesNumbersid", insertable = true) private LeavesNumbers leavesNumbersid;
     @ManyToOne @JoinColumn(name = "departmentid", insertable = true) private Department departmentid;
+
+    public double getDiffDay() {
+        return diffDay;
+    }
+
+    public void setDiffDay(double diffDay) {
+        this.diffDay = diffDay;
+    }
 
     public Department getDepartmentid() {
         return departmentid;

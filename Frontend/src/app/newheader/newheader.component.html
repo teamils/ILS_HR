@@ -100,12 +100,12 @@
               <mat-expansion-panel-header>
                 <mat-label class="dd">
                   <mat-icon matSuffix>settings_applications</mat-icon>
-                    Admin
+                    Master Data
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="/newheader" (click)="callAddDepartmentRole()" *ngIf="(logouts == 'true' ? false : true) && (this.role10 == true)">Add Department Role</a>
-              <a routerLink="/newheader" (click)="callAddDataCombobox()" *ngIf="(logouts == 'true' ? false : true) && (this.role11 == true)">Add Main Data</a>
+              <a routerLink="/newheader" (click)="callAddDepartmentRole()" *ngIf="(logouts == 'true' ? false : true) && (this.role10 == true)">Add Approve Role</a>
+              <a routerLink="/newheader" (click)="callAddDataCombobox()" *ngIf="(logouts == 'true' ? false : true) && (this.role11 == true)">Add Data</a>
               <a routerLink="/newheader" (click)="callAddUserRole()" *ngIf="(logouts == 'true' ? false : true) && (this.role12 == true)">Add User Role</a>
             </mat-expansion-panel>
           </mat-accordion>

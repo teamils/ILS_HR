@@ -136,7 +136,7 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
     // approveByManager //เห็นตาม master department role // ตอนไม่กด Approve
     @Query(value = "select * from leaves l,department d,employee_master e\n" +
             "where l.departmentid = d.departmentid\n" +
-            "and l.leave_status = 'Waiting approve' and l.approved_by_supervisor <> 'Pending'\n" +
+            "and l.leave_status = 'Waiting approve'\n" +
             "and l.employee_masterid_employee_masterid <> :empID2 \n" +
             "and l.is_active_attendance=1\n" +
             "and e.is_active=1\n" +
@@ -183,7 +183,7 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
     //Approve By Manager ค้นหา รหัสพนักงาน ชื่อ - สกุล เเผนก // ตอนไม่กด Approve
     @Query(value = "select * from leaves l,department d, employee_master e\n" +
             "where l.departmentid = d.departmentid\n" +
-            "and l.leave_status = 'Waiting approve' and l.approved_by_supervisor <> 'Pending'" +
+            "and l.leave_status = 'Waiting approve'" +
             "and l.is_active_attendance=1\n" +
             "and e.is_active=1\n" +
             "and l.employee_masterid_employee_masterid <> :empIDSearch2 \n" +

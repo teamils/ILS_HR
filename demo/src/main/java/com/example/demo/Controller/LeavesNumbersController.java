@@ -48,7 +48,7 @@ public class LeavesNumbersController {
     }
 
     @PostMapping("/UpdateLeaveNumber/{leavesNumbersID}/{diffDay}/{fName}/{lName}/{statusLabelLeaveHalfDay}/{leaveTypeForAllDayID}")
-    public LeavesNumbers UpdateLeaveNumber( @PathVariable long leavesNumbersID,@PathVariable String diffDay,@PathVariable String fName,
+    public LeavesNumbers UpdateLeaveNumber( @PathVariable long leavesNumbersID,@PathVariable Double diffDay,@PathVariable String fName,
                                             @PathVariable String lName,@PathVariable int statusLabelLeaveHalfDay,@PathVariable long leaveTypeForAllDayID){
         LeavesNumbers leavesNumbers = leavesNumbersRepository.findById(leavesNumbersID).get();
         if(statusLabelLeaveHalfDay==3){
@@ -57,19 +57,19 @@ public class LeavesNumbersController {
             leavesNumbers.setDiffDay(0.5);
         }
         else if(statusLabelLeaveHalfDay==2){
-            int result = Integer.parseInt(diffDay);
-            leavesNumbers.setUsedDay(leavesNumbers.getUsedDay()+result);
-            leavesNumbers.setBalanceDay(leavesNumbers.getBalanceDay()-result);
-            leavesNumbers.setDiffDay(result);
+            //int result = Integer.parseInt(diffDay);
+            leavesNumbers.setUsedDay(leavesNumbers.getUsedDay()+diffDay);
+            leavesNumbers.setBalanceDay(leavesNumbers.getBalanceDay()-diffDay);
+            leavesNumbers.setDiffDay(diffDay);
         }
-        else{
-            double result2 = Double.parseDouble(diffDay);
-            BigDecimal bd = new BigDecimal(result2).setScale(2, RoundingMode.HALF_UP);
-            double newresult2 = bd.doubleValue();
-            newresult2 = newresult2/8;
-            leavesNumbers.setUsedDay(leavesNumbers.getUsedDay()+newresult2);
-            leavesNumbers.setBalanceDay(leavesNumbers.getBalanceDay()-newresult2);
-            leavesNumbers.setDiffDay(newresult2);
+        else if(statusLabelLeaveHalfDay==1){
+            //double result2 = Double.parseDouble(diffDay);
+            //BigDecimal bd = new BigDecimal(result2).setScale(2, RoundingMode.HALF_UP);
+            //double newresult2 = bd.doubleValue();
+            diffDay = (diffDay*0.5)/4;
+            leavesNumbers.setUsedDay(leavesNumbers.getUsedDay()+diffDay);
+            leavesNumbers.setBalanceDay(leavesNumbers.getBalanceDay()-diffDay);
+            leavesNumbers.setDiffDay(diffDay);
         }
         if(leaveTypeForAllDayID==3){
             leavesNumbers.setCompoundDay(leavesNumbers.getBalanceDay());

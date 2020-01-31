@@ -307,7 +307,7 @@ export interface DialogData {
     DeleteAttendance(){
         if(this.leaves.leaveStatus=='Complete'){
             if(this.leaves.isPayment=='payment'){
-                    this.http.post(API1 + '/CalculateLeaveNumberBack/' + this.leaves.leavesNumbersid.leavesNumbersID +'/'+ this.leaves.leavesNumbersid.diffDay +'/'+ this.leaves.leavesID,{})
+                    this.http.post(API1 + '/CalculateLeaveNumberBack/' + this.leaves.leavesNumbersid.leavesNumbersID +'/'+ this.leaves.diffDay +'/'+ this.leaves.leavesID,{})
                                      .subscribe(
                                          data => {
                                              console.log('CalculateLeaveNumberBack is successful',data);
@@ -327,6 +327,16 @@ export interface DialogData {
                                               this.dialogRef.close();
                                              //window.location.reload(true);
                                               localStorage.setItem('links', 'attendanceData');
+                                            this.http.post(API1 + '/CalculateLeaveNumberBack/' + this.leaves.leavesNumbersid.leavesNumbersID +'/'+ this.leaves.diffDay +'/'+ this.leaves.leavesID,{})
+                                             .subscribe(
+                                                 data => {
+                                                     console.log('CalculateLeaveNumberBack is successful',data);
+                                                      this.dialogRef.close();
+                                                 },
+                                                 error => {
+                                                     console.log('Error', error);
+                                                 }
+                                              );
                                          },
                                          error => {
                                              console.log('Error', error);
@@ -364,6 +374,7 @@ export interface EditPaymentDialogData {
     leaveTypeForAllDayID='';
     balanceDay;
     diffDay:String;
+    diffDay2;
     splitted;
     diffShowFrontend;
     paymentReson=null;
@@ -385,7 +396,7 @@ export interface EditPaymentDialogData {
             this.leaveTypeForAllDay = data.leaveTypeForAllDay.leaveTypeForAlldayName;
             this.leaveTypeForAllDayID = data.leaveTypeForAllDay.leaveTypeForAlldayID;
             this.leavesNumbersID = data.leavesNumbersid.leavesNumbersID;
-
+            this.diffDay2 = data.diffDay;
 
             if(data.leavesNumbersid.balanceDay>0)
             this.balanceDay = data.leavesNumbersid.balanceDay;
@@ -426,8 +437,9 @@ export interface EditPaymentDialogData {
             console.log('Error', error);
           }
         );
-        if(this.isPayments=="payment"){
-             this.UpdateLeaveNumber();
+        if(this.isPayments=="not payment"){
+              this.CalculateLeaveNumberBack();
+             //this.UpdateLeaveNumber();
         }
         else{}
     }
@@ -439,6 +451,20 @@ export interface EditPaymentDialogData {
           },
             error => {console.log('Error', error);}
         );
+    }
+
+    CalculateLeaveNumberBack(){
+        this.http.post(API1 + '/CalculateLeaveNumberBack/' + this.leavesNumbersID +'/'+ this.diffDay2 +'/'+ this.leavesID,{})
+                                       .subscribe(
+                                           data => {
+                                               console.log('CalculateLeaveNumberBack is successful',data);
+                                                this.dialogRef.close();
+                                           },
+                                           error => {
+                                               console.log('Error', error);
+                                           }
+                                        );
+
     }
 
 

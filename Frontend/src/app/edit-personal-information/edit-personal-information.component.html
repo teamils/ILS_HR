@@ -14,8 +14,8 @@
   &nbsp;
   <mat-form-field appearance="outline">
     <mat-label>คำนำหน้า</mat-label>
-    <mat-select  [(ngModel)]="Newprefix">
-      <mat-option *ngFor="let value of prefix" [value]="value.prefixName">
+    <mat-select  [(ngModel)]="Newprefix" disabled>
+      <mat-option *ngFor="let value of prefix" [value]="value.prefixName" >
         {{value.prefixName}}
       </mat-option>
     </mat-select>
@@ -24,25 +24,25 @@
   &nbsp;
   <mat-form-field appearance="outline">
     <mat-label>ชื่อ</mat-label>
-    <input matInput [(ngModel)]="NewemployeeMasterFirstName">
+    <input matInput [(ngModel)]="NewemployeeMasterFirstName" disabled>
     <mat-icon matSuffix>perm_identity</mat-icon>
   </mat-form-field>
   &nbsp;
   <mat-form-field appearance="outline">
     <mat-label>สกุล</mat-label>
-    <input matInput [(ngModel)]="NewemployeeMasterLastName">
+    <input matInput [(ngModel)]="NewemployeeMasterLastName" disabled>
     <mat-icon matSuffix>perm_identity</mat-icon>
   </mat-form-field>
   &nbsp;
   <mat-form-field appearance="outline">
     <mat-label>ชื่อเล่น</mat-label>
-    <input matInput [(ngModel)]="NewemployeeMasterNickName">
+    <input matInput [(ngModel)]="NewemployeeMasterNickName" disabled>
     <mat-icon matSuffix>perm_identity</mat-icon>
   </mat-form-field>
   &nbsp;
   <mat-form-field appearance="outline">
     <mat-label>เพศ</mat-label>
-    <mat-select  [(ngModel)]="NewemployeeMasterGender">
+    <mat-select  [(ngModel)]="NewemployeeMasterGender" disabled>
       <mat-option *ngFor="let value of gender" [value]="value.genderName">
         {{value.genderName}}
       </mat-option>
@@ -52,7 +52,7 @@
   &nbsp;
   <mat-form-field appearance="outline">
     <mat-label>วัน/เดือน/ปี เกิด</mat-label>
-    <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="วัน/เดือน/ปี เกิด"  [(ngModel)]="NewemployeeMasterBirthDate">
+    <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="วัน/เดือน/ปี เกิด"  [(ngModel)]="NewemployeeMasterBirthDate" disabled>
     <mat-datepicker-toggle matSuffix [for]="BirthDate" ></mat-datepicker-toggle>
     <mat-datepicker #BirthDate></mat-datepicker>
   </mat-form-field>
@@ -67,26 +67,26 @@
   <hr>
   <mat-form-field  appearance="outline">
     <mat-label>รหัสประจำตัวประชาชน</mat-label>
-    <input matInput #message maxlength="13"  [(ngModel)]="NewemployeeMasterPersonID">
+    <input matInput #message maxlength="13"  [(ngModel)]="NewemployeeMasterPersonID" disabled>
     <mat-hint align="end">{{message.value.length}}/13</mat-hint>
     <mat-icon matSuffix>perm_identity</mat-icon>
   </mat-form-field>
   &nbsp;
   <mat-form-field  appearance="outline" >
     <mat-label>เบอร์โทร</mat-label>
-    <input matInput #input maxlength="10"  [(ngModel)]="NewemployeeMasterTel1">
+    <input matInput #input maxlength="10"  [(ngModel)]="NewemployeeMasterTel1" disabled>
     <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
     <mat-icon matSuffix>phone_iphone</mat-icon>
   </mat-form-field>
   &nbsp;
   <mat-form-field  appearance="outline">
     <mat-label>email</mat-label>
-    <input matInput [(ngModel)]="NewempEmail">
+    <input matInput [(ngModel)]="NewempEmail" disabled>
     <mat-icon matSuffix>email</mat-icon>
   </mat-form-field>
   &nbsp;
   <mat-form-field appearance="outline">
-    <mat-label>เดือน/วัน/ปี เริ่มงาน</mat-label>
+    <mat-label>วัน/เดือน/ปี เริ่มงาน</mat-label>
     <input matInput [matDatepicker]="startwork"  [(ngModel)]="NewemployeeMasterStartDate" disabled>
     <mat-datepicker-toggle matSuffix [for]="startwork" ></mat-datepicker-toggle>
     <mat-datepicker #startwork></mat-datepicker>
@@ -94,26 +94,26 @@
   &nbsp;
   <mat-form-field appearance="outline">
     <mat-label>ที่อยู่</mat-label>
-    <textarea matInput [(ngModel)]="NewempAddressReal"></textarea>
+    <textarea matInput [(ngModel)]="NewempAddressReal" disabled></textarea>
     <mat-icon matSuffix>location_city</mat-icon>
   </mat-form-field>
   &nbsp;
   <mat-form-field appearance="outline">
     <mat-label>ที่อยู่ปัจจุบัน</mat-label>
-    <textarea matInput [(ngModel)]="NewempAddressPerson" ></textarea>
+    <textarea matInput [(ngModel)]="NewempAddressPerson" disabled></textarea>
     <mat-icon matSuffix>location_city</mat-icon>
   </mat-form-field>
   &nbsp;
   <mat-form-field appearance="outline">
     <mat-label>ชื่อ/เบอร์โทร ผู้ที่ติดต่อในกรณีฉุกเฉิน</mat-label>
-    <textarea matInput [(ngModel)]="NewemergencyContact"></textarea>
+    <textarea matInput [(ngModel)]="NewemergencyContact" disabled></textarea>
     <mat-icon matSuffix>location_city</mat-icon>
   </mat-form-field>
   <hr>
   &nbsp;
   <mat-form-field appearance="outline" >
     <mat-label>แผนก</mat-label>
-    <mat-select  [(ngModel)]="NewemployeeDepartment">
+    <mat-select  [(ngModel)]="NewemployeeDepartment" disabled>
       <mat-option *ngFor="let depart of department" [value]="depart.departmentName">
         {{depart.departmentName}}
       </mat-option>
@@ -123,7 +123,7 @@
   &nbsp;
   <mat-form-field appearance="outline">
     <mat-label>ตำแหน่ง</mat-label>
-    <mat-select  [(ngModel)]="NewemployeePosition">
+    <mat-select  [(ngModel)]="NewemployeePosition" disabled>
       <mat-option *ngFor="let pos of position" [value]="pos.positionName">
         {{pos.positionName}}
       </mat-option>
@@ -132,8 +132,8 @@
   </mat-form-field>
   &nbsp;
   <mat-form-field appearance="outline">
-    <mat-label>ประเภทการทำงาน</mat-label>
-    <mat-select [(ngModel)]="NewemployeeType">
+    <mat-label>ประเภทการทำงาน</mat-label >
+    <mat-select [(ngModel)]="NewemployeeType" disabled>
       <mat-option *ngFor="let pos of employeeType" [value]="pos.employeeTypeName">
         {{pos.employeeTypeName}}
       </mat-option>
@@ -143,7 +143,7 @@
   &nbsp;
   <mat-form-field appearance="outline">
     <mat-label>วุฒิการศึกษา</mat-label>
-    <mat-select  [(ngModel)]="Neweducation">
+    <mat-select  [(ngModel)]="Neweducation" disabled>
       <mat-option *ngFor="let pos of education" [value]="pos.educationName">
         {{pos.educationName}}
       </mat-option>
@@ -153,7 +153,7 @@
   &nbsp;
   <mat-form-field appearance="outline">
     <mat-label>ธนาคาร</mat-label>
-    <mat-select  [(ngModel)]="Newbank">
+    <mat-select  [(ngModel)]="Newbank" disabled>
       <mat-option *ngFor="let bank of NewBank" [value]="bank.bankName">
         {{bank.bankName}}
       </mat-option>
@@ -163,7 +163,7 @@
   &nbsp;
   <mat-form-field appearance="outline">
     <mat-label>เลขบัญชี</mat-label>
-    <input matInput #AccountNo maxlength="10" [(ngModel)]="NewbankNumber">
+    <input matInput #AccountNo maxlength="10" [(ngModel)]="NewbankNumber" disabled>
     <mat-hint align="end">{{AccountNo.value?.length || 0}}/10</mat-hint>
     <mat-icon matSuffix>monetization_on</mat-icon>
   </mat-form-field>

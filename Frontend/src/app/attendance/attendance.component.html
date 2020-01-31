@@ -13,8 +13,8 @@
     <mat-tab label="การลาเต็มวัน">
         <div align="center">
           <h2>กรอกข้อมูลการลาเต็มวัน</h2>
-          <mat-form-field hintLabel="">
-            <mat-select placeholder="ประเภทการลา" required [(ngModel)]="leaveTypeSelect2">
+          <mat-form-field hintLabel="" >
+            <mat-select placeholder="ประเภทการลา" required [(ngModel)]="leaveTypeSelect2" >
               <mat-option *ngFor="let value of leaveTypeForAlldays" [value]="value.leaveTypeForAlldayName">
                 {{value.leaveTypeForAlldayName}}
               </mat-option>
@@ -22,20 +22,20 @@
           </mat-form-field>
         &nbsp;&nbsp;
         <mat-form-field>
-          <input matInput [matDatepicker]="picker2" placeholder="เริ่มจากวันที่" [(ngModel)]="startDate2" required >
+          <input matInput [matDatepicker]="picker2" placeholder="เริ่มจากวันที่" [(ngModel)]="startDate2" [disabled]="statusVacationLeave" readonly required>
           <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
           <mat-datepicker touchUi #picker2></mat-datepicker>
         </mat-form-field>
         &nbsp;&nbsp;
         <mat-form-field>
-          <input matInput [matDatepicker]="pickers2" placeholder="ถึงวันที่" [(ngModel)]="endDate2" required>
+          <input matInput [matDatepicker]="pickers2" placeholder="ถึงวันที่" [(ngModel)]="endDate2" [disabled]="statusVacationLeave" readonly required>
           <mat-datepicker-toggle matSuffix [for]="pickers2"></mat-datepicker-toggle>
           <mat-datepicker touchUi #pickers2></mat-datepicker>
         </mat-form-field>
           <font color="red">&nbsp;&nbsp;*{{leaveTypeSelect2}}&nbsp;{{diffDay}}&nbsp;{{day}}</font>
           <br>
         <mat-form-field style="width:30%;">
-          <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason2" required (click)="CalculateLeaveDate(startDate2,endDate2); Checktheleave(this.table.leaID,this.leaveTypeSelect2);"></textarea>
+          <textarea matInput placeholder="เหตุผล" [(ngModel)]="reason2" required (click)="CalculateLeaveDate(startDate2,endDate2); Checktheleave(this.table.leaID,this.leaveTypeSelect2);" [disabled]="statusVacationLeave"></textarea>
         </mat-form-field>
         <br><button mat-raised-button color="accent" style="width:100px; font-size:25px;"  (click)="SubmitData2()">Save</button>
       </div>
@@ -65,12 +65,12 @@
           <mat-label>เวลากลับ:</mat-label>
           <input aria-label="24hr format" [ngxTimepicker]="endTime" [format]="24" [(ngModel)]="endTimeSelect" (change)="CalculateLeaveTime()" [disabled]="!hourdis"  readonly>
           <ngx-material-timepicker #endTime></ngx-material-timepicker>
-          &nbsp;&nbsp;<font color="red">*&nbsp;{{this.totalTime}}&nbsp;ชม.</font>
+          &nbsp;&nbsp;<font color="red">*{{leaveTypeSelect}}&nbsp;{{this.totalTime}}&nbsp;ชม.</font>
         </div>
 
         <br>
         <mat-form-field>
-          <input matInput [matDatepicker]="picker" placeholder="วันที่ลา" [(ngModel)]="startDate" required >
+          <input matInput [matDatepicker]="picker" placeholder="วันที่ลา" [(ngModel)]="startDate" readonly required >
           <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
           <mat-datepicker touchUi #picker></mat-datepicker>
         </mat-form-field>
