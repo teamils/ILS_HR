@@ -129,12 +129,25 @@ public class LeavesController {
         if(statusLabelLeaveHalfDay==1) leaves1.setLabelLeaveHalfDay(totalTime+" "+labelLeaveHalfDay);// x ชั่วโมง
         else leaves1.setLabelLeaveHalfDay(labelLeaveHalfDay);
         leaves1.setDiffDay((totalTime*0.5)/4);
-        leaves1.setApprovedBySupervisor("Pending");
-        leaves1.setApprovedByManager("Pending");
         leaves1.setConfirmByHR("Pending");
         leaves1.setIsActiveAttendance("1");
-        if(employeeMaster.getRoleStatus()=="SUPERVISOR") leaves1.setLeaveStatus("Waiting approve");
-        else leaves1.setLeaveStatus("Pending");
+
+        if(employeeMaster.getRoleStatus().equals("SUPERVISOR")) {
+            leaves1.setLeaveStatus("Waiting approve");
+            leaves1.setApprovedByManager("Pending");
+            leaves1.setApprovedBySupervisor("");
+        }
+        else if(employeeMaster.getRoleStatus().equals("MANAGER")){
+            leaves1.setLeaveStatus("Approve");
+            leaves1.setApprovedBySupervisor("");
+            leaves1.setApprovedByManager("");
+        }
+        else {
+            leaves1.setLeaveStatus("Pending");
+            leaves1.setApprovedBySupervisor("Pending");
+            leaves1.setApprovedByManager("Pending");
+        }
+
         leaves1.setDepartmentid(department);
         leaves1.setLeavesNumbersid(leavesNumbers);
         if(leavesNumbers.getBalanceDay()>0) leaves1.setIsPayment("payment");
@@ -174,12 +187,25 @@ public class LeavesController {
         leaves2.setReasonForAllDay(reason2);
         leaves2.setLabelLeaveHalfDay(diffDay + " ว ัน");
         leaves2.setDiffDay(diffDay);
-        leaves2.setApprovedBySupervisor("Pending");
-        leaves2.setApprovedByManager("Pending");
         leaves2.setConfirmByHR("Pending");
         leaves2.setIsActiveAttendance("1");
-        if(employeeMaster.getRoleStatus()=="SUPERVISOR") leaves2.setLeaveStatus("Waiting approve");
-        else leaves2.setLeaveStatus("Pending");
+
+        if(employeeMaster.getRoleStatus().equals("SUPERVISOR")) {
+            leaves2.setLeaveStatus("Waiting approve");
+            leaves2.setApprovedByManager("Pending");
+            leaves2.setApprovedBySupervisor("");
+        }
+        else if(employeeMaster.getRoleStatus().equals("MANAGER")){
+            leaves2.setLeaveStatus("Approve");
+            leaves2.setApprovedBySupervisor("");
+            leaves2.setApprovedByManager("");
+        }
+        else {
+            leaves2.setLeaveStatus("Pending");
+            leaves2.setApprovedBySupervisor("Pending");
+            leaves2.setApprovedByManager("Pending");
+        }
+
         leaves2.setLeavesNumbersid(leavesNumbers);
         leaves2.setDepartmentid(department);
         if(leavesNumbers.getBalanceDay()>0) leaves2.setIsPayment("payment");

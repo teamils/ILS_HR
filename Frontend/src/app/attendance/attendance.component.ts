@@ -48,6 +48,7 @@ export class AttendanceComponent implements OnInit {
     sumDate : '',
     status:'',
     employeeMasterGender:'',
+    roleStatus:'',
   };
 
   leavetatelAll : any = {
@@ -57,6 +58,7 @@ export class AttendanceComponent implements OnInit {
     BalanceDay: '',
     CompoundDay : '',
     leaveTypeID:'',
+    checkDisabled:'',
   };
 
   empId = localStorage.getItem('empId');
@@ -104,6 +106,7 @@ export class AttendanceComponent implements OnInit {
   statusLabelLeaveHalfDay2;
   empRole;
   statusVacationLeave=false;
+  disLeave=false;
 
   displayedColumns2: string[] = ['number','date','leaveType','startDate','endDate2','total', 'reason', /*'approvedBySupervisor', 'approvedByManager',*/'reasonNotApprove','isPayment','leaveStatus','del'];
   dataSource2 = new MatTableDataSource<leave2>(this.leaves2);
@@ -116,6 +119,10 @@ export class AttendanceComponent implements OnInit {
              private http: HttpClient,
              public datepipe: DatePipe) { }
 
+  onlyOdds = (d: Date): boolean => {
+    const day = d.getDay();
+    return day !== 0 ;
+  }
 
   ngOnDestroy() {
       clearInterval(this.interval);
@@ -141,11 +148,12 @@ export class AttendanceComponent implements OnInit {
               this.table.empDep = data1.departmentid.departmentName;
               this.table.empPos = data1.employeePosition;
               this.table.employeeMasterGender = data1.employeeMasterGender;
+              this.table.roleStatus = data1.roleStatus;
               this.SaveLeaveNumber();
 
               this.service.getShowLeaves2(this.table.leaID).subscribe(dataleave => {
                     this.leaves2 = dataleave;
-                    //console.log('leaves2 -> ', this.leaves2);
+                    //console.log('getShowLeaves2 -> ', this.leaves2);
                     this.dataSource2.data = this.leaves2;
                     this.dataSource2.paginator = this.paginator;
                     for(let i of this.leaves2){
@@ -179,6 +187,7 @@ export class AttendanceComponent implements OnInit {
                   this.table.lName = data1.employeeMasterLastName;
                   this.table.empDep = data1.employeeDepartment;
                   this.table.empPos = data1.employeePosition;
+                  this.table.roleStatus = data1.roleStatus;
                   this.service.getShowLeaves2(this.table.leaID).subscribe(dataleave => {
                         this.leaves2 = dataleave;
                         this.dataSource2.data = this.leaves2;
@@ -224,8 +233,18 @@ export class AttendanceComponent implements OnInit {
     }, 100);
     return this.totalTime;
   }
-  DayToHour(){
 
+ CheckDoublyLeaves_HalfDay(leaveType:any,startDate:any,startTime:any,endTime:any){
+    for(let i of this.leaves2){
+      if(i.leaveStatus!='Cancel'){
+        //console.log(i);
+        startDate = this.datepipe.transform(startDate, 'dd-MM-yyyy')
+        if(leaveType==i.leaveTypeForAllDay.leaveTypeForAlldayName && startDate==i.startDateForAllDay && startDate==i.endDateForAllDay && startTime==i.startTime && endTime==i.endTime ){
+            return 0;
+        }
+      }
+    }
+    return 1;
   }
   SubmitData(){ // Half Day
         let totalTime = this.CalculateLeaveTime();
@@ -245,7 +264,10 @@ export class AttendanceComponent implements OnInit {
             alert("*คุณมีวัน"+this.leaveTypeSelect+" = "+this.leavetatelAll.BalanceDay+"ชั่วโมง\n"+"หากคุณต้องการ"+this.leaveTypeSelect+" "+totalTime+"ชั่วโมง คุณต้องคีย์ลา "+this.leavetatelAll.BalanceDay+"ชั่วโมง หนึ่งครั้งและ "+totalTime+"ชั่วโมง อีกหนึ่งครั้ง!");
         }
         else{
-             this.http.post(API1  +'/SaveLeaveHalfDay/'+ this.table.leaID +'/'+ this.leaveTypeSelect
+            let CheckDoublyLeaves_HalfDay = this.CheckDoublyLeaves_HalfDay(this.leaveTypeSelect,this.startDate,this.startTimeSelect,this.endTimeSelect);
+            if(CheckDoublyLeaves_HalfDay==0) alert("วันที่และเวลา ที่คุณเลือกมีการลาแล้ว กรุณาตรวจสอบอีกครั้ง!");
+            else{
+              this.http.post(API1  +'/SaveLeaveHalfDay/'+ this.table.leaID +'/'+ this.leaveTypeSelect
                               +'/'+ this.labelLeaveHalfDay +'/'+ this.startDate  +'/'+ this.reason +'/'+
                               this.startTimeSelect +'/'+ this.endTimeSelect +'/'+ totalTime +'/'+
                               this.statusLabelLeaveHalfDay2 +'/'+ this.departmentIDLogin +'/'+ this.leavetatelAll.leavesNumbersID,{})
@@ -256,7 +278,7 @@ export class AttendanceComponent implements OnInit {
                                             //window.location.reload(true);
                                             localStorage.setItem('links', 'attendance');
                                             this.x=false;
-                                            this.SentEmail(this.leaveTypeSelect,this.startDate,this.startDate,this.startTimeSelect,this.endTimeSelect,this.totalTime,'ชั่วโมง');
+                                            this.SentEmail(this.leaveTypeSelect,this.startDate,this.startDate,this.startTimeSelect,this.endTimeSelect,this.totalTime,'ชั่วโมง',this.reason);
                                             this.ClearTextInput();
                                             this.UpdateLeaveNumber(totalTime);
                                        },
@@ -266,9 +288,23 @@ export class AttendanceComponent implements OnInit {
                                            console.log('Error', error);
                                        }
                                       );
-
-            this.x=true;
+              this.x=true;
+            }
         }
+  }
+
+  CheckDoublyLeaves_Fullday(leaveType:any,startDate:any,endDate:any){
+    for(let i of this.leaves2){
+      if(i.leaveStatus!='Cancel'){
+        //console.log(i);
+        startDate = this.datepipe.transform(startDate, 'dd-MM-yyyy')
+        endDate = this.datepipe.transform(endDate, 'dd-MM-yyyy')
+        if(leaveType==i.leaveTypeForAllDay.leaveTypeForAlldayName && startDate==i.startDateForAllDay && endDate==i.endDateForAllDay ){
+            return 0;
+        }
+      }
+    }
+    return 1;
   }
 
   SubmitData2(){ //Full day
@@ -285,10 +321,12 @@ export class AttendanceComponent implements OnInit {
         else if(this.reason2 == null) alert("กรุณากรอกเหตุผล");
         else if(this.diffDay>this.leavetatelAll.BalanceDay && this.leavetatelAll.BalanceDay != 0 ){
             this.diff = this.diffDay-this.leavetatelAll.BalanceDay;
-            alert("*คุณมีวัน"+this.leaveTypeSelect2+" = "+this.leavetatelAll.BalanceDay+"วัน\n"+"หากคุณต้องการ"+this.leaveTypeSelect2+" "+this.diffDay+"วัน คุณต้องคีย์ลา "+this.leavetatelAll.BalanceDay+"วัน หนึ่งครั้งและ "+this.diff+"วัน อีกหนึ่งครั้ง!\n"+
-            "0.125วัน = 1 ชั่วโมง");
+            alert("*คุณมีวัน"+this.leaveTypeSelect2+" = "+this.leavetatelAll.BalanceDay+"วัน\n"+"หากคุณต้องการ"+this.leaveTypeSelect2+" "+this.diffDay+"วัน คุณต้องคีย์ลา "+this.leavetatelAll.BalanceDay+"วัน หนึ่งครั้งและ "+this.diff+"วัน อีกหนึ่งครั้ง!");
         }
         else{
+            let CheckDoublyLeaves_Fullday = this.CheckDoublyLeaves_Fullday(this.leaveTypeSelect2,this.startDate2,this.endDate2);
+            if(CheckDoublyLeaves_Fullday==0) alert("วันที่ ที่คุณเลือกมีการลาแล้ว กรุณาตรวจสอบอีกครั้ง!");
+            else{
              this.http.post(API1  +/SaveLeaveFullDay/+ this.table.leaID +'/'+ this.leaveTypeSelect2 +'/'+ this.startDate2 +'/'+  this.endDate2 +'/'+ this.reason2 +'/'+ this.diffDay +'/'+ this.leavetatelAll.leavesNumbersID +'/'+ this.departmentIDLogin ,{})
                         .subscribe(
                                        dataLeave => {
@@ -296,7 +334,7 @@ export class AttendanceComponent implements OnInit {
                                            alert(this.leaveTypeSelect2+"ลา "+this.diffDay+" วัน สำเร็จ รอการอนุมัติ");
                                             //window.location.reload(true);
                                             localStorage.setItem('links', 'attendance');
-                                            this.SentEmail(this.leaveTypeSelect2,this.startDate2,this.endDate2,'8:00','17:00',0,'วัน');
+                                            this.SentEmail(this.leaveTypeSelect2,this.startDate2,this.endDate2,'8:00','17:00',0,'วัน',this.reason2);
                                             this.x=false;
                                             this.ClearTextInput();
                                             this.UpdateLeaveNumber(this.diffDay);
@@ -309,11 +347,12 @@ export class AttendanceComponent implements OnInit {
                                       );
 
               this.x=true;
+             }
         }
 
   }
 
-  SentEmail(leaveType:any,startdate:any,enddate:any,statTime:any,endTime:any,totalTime:any,type:any){
+  SentEmail(leaveType:any,startdate:any,enddate:any,statTime:any,endTime:any,totalTime:any,type:any,reason:any){
         this.service.getemployee1person(this.empId).subscribe(dataEmp => {for(let i of dataEmp){this.empRole = i.roleStatus;}});
         if(totalTime==0)
            this.dateAndTotel = "ในวันที่ "+this.datepipe.transform(startdate, 'dd/MM/yyyy')+" "+statTime+" น. ถึงวันที่ "+this.datepipe.transform(enddate, 'dd/MM/yyyy')+" "+endTime+" น. รวมเป็นเวลา "+this.diffDay+" "+type;
@@ -329,6 +368,7 @@ export class AttendanceComponent implements OnInit {
                 leaveType:leaveType,
                 empID:this.empId,
                 dateAndTotel:this.dateAndTotel,
+                reason:reason,
               };
               if(i.employeeMasterid.roleStatus=='SUPERVISOR'){ // ส่งไปหา
                 //console.log(this.dataToInput);
@@ -349,6 +389,7 @@ export class AttendanceComponent implements OnInit {
                 leaveType:leaveType,
                 empID:this.empId,
                 dateAndTotel:this.dateAndTotel,
+                reason:reason,
               };
               if(i.employeeMasterid.roleStatus=='MANAGER'){ // ส่งไปหา
                 //console.log(this.dataToInput);
@@ -370,6 +411,7 @@ export class AttendanceComponent implements OnInit {
                 leaveType:leaveType,
                 empID:this.empId,
                 dateAndTotel:this.dateAndTotel,
+                reason:reason,
               };
               if(i.employeeMasterid.roleStatus=='DC MANAGER'){ // ส่งไปหา
                 //console.log(this.dataToInput);
@@ -402,7 +444,12 @@ export class AttendanceComponent implements OnInit {
                 }
                 else{
                     this.leaveNumber = data;
-                    //console.log('SaveLeaveNumber -> ',this.leavecheck);
+                    //console.log('SaveLeaveNumber -> ',this.leaveNumber);
+                    for(let i of data){
+                        if(i.leaveTypeid.leaveTypeForAlldayID==3){
+                            this.leavetatelAll.checkDisabled = i.balanceDay;
+                        }
+                    }
                 }
 
           });

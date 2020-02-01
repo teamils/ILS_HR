@@ -145,4 +145,5 @@ export class ServiceService {
   getSearchLeaveAtManager(dataSearch:String):Observable<any>{
       return this.http.get(API1+'/SearchLeaveAtManager/'+dataSearch,{})
   }
+
 }

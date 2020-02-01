@@ -15,20 +15,20 @@
           <h2>กรอกข้อมูลการลาเต็มวัน</h2>
           <mat-form-field hintLabel="" >
             <mat-select placeholder="ประเภทการลา" required [(ngModel)]="leaveTypeSelect2" >
-              <mat-option *ngFor="let value of leaveTypeForAlldays" [value]="value.leaveTypeForAlldayName">
+              <mat-option *ngFor="let value of leaveTypeForAlldays" [value]="value.leaveTypeForAlldayName" [disabled]="(this.table.employeeMasterGender=='ชาย'&&(value.leaveTypeForAlldayName=='ลาคลอด'))||(this.table.employeeMasterGender=='หญิง'&&(value.leaveTypeForAlldayName=='ลาบวช'))||(this.leavetatelAll.checkDisabled==0&&(value.leaveTypeForAlldayName=='ลาพักร้อน'))?true:false">
                 {{value.leaveTypeForAlldayName}}
               </mat-option>
             </mat-select>
           </mat-form-field>
         &nbsp;&nbsp;
         <mat-form-field>
-          <input matInput [matDatepicker]="picker2" placeholder="เริ่มจากวันที่" [(ngModel)]="startDate2" [disabled]="statusVacationLeave" readonly required>
+          <input matInput [matDatepicker]="picker2"  [matDatepickerFilter]="onlyOdds" placeholder="เริ่มจากวันที่" [(ngModel)]="startDate2" [disabled]="statusVacationLeave" readonly required>
           <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
           <mat-datepicker touchUi #picker2></mat-datepicker>
         </mat-form-field>
         &nbsp;&nbsp;
         <mat-form-field>
-          <input matInput [matDatepicker]="pickers2" placeholder="ถึงวันที่" [(ngModel)]="endDate2" [disabled]="statusVacationLeave" readonly required>
+          <input matInput [matDatepicker]="pickers2" [matDatepickerFilter]="onlyOdds" placeholder="ถึงวันที่" [(ngModel)]="endDate2" [disabled]="statusVacationLeave" readonly required>
           <mat-datepicker-toggle matSuffix [for]="pickers2"></mat-datepicker-toggle>
           <mat-datepicker touchUi #pickers2></mat-datepicker>
         </mat-form-field>
@@ -45,7 +45,7 @@
         <h2>กรอกข้อมูลการลาไม่เต็มวัน</h2>
         <mat-form-field width="200px;">
           <mat-select  placeholder="ประเภทการลา" [(ngModel)]="leaveTypeSelect"  required >
-            <mat-option *ngFor="let value of leaveTypeForAlldays" [value]="value.leaveTypeForAlldayName">
+            <mat-option *ngFor="let value of leaveTypeForAlldays" [value]="value.leaveTypeForAlldayName"  [disabled]="(this.table.employeeMasterGender=='ชาย'&&(value.leaveTypeForAlldayName=='ลาคลอด'))||(this.table.employeeMasterGender=='หญิง'&&(value.leaveTypeForAlldayName=='ลาบวช'))||(this.leavetatelAll.checkDisabled==0&&(value.leaveTypeForAlldayName=='ลาพักร้อน'))?true:false">
               {{value.leaveTypeForAlldayName}}
             </mat-option>
           </mat-select>
@@ -70,7 +70,7 @@
 
         <br>
         <mat-form-field>
-          <input matInput [matDatepicker]="picker" placeholder="วันที่ลา" [(ngModel)]="startDate" readonly required >
+          <input matInput [matDatepicker]="picker" [matDatepickerFilter]="onlyOdds" placeholder="วันที่ลา" [(ngModel)]="startDate" readonly required >
           <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
           <mat-datepicker touchUi #picker></mat-datepicker>
         </mat-form-field>
@@ -147,7 +147,7 @@
     <ng-container matColumnDef="del">
       <th mat-header-cell *matHeaderCellDef><font  color="black"><b>ยกเลิกการลา</b></font></th>
       <td mat-cell *matCellDef="let element" >
-        <button mat-icon-button matTooltip="ยกเลิกการลา" matTooltipPosition="right" (click)="CancelDataAttendance(element); RefreshTable();"  [disabled]="element.leaveStatus=='Pending'?false:true"  #ckeckEdit>
+        <button mat-icon-button matTooltip="ยกเลิกการลา" matTooltipPosition="right" (click)="CancelDataAttendance(element); RefreshTable();"  [disabled]="element.employeeMasterid.roleStatus == 'SUPERVISOR' ? (element.leaveStatus == 'Waiting approve' ? false : true) : element.employeeMasterid.roleStatus == 'MANAGER' ?  (element.leaveStatus == 'Approve' ? false : true) : (element.employeeMasterid.roleStatus == 'EMPLOYEE' || element.employeeMasterid.roleStatus == 'ADMIN' || element.employeeMasterid.roleStatus == 'HR') ? (element.leaveStatus == 'Pending'? false : true): true"  #ckeckEdit>
           <mat-icon>cancel_presentation</mat-icon>
         </button>
       </td>

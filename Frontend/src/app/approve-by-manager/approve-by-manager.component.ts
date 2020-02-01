@@ -173,6 +173,9 @@ export class ApproveByManagerComponent implements OnInit {
 export interface DialogData {
   leavesID : null;
   isActiveAttendance: string;
+  leavesNumbersid;
+  diffDay;
+  isPayment;
 }
 @Component({
     selector: 'reasonNotApprovebyger',
@@ -180,12 +183,19 @@ export interface DialogData {
   })
 
 export class ReasonNotApproveBygerDialog {
+
     leavesID: string;
     isActiveAttendance:string;
     reasonNotapprove=null;
+    leavesNumbersid;
+    diffDay;
+    isPayment;
     constructor(public dialogRef: MatDialogRef<ReasonNotApproveBygerDialog> , public service:ServiceService,@Inject(MAT_DIALOG_DATA)  public date: DialogData,private http: HttpClient){
          this.leavesID = this.date.leavesID;
         this.isActiveAttendance = this.date.isActiveAttendance;
+        this.leavesNumbersid = this.date.leavesNumbersid.leavesNumbersID;
+        this.diffDay = this.date.diffDay;
+        this.isPayment = this.date.isPayment;
     }
 
     closeDialog(): void {
@@ -193,16 +203,38 @@ export class ReasonNotApproveBygerDialog {
     }
 
    notApprove(){
-        this.http.post(API1 + '/notApproveByManager/' + this.leavesID +'/'+ this.reasonNotapprove,{}).subscribe(data => {
-            console.log('Not approve is successful');
-            alert("Not approve successful");
-          },
-          error => {
-            console.log('Error', error);
-          }
-        );
-        //this.ss.onChange();
-        this.dialogRef.close();
+        if(this.reasonNotapprove==null){
+            alert("กรุณากรอกเหตุผล");
+        }
+        else{
+          this.http.post(API1 + '/notApproveByManager/' + this.leavesID +'/'+ this.reasonNotapprove,{}).subscribe(data => {
+              this.CalculateLeaveNumberBack();
+              console.log('Not approve is successful');
+              alert("Not approve successful");
+            },
+            error => {
+              console.log('Error', error);
+            }
+          );
+          //this.ss.onChange();
+          this.dialogRef.close();
+        }
+    }
+
+    CalculateLeaveNumberBack(){
+        if(this.isPayment=='payment'){
+            this.http.post(API1 + '/CalculateLeaveNumberBack/' + this.leavesNumbersid +'/'+ this.diffDay +'/'+ this.leavesID,{})
+                                       .subscribe(
+                                           data => {
+                                               console.log('CalculateLeaveNumberBack is successful',data);
+                                                this.dialogRef.close();
+                                           },
+                                           error => {
+                                               console.log('Error', error);
+                                           }
+                                        );
+        }
+
     }
 
 

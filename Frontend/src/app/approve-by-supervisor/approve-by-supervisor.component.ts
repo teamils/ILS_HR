@@ -90,7 +90,7 @@ export class ApproveBySupervisorComponent implements OnInit {
 
   SentEmail(element:any){
       //console.log(element);
-      this.dateAndTotel = "ในวันที่ "+element.startDateForAllDay+" "+element.startTime+" น. ถึงวันที่ "+element.endDateForAllDay+" "+element.endTime+" น. รวม "+element.labelLeaveHalfDay+" ด้วยเหตุผล "+element.reasonForAllDay;
+      this.dateAndTotel = "ในวันที่ "+element.startDateForAllDay+" "+element.startTime+" น. ถึงวันที่ "+element.endDateForAllDay+" "+element.endTime+" น. รวม "+element.labelLeaveHalfDay;
       this.service.getDepartmentMasterRoleFindByDepartmentID(element.departmentid.departmentID).subscribe(data => {
             for(let i of data){
               this.dataToInput = {
@@ -99,6 +99,7 @@ export class ApproveBySupervisorComponent implements OnInit {
                   empIdLeave:element.employeeMasterid.employeeMasterID,
                   supervisorID:this.empId,
                   dateAndTotel:this.dateAndTotel,
+                  reason:element.reasonForAllDay,
               };
               if(i.employeeMasterid.roleStatus=='MANAGER'){ //Send To ...
                 this.http.post(API1 + '/sendEmailToManager', JSON.stringify(this.dataToInput), {headers: {"Content-Type": "application/json"}
@@ -254,9 +255,10 @@ export interface DialogData {
         }
         else{
           this.http.post(API1 + '/notApproveBySupervisor/' + this.leavesID +'/'+ this.reasonNotapprove,{}).subscribe(data => {
+              this.CalculateLeaveNumberBack();
               console.log('Not approve is successful');
               alert("Not approve successful");
-              this.CalculateLeaveNumberBack();
+
             },
             error => {
               console.log('Error', error);

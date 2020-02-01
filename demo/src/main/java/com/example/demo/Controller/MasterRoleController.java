@@ -37,12 +37,14 @@ public class MasterRoleController {
         String leaveType = body.get("leaveType").toString();
         long empID = Integer.valueOf(body.get("empID").toString());
         String dateAndTotel = body.get("dateAndTotel").toString();
+        String reason = body.get("reason").toString();
 
         EmployeeMaster manager = employeeMasterRepository.findById(managerID).get();
         EmployeeMaster emp = employeeMasterRepository.findById(empID).get();
         String managername = manager.getEmployeeMasterFirstName()+" "+manager.getEmployeeMasterLastName();
         String empname = emp.getEmployeeMasterFirstName()+" "+emp.getEmployeeMasterLastName();
-        notificationService.sendEmailToSupervisor(managername,manager.getEmpEmail(),leaveType,empname,dateAndTotel);
+
+        notificationService.sendEmailToSupervisor(managername,manager.getEmpEmail(),leaveType,empname,dateAndTotel,reason);
     }
 
     @PostMapping(path = "/sendEmailToManager")
@@ -53,6 +55,7 @@ public class MasterRoleController {
         long empIdLeave = Integer.valueOf(body.get("empIdLeave").toString());
         String leaveType = body.get("leaveType").toString();
         String dateAndTotel = body.get("dateAndTotel").toString();
+        String reason = body.get("reason").toString();
 
         EmployeeMaster manager = employeeMasterRepository.findById(managerID).get();
         EmployeeMaster supervisor = employeeMasterRepository.findById(supervisorID).get();
@@ -61,7 +64,7 @@ public class MasterRoleController {
         String supervisorname = supervisor.getEmployeeMasterFirstName()+" "+supervisor.getEmployeeMasterLastName();
         String empLeavename = empLeave.getEmployeeMasterFirstName()+" "+empLeave.getEmployeeMasterLastName();
 
-        notificationService.sendEmailToManager(managername,supervisorname,empLeavename,leaveType,dateAndTotel,supervisor.getEmpEmail());
+        notificationService.sendEmailToManager(managername,supervisorname,empLeavename,leaveType,dateAndTotel,supervisor.getEmpEmail(),reason);
     }
 
     @PostMapping(path = "/sendEmailToDCManager")
@@ -71,12 +74,13 @@ public class MasterRoleController {
         String leaveType = body.get("leaveType").toString();
         long empID = Integer.valueOf(body.get("empID").toString());
         String dateAndTotel = body.get("dateAndTotel").toString();
+        String reason = body.get("reason").toString();
 
         EmployeeMaster manager = employeeMasterRepository.findById(managerID).get();
         EmployeeMaster emp = employeeMasterRepository.findById(empID).get();
         String managername = manager.getEmployeeMasterFirstName()+" "+manager.getEmployeeMasterLastName();
         String empname = emp.getEmployeeMasterFirstName()+" "+emp.getEmployeeMasterLastName();
-        notificationService.sendEmailToDCManager(managername,manager.getEmpEmail(),leaveType,empname,dateAndTotel);
+        notificationService.sendEmailToDCManager(managername,manager.getEmpEmail(),leaveType,empname,dateAndTotel,reason);
 
     }
 

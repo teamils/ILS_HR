@@ -68,7 +68,7 @@ export class EmployeeMasterComponent implements OnInit {
     accountuser : Array<any>;
     progressBar=false;
     pipe = new DatePipe('en-TH');
-    displayedColumns: string[] = [/*'select',*/'number','empCodeID'/*,'prefix'*/,'empFristName','empLastName',/*'NickName',*/'Gender'/*,'Status','BirthDate'*/ /*,'Age'*/ ,'PersonID','Tel1'/*,'Email','AddressReal','AddressPerson'*/,'StartDate','Position','Department','empType'/*,'educations'*//*,'bank','bankNumber'*/,'del','Edit'];
+    displayedColumns: string[] = [/*'select',*/'number','empCodeID'/*,'prefix'*/,'empFristName','empLastName',/*'NickName',*/'Gender'/*,'Status','BirthDate'*/ /*,'Age' ,'PersonID'*/,'Tel1'/*,'Email','AddressReal','AddressPerson'*/,'StartDate','Position','Department','empType'/*,'educations'*//*,'bank','bankNumber'*/,'del','Edit'];
     dataSource = new MatTableDataSource<Emp>(this.employee);
     selection = new SelectionModel<Emp>(true, []);
     @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
@@ -201,7 +201,6 @@ export class EmployeeMasterComponent implements OnInit {
               ผู้ที่ติดต่อในกรณีฉุกเฉิน : this.employee[i].emergencyContact,
               ประเภทการทำงาน : this.employee[i].employeeType,
               วุฒิการศึกษา : this.employee[i].education,
-              RoleStatus : this.employee[i].roleStatus,
             });
         }
         this.excelService.exportAsExcelFile(dataemployee, 'Data-Employee');
