@@ -86,6 +86,7 @@ export class AttendanceDataComponent implements OnInit {
                 for(let i of this.leaves){
                   i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
                   i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                  i.createDate =  this.SplitCreateDate(i.createDate);
                 }
                 //console.log('leaves -> ',this.leaves);
           });
@@ -96,6 +97,12 @@ export class AttendanceDataComponent implements OnInit {
         });
         this.dataSource.paginator = this.paginator;
 
+  }
+  SplitCreateDate(date:any){
+    var DateSplitted = date.split("T");
+    var DateSplitted2 = DateSplitted[0].split("-");
+    var TimeSplitted = DateSplitted[1].split(".");
+    return DateSplitted2[2] +"-"+ DateSplitted2[1] +"-"+ DateSplitted2[0] +" "+ TimeSplitted[0];
   }
   SplitDate(date:any){
     var DateSplitted = date.split("-");
@@ -200,7 +207,7 @@ export class AttendanceDataComponent implements OnInit {
     DeleteAttendance(row : any){
         const dialogRef = this.dialog.open(AttendanceDeleteDialog, {
             width: '320px',
-            height:'200px',
+            height:'250px',
             data: row,
         });
         //this.onChange();
@@ -274,6 +281,7 @@ export interface DialogData {
 
 }
 
+
 //Dialog AttendanceDeleteDialog
 export interface DialogData {
   leavesID : null;
@@ -288,7 +296,7 @@ export interface DialogData {
     leavesID: string;
     isActiveAttendance:string;
     selectAttendanceDate : String;
-
+    reasonNotapprove;
     constructor(public dialogRef: MatDialogRef<AttendanceDeleteDialog>,
                 public service:ServiceService,
                 @Inject(MAT_DIALOG_DATA)  public date: DialogData,
@@ -297,7 +305,7 @@ export interface DialogData {
         this.leaves = this.date;
         this.leavesID = this.date.leavesID;
         this.isActiveAttendance = this.date.isActiveAttendance;
-        console.log(this.leaves);
+        //console.log(this.leaves);
     }
 
     closeDialog(): void {
@@ -320,7 +328,9 @@ export interface DialogData {
             }
         }
         else{
-            this.http.post(API1 + '/deleteAttendance/' + this.leavesID ,{})
+            if(this.reasonNotapprove==null) alert("กรุณากรอกเหตุผล");
+            else{
+              this.http.post(API1 + '/deleteAttendance/' + this.leavesID +'/'+ this.reasonNotapprove ,{})
                                      .subscribe(
                                          data => {
                                              console.log('CancelAttendance is successful');
@@ -342,6 +352,7 @@ export interface DialogData {
                                              console.log('Error', error);
                                          }
                                       );
+            }
         }
     }
 

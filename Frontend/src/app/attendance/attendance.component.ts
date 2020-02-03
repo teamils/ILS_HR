@@ -107,7 +107,14 @@ export class AttendanceComponent implements OnInit {
   empRole;
   statusVacationLeave=false;
   disLeave=false;
-
+//------Search------------
+  startDateSearch;
+  endDateSearch;
+  checkboxSearch;
+  hide=false;
+  leaveTypeSearch;
+  leaveStatusSearch;
+//------------------------
   displayedColumns2: string[] = ['number','date','leaveType','startDate','endDate2','total', 'reason', /*'approvedBySupervisor', 'approvedByManager',*/'reasonNotApprove','isPayment','leaveStatus','del'];
   dataSource2 = new MatTableDataSource<leave2>(this.leaves2);
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
@@ -159,6 +166,7 @@ export class AttendanceComponent implements OnInit {
                     for(let i of this.leaves2){
                       i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
                       i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                      i.createDate =  this.SplitCreateDate(i.createDate);
                     }
               });
             });
@@ -166,6 +174,12 @@ export class AttendanceComponent implements OnInit {
 
   }
 
+  SplitCreateDate(date:any){
+    var DateSplitted = date.split("T");
+    var DateSplitted2 = DateSplitted[0].split("-");
+    var TimeSplitted = DateSplitted[1].split(".");
+    return DateSplitted2[2] +"-"+ DateSplitted2[1] +"-"+ DateSplitted2[0] +" "+ TimeSplitted[0];
+  }
   SplitDate(date:any){
     var DateSplitted = date.split("-");
     return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
@@ -314,6 +328,7 @@ export class AttendanceComponent implements OnInit {
         if(this.diffDay<1){
           this.startDate2  = null;
           this.endDate2  = null;
+          this.diffDay=0;
         }
         else if(this.leaveTypeSelect2 == null)  alert("กรุณาเลือกประเภทการลา");
         else if(this.startDate2 == null) alert("กรุณาเลือกวันลา");
@@ -480,9 +495,28 @@ export class AttendanceComponent implements OnInit {
     }
 
     CalculateLeaveDate(date1:any,date2:any){
+        let index = 0 ;
         this.diffTime1 = (date2 - date1);
-        this.diffDay = Math.ceil((this.diffTime1 / (1000 * 60 * 60 * 24))+1);
-        //console.log('Leave Day =>',this.diffDay);
+        let diffDay2 = Math.ceil((this.diffTime1 / (1000 * 60 * 60 * 24))+1);
+      //  console.log('date1-->\n',date1);
+      //  console.log('date2-->\n',date2);
+      // console.log('Leave Day =>',diffDay2);
+
+        let testdate = new Date(parseInt(date1.getMonth()+1)+'/'+date1.toString().slice(8,10)+'/'+date1.toString().slice(11,15));
+        for(let i = 0 ; i < diffDay2 ; i++){
+            if(i == 0)
+               testdate.setDate(testdate.getDate()+0)
+            else
+               testdate.setDate(testdate.getDate()+1)
+
+          if(testdate.toString().slice(0,3) == 'Sun'){
+              index = index + 0;
+          }else{
+             index = index + 1;
+          }
+        }
+        this.diffDay = index;
+        console.log('Leave Day =>',this.diffDay);
     }
 
     sortEggsInNest(a, b) {

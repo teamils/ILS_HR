@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
     RoleEmployee = [4, 5];
     RoleManager = [4, 5, 8];
     RoleSupervisor = [4, 5, 7];
-    RoleHR = [1, 2, 3, 4, 5, 6];
+    RoleHR = [1, 2, 3, 4, 6, 9, 11];
     RoleDcManager = [13];
 
     hide:any;
@@ -136,7 +136,7 @@ export class HomeComponent implements OnInit {
                                 });
                             }
                           }
-                          else if(this.table.rolestatus == "HR"){
+                          else if(this.table.rolestatus == "HR-ADMIN"){
                             for(let i=0;i<this.RoleHR.length;i++){
                                 this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleHR[i] ,{})
                                 .subscribe(data => {

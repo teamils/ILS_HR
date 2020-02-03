@@ -25,7 +25,7 @@ public class Leaves {
     @SequenceGenerator(name = "Leaves3_seq", sequenceName = "Leaves3_seq",initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator ="Leaves3_seq")
     private long leavesID;
-    private String createDate;
+    private Date createDate;
     private Date updateLeave_date;
     private String updateLeave_by;
     private String createLeave_by;
@@ -99,11 +99,11 @@ public class Leaves {
         this.leavesID = leavesID;
     }
 
-    public String getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 

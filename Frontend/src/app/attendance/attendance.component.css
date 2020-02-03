@@ -1,6 +1,5 @@
 .cardHeader{
    height: auto;
-   height: auto;
    margin-top: 0px;
    margin-right: auto;
    margin-left: auto;
@@ -95,4 +94,9 @@ mat-grid-tile {
 
 .example-spacer {
   flex: 1 1 auto;
+}
+
+.cardSearch{
+    width:auto;
+    height: auto;
 }

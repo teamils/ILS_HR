@@ -22,13 +22,13 @@
           </mat-form-field>
         &nbsp;&nbsp;
         <mat-form-field>
-          <input matInput [matDatepicker]="picker2"  [matDatepickerFilter]="onlyOdds" placeholder="เริ่มจากวันที่" [(ngModel)]="startDate2" [disabled]="statusVacationLeave" readonly required>
+          <input matInput [matDatepicker]="picker2"  [matDatepickerFilter]="onlyOdds" placeholder="เริ่มจากวันที่" [(ngModel)]="startDate2" [disabled]="statusVacationLeave" (dateChange)="CalculateLeaveDate(startDate2,endDate2);" readonly required>
           <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
           <mat-datepicker touchUi #picker2></mat-datepicker>
         </mat-form-field>
         &nbsp;&nbsp;
         <mat-form-field>
-          <input matInput [matDatepicker]="pickers2" [matDatepickerFilter]="onlyOdds" placeholder="ถึงวันที่" [(ngModel)]="endDate2" [disabled]="statusVacationLeave" readonly required>
+          <input matInput [matDatepicker]="pickers2" [matDatepickerFilter]="onlyOdds" placeholder="ถึงวันที่" [(ngModel)]="endDate2" [disabled]="statusVacationLeave" (dateChange)="CalculateLeaveDate(startDate2,endDate2);" readonly required>
           <mat-datepicker-toggle matSuffix [for]="pickers2"></mat-datepicker-toggle>
           <mat-datepicker touchUi #pickers2></mat-datepicker>
         </mat-form-field>
@@ -59,18 +59,18 @@
         <br>
         <div>
           <mat-label>เวลาไป:</mat-label>
-          <input  aria-label="24hr format"  [ngxTimepicker]="startTime" [format]="24"  [(ngModel)]="startTimeSelect" (change)="CalculateLeaveTime()" [disabled]="!hourdis" readonly>
+          <input  aria-label="24hr format"  [ngxTimepicker]="startTime" [format]="24"  [(ngModel)]="startTimeSelect" (ngModelChange)="CalculateLeaveTime()" [disabled]="!hourdis" readonly>
           <ngx-material-timepicker #startTime></ngx-material-timepicker>
           &nbsp;&nbsp;
           <mat-label>เวลากลับ:</mat-label>
-          <input aria-label="24hr format" [ngxTimepicker]="endTime" [format]="24" [(ngModel)]="endTimeSelect" (change)="CalculateLeaveTime()" [disabled]="!hourdis"  readonly>
+          <input aria-label="24hr format" [ngxTimepicker]="endTime" [format]="24" [(ngModel)]="endTimeSelect" (ngModelChange)="CalculateLeaveTime()" [disabled]="!hourdis"  readonly>
           <ngx-material-timepicker #endTime></ngx-material-timepicker>
           &nbsp;&nbsp;<font color="red">*{{leaveTypeSelect}}&nbsp;{{this.totalTime}}&nbsp;ชม.</font>
         </div>
 
         <br>
         <mat-form-field>
-          <input matInput [matDatepicker]="picker" [matDatepickerFilter]="onlyOdds" placeholder="วันที่ลา" [(ngModel)]="startDate" readonly required >
+          <input matInput [matDatepicker]="picker" [matDatepickerFilter]="onlyOdds" placeholder="วันที่ลา" [(ngModel)]="startDate"  readonly required >
           <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
           <mat-datepicker touchUi #picker></mat-datepicker>
         </mat-form-field>
@@ -82,7 +82,49 @@
       </div>
     </mat-tab>
   </mat-tab-group>
+  <hr>
 </mat-card>
+
+<mat-card class="cardSearch">
+  <button mat-stroked-button style="width:100%;"(click)="hide = !hide"><mat-icon>search</mat-icon>&nbsp;<b>Show Search Data</b></button>
+
+  <div *ngIf="hide">ค้นหา :
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerSearch"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี" [(ngModel)]="startDateSearch" >
+    <mat-datepicker-toggle matSuffix [for]="pickerSearch" ></mat-datepicker-toggle>
+    <mat-datepicker touchUi #pickerSearch></mat-datepicker>
+  </mat-form-field>&nbsp;&nbsp;To&nbsp;&nbsp;
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerSearch2"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี" [(ngModel)]="endDateSearch" >
+    <mat-datepicker-toggle matSuffix [for]="pickerSearch2" ></mat-datepicker-toggle>
+    <mat-datepicker touchUi #pickerSearch2></mat-datepicker>
+  </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field hintLabel="" >
+      <mat-select placeholder="ประเภทการลา" [(ngModel)]="leaveTypeSearch" >
+        <mat-option>---none---</mat-option>
+        <mat-option *ngFor="let value of leaveTypeForAlldays" [value]="value.leaveTypeForAlldayName" [disabled]="(this.table.employeeMasterGender=='ชาย'&&(value.leaveTypeForAlldayName=='ลาคลอด'))||(this.table.employeeMasterGender=='หญิง'&&(value.leaveTypeForAlldayName=='ลาบวช'))||(this.leavetatelAll.checkDisabled==0&&(value.leaveTypeForAlldayName=='ลาพักร้อน'))?true:false">
+          {{value.leaveTypeForAlldayName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field hintLabel="" >
+      <mat-select placeholder="สถานะ" [(ngModel)]="leaveStatusSearch" >
+        <mat-option>---none---</mat-option>
+        <mat-option value="Pending">Pending</mat-option>
+        <mat-option value="Waiting approve">Waiting approve</mat-option>
+        <mat-option value="Approve">Approve</mat-option>
+        <mat-option value="Not approve">Not approve</mat-option>
+        <mat-option value="Complete">Complete</mat-option>
+        <mat-option value="Cancel">Cancel</mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <button mat-raised-button><mat-icon>search</mat-icon>&nbsp;Search</button>
+  </div>
+</mat-card>
+
 
   <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
     <ng-container matColumnDef="number" >

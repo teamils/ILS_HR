@@ -77,11 +77,18 @@ export class ApproveBySupervisorComponent implements OnInit {
             for(let i of this.leaves){
               i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
               i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+              i.createDate =  this.SplitCreateDate(i.createDate);
             }
         });
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }, 1000);
+  }
+  SplitCreateDate(date:any){
+    var DateSplitted = date.split("T");
+    var DateSplitted2 = DateSplitted[0].split("-");
+    var TimeSplitted = DateSplitted[1].split(".");
+    return DateSplitted2[2] +"-"+ DateSplitted2[1] +"-"+ DateSplitted2[0] +" "+ TimeSplitted[0];
   }
   SplitDate(date:any){
     var DateSplitted = date.split("-");

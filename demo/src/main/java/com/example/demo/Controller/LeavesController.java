@@ -106,7 +106,7 @@ public class LeavesController {
         Department department = departmentRepository.findById(departmentIDLogin).get();
         LeavesNumbers leavesNumbers = leavesNumbersRepository.findById(leavesNumbersID).get();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        /*SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
         Date time = new Date();
@@ -115,11 +115,11 @@ public class LeavesController {
         String[] arryA = datetest.split("-");
         int result = Integer.parseInt(arryA[2]);
         int arryA_3 = result-543;
-        String datetrue = arryA[0]+"-"+arryA[1]+"-"+arryA_3+" "+datetest2;
+        String datetrue = arryA[0]+"-"+arryA[1]+"-"+arryA_3+" "+datetest2;*/
 
         Leaves leaves1 = new Leaves();
         leaves1.setEmployeeMasterid(employeeMaster);
-        leaves1.setCreateDate(datetrue);
+        leaves1.setCreateDate(new Date());
         leaves1.setLeaveTypeForAllDay(leaveTypeForAllday);
         leaves1.setStartDateForAllDay(startDate);
         leaves1.setStartTime(startTimeSelect);
@@ -165,8 +165,8 @@ public class LeavesController {
         LeaveTypeForAllday leaveTypeForAllday = leaveTypeForAlldayRepository.findByLeaveTypeForAlldayName(leaveTypeSelect2);
         LeavesNumbers leavesNumbers = leavesNumbersRepository.findById(leavesNumbersID).get();
         Department department = departmentRepository.findById(departmentIDLogin).get();
-        //DepartmentMasterRole departmentMasterRole = departmentMasterRoleRepository.findBy
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+       /* SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
         Date time = new Date();
@@ -175,10 +175,11 @@ public class LeavesController {
         String[] arryA = datetest.split("-");
         int result = Integer.parseInt(arryA[2]);
         int arryA_3 = result-543;
-        String datetrue = arryA[0]+"-"+arryA[1]+"-"+arryA_3+" "+datetest2;
+        String datetrue = arryA[0]+"-"+arryA[1]+"-"+arryA_3+" "+datetest2;*/
+
         Leaves leaves2 = new Leaves();
         leaves2.setEmployeeMasterid(employeeMaster);
-        leaves2.setCreateDate(datetrue);
+        leaves2.setCreateDate(new Date());
         leaves2.setLeaveTypeForAllDay(leaveTypeForAllday);
         leaves2.setStartDateForAllDay(startDate2);
         leaves2.setEndDateForAllDay(endDate2);
@@ -215,9 +216,10 @@ public class LeavesController {
         return leaves2;
     }
 
-    @PostMapping(path = "/deleteAttendance/{leavesID}") //Delete Attendance Data
-    public Leaves leaves(@PathVariable Long leavesID) {
+    @PostMapping(path = "/deleteAttendance/{leavesID}/{reason}") //Delete Attendance Data
+    public Leaves leaves(@PathVariable Long leavesID,@PathVariable String reason) {
         Leaves leaves = leavesRepository.findById(leavesID).get();
+        leaves.setReasonNotApprove(reason);
         leaves.setLeaveStatus("Cancel");
         leavesRepository.save(leaves);
         return leaves;
