@@ -1,0 +1,66 @@
+<mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
+<mat-card class="card">
+  <mat-toolbar-row>
+    <span class="example-spacer"><h1 align="center">REPORT</h1></span>
+  </mat-toolbar-row>
+
+  <div>Filter :
+    <mat-form-field>
+      <input matInput [matDatepicker]="pickerSearch"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี ค.ศ." [(ngModel)]="startDateSearch" >
+      <mat-datepicker-toggle matSuffix [for]="pickerSearch" ></mat-datepicker-toggle>
+      <mat-datepicker touchUi #pickerSearch></mat-datepicker>
+    </mat-form-field>&nbsp;&nbsp;To&nbsp;&nbsp;
+    <mat-form-field>
+      <input matInput [matDatepicker]="pickerSearch2"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี ค.ศ." [(ngModel)]="endDateSearch" >
+      <mat-datepicker-toggle matSuffix [for]="pickerSearch2" ></mat-datepicker-toggle>
+      <mat-datepicker touchUi #pickerSearch2></mat-datepicker>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field hintLabel="" >
+      <mat-select placeholder="ประเภทการลา" [(ngModel)]="leaveTypeSearch" >
+        <mat-option>---none---</mat-option>
+        <mat-option *ngFor="let value of leaveType" [value]="value.leaveTypeForAlldayName">
+          {{value.leaveTypeForAlldayName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field hintLabel="" >
+      <mat-select placeholder="สถานะ" [(ngModel)]="leaveStatusSearch" >
+        <mat-option>---none---</mat-option>
+        <mat-option value="Pending">Pending</mat-option>
+        <mat-option value="Waiting approve">Waiting approve</mat-option>
+        <mat-option value="Approve">Approve</mat-option>
+        <mat-option value="Not approve">Not approve</mat-option>
+        <mat-option value="Complete">Complete</mat-option>
+        <mat-option value="Cancel">Cancel</mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field hintLabel="" >
+      <mat-select placeholder="แผนก" [(ngModel)]="departmentSelect" >
+        <mat-option>---none---</mat-option>
+        <mat-option *ngFor="let value of department" [value]="value.departmentID">
+          {{value.departmentName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field hintLabel="">
+      <mat-select placeholder="Payment" [(ngModel)]="leavePayment" >
+        <mat-option>---none---</mat-option>
+        <mat-option value="payment">Payment</mat-option>
+        <mat-option value="not payment">Not payment</mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field  class="searchStyle">
+      <mat-label>Search</mat-label>
+      <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button style="width:100%"><mat-icon>search</mat-icon>&nbsp;Search</button>&nbsp;&nbsp;
+  </div>
+  <mat-chip color="accent" matTooltip="นำข้อมูลออก"  selected>Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></mat-chip>&nbsp;
+</mat-card>

@@ -23,11 +23,11 @@ export class HomeComponent implements OnInit {
     userRole : Array<any>;
     masterRole: Array<any>;
 
-    RoleEmployee = [4, 5];
-    RoleManager = [4, 5, 8];
-    RoleSupervisor = [4, 5, 7];
-    RoleHR = [1, 2, 3, 4, 6, 9, 11];
-    RoleDcManager = [13];
+    RoleEmployee = [4, 5, 10];
+    RoleManager = [4, 5, 8, 10];
+    RoleSupervisor = [4, 5, 7, 10];
+    RoleHR_ADMIN = [1, 2, 3, 4, 6, 10, 11, 13];
+    RoleDcManager = [9];
 
     hide:any;
     id : String = null;
@@ -78,87 +78,93 @@ export class HomeComponent implements OnInit {
                     this.progressBar=false;
                 }
                 else if(data != null){
-                    this.employee = data;
-                    //console.table(data);
-                    this.table.leaID = data.employeeMasterID;
-                    this.table.empCode = data.employeeMasterCustomerCode;
-                    this.table.fName = data.employeeMasterFirstName;
-                    this.table.lName = data.employeeMasterLastName;
-                    this.table.rolestatus = data.roleStatus;
-                    localStorage.setItem('loginstatus', 'true');
-                    localStorage.setItem('empId', this.table.leaID);
-                    localStorage.setItem('empCode', this.table.empCode);
-                    localStorage.setItem('fName', this.table.fName);
-                    localStorage.setItem('lName', this.table.lName);
-                    localStorage.setItem('departmentIDLogin', data.departmentid.departmentID);
-                    localStorage.setItem('startDateInLogin', data.employeeMasterStartDate);
-                    localStorage.setItem('roleStatusInLogin', data.roleStatus);
-                    console.log(this.table.rolestatus);
-                    this.progressBar=false;
+                    if(data.maritalStatus=="ยังปฏิบัติงานอยู่"){
+                        this.employee = data;
+                        //console.log(data);
+                        this.table.leaID = data.employeeMasterID;
+                        this.table.empCode = data.employeeMasterCustomerCode;
+                        this.table.fName = data.employeeMasterFirstName;
+                        this.table.lName = data.employeeMasterLastName;
+                        this.table.rolestatus = data.roleStatus;
+                        localStorage.setItem('loginstatus', 'true');
+                        localStorage.setItem('empId', this.table.leaID);
+                        localStorage.setItem('empCode', this.table.empCode);
+                        localStorage.setItem('fName', this.table.fName);
+                        localStorage.setItem('lName', this.table.lName);
+                        localStorage.setItem('departmentIDLogin', data.departmentid.departmentID);
+                        localStorage.setItem('startDateInLogin', data.employeeMasterStartDate);
+                        localStorage.setItem('roleStatusInLogin', data.roleStatus);
+                        console.log(this.table.rolestatus);
+                        this.progressBar=false;
 
-                    this.service.getUserRoles(data.employeeMasterID).subscribe(data => {
-                        //this.userRole = data;
-                        //console.log('userRole -> ',this.userRole);
-                        if(data.length==0){
-                          if(this.table.rolestatus == "ADMIN"){
-                            for(let i=1;i<=this.masterRole.length;i++){
-                                this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ i ,{})
-                                .subscribe(data => {
-                                    console.log(i," InsertUserRole is successfull");
-                                    this.router.navigate(['newheader']);
-                                });
+                        this.service.getUserRoles(data.employeeMasterID).subscribe(data => {
+                            //this.userRole = data;
+                            //console.log('userRole -> ',this.userRole);
+                            if(data.length==0){
+                              if(this.table.rolestatus == "ADMIN"){
+                                for(let i=1;i<=this.masterRole.length;i++){
+                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ i ,{})
+                                    .subscribe(data => {
+                                        console.log(i," InsertUserRole is successfull");
+                                        this.router.navigate(['newheader']);
+                                    });
+                                }
+                              }
+                              else if(this.table.rolestatus == "EMPLOYEE"){
+                                for(let i=0;i<this.RoleEmployee.length;i++){
+                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleEmployee[i] ,{})
+                                    .subscribe(data => {
+                                        console.log(this.RoleEmployee[i]," InsertUserRole is successfull");
+                                        this.router.navigate(['newheader']);
+                                    });
+                                }
+                              }
+                              else if(this.table.rolestatus == "MANAGER"){
+                                for(let i=0;i<this.RoleManager.length;i++){
+                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleManager[i] ,{})
+                                    .subscribe(data => {
+                                        console.log(this.RoleManager[i]," InsertUserRole is successfull");
+                                        this.router.navigate(['newheader']);
+                                    });
+                                }
+                              }
+                              else if(this.table.rolestatus == "SUPERVISOR"){
+                                for(let i=0;i<this.RoleSupervisor.length;i++){
+                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleSupervisor[i] ,{})
+                                    .subscribe(data => {
+                                        console.log(this.RoleSupervisor[i]," InsertUserRole is successfull");
+                                        this.router.navigate(['newheader']);
+                                    });
+                                }
+                              }
+                              else if(this.table.rolestatus == "HR-ADMIN"){
+                                for(let i=0;i<this.RoleHR_ADMIN.length;i++){
+                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleHR_ADMIN[i] ,{})
+                                    .subscribe(data => {
+                                        console.log(this.RoleHR_ADMIN[i]," InsertUserRole is successfull");
+                                        this.router.navigate(['newheader']);
+                                    });
+                                }
+                              }
+                              else if(this.table.rolestatus == "DC-MANAGER"){
+                                for(let i=0;i<this.RoleDcManager.length;i++){
+                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleDcManager[i] ,{})
+                                    .subscribe(data => {
+                                        console.log(this.RoleDcManager[i]," InsertUserRole is successfull");
+                                        this.router.navigate(['newheader']);
+                                    });
+                                }
+                              }
                             }
-                          }
-                          else if(this.table.rolestatus == "EMPLOYEE"){
-                            for(let i=0;i<this.RoleEmployee.length;i++){
-                                this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleEmployee[i] ,{})
-                                .subscribe(data => {
-                                    console.log(this.RoleEmployee[i]," InsertUserRole is successfull");
-                                    this.router.navigate(['newheader']);
-                                });
+                            else{
+                                this.router.navigate(['newheader']);
                             }
-                          }
-                          else if(this.table.rolestatus == "MANAGER"){
-                            for(let i=0;i<this.RoleManager.length;i++){
-                                this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleManager[i] ,{})
-                                .subscribe(data => {
-                                    console.log(this.RoleManager[i]," InsertUserRole is successfull");
-                                    this.router.navigate(['newheader']);
-                                });
-                            }
-                          }
-                          else if(this.table.rolestatus == "SUPERVISOR"){
-                            for(let i=0;i<this.RoleSupervisor.length;i++){
-                                this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleSupervisor[i] ,{})
-                                .subscribe(data => {
-                                    console.log(this.RoleSupervisor[i]," InsertUserRole is successfull");
-                                    this.router.navigate(['newheader']);
-                                });
-                            }
-                          }
-                          else if(this.table.rolestatus == "HR-ADMIN"){
-                            for(let i=0;i<this.RoleHR.length;i++){
-                                this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleHR[i] ,{})
-                                .subscribe(data => {
-                                    console.log(this.RoleHR[i]," InsertUserRole is successfull");
-                                    this.router.navigate(['newheader']);
-                                });
-                            }
-                          }
-                          else if(this.table.rolestatus == "DC MANAGER"){
-                            for(let i=0;i<this.RoleDcManager.length;i++){
-                                this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleDcManager[i] ,{})
-                                .subscribe(data => {
-                                    console.log(this.RoleDcManager[i]," InsertUserRole is successfull");
-                                    this.router.navigate(['newheader']);
-                                });
-                            }
-                          }
-                        }
-                        else{
-                            this.router.navigate(['newheader']);
-                        }
-                    });
+                        });
+                    }else{
+                      this.progressBar=false;
+                      alert("ท่านอยู่ในสถานะ"+data.maritalStatus+" ไม่สามารถเข้าระบบได้!");
+                    }
+
                     localStorage.setItem('logouts', 'false');
                 }
               });

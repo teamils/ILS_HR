@@ -1,7 +1,7 @@
 <mat-progress-bar mode="indeterminate" *ngIf="x"></mat-progress-bar>
 <mat-toolbar-row>
     <span class="example-spacer"><h1 align="center">The Attendance</h1></span>
-  <button  mat-button (click)="ShowLeaveNumberDailog()"><mat-icon matTooltip="จำนวนวันลา"><font color="red">priority_high</font></mat-icon></button>
+  <button  mat-button (click)="ShowLeaveNumberDailog()"><mat-icon matTooltip="จำนวนวันลา"><font color="red">notification_important</font></mat-icon></button>
 </mat-toolbar-row>
 <mat-card class="cardHeader">
   ชื่อ - สกุล:&nbsp;<b>{{table.fName}}&nbsp;&nbsp;{{table.lName}}</b>&nbsp;&nbsp; แผนก:&nbsp;<b>{{table.empDep}}</b> &nbsp;&nbsp; ตำแหน่ง:&nbsp;<b>{{table.empPos}}</b>
@@ -90,12 +90,12 @@
 
   <div *ngIf="hide">ค้นหา :
   <mat-form-field>
-    <input matInput [matDatepicker]="pickerSearch"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี" [(ngModel)]="startDateSearch" >
+    <input matInput [matDatepicker]="pickerSearch"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี ค.ศ." [(ngModel)]="startDateSearch" >
     <mat-datepicker-toggle matSuffix [for]="pickerSearch" ></mat-datepicker-toggle>
     <mat-datepicker touchUi #pickerSearch></mat-datepicker>
   </mat-form-field>&nbsp;&nbsp;To&nbsp;&nbsp;
   <mat-form-field>
-    <input matInput [matDatepicker]="pickerSearch2"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี" [(ngModel)]="endDateSearch" >
+    <input matInput [matDatepicker]="pickerSearch2"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี ค.ศ." [(ngModel)]="endDateSearch" >
     <mat-datepicker-toggle matSuffix [for]="pickerSearch2" ></mat-datepicker-toggle>
     <mat-datepicker touchUi #pickerSearch2></mat-datepicker>
   </mat-form-field>

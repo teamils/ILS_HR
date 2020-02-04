@@ -1,0 +1,11 @@
+.card{
+    width:97.1%;
+    height:94%;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
