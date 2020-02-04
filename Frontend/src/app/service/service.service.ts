@@ -146,4 +146,14 @@ export class ServiceService {
       return this.http.get(API1+'/SearchLeaveAtManager/'+dataSearch,{})
   }
 
+  //////////////////////////////////////////////////////////////////
+  ///////                   report                           //////
+  ////////////////////////////////////////////////////////////////
+
+  getLeavesEmployee(empid : string , leaveTypeSearch : string , leaveStatusSearch : string , departmentSelect:string ,
+  leavePayment:string):Observable<any>{
+    return this.http.get(API1+'/getLeavesEmployee/'+empid+'/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
+    +'/'+leavePayment,{})
+  }
+
 }

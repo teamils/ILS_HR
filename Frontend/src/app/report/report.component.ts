@@ -32,7 +32,7 @@ export class ReportComponent implements OnInit {
   leaveStatusSearch;
   departmentSelect;
   leavePayment;
-
+  showTable: Array<any>;
   constructor(private service:ServiceService,
             private router:Router,
             private route:ActivatedRoute,
@@ -49,6 +49,33 @@ export class ReportComponent implements OnInit {
         this.department = data;
         //console.log('department == ',this.department);
       });
+
   }
+
+clickSearch(){
+    let statususer =   localStorage.getItem('roleStatusInLogin');
+    if(statususer == 'MANAGER'){
+      console.log(1);
+    }else if(statususer == 'SUPERVISOR'){
+      console.log(2);
+    }else if(statususer == 'EMPLOYEE'){
+          console.log(this.startDateSearch, this.endDateSearch);
+          if(this.startDateSearch == undefined || this.endDateSearch == undefined){
+
+             this.service.getLeavesEmployee(localStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
+             this.departmentSelect , this.leavePayment).subscribe(data => {
+                 this.showTable = data;
+                 console.table(this.showTable);
+               });
+
+          }else{
+
+          }
+
+
+    }else if(statususer == 'DC-MANAGER'){
+
+    }
+}
 
 }

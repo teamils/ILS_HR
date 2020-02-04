@@ -19,7 +19,7 @@
     <mat-form-field hintLabel="" >
       <mat-select placeholder="ประเภทการลา" [(ngModel)]="leaveTypeSearch" >
         <mat-option>---none---</mat-option>
-        <mat-option *ngFor="let value of leaveType" [value]="value.leaveTypeForAlldayName">
+        <mat-option *ngFor="let value of leaveType" [value]="value.leaveTypeForAlldayID">
           {{value.leaveTypeForAlldayName}}
         </mat-option>
       </mat-select>
@@ -60,7 +60,7 @@
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     <br>
-    <button mat-raised-button style="width:100%"><mat-icon>search</mat-icon>&nbsp;Search</button>&nbsp;&nbsp;
+    <button mat-raised-button style="width:100%"  (click)="clickSearch()"><mat-icon>search</mat-icon>&nbsp;Search</button>&nbsp;&nbsp;
   </div>
   <mat-chip color="accent" matTooltip="นำข้อมูลออก"  selected>Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></mat-chip>&nbsp;
 </mat-card>
