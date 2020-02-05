@@ -15,8 +15,10 @@ public interface ReportRepository extends JpaRepository<Leaves,Long> {
 
 
     // ของ Employee Search ไม่มี Date
-    @Query(value = "select * from leaves \n" +
-            "where leave_type_for_all_day_leave_type_for_alldayid like :leaveTypeSearch% \n" +
+    @Query(value = "select * from leaves , employee_master\n" +
+            "where (employee_master_customer_code LIKE %:dataSearch% or employee_master_first_name like %:dataSearch% or employee_master_last_name like %:dataSearch%)\n" +
+            "and leaves.employee_masterid_employee_masterid = employee_master.employee_masterid\n"+
+            "and leave_type_for_all_day_leave_type_for_alldayid like :leaveTypeSearch% \n" +
             "and employee_masterid_employee_masterid = :empid \n" +
             "and leave_status like :leaveStatusSearch% \n" +
             "and departmentid like :departmentSelect% \n" +
@@ -28,4 +30,24 @@ public interface ReportRepository extends JpaRepository<Leaves,Long> {
                                          @Param("departmentSelect") String departmentSelect,
                                          @Param("leavePayment") String leavePayment,
                                          @Param("dataSearch") String dataSearch);
+
+
+    @Query(value = "select * from leaves , employee_master\n" +
+            "where start_date_for_all_day between :datestart and :dateend\n" +
+            "and (employee_master_customer_code LIKE %:dataSearch% or employee_master_first_name like %:dataSearch% or employee_master_last_name like %:dataSearch%)\n" +
+            "and leaves.employee_masterid_employee_masterid = employee_master.employee_masterid\n"+
+            "and leave_type_for_all_day_leave_type_for_alldayid like :leaveTypeSearch% \n" +
+            "and employee_masterid_employee_masterid = :empid \n" +
+            "and leave_status like :leaveStatusSearch% \n" +
+            "and departmentid like :departmentSelect% \n" +
+            "and is_payment like :leavePayment% " +
+            "and is_active_attendance = 1",nativeQuery = true)
+    Collection<Leaves> getLeavesEmployeeHaveDate(@Param("empid") String empid,
+                                         @Param("leaveTypeSearch") String leaveTypeSearch,
+                                         @Param("leaveStatusSearch") String leaveStatusSearch,
+                                         @Param("departmentSelect") String departmentSelect,
+                                         @Param("leavePayment") String leavePayment,
+                                         @Param("dataSearch") String dataSearch,
+                                                 @Param("datestart") String datestart,
+                                                 @Param("dateend") String dateend);
 }

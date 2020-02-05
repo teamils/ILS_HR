@@ -17,9 +17,9 @@ public class ReportController {
     @Autowired
     private ReportRepository reportRepository;
 
-    @GetMapping("/getLeavesEmployee/{empid}/{leaveTypeSearch}/{leaveStatusSearch}/{departmentSelect}/{leavePayment}")
+    @GetMapping("/getLeavesEmployee/{empid}/{leaveTypeSearch}/{leaveStatusSearch}/{departmentSelect}/{leavePayment}/{dataSearch}")
     public Iterable<Leaves> getLeavesEmployee(@PathVariable String empid , @PathVariable String leaveTypeSearch
-            ,@PathVariable String leaveStatusSearch, @PathVariable String departmentSelect , @PathVariable String leavePayment) {
+            ,@PathVariable String leaveStatusSearch, @PathVariable String departmentSelect , @PathVariable String leavePayment,@PathVariable String dataSearch) {
 
 
         if(leaveTypeSearch.equals("undefined")){
@@ -31,10 +31,40 @@ public class ReportController {
         if(departmentSelect.equals("undefined")){
             departmentSelect = "";
         }
-        if(leavePayment .equals("undefined")){
+        if(leavePayment.equals("undefined")){
             leavePayment = "";
         }
+        if(dataSearch.equals("undefined")){
+            dataSearch = "";
+        }
 
-        return this.reportRepository.getLeavesEmployee(empid,leaveTypeSearch,leaveStatusSearch,departmentSelect,leavePayment);
+        return this.reportRepository.getLeavesEmployee(empid,leaveTypeSearch,leaveStatusSearch,departmentSelect,leavePayment,dataSearch);
+    }
+
+
+
+    @GetMapping("/getLeavesEmployeeHavedate/{empid}/{leaveTypeSearch}/{leaveStatusSearch}/{departmentSelect}/{leavePayment}/{dataSearch}/{datestart}/{dateend}")
+    public Iterable<Leaves> getLeavesEmployeeHavedate(@PathVariable String empid , @PathVariable String leaveTypeSearch
+            ,@PathVariable String leaveStatusSearch, @PathVariable String departmentSelect , @PathVariable String leavePayment,
+                                                      @PathVariable String dataSearch,@PathVariable String datestart,@PathVariable String dateend) {
+
+
+        if(leaveTypeSearch.equals("undefined")){
+            leaveTypeSearch = "";
+        }
+        if(leaveStatusSearch.equals("undefined")){
+            leaveStatusSearch = "";
+        }
+        if(departmentSelect.equals("undefined")){
+            departmentSelect = "";
+        }
+        if(leavePayment.equals("undefined")){
+            leavePayment = "";
+        }
+        if(dataSearch.equals("undefined")){
+            dataSearch = "";
+        }
+
+        return this.reportRepository.getLeavesEmployeeHaveDate(empid,leaveTypeSearch,leaveStatusSearch,departmentSelect,leavePayment,dataSearch,datestart,dateend);
     }
 }

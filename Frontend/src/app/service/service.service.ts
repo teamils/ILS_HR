@@ -150,10 +150,17 @@ export class ServiceService {
   ///////                   report                           //////
   ////////////////////////////////////////////////////////////////
 
-  getLeavesEmployee(empid : string , leaveTypeSearch : string , leaveStatusSearch : string , departmentSelect:string ,
+  getLeavesEmployeeNoDate(empid : string , leaveTypeSearch : string , leaveStatusSearch : string , departmentSelect:string ,
   leavePayment:string , dataSearch:string):Observable<any>{
     return this.http.get(API1+'/getLeavesEmployee/'+empid+'/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
     +'/'+leavePayment+'/'+dataSearch,{})
   }
+
+  getLeavesEmployeeHaveDate(empid : string , leaveTypeSearch : string , leaveStatusSearch : string , departmentSelect:string ,
+  leavePayment:string , dataSearch:string , datestart:string , dateend:string):Observable<any>{
+    return this.http.get(API1+'/getLeavesEmployeeHavedate/'+empid+'/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
+    +'/'+leavePayment+'/'+dataSearch+'/'+datestart+'/'+dateend,{})
+  }
+
 
 }

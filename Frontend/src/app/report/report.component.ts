@@ -59,16 +59,24 @@ clickSearch(){
     }else if(statususer == 'SUPERVISOR'){
       console.log(2);
     }else if(statususer == 'EMPLOYEE'){
-          console.log(this.startDateSearch, this.endDateSearch);
-          if(this.startDateSearch == undefined || this.endDateSearch == undefined){
 
-             this.service.getLeavesEmployee(localStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
+          if(this.startDateSearch == undefined || this.endDateSearch == undefined){ //ถ้าไม่ใส่วันที่
+              if(this.dataSearch == ''){
+                  this.dataSearch=undefined;
+              }
+             this.service.getLeavesEmployeeNoDate(localStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
              this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
                  this.showTable = data;
                  console.table(this.showTable);
                });
 
-          }else{
+          }else{ //ถ้าใส่วันที่
+                this.service.getLeavesEmployeeHaveDate(localStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
+                 this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
+                     this.showTable = data;
+                     console.table(this.showTable);
+               });
+
 
           }
 
