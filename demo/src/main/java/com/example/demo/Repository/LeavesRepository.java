@@ -16,10 +16,23 @@ import java.util.Collection;
 @Repository
 public interface LeavesRepository extends JpaRepository<Leaves,Long>{
     Leaves findByemployeeMasterid(EmployeeMaster employeeMasterid);
-
+//***********************************************  date attendance *******************************************//
     //getLeaves 1คน //show ของ user นั้นๆ
     @Query(value = "SELECT * FROM leaves WHERE employee_masterid_employee_masterid = :employeeCode2 and is_active_attendance='1' ",nativeQuery = true)
     Collection<Leaves> getLeaves2(@Param("employeeCode2") String employeeCode2 );
+
+    //Search leave by leaveType and leaveStatus
+    @Query(value = "SELECT * FROM leaves l\n" +
+            "WHERE l.leave_type_for_all_day_leave_type_for_alldayid like :leaveType% \n" +
+            "and l.leave_status like :leaveStatus%\n" +
+            "and l.is_active_attendance=1",nativeQuery = true)
+    Collection<Leaves> Search_Leave_by_leaveType_and_leaveStatus(@Param("leaveType") String leaveType,@Param("leaveStatus") String leaveStatus );
+    //Search leave by StartDate to StartDate
+    @Query(value = "SELECT * FROM leaves l\n" +
+            "WHERE l.start_date_for_all_day BETWEEN :startDate AND :startDate2\n" +
+            "and l.leave_type_for_all_day_leave_type_for_alldayid like :leaveType% " +
+            "and l.leave_status like :leaveStatus%\n",nativeQuery = true)
+    Collection<Leaves> Search_Leave_by_StartDate_To_StartDate(@Param("startDate") String startDate,@Param("startDate2") String startDate2,@Param("leaveType") String leaveType,@Param("leaveStatus") String leaveStatus );
 
 //***********************************************  date attendance *******************************************//
     //date attendance // ตกนกด Complete

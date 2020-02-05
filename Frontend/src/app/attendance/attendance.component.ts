@@ -110,7 +110,6 @@ export class AttendanceComponent implements OnInit {
 //------Search------------
   startDateSearch;
   endDateSearch;
-  checkboxSearch;
   hide=false;
   leaveTypeSearch;
   leaveStatusSearch;
@@ -603,6 +602,40 @@ export class AttendanceComponent implements OnInit {
             this.statusVacationLeave = true;
             console.log('ddddd');
         }
+    }
+
+    SetLeaves(data:any){
+      //console.log(data);
+      this.leaves2 = data;
+      //console.log('getShowLeaves2 -> ', this.leaves2);
+      this.dataSource2.data = this.leaves2;
+      this.dataSource2.paginator = this.paginator;
+      for(let i of this.leaves2){
+        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+        i.createDate =  this.SplitCreateDate(i.createDate);
+      }
+      this.ngOnDestroy();
+    }
+    SearchLeave(){
+        /*if(this.startDateSearch==null && this.endDateSearch==null ){
+          this.http.get(API1  +/SearchLeaveByLeaveTypeAndLeaveStatus/+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch,{})
+                               .subscribe(data => {
+                                  //console.log(data);
+                                  this.SetLeaves(data);
+                               },error => {
+                                  console.log('Error', error);
+                               });
+        }
+        else{*/
+          this.http.get(API1  +/Search_Leave_by_StartDate_To_StartDate/+ this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd') +'/'+ this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd') +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch,{})
+                               .subscribe(data => {
+                                  //console.log(data);
+                                  this.SetLeaves(data);
+                               },error => {
+                                  console.log('Error', error);
+                               });
+        //}
     }
 
 }
