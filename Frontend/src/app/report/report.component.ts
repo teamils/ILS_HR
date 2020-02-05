@@ -55,7 +55,23 @@ export class ReportComponent implements OnInit {
 clickSearch(){
     let statususer =   localStorage.getItem('roleStatusInLogin');
     if(statususer == 'MANAGER'){
-      console.log(1);
+
+
+      if(this.startDateSearch == undefined || this.endDateSearch == undefined){
+              if(this.dataSearch == ''){
+                  this.dataSearch=undefined;
+              }
+              this.service.getLeavesManager(localStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
+                 this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
+                     this.showTable = data;
+                     console.table(this.showTable);
+               });
+      }
+      else{
+
+      }
+
+
     }else if(statususer == 'SUPERVISOR'){
 
       if(this.startDateSearch == undefined || this.endDateSearch == undefined){
