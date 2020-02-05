@@ -88,7 +88,7 @@
 <mat-card class="cardSearch">
   <button mat-stroked-button style="width:100%;"(click)="hide = !hide"><mat-icon>search</mat-icon>&nbsp;<b>Show Search Data</b></button>
 
-  <div *ngIf="hide">ค้นหา :
+  <div *ngIf="hide">Filter :
   <mat-form-field>
     <input matInput [matDatepicker]="pickerSearch"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี ค.ศ." [(ngModel)]="startDateSearch" >
     <mat-datepicker-toggle matSuffix [for]="pickerSearch" ></mat-datepicker-toggle>
@@ -103,7 +103,7 @@
     <mat-form-field hintLabel="" >
       <mat-select placeholder="ประเภทการลา" [(ngModel)]="leaveTypeSearch" >
         <mat-option>---none---</mat-option>
-        <mat-option *ngFor="let value of leaveTypeForAlldays" [value]="value.leaveTypeForAlldayName" [disabled]="(this.table.employeeMasterGender=='ชาย'&&(value.leaveTypeForAlldayName=='ลาคลอด'))||(this.table.employeeMasterGender=='หญิง'&&(value.leaveTypeForAlldayName=='ลาบวช'))||(this.leavetatelAll.checkDisabled==0&&(value.leaveTypeForAlldayName=='ลาพักร้อน'))?true:false">
+        <mat-option *ngFor="let value of leaveTypeForAlldays" [value]="value.leaveTypeForAlldayID" [disabled]="(this.table.employeeMasterGender=='ชาย'&&(value.leaveTypeForAlldayName=='ลาคลอด'))||(this.table.employeeMasterGender=='หญิง'&&(value.leaveTypeForAlldayName=='ลาบวช'))||(this.leavetatelAll.checkDisabled==0&&(value.leaveTypeForAlldayName=='ลาพักร้อน'))?true:false">
           {{value.leaveTypeForAlldayName}}
         </mat-option>
       </mat-select>
@@ -121,7 +121,7 @@
       </mat-select>
     </mat-form-field>
     &nbsp;&nbsp;
-    <button mat-raised-button><mat-icon>search</mat-icon>&nbsp;Search</button>
+    <button mat-raised-button (click)="SearchLeave()"><mat-icon>search</mat-icon>&nbsp;Search</button>
   </div>
 </mat-card>
 

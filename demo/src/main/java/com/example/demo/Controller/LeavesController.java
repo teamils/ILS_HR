@@ -318,4 +318,23 @@ public class LeavesController {
         return this.leavesRepository.SearchLeaveAtManager(dataSearch);
     }
 
+    @GetMapping("/SearchLeaveByLeaveTypeAndLeaveStatus/{leaveType}/{leaveStatus}")
+    public Iterable<Leaves> SearchLeaveByLeaveTypeAndLeaveStatus(@PathVariable String leaveType,@PathVariable String leaveStatus){
+        if(leaveType.equals("undefined")){
+            leaveType="";
+        }
+        else if(leaveStatus.equals("undefined")){
+            leaveStatus="";
+        }
+        return this.leavesRepository.Search_Leave_by_leaveType_and_leaveStatus(leaveType,leaveStatus);
+    }
+    @GetMapping("/Search_Leave_by_StartDate_To_StartDate/{startDate}/{startDate2}/{leaveType}/{leaveStatus}")
+    public Iterable<Leaves> Search_Leave_by_StartDate_To_StartDate(@PathVariable String startDate,@PathVariable String startDate2,@PathVariable String leaveType,@PathVariable String leaveStatus){
+        if(leaveType.equals("undefined")) leaveType="";
+        else if(leaveStatus.equals("undefined")) leaveStatus="";
+        else if(startDate.equals("undefined")) startDate="";
+        else if(startDate2.equals("undefined")) startDate2="";
+        return this.leavesRepository.Search_Leave_by_StartDate_To_StartDate(startDate,startDate2,leaveType,leaveStatus);
+    }
+
 }

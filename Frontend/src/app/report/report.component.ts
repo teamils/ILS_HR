@@ -26,7 +26,6 @@ export class ReportComponent implements OnInit {
 
   startDateSearch;
   endDateSearch;
-  checkboxSearch;
   hide=false;
   leaveTypeSearch;
   leaveStatusSearch;
