@@ -195,4 +195,10 @@ getLeavesDCManager(leaveTypeSearch : string , leaveStatusSearch : string , depar
     return this.http.get(API1+'/getLeavesDCManager/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
     +'/'+leavePayment+'/'+dataSearch,{})
   }
+
+getLeavesDCManagerHavedate(leaveTypeSearch : string , leaveStatusSearch : string , departmentSelect:string ,
+  leavePayment:string , dataSearch:string,datestart:string , dateend:string):Observable<any>{
+    return this.http.get(API1+'/getLeavesDCManagerHavedate/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
+    +'/'+leavePayment+'/'+dataSearch+'/'+datestart+'/'+dateend,{})
+  }
 }

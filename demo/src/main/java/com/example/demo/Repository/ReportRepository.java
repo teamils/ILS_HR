@@ -149,8 +149,8 @@ public interface ReportRepository extends JpaRepository<Leaves,Long> {
 
 
 
-    @Query(value = "select * from leaves l,department d,employee_master e\n" +
-            "where and l.is_active_attendance=1\n" +
+    @Query(value = "select * from leaves l,employee_master e\n" +
+            "where l.is_active_attendance=1\n" +
             "and e.is_active=1\n" +
             "and l.employee_masterid_employee_masterid = e.employee_masterid\n" +
             "and (e.role_status='MANAGER')\n" +
@@ -164,4 +164,24 @@ public interface ReportRepository extends JpaRepository<Leaves,Long> {
                                         @Param("departmentSelect") String departmentSelect,
                                         @Param("leavePayment") String leavePayment,
                                         @Param("dataSearch") String dataSearch);
+
+
+
+    @Query(value = "select * from leaves l,employee_master e\n" +
+            "where l.is_active_attendance=1\n" +
+            "and l.start_date_for_all_day between :datestart and :dateend\n"+
+            "and e.is_active=1\n" +
+            "and l.employee_masterid_employee_masterid = e.employee_masterid\n" +
+            "and (e.role_status='MANAGER')\n" +
+            "and l.leave_type_for_all_day_leave_type_for_alldayid like :leaveTypeSearch% \n"+
+            "and l.leave_status like :leaveStatusSearch% \n"+
+            "and l.departmentid like :departmentSelect% \n"+
+            "and l.is_payment like :leavePayment% \n"+
+            "and (e.employee_master_customer_code LIKE %:dataSearch% or e.employee_master_first_name like %:dataSearch% or e.employee_master_last_name like %:dataSearch%)\n",nativeQuery = true)
+    Collection<Leaves> getLeavesDCManagerHaveDate(@Param("leaveTypeSearch") String leaveTypeSearch,
+                                          @Param("leaveStatusSearch") String leaveStatusSearch,
+                                          @Param("departmentSelect") String departmentSelect,
+                                          @Param("leavePayment") String leavePayment,
+                                          @Param("dataSearch") String dataSearch, @Param("datestart") String datestart,
+                                                  @Param("dateend") String dateend);
 }

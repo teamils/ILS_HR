@@ -180,7 +180,7 @@ public class ReportController {
 
 
     @GetMapping("/getLeavesDCManager/{leaveTypeSearch}/{leaveStatusSearch}/{departmentSelect}/{leavePayment}/{dataSearch}")
-    public Iterable<Leaves> getLeavesDCManager(@PathVariable String empid , @PathVariable String leaveTypeSearch
+    public Iterable<Leaves> getLeavesDCManager(@PathVariable String leaveTypeSearch
             ,@PathVariable String leaveStatusSearch, @PathVariable String departmentSelect
             , @PathVariable String leavePayment,@PathVariable String dataSearch) {
 
@@ -202,5 +202,31 @@ public class ReportController {
         }
 
         return this.reportRepository.getLeavesDCManager(leaveTypeSearch,leaveStatusSearch,departmentSelect,leavePayment,dataSearch);
+    }
+
+    @GetMapping("/getLeavesDCManagerHavedate/{leaveTypeSearch}/{leaveStatusSearch}/{departmentSelect}/{leavePayment}/{dataSearch}/{datestart}/{dateend}")
+    public Iterable<Leaves> getLeavesDCManagerHavedate(@PathVariable String leaveTypeSearch
+            ,@PathVariable String leaveStatusSearch, @PathVariable String departmentSelect
+            , @PathVariable String leavePayment,@PathVariable String dataSearch
+            , @PathVariable String datestart,@PathVariable String dateend) {
+
+
+        if(leaveTypeSearch.equals("undefined")){
+            leaveTypeSearch = "";
+        }
+        if(leaveStatusSearch.equals("undefined")){
+            leaveStatusSearch = "";
+        }
+        if(departmentSelect.equals("undefined")){
+            departmentSelect = "";
+        }
+        if(leavePayment.equals("undefined")){
+            leavePayment = "";
+        }
+        if(dataSearch.equals("undefined")){
+            dataSearch = "";
+        }
+
+        return this.reportRepository.getLeavesDCManagerHaveDate(leaveTypeSearch,leaveStatusSearch,departmentSelect,leavePayment,dataSearch,datestart,dateend);
     }
 }

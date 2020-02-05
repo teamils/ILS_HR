@@ -148,7 +148,11 @@ clickSearch(){
                   this.dataSearch=undefined;
               }
 
-
+                this.service.getLeavesDCManagerHavedate(this.leaveTypeSearch , this.leaveStatusSearch ,
+                 this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
+                     this.showTable = data;
+                     console.table(this.showTable);
+               });
 
           }
     }
