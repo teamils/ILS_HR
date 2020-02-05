@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     RoleManager = [4, 5, 8, 10];
     RoleSupervisor = [4, 5, 7, 10];
     RoleHR_ADMIN = [1, 2, 3, 4, 6, 10, 11, 13];
-    RoleDcManager = [9];
+    RoleDcManager = [9, 10];
 
     hide:any;
     id : String = null;

@@ -617,9 +617,32 @@ export class AttendanceComponent implements OnInit {
       }
       this.ngOnDestroy();
     }
+    ShowSearchLeaveData(){
+      this.hide = !this.hide;
+      if(this.hide==false){
+          this.startDateSearch=null;
+          this.endDateSearch=null;
+          this.leaveTypeSearch=null;
+          this.leaveStatusSearch=null;
+      }
+    }
     SearchLeave(){
-        /*if(this.startDateSearch==null && this.endDateSearch==null ){
-          this.http.get(API1  +/SearchLeaveByLeaveTypeAndLeaveStatus/+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch,{})
+      this.ngOnDestroy();
+        if(this.startDateSearch==null && this.endDateSearch==null && this.leaveTypeSearch==null && this.leaveStatusSearch==null){
+
+        }
+        else if(this.startDateSearch==null && this.endDateSearch==null ){
+          this.http.get(API1  +/SearchLeaveByLeaveTypeAndLeaveStatus/+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch +'/'+ this.empId,{})
+                               .subscribe(data => {
+                                  //console.log(data);
+                                  this.SetLeaves(data);
+                               },error => {
+                                  console.log('Error', error);
+                               });
+
+        }
+        else{
+          this.http.get(API1  +/Search_Leave_by_StartDate_To_StartDate/+ this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd') +'/'+ this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd') +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch +'/'+ this.empId,{})
                                .subscribe(data => {
                                   //console.log(data);
                                   this.SetLeaves(data);
@@ -627,15 +650,6 @@ export class AttendanceComponent implements OnInit {
                                   console.log('Error', error);
                                });
         }
-        else{*/
-          this.http.get(API1  +/Search_Leave_by_StartDate_To_StartDate/+ this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd') +'/'+ this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd') +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch,{})
-                               .subscribe(data => {
-                                  //console.log(data);
-                                  this.SetLeaves(data);
-                               },error => {
-                                  console.log('Error', error);
-                               });
-        //}
     }
 
 }

@@ -10,7 +10,6 @@ import { ExcelService } from '../excel.service';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import {MatBottomSheet,MatBottomSheetRef} from '@angular/material';
 import {  SelectionModel } from '@angular/cdk/collections';
-import {  DatePipe} from '@angular/common';
 import { EmployeeEditComponent } from '../employee-edit/employee-edit.component';
 import { NewheaderComponent } from '../newheader/newheader.component';
 import { EmployeeDeleteComponent } from '../employee-delete/employee-delete.component';
@@ -18,6 +17,9 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { API1 } from '../app.component';
+import { DatePipe } from '@angular/common';
+import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 
 export interface Emp{
     empCodeIDxx : number;
@@ -27,19 +29,23 @@ export interface Emp{
 @Component({
   selector: 'app-approve-by-supervisor',
   templateUrl: './approve-by-supervisor.component.html',
-  styleUrls: ['./approve-by-supervisor.component.css']
+  styleUrls: ['./approve-by-supervisor.component.css'],
+  providers: [DatePipe,
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+  ]
 })
 
 export class ApproveBySupervisorComponent implements OnInit {
   leaves  : Array<any>;
   LeavesToComplete: Array<any>;
+  leaveTypeForAlldays: Array<any>;
   isChecked;
   interval:any;
   interval2:any;
   interval3:any;
   leaveID;
   dis;
-  dataSearch='';
   empId = localStorage.getItem('empId');
   firstNameOnLogin = localStorage.getItem('fName');
   lastNameOnLogin  = localStorage.getItem('lName');
@@ -47,6 +53,14 @@ export class ApproveBySupervisorComponent implements OnInit {
   progressBar=false;
   dateAndTotel;
   dataToInput;
+//------Search------------
+  startDateSearch;
+  endDateSearch;
+  hide=false;
+  leaveTypeSearch;
+  leaveStatusSearch;
+  codeAndName;
+//------------------------
   displayedColumns: string[] = ['number','employeeCode', 'name','department','date', 'leaveType','startDate', 'endDate','total','reason', /*'approvedBySupervisor', 'approvedByManager',*/'leaveStatus','approve','notApprove'];
   dataSource = new MatTableDataSource<Emp>(this.leaves);
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
@@ -59,7 +73,53 @@ export class ApproveBySupervisorComponent implements OnInit {
             private router:Router,
             private route:ActivatedRoute ,
             public dialog: MatDialog,
-             private http: HttpClient) { }
+             private http: HttpClient,
+             public datepipe: DatePipe) { }
+
+
+  ShowSearchLeaveData(){
+      this.hide = !this.hide;
+      if(this.hide==false){
+          this.startDateSearch=null;
+          this.endDateSearch=null;
+          this.leaveTypeSearch=null;
+          this.leaveStatusSearch=null;
+          this.codeAndName=null;
+      }
+  }
+
+  SetLeaves(data:any){
+                this.progressBar = false;
+                this.leaves = data;
+                this.dataSource.data = this.leaves;
+                for(let i of this.leaves){
+                  i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                  i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                  i.createDate =  this.SplitCreateDate(i.createDate);
+                }
+      this.ngOnDestroy();
+  }
+
+  SearchLeaveData(){
+    this.progressBar = true;
+    this.ngOnDestroy();
+    if(this.startDateSearch == null && this.endDateSearch == null){
+      this.http.get(API1+'/SearchLeaveInApproveSupByLeaveTypeLeaveStatusCodeName/' + this.empId +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch +'/'+ this.codeAndName,{})
+                               .subscribe(data => {
+                                  this.SetLeaves(data);
+                               },error => {
+                                  console.log('Error', error);
+                               });
+    }
+    else{
+      this.http.get(API1+'/SearchLeaveInApproveSupByStartDateToStartDate2AndAll/' + this.empId +'/'+ this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd') +'/'+ this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd') +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch  +'/'+ this.codeAndName,{})
+                               .subscribe(data => {
+                                  this.SetLeaves(data);
+                               },error => {
+                                  console.log('Error', error);
+                               });
+    }
+  }
 
   ngOnDestroy() {
       clearInterval(this.interval);
@@ -83,6 +143,11 @@ export class ApproveBySupervisorComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }, 1000);
+
+      this.service.getleaveTypeForAlldays().subscribe(data => {
+          this.leaveTypeForAlldays = data;
+          //console.table(this.leaveTypeForAlldays);
+      });
   }
   SplitCreateDate(date:any){
     var DateSplitted = date.split("T");
@@ -144,78 +209,6 @@ export class ApproveBySupervisorComponent implements OnInit {
                   data: row,
             });
   }
-
-  onChange(){
-           this.dataSearch='';
-           this.progressBar = true;
-            if(this.isChecked == true){
-              clearInterval(this.interval2);
-              clearInterval(this.interval3);
-              this.dis=true;
-              this.interval = setInterval(() => {  //show table Leave
-                this.service.getLeavesSelectDepartmentBySupervisor(this.empId).subscribe(dataLeavesToComplete => {
-                      this.leaves = dataLeavesToComplete;
-                      this.dataSource.data = this.leaves;
-                      this.progressBar = false;
-                      for(let i of this.leaves){
-                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-                      }
-                      //console.log('leaves -> ',this.leaves);
-                  });
-
-              }, 1000);
-            }
-            else{
-              this.dis=false;
-              clearInterval(this.interval);
-              clearInterval(this.interval3);
-              this.interval2 = setInterval(() => {
-                  this.service.getLeavesToNotCompleteBySupervisor(this.empId).subscribe(data => {
-                    this.leaves = data;
-                    this.dataSource.data = this.leaves;
-                    this.progressBar = false;
-                    for(let i of this.leaves){
-                      i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                      i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-                    }
-                    //console.log('leaves -> ',this.leaves);
-                  });
-              }, 1000);
-            }
-
-  }
-  SearchInputNull(){
-    this.ngOnDestroy();
-    //console.log(this.dataSearch);
-    if(this.dataSearch==''){
-      this.onChange();
-      this.progressBar = false;
-    }
-  }
-  SearchEmployeeByCodeAndNameInApproveBySupNOTApprove(){
-      this.ngOnDestroy();
-      this.service.getSearchEmployeeByCodeAndNameInApproveBySup(this.dataSearch,this.empId).subscribe(data => {
-              this.leaves = data;
-              this.dataSource.data = this.leaves;
-              for(let i of this.leaves){
-                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-              }
-      });
-  }
-  SearchEmployeeByCodeAndNameInApproveBySupApprove(){
-      this.ngOnDestroy();
-      this.service.getgetSearchEmployeeByCodeAndNameInApproveBySupervisor(this.dataSearch,this.empId).subscribe(data => {
-              this.leaves = data;
-              this.dataSource.data = this.leaves;
-              for(let i of this.leaves){
-                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-              }
-      });
-  }
-
 
 }
 

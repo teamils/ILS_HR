@@ -1,8 +1,9 @@
 <mat-progress-bar mode="indeterminate" *ngIf="x"></mat-progress-bar>
-<mat-toolbar-row>
-    <span class="example-spacer"><h1 align="center">The Attendance</h1></span>
-  <button  mat-button (click)="ShowLeaveNumberDailog()"><mat-icon matTooltip="จำนวนวันลา"><font color="red">notification_important</font></mat-icon></button>
-</mat-toolbar-row>
+<mat-toolbar color="primary">
+  <span (click)="ngOnInit()">The Attendance</span>
+    <span class="example-spacer"></span>
+  <button  mat-button (click)="ShowLeaveNumberDailog()"><mat-icon matTooltip="จำนวนวันลา"><font color="white">notification_important</font></mat-icon></button>
+</mat-toolbar>
 <mat-card class="cardHeader">
   ชื่อ - สกุล:&nbsp;<b>{{table.fName}}&nbsp;&nbsp;{{table.lName}}</b>&nbsp;&nbsp; แผนก:&nbsp;<b>{{table.empDep}}</b> &nbsp;&nbsp; ตำแหน่ง:&nbsp;<b>{{table.empPos}}</b>
   &nbsp;&nbsp;ลากิจคงเหลือ :&nbsp;<b *ngFor="let item of leaveNumber;"><b *ngIf="this.item.leaveTypeid.leaveTypeForAlldayID==1">{{this.item.balanceDay}}</b></b>
@@ -82,11 +83,10 @@
       </div>
     </mat-tab>
   </mat-tab-group>
-  <hr>
 </mat-card>
 
-<mat-card class="cardSearch">
-  <button mat-stroked-button style="width:100%;"(click)="hide = !hide"><mat-icon>search</mat-icon>&nbsp;<b>Show Search Data</b></button>
+<mat-card class="cardSearch">  <hr>
+  <button mat-stroked-button style="width:100%;"(click)="ShowSearchLeaveData()"><mat-icon>search</mat-icon>&nbsp;<b>Show Search Data</b></button>
 
   <div *ngIf="hide">Filter :
   <mat-form-field>
@@ -124,7 +124,6 @@
     <button mat-raised-button (click)="SearchLeave()"><mat-icon>search</mat-icon>&nbsp;Search</button>
   </div>
 </mat-card>
-
 
   <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
     <ng-container matColumnDef="number" >

@@ -12,6 +12,8 @@ import { API1 } from '../app.component';
 import {FormControl} from '@angular/forms';
 import { AttendanceComponent } from '../attendance/attendance.component';
 import { ExcelService } from '../excel.service';
+import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
+import { DatePipe } from '@angular/common';
 
 export interface PeriodicElement {
   leavesID: any;
@@ -42,13 +44,18 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-attendance-data',
   templateUrl: './attendance-data.component.html',
-  styleUrls: ['./attendance-data.component.css']
+  styleUrls: ['./attendance-data.component.css'],
+  providers: [DatePipe,
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+  ]
 })
 export class AttendanceDataComponent implements OnInit {
   leaves  : Array<any>;
   department: Array<any>;
   departmentSelect:any;
   LeavesToComplete: Array<any>;
+  leaveTypeForAlldays: Array<any>;
   isChecked;
   interval:any;
   interval2:any;
@@ -59,6 +66,16 @@ export class AttendanceDataComponent implements OnInit {
   firstNameOnLogin = localStorage.getItem('fName');
   lastNameOnLogin  = localStorage.getItem('lName');
   empId = localStorage.getItem('empId');
+//------Search------------
+  startDateSearch;
+  endDateSearch;
+  hide=false;
+  leaveTypeSearch;
+  leaveStatusSearch;
+  leavePayment;
+  departmentSearch;
+  codeAndName;
+//------------------------
   displayedColumns: string[] = ['number','employeeCode', 'name','position','department'/*,'employeeType'*/,'date', 'leaveType','startDate', 'endDate','total','reason', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','isPayment','leaveStatus','confirm','del'/*,'edit'*/];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
@@ -68,8 +85,8 @@ export class AttendanceDataComponent implements OnInit {
             private route:ActivatedRoute ,
             public dialog: MatDialog,
              private http: HttpClient,
-             private excelService:ExcelService) { }
-
+             private excelService:ExcelService,
+              public datepipe: DatePipe) { }
 
   ngOnDestroy() {
       clearInterval(this.interval);
@@ -94,6 +111,10 @@ export class AttendanceDataComponent implements OnInit {
         this.service.getDepartment().subscribe(data => {
                this.department = data;
               //console.log('department == ',this.department);
+        });
+        this.service.getleaveTypeForAlldays().subscribe(data => {
+          this.leaveTypeForAlldays = data;
+          //console.table(this.leaveTypeForAlldays);
         });
         this.dataSource.paginator = this.paginator;
 
@@ -154,56 +175,7 @@ export class AttendanceDataComponent implements OnInit {
           this.progressBar = false;
       }
     }
-    SearchEmployeeByCodeAndName(){
-      this.ngOnDestroy();
-      this.service.getSearchEmployeeByCodeAndName(this.dataSearch).subscribe(data => {
-              this.leaves = data;
-              this.dataSource.data = this.leaves;
-              this.departmentSelect = null;
-              for(let i of this.leaves){
-                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-              }
-      });
-    }
-    SearchEmployeeByCodeAndName2(){
-      this.ngOnDestroy();
-      this.service.getSearchEmployeeByCodeAndName2(this.dataSearch).subscribe(data => {
-              this.leaves = data;
-              this.dataSource.data = this.leaves;
-              this.departmentSelect = null;
-              for(let i of this.leaves){
-                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-              }
-      });
-    }
-    SearchEmployeeByDepartmentID(){
-      this.ngOnDestroy();
-      this.service.getSearchEmployeeByDepartmentID(this.departmentSelect).subscribe(data => {
-              //console.log(data);
-              this.leaves = data;
-              this.dataSource.data = this.leaves;
-              this.dataSearch=null;
-              for(let i of this.leaves){
-                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-              }
-      });
-    }
-    SearchEmployeeByDepartmentID2(){
-      this.ngOnDestroy();
-      this.service.getSearchEmployeeByDepartmentID2(this.departmentSelect).subscribe(data => {
-              //console.log(data);
-              this.leaves = data;
-              this.dataSource.data = this.leaves;
-              this.dataSearch=null;
-              for(let i of this.leaves){
-                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-              }
-      });
-    }
+
     DeleteAttendance(row : any){
         const dialogRef = this.dialog.open(AttendanceDeleteDialog, {
             width: '320px',
@@ -220,13 +192,7 @@ export class AttendanceDataComponent implements OnInit {
             });
             //this.onChange();
     }
-    GetExportDataDailog(){
-            const dialogRef = this.dialog.open(ExportDataDialog, {
-                  width: 'auto',
-                  height:'auto',
-            });
-            //this.onChange();
-    }
+
     exportexcel(): void{
         let dataleave : any[] = [];
         for(let i = 0 ; i < this.leaves.length ; i++){
@@ -250,34 +216,51 @@ export class AttendanceDataComponent implements OnInit {
         }
         this.excelService.exportAsExcelFile(dataleave, 'Dataleave');
     }
-}
 
-//Dialog ExportDataDialog
-export interface DialogData {
-  leavesID : null;
-  isActiveAttendance: string;
-}
-@Component({
-    selector: 'exportDataDialog',
-    templateUrl: 'exportDataDialog.html',
-  })
-  export class ExportDataDialog {
-    leavesID: string;
-    isActiveAttendance:string;
-    selectAttendanceDate : String;
 
-    constructor(public dialogRef: MatDialogRef<ExportDataDialog>,
-                public service:ServiceService,
-                @Inject(MAT_DIALOG_DATA)  public date: DialogData,
-                private http: HttpClient){
-          dialogRef.disableClose = false;
-
+  ShowSearchLeaveData(){
+      this.hide = !this.hide;
+      if(this.hide==false){
+          this.startDateSearch=null;
+          this.endDateSearch=null;
+          this.leaveTypeSearch=null;
+          this.leaveStatusSearch=null;
+          this.leavePayment=null;
+          this.departmentSearch=null;
+          this.codeAndName=null;
+      }
+  }
+  SetLeaves(data:any){
+                this.progressBar = false;
+                this.leaves = data;
+                this.dataSource.data = this.leaves;
+                for(let i of this.leaves){
+                  i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                  i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                  i.createDate =  this.SplitCreateDate(i.createDate);
+                }
+      this.ngOnDestroy();
+  }
+  SearchLeaveData(){
+    this.progressBar = true;
+    this.ngOnDestroy();
+    if(this.startDateSearch == null && this.endDateSearch == null){
+      this.http.get(API1+'/SearchLeaveByDepartmentLeaveTypeLeaveStatusIspaymentCodeandName' +'/'+ this.departmentSearch +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch +'/'+ this.leavePayment +'/'+ this.codeAndName,{})
+                               .subscribe(data => {
+                                  this.SetLeaves(data);
+                               },error => {
+                                  console.log('Error', error);
+                               });
     }
-
-    closeDialog(): void {
-      this.dialogRef.close();
+    else{
+      this.http.get(API1+'/SearchLeaveByStartDateToStartDate2AndAll' +'/'+ this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd') +'/'+ this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd') +'/'+ this.departmentSearch +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch +'/'+ this.leavePayment +'/'+ this.codeAndName,{})
+                               .subscribe(data => {
+                                  this.SetLeaves(data);
+                               },error => {
+                                  console.log('Error', error);
+                               });
     }
-
+  }
 
 }
 

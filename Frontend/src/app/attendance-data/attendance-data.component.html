@@ -1,40 +1,72 @@
 <mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
 <mat-toolbar color="primary">
-  <span>Attendance Information</span>&nbsp;&nbsp;&nbsp;&nbsp;
-  <span class="example-fill-remaining-space" style="align:center;">
-          <!--<mat-form-field  class="searchStyle">
-            <input matInput  placeholder="Enter keyword">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field> -->
-  </span>
+  <span (click)="ngOnInit()">Attendance Information</span>&nbsp;&nbsp;&nbsp;&nbsp;
+  <span class="example-fill-remaining-space" style="align:center;"></span>
   <span>
-    <mat-slide-toggle (change)="onChange()" [(ngModel)]="isChecked">Complete</mat-slide-toggle>
+      <button mat-stroked-button style="width:100%;"(click)="ShowSearchLeaveData()"><mat-icon>search</mat-icon>&nbsp;<b>Show Search Data</b></button>
   </span>
 </mat-toolbar>
 
-<mat-card>
-  <mat-toolbar-row>
-  ค้นหา :
-    <mat-form-field  class="searchStyle" (keyup)="isChecked==true?SearchEmployeeByCodeAndName2():SearchEmployeeByCodeAndName(); SearchInputNull()">
-      <mat-label>Search</mat-label>
-      <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
-    &nbsp; &nbsp;
-    ค้นหาโดยเเผนก :
-    <mat-form-field class="formcenter" hintLabel="" style="width :200px" >
-      <mat-select placeholder="Search by department"  [(ngModel)]="departmentSelect">
-        <mat-option>None</mat-option>
-        <mat-option *ngFor="let depart of department" [value]="depart.departmentID">
-          {{depart.departmentName}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>&nbsp;
-    <button mat-raised-button (click)="isChecked==true?SearchEmployeeByDepartmentID2():SearchEmployeeByDepartmentID()"><mat-icon matSuffix>search</mat-icon></button>
-    <span class="example-spacer"></span>
-    <mat-chip color="accent" matTooltip="นำข้อมูลออก" (click)="exportexcel()" selected>Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></mat-chip>
-   </mat-toolbar-row>
+<mat-card *ngIf="hide" (keydown.enter)="SearchLeaveData()">
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerSearch"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี ค.ศ." [(ngModel)]="startDateSearch" >
+    <mat-datepicker-toggle matSuffix [for]="pickerSearch" ></mat-datepicker-toggle>
+    <mat-datepicker touchUi #pickerSearch></mat-datepicker>
+  </mat-form-field>&nbsp;&nbsp;To&nbsp;&nbsp;
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerSearch2"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี ค.ศ." [(ngModel)]="endDateSearch" >
+    <mat-datepicker-toggle matSuffix [for]="pickerSearch2" ></mat-datepicker-toggle>
+    <mat-datepicker touchUi #pickerSearch2></mat-datepicker>
+  </mat-form-field>
+  &nbsp;&nbsp;
+  <mat-form-field hintLabel="" >
+    <mat-select placeholder="แผนก" [(ngModel)]="departmentSearch" >
+      <mat-option>---none---</mat-option>
+      <mat-option *ngFor="let value of department" [value]="value.departmentID" >
+        {{value.departmentName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;&nbsp;
+  <mat-form-field hintLabel="" >
+    <mat-select placeholder="ประเภทการลา" [(ngModel)]="leaveTypeSearch" >
+      <mat-option>---none---</mat-option>
+      <mat-option *ngFor="let value of leaveTypeForAlldays" [value]="value.leaveTypeForAlldayID" >
+        {{value.leaveTypeForAlldayName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;&nbsp;
+  <mat-form-field hintLabel="" >
+    <mat-select placeholder="สถานะ" [(ngModel)]="leaveStatusSearch" >
+      <mat-option>---none---</mat-option>
+      <mat-option value="Pending">Pending</mat-option>
+      <mat-option value="Waiting approve">Waiting approve</mat-option>
+      <mat-option value="Approve">Approve</mat-option>
+      <mat-option value="Not approve">Not approve</mat-option>
+      <mat-option value="Complete">Complete</mat-option>
+      <mat-option value="Cancel">Cancel</mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;&nbsp;
+  <mat-form-field hintLabel="">
+    <mat-select placeholder="Payment" [(ngModel)]="leavePayment" >
+      <mat-option>---none---</mat-option>
+      <mat-option value="payment">Payment</mat-option>
+      <mat-option value="not payment">Not payment</mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;&nbsp;
+  <mat-form-field  hintLabel="">
+    <input matInput  [(ngModel)]="codeAndName" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  <br>
+  <button mat-raised-button (click)="SearchLeaveData()" style="width:100%"><mat-icon>search</mat-icon>&nbsp;Search</button>
 </mat-card>
+
+
+
 <div class="example-container mat-elevation-z8">
 <table mat-table [dataSource]="dataSource" matSort  class="mat-elevation-z8">
   <ng-container matColumnDef="number">
@@ -126,7 +158,7 @@
   <ng-container matColumnDef="confirm" stickyEnd>
     <th mat-header-cell *matHeaderCellDef ><font  color="black"><b></b></font></th>
     <td mat-cell *matCellDef="let element">
-        <button mat-icon-button style="color: green;" matTooltip="ยืนยัน" matTooltipPosition="left"  [disabled]="dis" (click)="getEditPaymentDialog(element);" aria-label="Example icon-button with a heart icon">
+        <button mat-icon-button  matTooltip="ยืนยัน" matTooltipPosition="left"  (click)="getEditPaymentDialog(element);" aria-label="Example icon-button with a heart icon"  [disabled]="element.leaveStatus=='Approve'?false:true">
           <mat-icon>check_circle_outline</mat-icon>
         </button>
     </td>
@@ -135,7 +167,7 @@
   <ng-container matColumnDef="del" stickyEnd>
     <th mat-header-cell *matHeaderCellDef ><font  color="black"><b></b></font></th>
     <td mat-cell *matCellDef="let element" >
-      <button mat-icon-button style="color: red;" matTooltip="ยกเลิกการลา" matTooltipPosition="left" (click)="DeleteAttendance(element);"  #ckeckEdit>
+      <button mat-icon-button  matTooltip="ยกเลิกการลา" matTooltipPosition="left" (click)="DeleteAttendance(element);" [disabled]="element.leaveStatus=='Cancel'?true:false" #ckeckEdit>
         <mat-icon>highlight_off</mat-icon>
       </button>
     </td>

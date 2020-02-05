@@ -67,7 +67,6 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AddDataComboboxComponent } from './add-data-combobox/add-data-combobox.component';
 import { AddUserroleComponent } from './add-userrole/add-userrole.component';
 import { EditMasterAttendanceDialog } from './add-data-combobox/add-data-combobox.component';
-import { ExportDataDialog } from './attendance-data/attendance-data.component';
 import { DcManagerComponent } from './dc-manager/dc-manager.component';
 import { ReportComponent } from './report/report.component';
 
@@ -95,7 +94,6 @@ import { ReportComponent } from './report/report.component';
     AddDataComboboxComponent,
     AddUserroleComponent,
     EditMasterAttendanceDialog,
-    ExportDataDialog,
     DcManagerComponent,
     ReportComponent,
   ],
@@ -158,7 +156,6 @@ import { ReportComponent } from './report/report.component';
                     EditPersonalInformationComponent,
                     EditPaymentDialog,
                     EditMasterAttendanceDialog,
-                    ExportDataDialog,
    ],
   providers: [],
   bootstrap: [AppComponent]
