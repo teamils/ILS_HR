@@ -13,6 +13,8 @@ import java.util.Collection;
 
 public interface ReportRepository extends JpaRepository<Leaves,Long> {
 
+
+    // ของ Employee Search ไม่มี Date
     @Query(value = "select * from leaves \n" +
             "where leave_type_for_all_day_leave_type_for_alldayid like :leaveTypeSearch% \n" +
             "and employee_masterid_employee_masterid = :empid \n" +
@@ -24,5 +26,6 @@ public interface ReportRepository extends JpaRepository<Leaves,Long> {
                                          @Param("leaveTypeSearch") String leaveTypeSearch,
                                          @Param("leaveStatusSearch") String leaveStatusSearch,
                                          @Param("departmentSelect") String departmentSelect,
-                                         @Param("leavePayment") String leavePayment);
+                                         @Param("leavePayment") String leavePayment,
+                                         @Param("dataSearch") String dataSearch);
 }

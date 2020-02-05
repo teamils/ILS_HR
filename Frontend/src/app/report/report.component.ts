@@ -33,6 +33,7 @@ export class ReportComponent implements OnInit {
   departmentSelect;
   leavePayment;
   showTable: Array<any>;
+  dataSearch;
   constructor(private service:ServiceService,
             private router:Router,
             private route:ActivatedRoute,
@@ -63,7 +64,7 @@ clickSearch(){
           if(this.startDateSearch == undefined || this.endDateSearch == undefined){
 
              this.service.getLeavesEmployee(localStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
-             this.departmentSelect , this.leavePayment).subscribe(data => {
+             this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
                  this.showTable = data;
                  console.table(this.showTable);
                });

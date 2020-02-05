@@ -151,9 +151,9 @@ export class ServiceService {
   ////////////////////////////////////////////////////////////////
 
   getLeavesEmployee(empid : string , leaveTypeSearch : string , leaveStatusSearch : string , departmentSelect:string ,
-  leavePayment:string):Observable<any>{
+  leavePayment:string , dataSearch:string):Observable<any>{
     return this.http.get(API1+'/getLeavesEmployee/'+empid+'/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
-    +'/'+leavePayment,{})
+    +'/'+leavePayment+'/'+dataSearch,{})
   }
 
 }
