@@ -56,7 +56,6 @@ clickSearch(){
     let statususer =   localStorage.getItem('roleStatusInLogin');
     if(statususer == 'MANAGER'){
 
-
       if(this.startDateSearch == undefined || this.endDateSearch == undefined){
               if(this.dataSearch == ''){
                   this.dataSearch=undefined;
@@ -68,7 +67,14 @@ clickSearch(){
                });
       }
       else{
-
+              if(this.dataSearch == ''){
+                  this.dataSearch=undefined;
+              }
+              this.service.getLeavesManagerHavedate(localStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
+                 this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
+                     this.showTable = data;
+                     console.table(this.showTable);
+               });
       }
 
 
@@ -124,10 +130,27 @@ clickSearch(){
           }
 
 
-
-
     }else if(statususer == 'DC-MANAGER'){
 
+
+          if(this.startDateSearch == undefined || this.endDateSearch == undefined){ //ถ้าไม่ใส่วันที่
+              if(this.dataSearch == ''){
+                  this.dataSearch=undefined;
+              }
+              this.service.getLeavesDCManager( this.leaveTypeSearch , this.leaveStatusSearch ,
+                   this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
+                    this.showTable = data;
+                   console.table(this.showTable);
+               });
+
+          }else{ //ถ้าใส่วันที่
+                if(this.dataSearch == ''){
+                  this.dataSearch=undefined;
+              }
+
+
+
+          }
     }
 
 
