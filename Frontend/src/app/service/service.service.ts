@@ -163,4 +163,18 @@ export class ServiceService {
   }
 
 
+  getLeavesSupervisor(empid : string , leaveTypeSearch : string , leaveStatusSearch : string , departmentSelect:string ,
+  leavePayment:string , dataSearch:string):Observable<any>{
+    return this.http.get(API1+'/getLeavesSupervisor/'+empid+'/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
+    +'/'+leavePayment+'/'+dataSearch,{})
+  }
+
+
+getLeavesSupervisorHaveDate(empid : string , leaveTypeSearch : string , leaveStatusSearch : string , departmentSelect:string ,
+  leavePayment:string , dataSearch:string,datestart:string , dateend:string):Observable<any>{
+    return this.http.get(API1+'/getLeavesSupervisorHavedate/'+empid+'/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
+    +'/'+leavePayment+'/'+dataSearch+'/'+datestart+'/'+dateend,{})
+  }
+
+
 }

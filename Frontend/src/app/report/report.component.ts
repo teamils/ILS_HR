@@ -57,7 +57,31 @@ clickSearch(){
     if(statususer == 'MANAGER'){
       console.log(1);
     }else if(statususer == 'SUPERVISOR'){
-      console.log(2);
+
+      if(this.startDateSearch == undefined || this.endDateSearch == undefined){
+              if(this.dataSearch == ''){
+                  this.dataSearch=undefined;
+              }
+              this.service.getLeavesSupervisor(localStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
+                 this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
+                     this.showTable = data;
+                     console.table(this.showTable);
+               });
+      }
+      else{
+            if(this.dataSearch == ''){
+                  this.dataSearch=undefined;
+              }
+
+          this.service.getLeavesSupervisorHaveDate(localStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
+                 this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
+                     this.showTable = data;
+                     console.table(this.showTable);
+               });
+      }
+
+
+
     }else if(statususer == 'EMPLOYEE'){
 
           if(this.startDateSearch == undefined || this.endDateSearch == undefined){ //ถ้าไม่ใส่วันที่
@@ -71,6 +95,9 @@ clickSearch(){
                });
 
           }else{ //ถ้าใส่วันที่
+                if(this.dataSearch == ''){
+                  this.dataSearch=undefined;
+              }
                 this.service.getLeavesEmployeeHaveDate(localStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
                  this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
                      this.showTable = data;
@@ -81,9 +108,14 @@ clickSearch(){
           }
 
 
+
+
     }else if(statususer == 'DC-MANAGER'){
 
     }
+
+
+
 }
 
 }
