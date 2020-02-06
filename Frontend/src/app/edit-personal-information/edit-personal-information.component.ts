@@ -25,9 +25,9 @@ import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/mater
 
 export class EditPersonalInformationComponent implements OnInit {
     employee: Array<any>;
-    empId = localStorage.getItem('empId');
-    fName = localStorage.getItem('fName');
-    lName = localStorage.getItem('lName');
+    empId = sessionStorage.getItem('empId');
+    fName = sessionStorage.getItem('fName');
+    lName = sessionStorage.getItem('lName');
     NewemployeeMasterID : null;
     NewemployeeMasterCustomerCode: string;
     Newprefix : string;
@@ -140,7 +140,7 @@ export class EditPersonalInformationComponent implements OnInit {
                                            console.log('EditEmployee is successful');
                                            alert("Edit Success!");
                                             this.BackupEmployeeMaster();
-                                            //localStorage.setItem('links', 'employeeMaster');
+                                            //sessionStorage.setItem('links', 'employeeMaster');
                                            window.location.reload(true);
 
                                        },

@@ -61,16 +61,6 @@ public class LeavesController {
         return this.leavesRepository.getLeavesToNotApproveByManager(empID);
     }
 
-    @GetMapping("/LeavesSelectDepartment/{empID}")
-    public Iterable<Leaves> LeavesSelectDepartment(@PathVariable String empID) {
-        return this.leavesRepository.getLeavesSelectDepartment(empID);
-    }
-
-    @GetMapping("/getSearchEmployeeByCodeAndNameInApprove/{dataSearch}/{empID}")
-    public Iterable<Leaves> searchEmployeeByCodeAndNameInApprove(@PathVariable String dataSearch,@PathVariable String empID){
-        return this.leavesRepository.SearchEmployeeByCodeAndNameInApprove(dataSearch,empID);
-    }
-
     @PostMapping("/Time/{startTime}/{endTime}")
     public String Time(@PathVariable String startTime , @PathVariable String endTime) throws ParseException {
 
@@ -293,18 +283,10 @@ public class LeavesController {
         return this.leavesRepository.SearchLeaveByStartDateToStartDate2AndAll(startDate,endDate,departmentID,leaveTypeID,leaveStatus,isPayment,codeAndName);
     }
 
-    @GetMapping("/SearchEmployeeByCodeAndNameInApproveByManager/{dataSearch}/{empID}")
-    public Iterable<Leaves> SearchEmployeeByCodeAndNameInApproveByManager(@PathVariable String dataSearch,@PathVariable String empID){
-        return this.leavesRepository.SearchEmployeeByCodeAndNameInApproveByManager(dataSearch,empID);
-    }
 
     @GetMapping("/getLeaveAtManager")
     public Iterable<Leaves> getLeaveAtManager(){
         return this.leavesRepository.getLeaveAtManager();
-    }
-    @GetMapping("/SearchLeaveAtManager/{dataSearch}")
-    public Iterable<Leaves> SearchLeaveAtManager(@PathVariable String dataSearch){
-        return this.leavesRepository.SearchLeaveAtManager(dataSearch);
     }
 
     @GetMapping("/SearchLeaveByLeaveTypeAndLeaveStatus/{leaveType}/{leaveStatus}/{empID}")
@@ -327,12 +309,39 @@ public class LeavesController {
         if(codeAndName.equals("undefined")||codeAndName.equals("null")) codeAndName="";
         return this.leavesRepository.SearchLeaveInApproveSupByLeaveTypeLeaveStatusCodeName(empID,leaveTypeID,leaveStatus,codeAndName);
     }
-
     @GetMapping("/SearchLeaveInApproveSupByStartDateToStartDate2AndAll/{empID}/{startDate}/{startDate2}/{leaveTypeID}/{leaveStatus}/{codeAndName}")
     public Iterable<Leaves> SearchLeaveInApproveSupByStartDateToStartDate2AndAll(@PathVariable String empID,@PathVariable String startDate,@PathVariable String startDate2,@PathVariable String leaveTypeID,@PathVariable String leaveStatus,@PathVariable String codeAndName){
         if(leaveTypeID.equals("undefined")||leaveTypeID.equals("null")) leaveTypeID="";
         if(leaveStatus.equals("undefined")||leaveStatus.equals("null")) leaveStatus="";
         if(codeAndName.equals("undefined")||codeAndName.equals("null")) codeAndName="";
         return this.leavesRepository.SearchLeaveInApproveSupByStartDateToStartDate2AndAll(empID,startDate,startDate2,leaveTypeID,leaveStatus,codeAndName);
+    }
+
+    @GetMapping("/SearchLeaveInApproveManagerByLeaveTypeLeaveStatusCodeName/{empID}/{leaveTypeID}/{leaveStatus}/{codeAndName}")
+    public Iterable<Leaves> SearchLeaveInApproveManagerByLeaveTypeLeaveStatusCodeName(@PathVariable String empID,@PathVariable String leaveTypeID,@PathVariable String leaveStatus,@PathVariable String codeAndName){
+        if(leaveTypeID.equals("undefined")||leaveTypeID.equals("null")) leaveTypeID="";
+        if(leaveStatus.equals("undefined")||leaveStatus.equals("null")) leaveStatus="";
+        if(codeAndName.equals("undefined")||codeAndName.equals("null")) codeAndName="";
+        return this.leavesRepository.SearchLeaveInApproveManagerByLeaveTypeLeaveStatusCodeName(empID,leaveTypeID,leaveStatus,codeAndName);
+    }
+    @GetMapping("/SearchLeaveInApproveManagerByStartDateToStartDate2AndAll/{empID}/{startDate}/{startDate2}/{leaveTypeID}/{leaveStatus}/{codeAndName}")
+    public Iterable<Leaves> SearchLeaveInApproveManagerByStartDateToStartDate2AndAll(@PathVariable String empID,@PathVariable String startDate,@PathVariable String startDate2,@PathVariable String leaveTypeID,@PathVariable String leaveStatus,@PathVariable String codeAndName){
+        if(leaveTypeID.equals("undefined")||leaveTypeID.equals("null")) leaveTypeID="";
+        if(leaveStatus.equals("undefined")||leaveStatus.equals("null")) leaveStatus="";
+        if(codeAndName.equals("undefined")||codeAndName.equals("null")) codeAndName="";
+        return this.leavesRepository.SearchLeaveInApproveManagerByStartDateToStartDate2AndAll(empID,startDate,startDate2,leaveTypeID,leaveStatus,codeAndName);
+    }
+
+    @GetMapping("/SearchLeaveInDCManagerByLeaveTypeAndCodeName/{leaveTypeID}/{codeAndName}")
+    public Iterable<Leaves> SearchLeaveInDCManagerByLeaveTypeAndCodeName(@PathVariable String leaveTypeID,@PathVariable String codeAndName){
+        if(leaveTypeID.equals("undefined")||leaveTypeID.equals("null")) leaveTypeID="";
+        if(codeAndName.equals("undefined")||codeAndName.equals("null")) codeAndName="";
+        return this.leavesRepository.SearchLeaveInDCManagerByLeaveTypeAndCodeName(leaveTypeID,codeAndName);
+    }
+    @GetMapping("/SearchLeaveInDCManagerByStartDateToStartDate2AndAll/{startDate}/{startDate2}/{leaveTypeID}/{codeAndName}")
+    public Iterable<Leaves> SearchLeaveInDCManagerByStartDateToStartDate2AndAll(@PathVariable String startDate,@PathVariable String startDate2,@PathVariable String leaveTypeID,@PathVariable String codeAndName){
+        if(leaveTypeID.equals("undefined")||leaveTypeID.equals("null")) leaveTypeID="";
+        if(codeAndName.equals("undefined")||codeAndName.equals("null")) codeAndName="";
+        return this.leavesRepository.SearchLeaveInDCManagerByStartDateToStartDate2AndAll(startDate,startDate2,leaveTypeID,codeAndName);
     }
 }

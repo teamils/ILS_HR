@@ -1,17 +1,40 @@
 <mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
 <mat-toolbar color="primary">
-  <span>DC Manager</span>&nbsp;&nbsp;&nbsp;&nbsp;
+  <span (click)="ngOnInit()">DC Manager</span>&nbsp;&nbsp;&nbsp;&nbsp;
   <span class="example-fill-remaining-space" style="align:center;"></span>
   <span>
-  ค้นหา :
-    <mat-form-field (keyup)="SearchLeaveAtManager();SearchInputNull()">
-       <mat-label></mat-label>
-      <input matInput placeholder="รหัสพนักงาน/ชื่อ-สกุล" [(ngModel)]="dataSearch">
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+      <button mat-stroked-button style="width:100%;"(click)="ShowSearchLeaveData()"><mat-icon>search</mat-icon>&nbsp;<b>Show Search Data</b></button>
   </span>
 </mat-toolbar>
 
+<mat-card *ngIf="hide">
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerSearch"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี ค.ศ." [(ngModel)]="startDateSearch" >
+    <mat-datepicker-toggle matSuffix [for]="pickerSearch" ></mat-datepicker-toggle>
+    <mat-datepicker touchUi #pickerSearch></mat-datepicker>
+  </mat-form-field>&nbsp;&nbsp;To&nbsp;&nbsp;
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerSearch2"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี ค.ศ." [(ngModel)]="endDateSearch" >
+    <mat-datepicker-toggle matSuffix [for]="pickerSearch2" ></mat-datepicker-toggle>
+    <mat-datepicker touchUi #pickerSearch2></mat-datepicker>
+  </mat-form-field>
+  &nbsp;&nbsp;
+  <mat-form-field hintLabel="" >
+    <mat-select placeholder="ประเภทการลา" [(ngModel)]="leaveTypeSearch" >
+      <mat-option>---none---</mat-option>
+      <mat-option *ngFor="let value of leaveTypeForAlldays" [value]="value.leaveTypeForAlldayID" >
+        {{value.leaveTypeForAlldayName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;&nbsp;
+  <mat-form-field  hintLabel="">
+    <input matInput  [(ngModel)]="codeAndName" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  <br>
+  <button mat-raised-button (click)="SearchLeaveData()" style="width:100%"><mat-icon>search</mat-icon>&nbsp;Search</button>
+</mat-card>
 
 <div class="example-container mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort  class="mat-elevation-z8">

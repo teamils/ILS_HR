@@ -20,7 +20,7 @@ export class AttendanceShowLeavenumberComponent implements OnInit {
   leave : Array<any>;
   employeeID;
   count:number=0;
-  empId = localStorage.getItem('empId');
+  empId = sessionStorage.getItem('empId');
   constructor(public dialogRef: MatDialogRef<AttendanceShowLeavenumberComponent>
                       ,hangeDetectorRef: ChangeDetectorRef
                       ,media: MediaMatcher

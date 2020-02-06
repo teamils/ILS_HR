@@ -50,7 +50,7 @@ export class EmployeeDeleteComponent implements OnInit {
                                        data => {
                                            console.log('PUT Request is successful');
                                            window.location.reload(true);
-                                            localStorage.setItem('links', 'employeeMaster');
+                                            sessionStorage.setItem('links', 'employeeMaster');
                                        },
                                        error => {
                                            console.log('Error', error);

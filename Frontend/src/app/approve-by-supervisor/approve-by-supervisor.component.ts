@@ -46,10 +46,10 @@ export class ApproveBySupervisorComponent implements OnInit {
   interval3:any;
   leaveID;
   dis;
-  empId = localStorage.getItem('empId');
-  firstNameOnLogin = localStorage.getItem('fName');
-  lastNameOnLogin  = localStorage.getItem('lName');
-  departmentOnLogin = localStorage.getItem('departmentlogin');
+  empId = sessionStorage.getItem('empId');
+  firstNameOnLogin = sessionStorage.getItem('fName');
+  lastNameOnLogin  = sessionStorage.getItem('lName');
+  departmentOnLogin = sessionStorage.getItem('departmentlogin');
   progressBar=false;
   dateAndTotel;
   dataToInput;
@@ -76,50 +76,6 @@ export class ApproveBySupervisorComponent implements OnInit {
              private http: HttpClient,
              public datepipe: DatePipe) { }
 
-
-  ShowSearchLeaveData(){
-      this.hide = !this.hide;
-      if(this.hide==false){
-          this.startDateSearch=null;
-          this.endDateSearch=null;
-          this.leaveTypeSearch=null;
-          this.leaveStatusSearch=null;
-          this.codeAndName=null;
-      }
-  }
-
-  SetLeaves(data:any){
-                this.progressBar = false;
-                this.leaves = data;
-                this.dataSource.data = this.leaves;
-                for(let i of this.leaves){
-                  i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                  i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-                  i.createDate =  this.SplitCreateDate(i.createDate);
-                }
-      this.ngOnDestroy();
-  }
-
-  SearchLeaveData(){
-    this.progressBar = true;
-    this.ngOnDestroy();
-    if(this.startDateSearch == null && this.endDateSearch == null){
-      this.http.get(API1+'/SearchLeaveInApproveSupByLeaveTypeLeaveStatusCodeName/' + this.empId +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch +'/'+ this.codeAndName,{})
-                               .subscribe(data => {
-                                  this.SetLeaves(data);
-                               },error => {
-                                  console.log('Error', error);
-                               });
-    }
-    else{
-      this.http.get(API1+'/SearchLeaveInApproveSupByStartDateToStartDate2AndAll/' + this.empId +'/'+ this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd') +'/'+ this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd') +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch  +'/'+ this.codeAndName,{})
-                               .subscribe(data => {
-                                  this.SetLeaves(data);
-                               },error => {
-                                  console.log('Error', error);
-                               });
-    }
-  }
 
   ngOnDestroy() {
       clearInterval(this.interval);
@@ -208,6 +164,49 @@ export class ApproveBySupervisorComponent implements OnInit {
                   height:'270px',
                   data: row,
             });
+  }
+  ShowSearchLeaveData(){
+      this.hide = !this.hide;
+      if(this.hide==false){
+          this.startDateSearch=null;
+          this.endDateSearch=null;
+          this.leaveTypeSearch=null;
+          this.leaveStatusSearch=null;
+          this.codeAndName=null;
+      }
+  }
+
+  SetLeaves(data:any){
+                this.progressBar = false;
+                this.leaves = data;
+                this.dataSource.data = this.leaves;
+                for(let i of this.leaves){
+                  i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                  i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                  i.createDate =  this.SplitCreateDate(i.createDate);
+                }
+      this.ngOnDestroy();
+  }
+
+  SearchLeaveData(){
+    this.progressBar = true;
+    this.ngOnDestroy();
+    if(this.startDateSearch == null && this.endDateSearch == null){
+      this.http.get(API1+'/SearchLeaveInApproveSupByLeaveTypeLeaveStatusCodeName/' + this.empId +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch +'/'+ this.codeAndName,{})
+                               .subscribe(data => {
+                                  this.SetLeaves(data);
+                               },error => {
+                                  console.log('Error', error);
+                               });
+    }
+    else{
+      this.http.get(API1+'/SearchLeaveInApproveSupByStartDateToStartDate2AndAll/' + this.empId +'/'+ this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd') +'/'+ this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd') +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch  +'/'+ this.codeAndName,{})
+                               .subscribe(data => {
+                                  this.SetLeaves(data);
+                               },error => {
+                                  console.log('Error', error);
+                               });
+    }
   }
 
 }

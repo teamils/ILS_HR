@@ -61,12 +61,12 @@ export class AttendanceComponent implements OnInit {
     checkDisabled:'',
   };
 
-  empId = localStorage.getItem('empId');
-  startDateInLogin = localStorage.getItem('startDateInLogin');
-  departmentIDLogin = localStorage.getItem('departmentIDLogin');
-  firstNameOnLogin = localStorage.getItem('fName');
-  lastNameOnLogin  = localStorage.getItem('lName');
-  roleStatusInLogin  = localStorage.getItem('roleStatusInLogin');
+  empId = sessionStorage.getItem('empId');
+  startDateInLogin = sessionStorage.getItem('startDateInLogin');
+  departmentIDLogin = sessionStorage.getItem('departmentIDLogin');
+  firstNameOnLogin = sessionStorage.getItem('fName');
+  lastNameOnLogin  = sessionStorage.getItem('lName');
+  roleStatusInLogin  = sessionStorage.getItem('roleStatusInLogin');
   employeeMasterCustomerCode : String;
   empID : Array<any>;
   dataLeave : Array<any>;
@@ -289,7 +289,7 @@ export class AttendanceComponent implements OnInit {
                                            console.log('PUT Request is successful', dataLeave);
                                            alert("ลาสําเร็จ รอการอนุมัติ");
                                             //window.location.reload(true);
-                                            localStorage.setItem('links', 'attendance');
+                                            sessionStorage.setItem('links', 'attendance');
                                             this.x=false;
                                             this.SentEmail(this.leaveTypeSelect,this.startDate,this.startDate,this.startTimeSelect,this.endTimeSelect,this.totalTime,'ชั่วโมง',this.reason);
                                             this.ClearTextInput();
@@ -347,7 +347,7 @@ export class AttendanceComponent implements OnInit {
                                            console.log('PUT Request is successful', dataLeave);
                                            alert(this.leaveTypeSelect2+"ลา "+this.diffDay+" วัน สำเร็จ รอการอนุมัติ");
                                             //window.location.reload(true);
-                                            localStorage.setItem('links', 'attendance');
+                                            sessionStorage.setItem('links', 'attendance');
                                             this.SentEmail(this.leaveTypeSelect2,this.startDate2,this.endDate2,'8:00','17:00',0,'วัน',this.reason2);
                                             this.x=false;
                                             this.ClearTextInput();
@@ -694,7 +694,7 @@ export interface DialogData {
                                              console.log('PUT Request is successful');
                                              //window.location.reload(true);
                                               this.dialogRef.close();
-                                              localStorage.setItem('links', 'attendance');
+                                              sessionStorage.setItem('links', 'attendance');
                                               this.CalculateLeaveNumberBack();
                                          },
                                          error => {

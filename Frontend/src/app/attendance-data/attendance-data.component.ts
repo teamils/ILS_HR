@@ -63,9 +63,9 @@ export class AttendanceDataComponent implements OnInit {
   dis;
   dataSearch='';
   progressBar=false;
-  firstNameOnLogin = localStorage.getItem('fName');
-  lastNameOnLogin  = localStorage.getItem('lName');
-  empId = localStorage.getItem('empId');
+  firstNameOnLogin = sessionStorage.getItem('fName');
+  lastNameOnLogin  = sessionStorage.getItem('lName');
+  empId = sessionStorage.getItem('empId');
 //------Search------------
   startDateSearch;
   endDateSearch;
@@ -319,7 +319,7 @@ export interface DialogData {
                                              console.log('CancelAttendance is successful');
                                               this.dialogRef.close();
                                              //window.location.reload(true);
-                                              localStorage.setItem('links', 'attendanceData');
+                                              sessionStorage.setItem('links', 'attendanceData');
                                             this.http.post(API1 + '/CalculateLeaveNumberBack/' + this.leaves.leavesNumbersid.leavesNumbersID +'/'+ this.leaves.diffDay +'/'+ this.leaves.leavesID,{})
                                              .subscribe(
                                                  data => {
@@ -355,9 +355,9 @@ export interface EditPaymentDialogData {
     templateUrl: 'editPayment.html',
   })
   export class EditPaymentDialog {
-    empId = localStorage.getItem('empId');
-    firstNameOnLogin = localStorage.getItem('fName');
-    lastNameOnLogin  = localStorage.getItem('lName');
+    empId = sessionStorage.getItem('empId');
+    firstNameOnLogin = sessionStorage.getItem('fName');
+    lastNameOnLogin  = sessionStorage.getItem('lName');
     leaves: Array<any>;
     leavesID: string;
     employeeMasterFirstName='';

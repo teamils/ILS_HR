@@ -73,9 +73,9 @@ export class EmployeeAddComponent implements OnInit {
   role_statusSelect = '';
   passwordCreate : null;
   progressBar=false;
-  empId = localStorage.getItem('empId');
-  fName = localStorage.getItem('fName');
-  lName = localStorage.getItem('lName');
+  empId = sessionStorage.getItem('empId');
+  fName = sessionStorage.getItem('fName');
+  lName = sessionStorage.getItem('lName');
 
     constructor(private route:ActivatedRoute ,
             public dialog: MatDialog,
@@ -187,7 +187,7 @@ export class EmployeeAddComponent implements OnInit {
                                          console.log('PUT Request is successful', data);
                                          alert("บันทึกสำเร็จ");
                                          window.location.reload(true);
-                                          localStorage.setItem('links', 'employeeMaster');
+                                          sessionStorage.setItem('links', 'employeeMaster');
                                           this.progressBar=false;
                                      },
                                      error => {

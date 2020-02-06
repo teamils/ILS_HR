@@ -86,14 +86,14 @@ export class HomeComponent implements OnInit {
                         this.table.fName = data.employeeMasterFirstName;
                         this.table.lName = data.employeeMasterLastName;
                         this.table.rolestatus = data.roleStatus;
-                        localStorage.setItem('loginstatus', 'true');
-                        localStorage.setItem('empId', this.table.leaID);
-                        localStorage.setItem('empCode', this.table.empCode);
-                        localStorage.setItem('fName', this.table.fName);
-                        localStorage.setItem('lName', this.table.lName);
-                        localStorage.setItem('departmentIDLogin', data.departmentid.departmentID);
-                        localStorage.setItem('startDateInLogin', data.employeeMasterStartDate);
-                        localStorage.setItem('roleStatusInLogin', data.roleStatus);
+                        sessionStorage.setItem('loginstatus', 'true');
+                        sessionStorage.setItem('empId', this.table.leaID);
+                        sessionStorage.setItem('empCode', this.table.empCode);
+                        sessionStorage.setItem('fName', this.table.fName);
+                        sessionStorage.setItem('lName', this.table.lName);
+                        sessionStorage.setItem('departmentIDLogin', data.departmentid.departmentID);
+                        sessionStorage.setItem('startDateInLogin', data.employeeMasterStartDate);
+                        sessionStorage.setItem('roleStatusInLogin', data.roleStatus);
                         console.log(this.table.rolestatus);
                         this.progressBar=false;
 
@@ -165,7 +165,7 @@ export class HomeComponent implements OnInit {
                       alert("ท่านอยู่ในสถานะ"+data.maritalStatus+" ไม่สามารถเข้าระบบได้!");
                     }
 
-                    localStorage.setItem('logouts', 'false');
+                    sessionStorage.setItem('logouts', 'false');
                 }
               });
               this.progressBar=true;

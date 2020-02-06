@@ -10,6 +10,9 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { ReasonNotApproveDialog } from '../approve-by-supervisor/approve-by-supervisor.component';
 import { API1 } from '../app.component';
+import { DatePipe } from '@angular/common';
+import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
+
 
 export interface PeriodicElement {
   name: string;
@@ -20,12 +23,17 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-approve-by-manager',
   templateUrl: './approve-by-manager.component.html',
-  styleUrls: ['./approve-by-manager.component.css']
+  styleUrls: ['./approve-by-manager.component.css'],
+  providers: [DatePipe,
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+  ]
 })
 export class ApproveByManagerComponent implements OnInit {
   leaves  : Array<any>;
   LeavesToComplete: Array<any>;
   departmentMasterRole: Array<any>;
+  leaveTypeForAlldays: Array<any>;
   isChecked;
   intervalMan:any;
   interval2Man:any;
@@ -34,10 +42,18 @@ export class ApproveByManagerComponent implements OnInit {
   dis;
   progressBar=false;
   dataSearch='';
-  empId = localStorage.getItem('empId');
-  firstNameOnLogin = localStorage.getItem('fName');
-  lastNameOnLogin  = localStorage.getItem('lName');
-  departmentOnLogin = localStorage.getItem('departmentlogin');
+//------Search------------
+  startDateSearch;
+  endDateSearch;
+  hide=false;
+  leaveTypeSearch;
+  leaveStatusSearch;
+  codeAndName;
+//------------------------
+  empId = sessionStorage.getItem('empId');
+  firstNameOnLogin = sessionStorage.getItem('fName');
+  lastNameOnLogin  = sessionStorage.getItem('lName');
+  departmentOnLogin = sessionStorage.getItem('departmentlogin');
 
   displayedColumns: string[] = ['number','employeeCode', 'name','department','date', 'leaveType', 'startDate', 'endDate','total', 'reason', /*'approvedBySupervisor', 'approvedByManager',*/'leaveStatus','approve','notApprove'];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
@@ -46,7 +62,8 @@ export class ApproveByManagerComponent implements OnInit {
               private router:Router,
               private route:ActivatedRoute ,
               public dialog: MatDialog,
-               private http: HttpClient) { }
+               private http: HttpClient,
+                public datepipe: DatePipe) { }
 
   ngOnDestroy() {
       clearInterval(this.intervalMan);
@@ -71,6 +88,10 @@ export class ApproveByManagerComponent implements OnInit {
           });
           this.dataSource.paginator = this.paginator;
         }, 1000);
+      this.service.getleaveTypeForAlldays().subscribe(data => {
+          this.leaveTypeForAlldays = data;
+          //console.table(this.leaveTypeForAlldays);
+      });
   }
   SplitCreateDate(date:any){
     var DateSplitted = date.split("T");
@@ -102,75 +123,51 @@ export class ApproveByManagerComponent implements OnInit {
                   data: row,
             });
   }
-  onChange(){
-          this.dataSearch='';
-          this.progressBar = true;
-              if(this.isChecked == true){
-                this.dis=true;
-                 clearInterval(this.interval2Man);
-                  clearInterval(this.interval3Man);
-                  this.intervalMan = setInterval(() => {
-                  this.service.getLeavesSelectDepartment(this.empId).subscribe(dataLeavesToComplete => {
-                        this.leaves = dataLeavesToComplete;
-                        this.dataSource.data = this.leaves;
-                        this.progressBar = false;
-                        for(let i of this.leaves){
-                          i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                          i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-                        }
-                        //console.log('leaves -> ',this.leaves);
-                    });
-                }, 1000);
-              }
-              else{
-                this.dis=false;
-                clearInterval(this.intervalMan);
-                clearInterval(this.interval3Man);
-                this.interval2Man = setInterval(() => {
-                  this.service.getShowLeavesNotApproveBySup(this.empId).subscribe(data => {
-                    this.leaves = data;
-                    this.dataSource.data = this.leaves;
-                    this.progressBar = false;
-                    for(let i of this.leaves){
-                      i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                      i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-                    }
-                    //console.log('leaves -> ',this.leaves);
-                  });
-                }, 1000);
-              }
 
+  ShowSearchLeaveData(){
+      this.hide = !this.hide;
+      if(this.hide==false){
+          this.startDateSearch=null;
+          this.endDateSearch=null;
+          this.leaveTypeSearch=null;
+          this.leaveStatusSearch=null;
+          this.codeAndName=null;
+      }
   }
-  SearchInputNull(){
+
+  SetLeaves(data:any){
+                this.progressBar = false;
+                this.leaves = data;
+                this.dataSource.data = this.leaves;
+                for(let i of this.leaves){
+                  i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                  i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                  i.createDate =  this.SplitCreateDate(i.createDate);
+                }
+      this.ngOnDestroy();
+  }
+
+  SearchLeaveData(){
+    this.progressBar = true;
     this.ngOnDestroy();
-    //console.log(this.dataSearch);
-    if(this.dataSearch==''){
-      this.onChange();
-      this.progressBar = false;
+    if(this.startDateSearch == null && this.endDateSearch == null){
+      this.http.get(API1+'/SearchLeaveInApproveManagerByLeaveTypeLeaveStatusCodeName/' + this.empId +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch +'/'+ this.codeAndName,{})
+                               .subscribe(data => {
+                                  this.SetLeaves(data);
+                               },error => {
+                                  console.log('Error', error);
+                               });
+    }
+    else{
+      this.http.get(API1+'/SearchLeaveInApproveManagerByStartDateToStartDate2AndAll/' + this.empId +'/'+ this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd') +'/'+ this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd') +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch  +'/'+ this.codeAndName,{})
+                               .subscribe(data => {
+                                  this.SetLeaves(data);
+                               },error => {
+                                  console.log('Error', error);
+                               });
     }
   }
-  SearchEmployeeByCodeAndNameInApproveByManagerNOTApprove(){
-    this.ngOnDestroy();
-      this.service.getSearchEmployeeByCodeAndNameInApproveByManager(this.dataSearch,this.empId).subscribe(data => {
-              this.leaves = data;
-              this.dataSource.data = this.leaves;
-              for(let i of this.leaves){
-                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-              }
-      });
-  }
-  SearchEmployeeByCodeAndNameInApproveByManagerApprove(){
-    this.ngOnDestroy();
-      this.service.getSearchEmployeeByCodeAndNameInApprove(this.dataSearch,this.empId).subscribe(data => {
-              this.leaves = data;
-              this.dataSource.data = this.leaves;
-              for(let i of this.leaves){
-                i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-              }
-      });
-  }
+
 
 }
 

@@ -64,9 +64,9 @@ export class EmployeeEditComponent implements OnInit {
         NewRoleStatus: string;
         dis;
         select:any;
-        empId = localStorage.getItem('empId');
-        fName = localStorage.getItem('fName');
-        lName = localStorage.getItem('lName');
+        empId = sessionStorage.getItem('empId');
+        fName = sessionStorage.getItem('fName');
+        lName = sessionStorage.getItem('lName');
       constructor(public dialogRef: MatDialogRef<EmployeeEditComponent>
                       ,hangeDetectorRef: ChangeDetectorRef
                       ,media: MediaMatcher
@@ -147,7 +147,7 @@ export class EmployeeEditComponent implements OnInit {
                                            console.log('EditEmployee is successful');
                                            alert("Edit Success!");
                                             this.BackupEmployeeMaster();
-                                            localStorage.setItem('links', 'employeeMaster');
+                                            sessionStorage.setItem('links', 'employeeMaster');
                                            window.location.reload(true);
 
                                        },

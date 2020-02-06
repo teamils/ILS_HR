@@ -158,18 +158,20 @@
   <ng-container matColumnDef="confirm" stickyEnd>
     <th mat-header-cell *matHeaderCellDef ><font  color="black"><b></b></font></th>
     <td mat-cell *matCellDef="let element">
-        <button mat-icon-button  matTooltip="ยืนยัน" matTooltipPosition="left"  (click)="getEditPaymentDialog(element);" aria-label="Example icon-button with a heart icon"  [disabled]="element.leaveStatus=='Approve'?false:true">
+      <button mat-mini-fab color="primary" matTooltip="ยืนยัน" matTooltipPosition="left" (click)="getEditPaymentDialog(element);" aria-label="Example icon-button with a heart icon" [disabled]="element.leaveStatus=='Approve'?false:true"><mat-icon>check</mat-icon></button>
+       <!-- <button mat-icon-button  matTooltip="ยืนยัน" matTooltipPosition="left"  (click)="getEditPaymentDialog(element);" aria-label="Example icon-button with a heart icon"  [disabled]="element.leaveStatus=='Approve'?false:true">
           <mat-icon>check_circle_outline</mat-icon>
-        </button>
+        </button> -->
     </td>
   </ng-container>
 
   <ng-container matColumnDef="del" stickyEnd>
     <th mat-header-cell *matHeaderCellDef ><font  color="black"><b></b></font></th>
     <td mat-cell *matCellDef="let element" >
-      <button mat-icon-button  matTooltip="ยกเลิกการลา" matTooltipPosition="left" (click)="DeleteAttendance(element);" [disabled]="element.leaveStatus=='Cancel'?true:false" #ckeckEdit>
+      <button mat-mini-fab color="warn" matTooltip="ยกเลิกการลา" matTooltipPosition="left" (click)="DeleteAttendance(element); " [disabled]="element.leaveStatus=='Cancel'?true:false" #ckeckEdit><mat-icon>clear</mat-icon></button>
+     <!-- <button mat-icon-button  matTooltip="ยกเลิกการลา" matTooltipPosition="left" (click)="DeleteAttendance(element);" [disabled]="element.leaveStatus=='Cancel'?true:false" #ckeckEdit>
         <mat-icon>highlight_off</mat-icon>
-      </button>
+      </button> -->
     </td>
   </ng-container>
 

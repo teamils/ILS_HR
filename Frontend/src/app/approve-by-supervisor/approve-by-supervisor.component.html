@@ -6,6 +6,7 @@
       <button mat-stroked-button style="width:100%;"(click)="ShowSearchLeaveData()"><mat-icon>search</mat-icon>&nbsp;<b>Show Search Data</b></button>
   </span>
 </mat-toolbar>
+
 <mat-card *ngIf="hide">
   <mat-form-field>
     <input matInput [matDatepicker]="pickerSearch"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี ค.ศ." [(ngModel)]="startDateSearch" >

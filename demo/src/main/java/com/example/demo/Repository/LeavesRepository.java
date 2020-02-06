@@ -40,6 +40,7 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
     //date attendance
     @Query(value = "SELECT * FROM leaves l,employee_master e\n" +
             "WHERE is_active_attendance='1' \n" +
+            "and l.leave_status = 'Approve'\n" +
             "and e.role_status <> 'MANAGER'\n" +
             "and l.employee_masterid_employee_masterid = e.employee_masterid" ,nativeQuery = true)
     Collection<Leaves> getLeavesToNotComplete();
@@ -80,7 +81,7 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "and l.is_active_attendance=1\n" +
             "and e.is_active=1\n" +
             "and l.employee_masterid_employee_masterid = e.employee_masterid\n" +
-            "and (e.role_status = 'EMPLOYEE' or e.role_status = 'HR')\n" +
+            "and (e.role_status = 'EMPLOYEE' or e.role_status = 'HR-ADMIN-ADMIN')\n" +
             "and l.departmentid in ( \n" +
             "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
             "where e.employee_masterid=:empID\n" +
@@ -97,7 +98,7 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "and l.is_active_attendance=1\n" +
             "and e.is_active=1\n" +
             "and l.employee_masterid_employee_masterid = e.employee_masterid\n" +
-            "and (e.role_status = 'EMPLOYEE' or e.role_status = 'HR')\n" +
+            "and (e.role_status = 'EMPLOYEE' or e.role_status = 'HR-ADMIN')\n" +
             "and l.departmentid in ( \n" +
             "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
             "where e.employee_masterid = :empID\n" +
@@ -115,7 +116,7 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "and l.is_active_attendance=1\n" +
             "and e.is_active=1\n" +
             "and l.employee_masterid_employee_masterid = e.employee_masterid\n" +
-            "and (e.role_status = 'EMPLOYEE' or e.role_status = 'HR')\n" +
+            "and (e.role_status = 'EMPLOYEE' or e.role_status = 'HR-ADMIN')\n" +
             "and l.departmentid in (\n" +
             "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
             "where e.employee_masterid = :empID\n" +
@@ -132,71 +133,75 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "and l.is_active_attendance=1\n" +
             "and e.is_active=1\n" +
             "and l.employee_masterid_employee_masterid = e.employee_masterid\n" +
-            "and (e.role_status = 'EMPLOYEE' or e.role_status = 'HR' or e.role_status = 'SUPERVISOR')\n" +
+            "and (e.role_status = 'EMPLOYEE' or e.role_status = 'HR-ADMIN' or e.role_status = 'SUPERVISOR')\n" +
             "and l.departmentid in ( \n" +
             "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
             "where e.employee_masterid=:empID2\n" +
             "and e.employee_masterid = dr.employee_masterid)" ,nativeQuery = true)
     Collection<Leaves> getLeavesToNotApproveByManager(@Param("empID2") String empID2 );
 
-    //approveByManager ลูกน้องตัวเอง//เห็นตาม master department role   // ตกนกด Approve
+    //approveByManager  ค้นหา leaves By leaveType,leaveStatus,CodeAndName
     @Query(value = "select * from leaves l,department d,employee_master e\n" +
             "where l.departmentid = d.departmentid\n" +
-            "and l.leave_status = 'Approve' \n" +
-            "and l.employee_masterid_employee_masterid <> :empID3\n" +
+            "and l.leave_type_for_all_day_leave_type_for_alldayid like :leaveTypeID%\n" +
+            "and l.leave_status like :leaveStatus%\n" +
+            "and (e.employee_master_customer_code like :codeAndName% or e.employee_master_first_name like :codeAndName% or e.employee_master_last_name like :codeAndName%)\n" +
+            "and l.employee_masterid_employee_masterid <> :empID\n" +
             "and l.is_active_attendance=1\n" +
             "and e.is_active=1\n" +
             "and l.employee_masterid_employee_masterid = e.employee_masterid\n" +
-            "and (e.role_status = 'EMPLOYEE' or e.role_status = 'HR' or e.role_status = 'SUPERVISOR')\n" +
-            "and l.departmentid in ( \n" +
+            "and (e.role_status = 'EMPLOYEE' or e.role_status = 'HR-ADMIN' or e.role_status = 'SUPERVISOR')\n" +
+            "and l.departmentid in (\n" +
             "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
-            "where e.employee_masterid=:empID3\n" +
+            "where e.employee_masterid = :empID\n" +
             "and e.employee_masterid = dr.employee_masterid)",nativeQuery = true)
-    Collection<Leaves> getLeavesSelectDepartment(@Param("empID3") String empID3 );
+    Collection<Leaves> SearchLeaveInApproveManagerByLeaveTypeLeaveStatusCodeName(@Param("empID") String empID,@Param("leaveTypeID") String leaveTypeID,@Param("leaveStatus") String leaveStatus,@Param("codeAndName") String codeAndName);
 
-    //approveByManager  ค้นหา รหัสพนักงาน ชื่อ - สกุล แผนก  ลูกน้องตัวเอง   // ตกนกด Approve
+    //approveByManager ค้นหา leaves By StartDate to StartDate2 and All
     @Query(value = "select * from leaves l,department d,employee_master e\n" +
             "where l.departmentid = d.departmentid\n" +
-            "and l.leave_status = 'Approve' \n" +
-            "and l.employee_masterid_employee_masterid <> :empIDSearch4\n" +
+            "and l.start_date_for_all_day BETWEEN :startDate AND :startDate2\n" +
+            "and l.leave_type_for_all_day_leave_type_for_alldayid like :leaveTypeID%\n" +
+            "and l.leave_status like :leaveStatus%\n" +
+            "and (e.employee_master_customer_code like :codeAndName% or e.employee_master_first_name like :codeAndName% or e.employee_master_last_name like :codeAndName%)\n" +
+            "and l.employee_masterid_employee_masterid <> :empID\n" +
             "and l.is_active_attendance=1\n" +
             "and e.is_active=1\n" +
             "and l.employee_masterid_employee_masterid = e.employee_masterid\n" +
-            "and (e.employee_master_customer_code LIKE %:dataSearch4% or e.employee_master_first_name LIKE %:dataSearch4% or e.employee_master_last_name LIKE %:dataSearch4% or d.department_name LIKE %:dataSearch4%)       \n" +
-            "and (e.role_status = 'EMPLOYEE' or e.role_status = 'HR' or e.role_status = 'SUPERVISOR')\n" +
-            "and l.departmentid in ( \n" +
+            "and (e.role_status = 'EMPLOYEE' or e.role_status = 'HR-ADMIN' or e.role_status = 'SUPERVISOR')\n" +
+            "and l.departmentid in (\n" +
             "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
-            "where e.employee_masterid=:empIDSearch4\n" +
-            "and e.employee_masterid = dr.employee_masterid)",nativeQuery = true)
-    Collection<Leaves> SearchEmployeeByCodeAndNameInApprove(@Param("dataSearch4") String dataSearch4,@Param("empIDSearch4") String empIDSearch4);
+            "where e.employee_masterid = :empID\n" +
+            "and e.employee_masterid = dr.employee_masterid)" ,nativeQuery = true)
+    Collection<Leaves> SearchLeaveInApproveManagerByStartDateToStartDate2AndAll(@Param("empID") String empID,@Param("startDate") String startDate,@Param("startDate2") String startDate2,@Param("leaveTypeID") String leaveTypeID,@Param("leaveStatus") String leaveStatus,@Param("codeAndName") String codeAndName);
 
-    //Approve By Manager ค้นหา รหัสพนักงาน ชื่อ - สกุล เเผนก // ตอนไม่กด Approve
-    @Query(value = "select * from leaves l,department d, employee_master e\n" +
-            "where l.departmentid = d.departmentid\n" +
-            "and l.leave_status = 'Waiting approve'" +
-            "and l.is_active_attendance=1\n" +
-            "and e.is_active=1\n" +
-            "and l.employee_masterid_employee_masterid <> :empIDSearch2 \n" +
-            "and (e.employee_master_customer_code LIKE %:dataSearch2% or e.employee_master_first_name LIKE %:dataSearch2% or e.employee_master_last_name LIKE %:dataSearch2% or d.department_name LIKE %:dataSearch2%)\n" +
-            "and e.employee_masterid = l.employee_masterid_employee_masterid\n" +
-            "and (e.role_status = 'EMPLOYEE' or e.role_status = 'HR' or e.role_status = 'SUPERVISOR')\n" +
-            "and l.departmentid in ( \n" +
-            "select distinct(dr.departmentid)from employee_master e,department_master_role dr\n" +
-            "where e.employee_masterid=:empIDSearch2\n" +
-            "and e.employee_masterid = dr.employee_masterid)",nativeQuery = true)
-    Collection<Leaves> SearchEmployeeByCodeAndNameInApproveByManager(@Param("dataSearch2") String dataSearch2,@Param("empIDSearch2") String empIDSearch2);
 
-    //***********************************************  approveByManager *******************************************//
+    //***********************************************  DC Manager *******************************************//
     //DC Manager show leave at manager
     @Query(value = "select * from leaves l ,employee_master e\n" +
             "where e.role_status='MANAGER'\n" +
             "and l.employee_masterid_employee_masterid = e.employee_masterid\n" ,nativeQuery = true)
     Collection<Leaves> getLeaveAtManager();
 
-    //DC Manager ค้นหา รหัสพนักงาน ชื่อ - สกุล
+    //DC Manager  ค้นหา leaves By leaveType,CodeAndName
     @Query(value = "select * from leaves l ,employee_master e\n" +
             "where e.role_status='MANAGER'\n" +
-            "and (e.employee_master_customer_code LIKE %:dataSearch3% or e.employee_master_first_name LIKE %:dataSearch3% or e.employee_master_last_name LIKE %:dataSearch3%)\n" +
-            "and l.employee_masterid_employee_masterid = e.employee_masterid\n" ,nativeQuery = true)
-    Collection<Leaves> SearchLeaveAtManager(@Param("dataSearch3") String dataSearch3);
+            "and l.leave_type_for_all_day_leave_type_for_alldayid like :leaveTypeID%\n" +
+            "and (e.employee_master_customer_code like :codeAndName% or e.employee_master_first_name like :codeAndName% or e.employee_master_last_name like :codeAndName%)\n" +
+            "and l.is_active_attendance=1\n" +
+            "and e.is_active=1\n" +
+            "and l.employee_masterid_employee_masterid = e.employee_masterid",nativeQuery = true)
+    Collection<Leaves> SearchLeaveInDCManagerByLeaveTypeAndCodeName(@Param("leaveTypeID") String leaveTypeID,@Param("codeAndName") String codeAndName);
+
+    //DC Manager  ค้นหา leaves By StartDate to StartDate2 and All
+    @Query(value = "select * from leaves l ,employee_master e\n" +
+            "where e.role_status='MANAGER'\n" +
+            "and l.start_date_for_all_day BETWEEN :startDate AND :startDate2\n" +
+            "and l.leave_type_for_all_day_leave_type_for_alldayid like :leaveTypeID%\n" +
+            "and (e.employee_master_customer_code like :codeAndName% or e.employee_master_first_name like :codeAndName% or e.employee_master_last_name like :codeAndName%)\n" +
+            "and l.is_active_attendance=1\n" +
+            "and e.is_active=1\n" +
+            "and l.employee_masterid_employee_masterid = e.employee_masterid",nativeQuery = true)
+    Collection<Leaves> SearchLeaveInDCManagerByStartDateToStartDate2AndAll(@Param("startDate") String startDate,@Param("startDate2") String startDate2,@Param("leaveTypeID") String leaveTypeID,@Param("codeAndName") String codeAndName);
+
 }
