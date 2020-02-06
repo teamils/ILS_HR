@@ -4,7 +4,7 @@
     <span class="example-spacer"><h1 align="center">REPORT</h1></span>
   </mat-toolbar-row>
 
-  <div>Filter :
+  <div (keydown.enter)="clickSearch()">Filter :
     <mat-form-field>
       <input matInput [matDatepicker]="pickerSearch"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี ค.ศ." [(ngModel)]="startDateSearch" >
       <mat-datepicker-toggle matSuffix [for]="pickerSearch" ></mat-datepicker-toggle>
@@ -60,9 +60,9 @@
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     <br>
-    <button mat-raised-button style="width:100%"  (click)="clickSearch()"><mat-icon>search</mat-icon>&nbsp;Search</button>&nbsp;&nbsp;
-  </div>
-  <mat-chip color="accent" matTooltip="นำข้อมูลออก"  selected (click)="exportexcel()">Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></mat-chip>&nbsp;
+    <button mat-raised-button style="width:100%" color="primary" (click)="clickSearch()"><mat-icon>search</mat-icon>&nbsp;Search</button>
+  </div><hr>
+  <button mat-raised-button style="width:100%" color="accent" matTooltip="นำข้อมูลออก" (click)="exportexcel()">Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></button>
 </mat-card>
 
 
@@ -153,9 +153,6 @@
       <th mat-header-cell *matHeaderCellDef><font color="black"><b>สถานะ</b></font>  </th>
       <td mat-cell *matCellDef="let element"> {{element.leaveStatus}} </td>
     </ng-container>
-
-
-
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
