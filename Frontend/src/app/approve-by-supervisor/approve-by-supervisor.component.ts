@@ -115,7 +115,10 @@ export class ApproveBySupervisorComponent implements OnInit {
     var DateSplitted = date.split("-");
     return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
   }
-
+  onlyOdds = (d: Date): boolean => {
+    const day = d.getDay();
+    return day !== 0 ;
+  }
   SentEmail(element:any){
       //console.log(element);
       this.dateAndTotel = "ในวันที่ "+element.startDateForAllDay+" "+element.startTime+" น. ถึงวันที่ "+element.endDateForAllDay+" "+element.endTime+" น. รวม "+element.labelLeaveHalfDay;

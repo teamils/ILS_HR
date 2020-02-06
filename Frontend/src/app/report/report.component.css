@@ -1,6 +1,5 @@
 .card{
-    width:97.1%;
-    height:94%;
+    width:97%;
     margin-top: 0px;
     margin-right: auto;
     margin-left: auto;
@@ -8,4 +7,82 @@
 }
 .example-spacer {
   flex: 1 1 auto;
+}
+
+
+   th.mat-column-number,
+   th.mat-column-employeeCode,
+   th.mat-column-name,
+   th.mat-column-endDate,
+   th.mat-column-date,
+   th.mat-column-leaveType,
+   th.mat-column-halfDay,
+   th.mat-column-startDate,
+   th.mat-column-reason,
+   th.mat-column-approvedBySupervisor,
+   th.mat-column-approvedByManager,
+   th.mat-column-leaveStatus,
+   th.mat-column-del,
+   th.mat-column-endDate2,
+   th.mat-column-total,
+   th.mat-column-employeeType,
+   th.mat-column-position,
+   th.mat-column-department,
+   th.mat-column-reasonNotApprove,
+   th.mat-column-isPayment{
+          text-align: center;
+   }
+   th.mat-column-number,td.mat-column-number{
+       width: 10px;
+   }
+   th.mat-column-confirm,td.mat-column-confirm{
+       width: 10px;
+   }
+   th.mat-column-del,td.mat-column-del{
+       width: 10px;
+   }
+
+
+
+.color{
+  background-color: #2E7D32;
+}
+th{
+   border: 1px solid #ffffff;
+    background-color: #00FF00;
+    text-align: center;
+    position: sticky;
+}
+td {
+   border: 1px solid #ffffff;
+  text-align: center;
+
+}
+
+tr:hover {background-color: #DCDCDC;}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 1600px;
+  height: auto;
+}
+
+.example-fill-remaining-space {
+  flex: 2 2 auto;
+}
+.searchStyle{
+  width:200px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-container {
+  width: 100%;
+  overflow: auto;
 }

@@ -64,3 +64,102 @@
   </div>
   <mat-chip color="accent" matTooltip="นำข้อมูลออก"  selected (click)="exportexcel()">Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></mat-chip>&nbsp;
 </mat-card>
+
+
+<div class="example-container mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort  class="mat-elevation-z8">
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>
+      <td mat-cell *matCellDef="let element ; let i = index">{{i+1}}.</td>
+    </ng-container>
+    <!-- Position Column -->
+    <ng-container matColumnDef="employeeCode">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>รหัสพนักงาน</b></font></th>
+      <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.employeeMasterCustomerCode}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>ชื่อ-สกุล</b></font></th>
+      <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.employeeMasterFirstName}}&nbsp;&nbsp;{{element.employeeMasterid.employeeMasterLastName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>ตำเเหน่ง</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.employeePosition}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="department">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>แผนก</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.departmentid.departmentName}} </td>
+    </ng-container>
+
+    <!-- <ng-container matColumnDef="employeeType">
+       <th mat-header-cell *matHeaderCellDef><font color="black"><b>ประเภทพนักงาน</b></font>  </th>
+       <td mat-cell *matCellDef="let element"> {{element.employeeMasterid.employeeType}} </td>
+     </ng-container> -->
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>วันที่</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.createDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="leaveType">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>ประเภทการลา</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.leaveTypeForAllDay.leaveTypeForAlldayName}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>เริ่มจากวันที่</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.startDateForAllDay+' '}}<font *ngIf="element.startTime=='null'?false:true;">{{element.startTime}}</font></td>
+    </ng-container>
+
+    <ng-container matColumnDef="endDate">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>ถึงวันที่</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.endDateForAllDay+' '}}<font *ngIf="element.startTime=='null'?false:true;">{{element.endTime}}</font> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>รวม</b></font>  </th>
+      <td mat-cell *matCellDef="let element">{{element.labelLeaveHalfDay}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="reason">
+      <th mat-header-cell *matHeaderCellDef ><font color="black"><b>เหตุผล</b></font></th>
+      <td mat-cell *matCellDef="let element"> {{element.reasonForAllDay}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="approvedBySupervisor">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>Ap_Sup</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.approvedBySupervisor}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="approvedByManager">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>Ap_Mgr</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.approvedByManager}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="reasonNotApprove">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>เหตุผลที่ไม่อนุมัติ</b></font></th>
+      <td mat-cell *matCellDef="let element"> {{element.reasonNotApprove}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="isPayment">
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>Payment</b></font></th>
+      <td mat-cell *matCellDef="let element"> {{element.isPayment}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="leaveStatus" >
+      <th mat-header-cell *matHeaderCellDef><font color="black"><b>สถานะ</b></font>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.leaveStatus}} </td>
+    </ng-container>
+
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+<mat-paginator [pageSizeOptions]="[15, 30, 50, 100,1000]" showFirstLastButtons ></mat-paginator>
+

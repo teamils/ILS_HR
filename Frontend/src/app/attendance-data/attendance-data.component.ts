@@ -119,6 +119,10 @@ export class AttendanceDataComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
 
   }
+  onlyOdds = (d: Date): boolean => {
+    const day = d.getDay();
+    return day !== 0 ;
+  }
   SplitCreateDate(date:any){
     var DateSplitted = date.split("T");
     var DateSplitted2 = DateSplitted[0].split("-");

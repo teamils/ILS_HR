@@ -103,7 +103,10 @@ export class ApproveByManagerComponent implements OnInit {
     var DateSplitted = date.split("-");
     return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
   }
-
+  onlyOdds = (d: Date): boolean => {
+    const day = d.getDay();
+    return day !== 0 ;
+  }
   approve(row : any){
         this.progressBar = true;
         this.http.post(API1 + '/approveByManager/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {

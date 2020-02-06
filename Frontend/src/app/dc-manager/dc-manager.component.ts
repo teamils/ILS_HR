@@ -127,7 +127,10 @@ export class DcManagerComponent implements OnInit {
     var DateSplitted = date.split("-");
     return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
   }
-
+  onlyOdds = (d: Date): boolean => {
+    const day = d.getDay();
+    return day !== 0 ;
+  }
   SearchLeaveAtManager(){
     this.ngOnDestroy();
       this.service.getSearchLeaveAtManager(this.dataSearch).subscribe(data => {

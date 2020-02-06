@@ -5,22 +5,30 @@ import {ActivatedRoute} from "@angular/router";
 import { HttpClient} from '@angular/common/http';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ServiceService } from '../service/service.service';
-import {  MatPaginator, MatTableDataSource } from '@angular/material';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import { API1 } from '../app.component';
 import { Pipe, PipeTransform} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { AttendanceShowLeavenumberComponent } from '../attendance-show-leavenumber/attendance-show-leavenumber.component';
 import { ExcelService } from '../excel.service';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+
+export interface Emp{
+  empCodeIDxx : number;
+  employeeMasterCustomerCode : String;
+}
+
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css'],
   providers: [DatePipe]
 })
+
 export class ReportComponent implements OnInit {
 
   progressBar=false;
+  showTable: Array<any>;
   leaveType: Array<any>;
   department: Array<any>;
 
@@ -31,8 +39,14 @@ export class ReportComponent implements OnInit {
   leaveStatusSearch;
   departmentSelect;
   leavePayment;
-  showTable: Array<any>;
+
   dataSearch;
+
+  displayedColumns: string[] = ['number','employeeCode', 'name','position','department'/*,'employeeType'*/,'date', 'leaveType','startDate', 'endDate','total','reason', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','isPayment','leaveStatus'];
+  dataSource = new MatTableDataSource<Emp>(this.showTable);
+  @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
+  @ViewChild(MatSort, {static : true}) sort: MatSort;
+
   constructor(private service:ServiceService,
             private router:Router,
             private route:ActivatedRoute,
@@ -52,7 +66,10 @@ export class ReportComponent implements OnInit {
       });
 
   }
-
+  onlyOdds = (d: Date): boolean => {
+    const day = d.getDay();
+    return day !== 0 ;
+  }
 clickSearch(){
 
     let statususer =   sessionStorage.getItem('roleStatusInLogin');
@@ -67,6 +84,13 @@ clickSearch(){
                  this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
                      this.showTable = data;
                      console.table(this.showTable);
+                     this.dataSource.data = this.showTable;
+                     this.dataSource.paginator = this.paginator;
+                      for(let i of this.showTable){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        i.createDate =  this.SplitCreateDate(i.createDate);
+                      }
                });
       }
       else{
@@ -77,6 +101,13 @@ clickSearch(){
                  this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
                      this.showTable = data;
                      console.table(this.showTable);
+                     this.dataSource.data = this.showTable;
+                     this.dataSource.paginator = this.paginator;
+                      for(let i of this.showTable){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        i.createDate =  this.SplitCreateDate(i.createDate);
+                      }
                });
       }
 
@@ -91,6 +122,13 @@ clickSearch(){
                  this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
                      this.showTable = data;
                      console.table(this.showTable);
+                     this.dataSource.data = this.showTable;
+                     this.dataSource.paginator = this.paginator;
+                      for(let i of this.showTable){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        i.createDate =  this.SplitCreateDate(i.createDate);
+                      }
                });
       }
       else{
@@ -102,6 +140,13 @@ clickSearch(){
                  this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
                      this.showTable = data;
                      console.table(this.showTable);
+                     this.dataSource.data = this.showTable;
+                     this.dataSource.paginator = this.paginator;
+                      for(let i of this.showTable){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        i.createDate =  this.SplitCreateDate(i.createDate);
+                      }
                });
       }
 
@@ -117,6 +162,13 @@ clickSearch(){
              this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
                  this.showTable = data;
                  console.table(this.showTable);
+                     this.dataSource.data = this.showTable;
+                     this.dataSource.paginator = this.paginator;
+                      for(let i of this.showTable){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        i.createDate =  this.SplitCreateDate(i.createDate);
+                      }
                });
 
           }else{ //ถ้าใส่วันที่
@@ -127,6 +179,13 @@ clickSearch(){
                  this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
                      this.showTable = data;
                      console.table(this.showTable);
+                     this.dataSource.data = this.showTable;
+                     this.dataSource.paginator = this.paginator;
+                      for(let i of this.showTable){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        i.createDate =  this.SplitCreateDate(i.createDate);
+                      }
                });
 
 
@@ -144,6 +203,13 @@ clickSearch(){
                    this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
                     this.showTable = data;
                    console.table(this.showTable);
+                     this.dataSource.data = this.showTable;
+                     this.dataSource.paginator = this.paginator;
+                      for(let i of this.showTable){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        i.createDate =  this.SplitCreateDate(i.createDate);
+                      }
                });
 
           }else{ //ถ้าใส่วันที่
@@ -155,6 +221,13 @@ clickSearch(){
                  this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
                      this.showTable = data;
                      console.table(this.showTable);
+                     this.dataSource.data = this.showTable;
+                     this.dataSource.paginator = this.paginator;
+                      for(let i of this.showTable){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        i.createDate =  this.SplitCreateDate(i.createDate);
+                      }
                });
 
           }
@@ -169,6 +242,13 @@ clickSearch(){
                    this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
                     this.showTable = data;
                    console.table(this.showTable);
+                     this.dataSource.data = this.showTable;
+                     this.dataSource.paginator = this.paginator;
+                      for(let i of this.showTable){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        i.createDate =  this.SplitCreateDate(i.createDate);
+                      }
                });
 
           }else{ //ถ้าใส่วันที่
@@ -180,12 +260,30 @@ clickSearch(){
                  this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
                      this.showTable = data;
                      console.table(this.showTable);
+                     this.dataSource.data = this.showTable;
+                     this.dataSource.paginator = this.paginator;
+                      for(let i of this.showTable){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        i.createDate =  this.SplitCreateDate(i.createDate);
+                      }
                });
 
           }
     }
 
 }
+
+  SplitCreateDate(date:any){
+    var DateSplitted = date.split("T");
+    var DateSplitted2 = DateSplitted[0].split("-");
+    var TimeSplitted = DateSplitted[1].split(".");
+    return DateSplitted2[2] +"-"+ DateSplitted2[1] +"-"+ DateSplitted2[0] +" "+ TimeSplitted[0];
+  }
+  SplitDate(date:any){
+    var DateSplitted = date.split("-");
+    return DateSplitted[2] +"-"+ DateSplitted[1] +"-"+ DateSplitted[0];
+  }
 
 exportexcel(){
     let dataleave : any[] = [];
