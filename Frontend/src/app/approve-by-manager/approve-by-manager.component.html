@@ -7,7 +7,7 @@
   </span>
 </mat-toolbar>
 
-<mat-card *ngIf="hide">
+<mat-card *ngIf="hide" (keydown.enter)="SearchLeaveData()">
   <mat-form-field>
     <input matInput [matDatepicker]="pickerSearch"  [matDatepickerFilter]="onlyOdds" placeholder="วัน/เดือน/ปี ค.ศ." [(ngModel)]="startDateSearch" >
     <mat-datepicker-toggle matSuffix [for]="pickerSearch" ></mat-datepicker-toggle>

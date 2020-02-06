@@ -201,7 +201,7 @@ public class LeavesController {
     public Leaves leaves(@PathVariable Long leavesID,@PathVariable String reason) {
         Leaves leaves = leavesRepository.findById(leavesID).get();
         leaves.setReasonNotApprove(reason);
-        leaves.setLeaveStatus("Cancel");
+        leaves.setLeaveStatus("c");
         leavesRepository.save(leaves);
         return leaves;
     }
@@ -255,10 +255,10 @@ public class LeavesController {
     public Leaves confirmByHR( @PathVariable Long leavesID,@PathVariable String isPayments,@PathVariable String fName
                                 ,@PathVariable String lName,@PathVariable String paymentReson){
         Leaves confirmByHR = leavesRepository.findById(leavesID).get();
-        confirmByHR.setLeaveStatus("Complete");
         confirmByHR.setConfirmByHR(fName+" "+lName);
         confirmByHR.setIsPayment(isPayments);
         confirmByHR.setPaymentReson(paymentReson);
+        confirmByHR.setLeaveStatus("Complete");
         leavesRepository.save(confirmByHR);
         return confirmByHR;
     }

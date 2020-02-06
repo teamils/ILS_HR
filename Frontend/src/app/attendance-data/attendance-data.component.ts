@@ -298,7 +298,7 @@ export interface DialogData {
     DeleteAttendance(){
         if(this.leaves.leaveStatus=='Complete'){
             if(this.leaves.isPayment=='payment'){
-                    this.http.post(API1 + '/CalculateLeaveNumberBack/' + this.leaves.leavesNumbersid.leavesNumbersID +'/'+ this.leaves.diffDay +'/'+ this.leaves.leavesID,{})
+                    this.http.post(API1 + '/CalculateLeaveNumberBack3/' + this.leaves.leavesNumbersid.leavesNumbersID +'/'+ this.leaves.diffDay +'/'+ this.leaves.leavesID,{})
                                      .subscribe(
                                          data => {
                                              console.log('CalculateLeaveNumberBack is successful',data);
@@ -320,7 +320,7 @@ export interface DialogData {
                                               this.dialogRef.close();
                                              //window.location.reload(true);
                                               sessionStorage.setItem('links', 'attendanceData');
-                                            this.http.post(API1 + '/CalculateLeaveNumberBack/' + this.leaves.leavesNumbersid.leavesNumbersID +'/'+ this.leaves.diffDay +'/'+ this.leaves.leavesID,{})
+                                            this.http.post(API1 + '/CalculateLeaveNumberBack3/' + this.leaves.leavesNumbersid.leavesNumbersID +'/'+ this.leaves.diffDay +'/'+ this.leaves.leavesID,{})
                                              .subscribe(
                                                  data => {
                                                      console.log('CalculateLeaveNumberBack is successful',data);
@@ -432,10 +432,17 @@ export interface EditPaymentDialogData {
           }
         );
         if(this.isPayments=="not payment"){
-              this.CalculateLeaveNumberBack();
-             //this.UpdateLeaveNumber();
+                this.http.post(API1 + '/CalculateLeaveNumberBack2/' + this.leavesNumbersID +'/'+ this.diffDay2 +'/'+ this.leavesID,{})
+                                       .subscribe(
+                                           data => {
+                                               console.log('CalculateLeaveNumberBack is successful',data);
+                                                this.dialogRef.close();
+                                           },
+                                           error => {
+                                               console.log('Error', error);
+                                           }
+                                        );
         }
-        else{}
     }
 
     UpdateLeaveNumber(){

@@ -53,12 +53,8 @@ export class ReportComponent implements OnInit {
   }
 
 clickSearch(){
-<<<<<<< HEAD
-    let statususer =   sessionStorage.getItem('roleStatusInLogin');
-=======
-    let statususer =   localStorage.getItem('roleStatusInLogin');
 
->>>>>>> add HR-ADMIN
+    let statususer =   sessionStorage.getItem('roleStatusInLogin');
     if(statususer == 'MANAGER'){
 
       if(this.startDateSearch == undefined || this.endDateSearch == undefined){

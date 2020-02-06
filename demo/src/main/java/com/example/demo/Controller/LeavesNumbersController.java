@@ -91,8 +91,39 @@ public class LeavesNumbersController {
             if(calculateLeaveNumberBack.getCompoundDay()!=0){
                 calculateLeaveNumberBack.setCompoundDay(calculateLeaveNumberBack.getCompoundDay()+diffDay);
             }
-        leaves.setLeaveStatus("Cancel");
         leaves.setIsPayment("not payment");
+        leavesRepository.save(leaves);
+        return leaves;
+    }
+
+    @PostMapping("/CalculateLeaveNumberBack2/{leavesNumbersID}/{diffDay}/{leavesID}")
+    public Leaves CalculateLeaveNumberBack2(@PathVariable long leavesNumbersID, @PathVariable double diffDay , @PathVariable long leavesID ){
+        Leaves leaves = leavesRepository.findById(leavesID).get();
+        LeavesNumbers calculateLeaveNumberBack = leavesNumbersRepository.findById(leavesNumbersID).get();
+        calculateLeaveNumberBack.setUsedDay(calculateLeaveNumberBack.getUsedDay()-diffDay);
+        calculateLeaveNumberBack.setDiffDay(calculateLeaveNumberBack.getDiffDay()-diffDay);
+        calculateLeaveNumberBack.setBalanceDay(calculateLeaveNumberBack.getBalanceDay()+diffDay);
+        if(calculateLeaveNumberBack.getCompoundDay()!=0){
+            calculateLeaveNumberBack.setCompoundDay(calculateLeaveNumberBack.getCompoundDay()+diffDay);
+        }
+        leaves.setIsPayment("not payment");
+        leaves.setLeaveStatus("Complete");
+        leavesRepository.save(leaves);
+        return leaves;
+    }
+
+    @PostMapping("/CalculateLeaveNumberBack3/{leavesNumbersID}/{diffDay}/{leavesID}")
+    public Leaves CalculateLeaveNumberBack3(@PathVariable long leavesNumbersID, @PathVariable double diffDay , @PathVariable long leavesID ){
+        Leaves leaves = leavesRepository.findById(leavesID).get();
+        LeavesNumbers calculateLeaveNumberBack = leavesNumbersRepository.findById(leavesNumbersID).get();
+        calculateLeaveNumberBack.setUsedDay(calculateLeaveNumberBack.getUsedDay()-diffDay);
+        calculateLeaveNumberBack.setDiffDay(calculateLeaveNumberBack.getDiffDay()-diffDay);
+        calculateLeaveNumberBack.setBalanceDay(calculateLeaveNumberBack.getBalanceDay()+diffDay);
+        if(calculateLeaveNumberBack.getCompoundDay()!=0){
+            calculateLeaveNumberBack.setCompoundDay(calculateLeaveNumberBack.getCompoundDay()+diffDay);
+        }
+        leaves.setIsPayment("not payment");
+        leaves.setLeaveStatus("Cancel");
         leavesRepository.save(leaves);
         return leaves;
     }
