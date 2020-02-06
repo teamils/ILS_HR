@@ -53,7 +53,12 @@ export class ReportComponent implements OnInit {
   }
 
 clickSearch(){
+<<<<<<< HEAD
     let statususer =   sessionStorage.getItem('roleStatusInLogin');
+=======
+    let statususer =   localStorage.getItem('roleStatusInLogin');
+
+>>>>>>> add HR-ADMIN
     if(statususer == 'MANAGER'){
 
       if(this.startDateSearch == undefined || this.endDateSearch == undefined){
@@ -155,10 +160,39 @@ clickSearch(){
                });
 
           }
+    }else if(statususer == 'HR-ADMIN'){
+
+          if(this.startDateSearch == undefined || this.endDateSearch == undefined){ //ถ้าไม่ใส่วันที่
+              if(this.dataSearch == ''){
+                  this.dataSearch=undefined;
+              }
+
+              this.service.getLeavesHRADMIN( this.leaveTypeSearch , this.leaveStatusSearch ,
+                   this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
+                    this.showTable = data;
+                   console.table(this.showTable);
+               });
+
+          }else{ //ถ้าใส่วันที่
+                if(this.dataSearch == ''){
+                  this.dataSearch=undefined;
+              }
+
+              this.service.getLeavesHRADMINHavedate(this.leaveTypeSearch , this.leaveStatusSearch ,
+                 this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
+                     this.showTable = data;
+                     console.table(this.showTable);
+               });
+
+          }
     }
 
+}
 
+exportexcel(){
 
 }
+
+
 
 }

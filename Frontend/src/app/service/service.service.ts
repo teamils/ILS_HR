@@ -201,4 +201,17 @@ getLeavesDCManagerHavedate(leaveTypeSearch : string , leaveStatusSearch : string
     return this.http.get(API1+'/getLeavesDCManagerHavedate/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
     +'/'+leavePayment+'/'+dataSearch+'/'+datestart+'/'+dateend,{})
   }
+
+getLeavesHRADMIN(leaveTypeSearch : string , leaveStatusSearch : string , departmentSelect:string ,
+  leavePayment:string , dataSearch:string):Observable<any>{
+    return this.http.get(API1+'/getLeavesHRADMIN/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
+    +'/'+leavePayment+'/'+dataSearch,{})
+  }
+
+getLeavesHRADMINHavedate(leaveTypeSearch : string , leaveStatusSearch : string , departmentSelect:string ,
+  leavePayment:string , dataSearch:string,datestart:string , dateend:string):Observable<any>{
+    return this.http.get(API1+'/getLeavesHRADMINHavedate/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
+    +'/'+leavePayment+'/'+dataSearch+'/'+datestart+'/'+dateend,{})
+  }
+
 }
