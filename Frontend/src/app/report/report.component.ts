@@ -11,7 +11,7 @@ import { API1 } from '../app.component';
 import { Pipe, PipeTransform} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { AttendanceShowLeavenumberComponent } from '../attendance-show-leavenumber/attendance-show-leavenumber.component';
-
+import { ExcelService } from '../excel.service';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -38,7 +38,8 @@ export class ReportComponent implements OnInit {
             private route:ActivatedRoute,
             public dialog: MatDialog,
              private http: HttpClient,
-             public datepipe: DatePipe) { }
+             public datepipe: DatePipe,
+             private excelService:ExcelService) { }
 
   ngOnInit() {
       this.service.getleaveTypeForAlldays().subscribe(data => {
@@ -55,6 +56,7 @@ export class ReportComponent implements OnInit {
 clickSearch(){
 
     let statususer =   sessionStorage.getItem('roleStatusInLogin');
+
     if(statususer == 'MANAGER'){
 
       if(this.startDateSearch == undefined || this.endDateSearch == undefined){
@@ -186,7 +188,27 @@ clickSearch(){
 }
 
 exportexcel(){
-
+    let dataleave : any[] = [];
+        for(let i = 0 ; i < this.showTable.length ; i++){
+            dataleave.push({
+              สำดับ : i+1,
+              ชื่อ_สกุล : this.showTable[i].employeeMasterid.employeeMasterFirstName+"  "+this.showTable[i].employeeMasterid.employeeMasterLastName,
+              ตำแหน่ง : this.showTable[i].employeeMasterid.employeePosition,
+              แผนก : this.showTable[i].employeeMasterid.departmentid.departmentName,
+              วันที่เขียนใบลา : this.showTable[i].createDate,
+              วันที่เริ่มลา : this.showTable[i].startDateForAllDay+" "+this.showTable[i].startTime,
+              ลาถึงวันที่ : this.showTable[i].endDateForAllDay+" "+this.showTable[i].endTime,
+              ประเภทการลา : this.showTable[i].leaveTypeForAllDay.leaveTypeForAlldayName,
+              ระยะเวลาที่ลา : this.showTable[i].labelLeaveHalfDay,
+              เหตุผล : this.showTable[i].reasonForAllDay,
+              หัวหน้างานอนุมัติ : this.showTable[i].approvedBySupervisor,
+              ผู้จัดการอนุมัติ : this.showTable[i].approvedByManager,
+              HR_ยืนยัน : this.showTable[i].confirmByHR,
+              จ่ายเงิน : this.showTable[i].isPayment,
+              สถานะการลา : this.showTable[i].leaveStatus,
+            });
+        }
+        this.excelService.exportAsExcelFile(dataleave, 'Dataleave');
 }
 
 
