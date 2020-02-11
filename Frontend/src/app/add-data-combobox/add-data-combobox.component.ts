@@ -38,7 +38,7 @@ export class AddDataComboboxComponent implements OnInit {
   masterAttendance:Array<any>;
   masterAttendance_year:number;
   masterAttendance_leaveDay:number;
-
+  nameInLogin = sessionStorage.getItem('nameInLogin');
   constructor(private service:ServiceService,
             private router:Router,
             private route:ActivatedRoute,
@@ -46,6 +46,7 @@ export class AddDataComboboxComponent implements OnInit {
              private http: HttpClient) { }
 
   ngOnInit() {
+      console.log(this.nameInLogin);
       this.service.getBank().subscribe(data => {
           this.NewBank = data;
           //console.log('NewBank == ',this.NewBank);
@@ -86,7 +87,7 @@ export class AddDataComboboxComponent implements OnInit {
   }
   /*--------------------------------BANK-------------------------------------------*/
   InsertBank(){
-    this.http.post(API1 + '/insertBank/' + this.bankName ,{})
+    this.http.post(API1 + '/insertBank/' + this.bankName +'/'+ this.nameInLogin,{})
       .subscribe(
         data => {
           this.RefreshTable();
@@ -106,7 +107,7 @@ export class AddDataComboboxComponent implements OnInit {
   /*--------------------------------------------------------------------------------*/
   /*--------------------------------DEPARTMENT-------------------------------------------*/
   InsertDepartment(){
-    this.http.post(API1 + '/insertDepartment/' + this.departmentInput ,{})
+    this.http.post(API1 + '/insertDepartment/' + this.departmentInput +'/'+ this.nameInLogin,{})
       .subscribe(
         data => {
           this.RefreshTable();
@@ -126,7 +127,7 @@ export class AddDataComboboxComponent implements OnInit {
   /*--------------------------------------------------------------------------------*/
  /*--------------------------------POSITION-------------------------------------------*/
   InsertPosition(){
-    this.http.post(API1 + '/insertPosition/' + this.positionInput ,{})
+    this.http.post(API1 + '/insertPosition/' + this.positionInput +'/'+ this.nameInLogin,{})
       .subscribe(
         data => {
           this.RefreshTable();
@@ -146,7 +147,7 @@ export class AddDataComboboxComponent implements OnInit {
   /*--------------------------------------------------------------------------------*/
 /*--------------------------------EDUCTION-------------------------------------------*/
   Inserteducation(){
-    this.http.post(API1 + '/inserteducation/' + this.educationInput ,{})
+    this.http.post(API1 + '/inserteducation/' + this.educationInput +'/'+ this.nameInLogin,{})
       .subscribe(
         data => {
           this.RefreshTable();
@@ -166,7 +167,7 @@ export class AddDataComboboxComponent implements OnInit {
   /*--------------------------------------------------------------------------------*/
   /*--------------------------------EmployeeType-------------------------------------------*/
   InsertEmployeeType(){
-    this.http.post(API1 + '/insertEmployeeType/' + this.employeeTypeInput ,{})
+    this.http.post(API1 + '/insertEmployeeType/' + this.employeeTypeInput +'/'+ this.nameInLogin,{})
       .subscribe(
         data => {
           this.RefreshTable();
@@ -186,7 +187,7 @@ export class AddDataComboboxComponent implements OnInit {
   /*--------------------------------------------------------------------------------*/
   /*--------------------------------EmpStatus-------------------------------------------*/
   InsertEmpStatus(){
-    this.http.post(API1 + '/insertEmpStatus/' + this.empStatusInput ,{})
+    this.http.post(API1 + '/insertEmpStatus/' + this.empStatusInput +'/'+ this.nameInLogin,{})
       .subscribe(
         data => {
           this.RefreshTable();
@@ -206,7 +207,7 @@ export class AddDataComboboxComponent implements OnInit {
   /*--------------------------------------------------------------------------------*/
   /*--------------------------------Gender-------------------------------------------*/
   InsertGender(){
-    this.http.post(API1 + '/insertGender/' + this.genderInput ,{})
+    this.http.post(API1 + '/insertGender/' + this.genderInput +'/'+ this.nameInLogin,{})
       .subscribe(
         data => {
           this.RefreshTable();
@@ -226,7 +227,7 @@ export class AddDataComboboxComponent implements OnInit {
   /*--------------------------------------------------------------------------------*/
   /*--------------------------------Prefix-------------------------------------------*/
   InsertPrefix(){
-    this.http.post(API1 + '/insertPrefix/' + this.prefixInput ,{})
+    this.http.post(API1 + '/insertPrefix/' + this.prefixInput +'/'+ this.nameInLogin,{})
       .subscribe(
         data => {
           this.RefreshTable();
@@ -261,7 +262,7 @@ export class AddDataComboboxComponent implements OnInit {
           alert("คุณต้องADDข้อมูลของ"+this.num.length+" ปี");
       }
       else{
-          this.http.post(API1 + '/insertMasterAttendance/' + this.masterAttendance_year +'/'+ this.masterAttendance_leaveDay ,{})
+          this.http.post(API1 + '/insertMasterAttendance/' + this.masterAttendance_year +'/'+ this.masterAttendance_leaveDay +'/'+ this.nameInLogin,{})
             .subscribe(
               data => {
                 this.RefreshTable();
@@ -348,7 +349,7 @@ export interface DialogData {
     templateUrl: 'editMasterAttendanceDialog.html',
   })
 export class EditMasterAttendanceDialog {
-
+  nameInLogin = sessionStorage.getItem('nameInLogin');
     year:any;
     dayLeave:any;
     masterAttendanceID:any;
@@ -365,7 +366,7 @@ export class EditMasterAttendanceDialog {
     }
 
     EditVacationDay(){
-        this.http.post(API1 + '/editmasterAttendance/' + this.masterAttendanceID +'/'+ this.dayLeave ,{})
+        this.http.post(API1 + '/editmasterAttendance/' + this.masterAttendanceID +'/'+ this.dayLeave +'/'+ this.nameInLogin,{})
             .subscribe(
               data => {
                     alert("Edit successfull");

@@ -11,6 +11,7 @@ import { Pipe, PipeTransform} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { AttendanceShowLeavenumberComponent } from '../attendance-show-leavenumber/attendance-show-leavenumber.component';
 import { ExcelService } from '../excel.service';
+import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 
 export interface Emp{
@@ -22,7 +23,10 @@ export interface Emp{
   selector: 'app-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css'],
-  providers: [DatePipe]
+  providers: [DatePipe,
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+  ]
 })
 
 export class ReportComponent implements OnInit {
@@ -41,7 +45,7 @@ export class ReportComponent implements OnInit {
   leavePayment;
 
   dataSearch;
-
+  roleStatusInLogin = sessionStorage.getItem('roleStatusInLogin');
   displayedColumns: string[] = ['number','employeeCode', 'name','position','department'/*,'employeeType'*/,'date', 'leaveType','startDate', 'endDate','total','reason', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','isPayment','leaveStatus'];
   dataSource = new MatTableDataSource<Emp>(this.showTable);
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
@@ -71,7 +75,7 @@ export class ReportComponent implements OnInit {
     return day !== 0 ;
   }
 clickSearch(){
-
+    this.progressBar = true;
     let statususer =   sessionStorage.getItem('roleStatusInLogin');
 
     if(statususer == 'MANAGER'){
@@ -91,6 +95,7 @@ clickSearch(){
                         i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
                         i.createDate =  this.SplitCreateDate(i.createDate);
                       }
+                      this.progressBar = false;
                });
       }
       else{
@@ -108,6 +113,7 @@ clickSearch(){
                         i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
                         i.createDate =  this.SplitCreateDate(i.createDate);
                       }
+                      this.progressBar = false;
                });
       }
 
@@ -129,6 +135,7 @@ clickSearch(){
                         i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
                         i.createDate =  this.SplitCreateDate(i.createDate);
                       }
+                      this.progressBar = false;
                });
       }
       else{
@@ -147,6 +154,7 @@ clickSearch(){
                         i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
                         i.createDate =  this.SplitCreateDate(i.createDate);
                       }
+                      this.progressBar = false;
                });
       }
 
@@ -169,6 +177,7 @@ clickSearch(){
                         i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
                         i.createDate =  this.SplitCreateDate(i.createDate);
                       }
+                      this.progressBar = false;
                });
 
           }else{ //ถ้าใส่วันที่
@@ -186,6 +195,7 @@ clickSearch(){
                         i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
                         i.createDate =  this.SplitCreateDate(i.createDate);
                       }
+                      this.progressBar = false;
                });
 
 
@@ -210,6 +220,7 @@ clickSearch(){
                         i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
                         i.createDate =  this.SplitCreateDate(i.createDate);
                       }
+                      this.progressBar = false;
                });
 
           }else{ //ถ้าใส่วันที่
@@ -228,6 +239,7 @@ clickSearch(){
                         i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
                         i.createDate =  this.SplitCreateDate(i.createDate);
                       }
+                      this.progressBar = false;
                });
 
           }
@@ -249,6 +261,7 @@ clickSearch(){
                         i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
                         i.createDate =  this.SplitCreateDate(i.createDate);
                       }
+                      this.progressBar = false;
                });
 
           }else{ //ถ้าใส่วันที่
@@ -267,6 +280,7 @@ clickSearch(){
                         i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
                         i.createDate =  this.SplitCreateDate(i.createDate);
                       }
+                      this.progressBar = false;
                });
 
           }

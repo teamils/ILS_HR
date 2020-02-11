@@ -27,8 +27,16 @@ public interface EmployeeMasterRepository extends JpaRepository<EmployeeMaster,L
     @Query(value = "select * from employee_master where employee_masterid=:empID and is_active=1;",nativeQuery = true)
     Collection<EmployeeMaster> QueryEmployee1person(@Param("empID") Long empID );
 
-
-   /* @Query(value = "SELECT * FROM employee_master WHERE employee_master_customer_code = :dataSearch;",nativeQuery = true)
-    Collection<EmployeeMaster> getEmployee(@Param("id") Long id );*/
+    @Query(value = "select * from employee_master e\n" +
+            "where (e.employee_master_customer_code like %:searchDate% \n" +
+            "\tor e.employee_master_first_name like %:searchDate% \n" +
+            "\tor e.employee_master_last_name like %:searchDate%)\n" +
+            "and e.employee_master_gender like :gender%\n" +
+            "and e.departmentid_departmentid like :departmentID%\n" +
+            "and e.employee_position like :position%\n" +
+            "and e.employee_type like :empType%",nativeQuery = true)
+    Collection<EmployeeMaster> SearchEmployeeInReport(@Param("searchDate") String searchDate,@Param("gender") String gender,
+                                                      @Param("departmentID") String departmentID,@Param("position") String position,
+                                                      @Param("empType") String empType);
 
 }

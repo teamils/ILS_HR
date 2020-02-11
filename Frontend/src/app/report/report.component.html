@@ -1,7 +1,7 @@
 <mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
 <mat-card class="card">
   <mat-toolbar-row>
-    <span class="example-spacer"><h1 align="center">REPORT</h1></span>
+    <span class="example-spacer"><h1 align="center">Report Attendance</h1></span>
   </mat-toolbar-row>
 
   <div (keydown.enter)="clickSearch()">Filter :
@@ -37,7 +37,7 @@
       </mat-select>
     </mat-form-field>
     &nbsp;&nbsp;
-    <mat-form-field hintLabel="" >
+    <mat-form-field hintLabel="" *ngIf="roleStatusInLogin=='EMPLOYEE'?false:true">
       <mat-select placeholder="แผนก" [(ngModel)]="departmentSelect" >
         <mat-option>---none---</mat-option>
         <mat-option *ngFor="let value of department" [value]="value.departmentID">
@@ -54,15 +54,13 @@
       </mat-select>
     </mat-form-field>
     &nbsp;&nbsp;
-    <mat-form-field  class="searchStyle">
-      <mat-label>Search</mat-label>
-      <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
-      <mat-icon matSuffix>search</mat-icon>
+    <mat-form-field  class="searchStyle" *ngIf="roleStatusInLogin=='EMPLOYEE'?false:true">
+      <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน / ชื่อ-สกุล" >
     </mat-form-field>
     <br>
-    <button mat-raised-button style="width:100%" color="primary" (click)="clickSearch()"><mat-icon>search</mat-icon>&nbsp;Search</button>
+    <button mat-raised-button style="width:100%" color="primary" (click)="clickSearch()">Search&nbsp;<mat-icon>search</mat-icon></button>
   </div><hr>
-  <button mat-raised-button style="width:100%" color="accent" matTooltip="นำข้อมูลออก" (click)="exportexcel()">Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></button>
+  <button mat-raised-button style="width:100%" color="accent" matTooltip="นำข้อมูลออก (.xlsx)" (click)="exportexcel()">Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></button>
 </mat-card>
 
 

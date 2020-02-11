@@ -36,6 +36,7 @@ export class NewheaderComponent implements OnInit {
   selectAddUserRole : String;
   selectDcManager : String;
   selectReport : String;
+  selectReportEmployeeMaster : String;
 
   employee : Array<any>;
   id : String ;
@@ -48,6 +49,8 @@ export class NewheaderComponent implements OnInit {
   NewemployeeMasterFirstName =  sessionStorage.getItem('fName');
   NewemployeeMasterLastName =  sessionStorage.getItem('lName');
   links = sessionStorage.getItem('links');
+  roleStatusInLogin = sessionStorage.getItem('roleStatusInLogin');
+
   role1 : boolean = false;
   role2 : boolean = false;
   role3 : boolean = false;
@@ -62,6 +65,9 @@ export class NewheaderComponent implements OnInit {
   role12 : boolean = false;
   role13 : boolean = false;
   role14 : boolean = false;
+  role15 : boolean = false;
+  role16 : boolean = false;
+
   private _mobileQueryListener: () => void;
 
   ngOnInit() : void {
@@ -89,6 +95,14 @@ export class NewheaderComponent implements OnInit {
                           this._mobileQueryListener = () => changeDetectorRef.detectChanges();
                           this.mobileQuery.addListener(this._mobileQueryListener);
 
+                  if(this.roleStatusInLogin != 'DC-MANAGER'){
+                      sessionStorage.setItem('selectAttendance', 'true');
+                      this.selectAttendance =  sessionStorage.getItem('selectAttendance');
+                  }
+                  else{
+                      sessionStorage.setItem('selectDcManager', 'true');
+                      this.selectDcManager =  sessionStorage.getItem('selectDcManager');
+                  }
                           if(this.links == 'employeeMaster'){
                               sessionStorage.setItem('selectEmployeemaster', 'true');
                               this.selectEmployeemaster =  sessionStorage.getItem('selectEmployeemaster');
@@ -306,6 +320,8 @@ export class NewheaderComponent implements OnInit {
           this.selectAddUserRole =  sessionStorage.getItem('selectAddUserRole');
           sessionStorage.setItem('selectReport', 'false');
           this.selectReport =  sessionStorage.getItem('selectReport');
+          sessionStorage.setItem('selectReportEmployeeMaster', 'false');
+          this.selectReportEmployeeMaster =  sessionStorage.getItem('selectReportEmployeeMaster');
 
           /*console.log(this.selectEmployeemaster);*/
       }
@@ -333,6 +349,8 @@ export class NewheaderComponent implements OnInit {
           this.selectDcManager =  sessionStorage.getItem('selectDcManager');
           sessionStorage.setItem('selectReport', 'false');
           this.selectReport =  sessionStorage.getItem('selectReport');
+          sessionStorage.setItem('selectReportEmployeeMaster', 'false');
+          this.selectReportEmployeeMaster =  sessionStorage.getItem('selectReportEmployeeMaster');
       }
       callAttendance(){
           sessionStorage.setItem('links', 'attendance');
@@ -358,6 +376,8 @@ export class NewheaderComponent implements OnInit {
           this.selectDcManager =  sessionStorage.getItem('selectDcManager');
           sessionStorage.setItem('selectReport', 'false');
           this.selectReport =  sessionStorage.getItem('selectReport');
+          sessionStorage.setItem('selectReportEmployeeMaster', 'false');
+          this.selectReportEmployeeMaster =  sessionStorage.getItem('selectReportEmployeeMaster');
       }
       callAttendanceData(){
           sessionStorage.setItem('links', 'attendanceData');
@@ -383,6 +403,8 @@ export class NewheaderComponent implements OnInit {
           this.selectDcManager =  sessionStorage.getItem('selectDcManager');
           sessionStorage.setItem('selectReport', 'false');
           this.selectReport =  sessionStorage.getItem('selectReport');
+          sessionStorage.setItem('selectReportEmployeeMaster', 'false');
+          this.selectReportEmployeeMaster =  sessionStorage.getItem('selectReportEmployeeMaster');
       }
       callApproveBySupervisor(){
           sessionStorage.setItem('links', 'attendance');
@@ -408,6 +430,8 @@ export class NewheaderComponent implements OnInit {
           this.selectDcManager =  sessionStorage.getItem('selectDcManager');
           sessionStorage.setItem('selectReport', 'false');
           this.selectReport =  sessionStorage.getItem('selectReport');
+          sessionStorage.setItem('selectReportEmployeeMaster', 'false');
+          this.selectReportEmployeeMaster =  sessionStorage.getItem('selectReportEmployeeMaster');
       }
 
       callApproveByManager(){
@@ -434,6 +458,8 @@ export class NewheaderComponent implements OnInit {
           this.selectDcManager =  sessionStorage.getItem('selectDcManager');
           sessionStorage.setItem('selectReport', 'false');
           this.selectReport =  sessionStorage.getItem('selectReport');
+          sessionStorage.setItem('selectReportEmployeeMaster', 'false');
+          this.selectReportEmployeeMaster =  sessionStorage.getItem('selectReportEmployeeMaster');
       }
 
       callAddDepartmentRole(){
@@ -460,6 +486,8 @@ export class NewheaderComponent implements OnInit {
           this.selectDcManager =  sessionStorage.getItem('selectDcManager');
           sessionStorage.setItem('selectReport', 'false');
           this.selectReport =  sessionStorage.getItem('selectReport');
+          sessionStorage.setItem('selectReportEmployeeMaster', 'false');
+          this.selectReportEmployeeMaster =  sessionStorage.getItem('selectReportEmployeeMaster');
       }
 
       callAddDataCombobox(){
@@ -486,6 +514,8 @@ export class NewheaderComponent implements OnInit {
           this.selectDcManager =  sessionStorage.getItem('selectDcManager');
           sessionStorage.setItem('selectReport', 'false');
           this.selectReport =  sessionStorage.getItem('selectReport');
+          sessionStorage.setItem('selectReportEmployeeMaster', 'false');
+          this.selectReportEmployeeMaster =  sessionStorage.getItem('selectReportEmployeeMaster');
       }
 
       callAddUserRole(){
@@ -512,6 +542,8 @@ export class NewheaderComponent implements OnInit {
           this.selectDcManager =  sessionStorage.getItem('selectDcManager');
           sessionStorage.setItem('selectReport', 'false');
           this.selectReport =  sessionStorage.getItem('selectReport');
+          sessionStorage.setItem('selectReportEmployeeMaster', 'false');
+          this.selectReportEmployeeMaster =  sessionStorage.getItem('selectReportEmployeeMaster');
       }
 
       callDCManager(){
@@ -538,6 +570,8 @@ export class NewheaderComponent implements OnInit {
           this.selectEmployeemaster =  sessionStorage.getItem('selectEmployeemaster');
           sessionStorage.setItem('selectReport', 'false');
           this.selectReport =  sessionStorage.getItem('selectReport');
+          sessionStorage.setItem('selectReportEmployeeMaster', 'false');
+          this.selectReportEmployeeMaster =  sessionStorage.getItem('selectReportEmployeeMaster');
       }
 
       callReport(){
@@ -564,7 +598,38 @@ export class NewheaderComponent implements OnInit {
           this.selectEmployeeAdd =  sessionStorage.getItem('selectEmployeeAdd');
           sessionStorage.setItem('selectEmployeemaster', 'false');
           this.selectEmployeemaster =  sessionStorage.getItem('selectEmployeemaster');
+          sessionStorage.setItem('selectReportEmployeeMaster', 'false');
+          this.selectReportEmployeeMaster =  sessionStorage.getItem('selectReportEmployeeMaster');
       }
+
+      callReportEmployeeMaster(){
+          sessionStorage.setItem('links', 'report');
+          sessionStorage.setItem('selectReportEmployeeMaster', 'true');
+          this.selectReportEmployeeMaster =  sessionStorage.getItem('selectReportEmployeeMaster');
+          sessionStorage.setItem('selectReport', 'false');
+          this.selectReport =  sessionStorage.getItem('selectReport');
+          sessionStorage.setItem('selectDcManager', 'false');
+          this.selectDcManager =  sessionStorage.getItem('selectDcManager');
+          sessionStorage.setItem('selectAddUserRole', 'false');
+          this.selectAddUserRole =  sessionStorage.getItem('selectAddUserRole');
+          sessionStorage.setItem('selectAddDataCombobox', 'false');
+          this.selectAddDataCombobox =  sessionStorage.getItem('selectAddDataCombobox');
+          sessionStorage.setItem('selectAddDepartmentRole', 'false');
+          this.selectAddDepartmentRole =  sessionStorage.getItem('selectAddDepartmentRole');
+          sessionStorage.setItem('selectApproveByManager', 'false');
+          this.selectApproveByManager =  sessionStorage.getItem('selectApproveByManager');
+          sessionStorage.setItem('selectApproveBySupervisor', 'false');
+          this.selectApproveBySupervisor =  sessionStorage.getItem('selectApproveBySupervisor');
+          sessionStorage.setItem('selectAttendanceDate', 'false');
+          this.selectAttendanceDate =  sessionStorage.getItem('selectAttendanceDate');
+          sessionStorage.setItem('selectAttendance', 'false');
+          this.selectAttendance =  sessionStorage.getItem('selectAttendance')
+          sessionStorage.setItem('selectEmployeeAdd', 'false');
+          this.selectEmployeeAdd =  sessionStorage.getItem('selectEmployeeAdd');
+          sessionStorage.setItem('selectEmployeemaster', 'false');
+          this.selectEmployeemaster =  sessionStorage.getItem('selectEmployeemaster');
+      }
+
 
 }
 

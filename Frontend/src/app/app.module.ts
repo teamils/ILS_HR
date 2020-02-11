@@ -69,6 +69,7 @@ import { AddUserroleComponent } from './add-userrole/add-userrole.component';
 import { EditMasterAttendanceDialog } from './add-data-combobox/add-data-combobox.component';
 import { DcManagerComponent } from './dc-manager/dc-manager.component';
 import { ReportComponent } from './report/report.component';
+import { ReportEmployeeMasterComponent } from './report-employee-master/report-employee-master.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { ReportComponent } from './report/report.component';
     EditMasterAttendanceDialog,
     DcManagerComponent,
     ReportComponent,
+    ReportEmployeeMasterComponent,
   ],
 
       imports: [

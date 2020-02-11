@@ -7,6 +7,7 @@ import com.example.demo.Repository.ComboboxRepository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.stream.Collectors;
 
 @RestController
@@ -21,13 +22,15 @@ public class DepartmentMasterRoleController {
         return departmentMasterRoleRepository.findAll().stream().collect(Collectors.toList());
     }
 
-    @PostMapping(path = "/insertDataDepartmentRole/{employeeMasterID}/{departmentSelect}")
-    public DepartmentMasterRole departmentMasterRole(@PathVariable long employeeMasterID,@PathVariable long departmentSelect) {
+    @PostMapping(path = "/insertDataDepartmentRole/{employeeMasterID}/{departmentSelect}/{name}")
+    public DepartmentMasterRole departmentMasterRole(@PathVariable long employeeMasterID,@PathVariable long departmentSelect,@PathVariable String name) {
             EmployeeMaster employeeMaster = employeeMasterRepository.findById(employeeMasterID).get();
             Department department = departmentRepository.findById(departmentSelect).get();
             DepartmentMasterRole departmentMasterRole = new DepartmentMasterRole();
             departmentMasterRole.setEmployeeMasterid(employeeMaster);
             departmentMasterRole.setDepartmentid(department);
+            departmentMasterRole.setCreate_date(new Date());
+            departmentMasterRole.setCreate_by(name);
             return  departmentMasterRoleRepository.save(departmentMasterRole);
     }
 

@@ -41,6 +41,8 @@ export class AddUserroleComponent implements OnInit {
   masterRoleID;
   progressBar=false;
   toppingList: string[] = [];
+  nameInLogin = sessionStorage.getItem('nameInLogin');
+
   constructor(private service:ServiceService,
               private router:Router,
               private route:ActivatedRoute ,
@@ -102,7 +104,7 @@ export class AddUserroleComponent implements OnInit {
                               this.progressBar = false;
                  }
                  else{
-                      this.http.post(API1 + '/insertUserRole/' + this.employeeMasterID +'/'+ this.toppings[i].id ,{})
+                      this.http.post(API1 + '/insertUserRole/' + this.employeeMasterID +'/'+ this.toppings[i].id +'/'+ this.nameInLogin ,{})
                         .subscribe(
                             data => {
                               this.RefreshTable();

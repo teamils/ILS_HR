@@ -153,7 +153,7 @@ export class ApproveBySupervisorComponent implements OnInit {
 
         this.http.post(API1 + '/approveBySupervisor/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {
             console.log('Approve is successful');
-            alert("Approve successful");
+            //alert("Approve successful");
              this.progressBar = false;
           },
           error => {
@@ -259,7 +259,7 @@ export interface DialogData {
           this.http.post(API1 + '/notApproveBySupervisor/' + this.leavesID +'/'+ this.reasonNotapprove,{}).subscribe(data => {
               this.CalculateLeaveNumberBack();
               console.log('Not approve is successful');
-              alert("Not approve successful");
+              //alert("Not approve successful");
 
             },
             error => {

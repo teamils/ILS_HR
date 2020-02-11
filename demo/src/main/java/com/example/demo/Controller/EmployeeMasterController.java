@@ -240,4 +240,16 @@ public class EmployeeMasterController {
 
     }
 
+    @GetMapping("/SearchEmployeeInReport/{searchDate}/{gender}/{departmentID}/{position}/{empType}")
+    public Iterable<EmployeeMaster> SearchEmployeeInReport(@PathVariable String searchDate,@PathVariable String gender,
+                                                           @PathVariable String departmentID,@PathVariable String position,
+                                                           @PathVariable String empType){
+        if(searchDate.equals("undefined")||searchDate.equals("null")) searchDate="";
+        if(gender.equals("undefined")||gender.equals("null")) gender="";
+        if(departmentID.equals("undefined")||departmentID.equals("null")) departmentID="";
+        if(position.equals("undefined")||position.equals("null")) position="";
+        if(empType.equals("undefined")||empType.equals("null")) empType="";
+        return this.employeeMasterRepository.SearchEmployeeInReport(searchDate,gender,departmentID,position,empType);
+    }
+
 }

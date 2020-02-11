@@ -111,7 +111,7 @@ export class ApproveByManagerComponent implements OnInit {
         this.progressBar = true;
         this.http.post(API1 + '/approveByManager/' + row.leavesID +'/'+ this.firstNameOnLogin +'/'+ this.lastNameOnLogin  ,{}).subscribe(data => {
             console.log('Approve is successful');
-            alert("Approve successful");
+            //alert("Approve successful");
             this.progressBar = false;
           },
           error => {
@@ -216,7 +216,7 @@ export class ReasonNotApproveBygerDialog {
           this.http.post(API1 + '/notApproveByManager/' + this.leavesID +'/'+ this.reasonNotapprove,{}).subscribe(data => {
               this.CalculateLeaveNumberBack();
               console.log('Not approve is successful');
-              alert("Not approve successful");
+              //alert("Not approve successful");
             },
             error => {
               console.log('Error', error);

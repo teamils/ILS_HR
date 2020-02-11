@@ -1,0 +1,102 @@
+
+.dd{
+  font-size: 18px;
+  color: back;
+  text-shadow: white 0.1em 0em 0.3em;
+   font-weight: bold;
+}
+
+
+
+
+.icon{
+  color:#005500;
+}
+
+.cardHeader{
+   width: auto;
+   height:auto;
+   margin-top: 0px;
+   margin-right: auto;
+   margin-left: auto;
+   margin-bottom: auto;
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.);
+  transition: 0.3s;
+  width: 100%;
+  height: auto;
+   margin-top: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+}
+
+
+/* ******************************  TABLE ********************************************** */
+
+td {
+  border: 1px solid #ffffff;
+  text-align: center;
+
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 103%;
+  height: auto;
+}
+
+tr:hover {background-color: #DCDCDC;}
+
+  th {
+   border: 1px solid #ffffff;
+    background-color: #00FF00;
+     text-align: center;
+
+  }
+
+   th.mat-column-select,
+   th.mat-column-number,
+   th.mat-column-empCodeID,
+   th.mat-column-prefix,
+   th.mat-column-empFristName,
+   th.mat-column-empLastName,
+   th.mat-column-NickName,
+   th.mat-column-Gender,
+   th.mat-column-Status,
+   th.mat-column-BirthDate,
+   th.mat-column-Age,
+   th.mat-column-PersonID,
+   th.mat-column-Tel1,
+   th.mat-column-Email,
+   th.mat-column-AddressReal,
+   th.mat-column-AddressPerson,
+   th.mat-column-StartDate,
+   th.mat-column-Position,
+   th.mat-column-Department,
+   th.mat-column-empType,
+   th.mat-column-educations,
+   th.mat-column-bank,
+   th.mat-column-bankNumber,
+   th.mat-column-del,
+   th.mat-column-Edit{
+          text-align: center;
+   }
+
+   td.mat-column-empFristName,
+   td.mat-column-empLastName,
+   td.mat-column-Position,
+   td.mat-column-Department,
+   td.mat-column-empType{
+      text-align: left;
+   }
+
+.example-fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+p {
+  font-size: 12px;
+}

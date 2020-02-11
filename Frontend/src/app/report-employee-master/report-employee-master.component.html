@@ -1,0 +1,177 @@
+<mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
+<mat-card class="card">
+  <mat-toolbar-row>
+    <span class="example-spacer"><h1 align="center">Report Employee Master</h1></span>
+  </mat-toolbar-row>
+
+  <div (keydown.enter)="clickSearch()">Filter :
+    <mat-form-field  class="searchStyle">
+      <input matInput  [(ngModel)]="dataSearch" placeholder="รหัสพนักงาน / ชื่อ-สกุล">
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field hintLabel="" >
+      <mat-select placeholder="เพศ" [(ngModel)]="genderSelect" >
+        <mat-option>---none---</mat-option>
+        <mat-option *ngFor="let value of gender" [value]="value.genderName">
+          {{value.genderName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field hintLabel="" >
+      <mat-select placeholder="แผนก" [(ngModel)]="departmentSelect" >
+        <mat-option>---none---</mat-option>
+        <mat-option *ngFor="let value of department" [value]="value.departmentID">
+          {{value.departmentName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field hintLabel="">
+      <mat-select placeholder="ตำเเหน่ง" [(ngModel)]="positionSelect" >
+        <mat-option>---none---</mat-option>
+        <mat-option *ngFor="let value of position" [value]="value.positionName">
+          {{value.positionName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field hintLabel="">
+      <mat-select placeholder="ประเภทการทำงาน" [(ngModel)]="employeeTypeSelect" >
+        <mat-option>---none---</mat-option>
+        <mat-option *ngFor="let value of employeeType" [value]="value.employeeTypeName">
+          {{value.employeeTypeName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button style="width:100%" color="primary" (click)="clickSearch()">Search&nbsp;<mat-icon>search</mat-icon></button>
+  </div><hr>
+  <button mat-raised-button style="width:100%" color="accent" matTooltip="นำข้อมูลออก (.xlsx)" (click)="exportexcel()">Export Data &nbsp;<mat-icon matSuffix>cloud_upload</mat-icon></button>
+</mat-card>
+
+
+
+  <div class="example-container2 mat-elevation-z8" >
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <ng-container matColumnDef="number" >
+        <th mat-header-cell *matHeaderCellDef><font  color="black"><b>No.</b></font></th>
+        <td mat-cell *matCellDef="let element; let i = index">{{i+1}}.</td>
+      </ng-container>
+
+      <ng-container matColumnDef="empCodeID" class="example-detail-row" >
+        <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Customer Code</b></font></th>
+        <td mat-cell *matCellDef="let element"  [attr.ngIf]="element.isActive == '1' ? true : false ">
+          {{element.employeeMasterCustomerCode}}
+        </td>
+      </ng-container>
+
+      <!--<ng-container matColumnDef="prefix" >
+        <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Prefix</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.prefix}}</td>
+        <td mat-cell *matCellDef="let element"> {{element.prefix}}</td>
+      </ng-container> -->
+
+      <ng-container matColumnDef="empFristName" >
+        <th mat-header-cell *matHeaderCellDef><font  color="black"><b>FirstName</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeMasterFirstName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="empLastName" >
+        <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Last Name</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeMasterLastName}}  </td>
+      </ng-container>
+
+      <!--<ng-container matColumnDef="NickName">
+        <th mat-header-cell *matHeaderCellDef><font color="black"><b>Nick Name</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeMasterNickName}} </td>
+      </ng-container>-->
+
+      <ng-container matColumnDef="Gender">
+        <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Gender</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeMasterGender}} </td>
+      </ng-container>
+
+      <!--<ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Status</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.maritalStatus}} </td>
+      </ng-container>
+      <!--
+      <ng-container matColumnDef="BirthDate">
+        <th mat-header-cell *matHeaderCellDef><font color="black"><b>Birth date</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeMasterBirthDate}} </td>
+      </ng-container> -->
+
+      <!-- <ng-container matColumnDef="Age">
+         <th mat-header-cell *matHeaderCellDef><font color="black"><b>Age.</b></font></th>
+         <td mat-cell *matCellDef="let element"> {{element.employeeMasterBirthDate}} </td>
+       </ng-container> -->
+
+      <!--<ng-container matColumnDef="PersonID">
+        <th mat-header-cell *matHeaderCellDef><font  color="black"><b>PersonID</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeMasterPersonID}} </td>
+      </ng-container>-->
+
+      <ng-container matColumnDef="Tel1">
+        <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Tel</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeMasterTel1}} </td>
+      </ng-container>
+
+      <!--  <ng-container matColumnDef="Email">
+         <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Email</b></font></th>
+         <td mat-cell *matCellDef="let element"> {{element.empEmail}} </td>
+       </ng-container>
+
+      <ng-container matColumnDef="AddressReal">
+         <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Address real</b></font></th>
+         <td mat-cell *matCellDef="let element"> {{element.empAddressReal}} </td>
+       </ng-container>
+
+       <ng-container matColumnDef="AddressPerson">
+         <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Address person</b></font></th>
+         <td mat-cell *matCellDef="let element"> {{element.empAddressPerson}} </td>
+       </ng-container> -->
+
+      <ng-container matColumnDef="StartDate">
+        <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Start work</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeMasterStartDate}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Position">
+        <th mat-header-cell *matHeaderCellDef><font color="black"><b>Position</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.employeePosition}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Department">
+        <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Department</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.departmentid.departmentName}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="empType">
+        <th mat-header-cell *matHeaderCellDef><font color="black"><b>Emp type</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeType}} </td>
+      </ng-container>
+      <!--
+        <ng-container matColumnDef="educations">
+          <th mat-header-cell *matHeaderCellDef><font  color="black"><b>educations</b></font></th>
+          <td mat-cell *matCellDef="let element"> {{element.education}} </td>
+        </ng-container>  -->
+
+      <!--<ng-container matColumnDef="bank">
+        <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Bank name</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.bank}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="bankNumber">
+        <th mat-header-cell *matHeaderCellDef><font  color="black"><b>Bank number</b></font></th>
+        <td mat-cell *matCellDef="let element"> {{element.bankNumber}} </td>
+      </ng-container> -->
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+<mat-paginator [pageSizeOptions]="[15, 30, 50, 100,1000]" showFirstLastButtons ></mat-paginator>

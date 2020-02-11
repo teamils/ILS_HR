@@ -5,6 +5,7 @@ import com.example.demo.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.stream.Collectors;
 
 @RestController
@@ -33,14 +34,16 @@ public class UserRolesController {
         return null;
     }
 
-    @PostMapping("/insertUserRole/{employeeMasterID}/{toppings}")
-    public UserRole insertUserRole(@PathVariable long employeeMasterID,@PathVariable long toppings) {
+    @PostMapping("/insertUserRole/{employeeMasterID}/{toppings}/{name}")
+    public UserRole insertUserRole(@PathVariable long employeeMasterID,@PathVariable long toppings,@PathVariable String name) {
         EmployeeMaster employeeMaster = employeeMasterRepository.findById(employeeMasterID).get();
         MasterRole masterRole = masterRoleRepository.findById(toppings).get();
 
         UserRole userRole = new UserRole();
         userRole.setEmpID(employeeMaster);
         userRole.setMasterRoleID(masterRole);
+        userRole.setCreate_date(new Date());
+        userRole.setCreate_by(name);
         userRolesRepository.save(userRole);
         return userRole;
     }

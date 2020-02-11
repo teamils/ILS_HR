@@ -6,6 +6,7 @@ import com.example.demo.Repository.ComboboxRepository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.stream.Collectors;
 
 @RestController
@@ -69,10 +70,12 @@ public class GetToComboboxController {
         return masterAttendanceRepository.findAll().stream().collect(Collectors.toList());
     }
 
-    @PostMapping(path = "/insertBank/{bankName}")
-    public Bank insertBank(@PathVariable String bankName) {
+    @PostMapping(path = "/insertBank/{bankName}/{name}")
+    public Bank insertBank(@PathVariable String bankName,@PathVariable String name) {
        Bank bank = new Bank();
        bank.setBankName(bankName);
+       bank.setCreate_date(new Date());
+       bank.setCreate_by(name);
        bankRepository.save(bank);
        return null;
     }
@@ -84,10 +87,12 @@ public class GetToComboboxController {
     }
 
 
-    @PostMapping(path = "/insertDepartment/{departmentInput}")
-    public Department insertDepartment(@PathVariable String departmentInput) {
+    @PostMapping(path = "/insertDepartment/{departmentInput}/{name}")
+    public Department insertDepartment(@PathVariable String departmentInput,@PathVariable String name) {
         Department insertDepartment = new Department();
         insertDepartment.setDepartmentName(departmentInput);
+        insertDepartment.setCreate_date(new Date());
+        insertDepartment.setCreate_by(name);
         departmentRepository.save(insertDepartment);
         return null;
     }
@@ -99,10 +104,12 @@ public class GetToComboboxController {
     }
 
 
-    @PostMapping(path = "/insertPosition/{positionInput}")
-    public Position insertPosition(@PathVariable String positionInput) {
+    @PostMapping(path = "/insertPosition/{positionInput}/{name}")
+    public Position insertPosition(@PathVariable String positionInput,@PathVariable String name) {
         Position insertPosition = new Position();
         insertPosition.setPositionName(positionInput);
+        insertPosition.setCreate_date(new Date());
+        insertPosition.setCreate_by(name);
         positionRepository.save(insertPosition);
         return null;
     }
@@ -114,10 +121,12 @@ public class GetToComboboxController {
     }
 
 
-    @PostMapping(path = "/inserteducation/{educationInput}")
-    public Education inserteducation(@PathVariable String educationInput) {
+    @PostMapping(path = "/inserteducation/{educationInput}/{name}")
+    public Education inserteducation(@PathVariable String educationInput,@PathVariable String name) {
         Education inserteducation = new Education();
         inserteducation.setEducationName(educationInput);
+        inserteducation.setCreate_date(new Date());
+        inserteducation.setCreate_by(name);
         educationRepository.save(inserteducation);
         return null;
     }
@@ -129,10 +138,12 @@ public class GetToComboboxController {
     }
 
 
-    @PostMapping(path = "/insertEmployeeType/{employeeTypeInput}")
-    public EmployeeType insertEmployeeType(@PathVariable String employeeTypeInput) {
+    @PostMapping(path = "/insertEmployeeType/{employeeTypeInput}/{name}")
+    public EmployeeType insertEmployeeType(@PathVariable String employeeTypeInput,@PathVariable String name) {
         EmployeeType insertEmployeeType = new EmployeeType();
         insertEmployeeType.setEmployeeTypeName(employeeTypeInput);
+        insertEmployeeType.setCreate_date(new Date());
+        insertEmployeeType.setCreate_by(name);
         employeeTypeRepository.save(insertEmployeeType);
         return null;
     }
@@ -144,10 +155,12 @@ public class GetToComboboxController {
     }
 
 
-    @PostMapping(path = "/insertEmpStatus/{EmpStatusInput}")
-    public EmpStatus insertEmpStatus(@PathVariable String EmpStatusInput) {
+    @PostMapping(path = "/insertEmpStatus/{EmpStatusInput}/{name}")
+    public EmpStatus insertEmpStatus(@PathVariable String EmpStatusInput,@PathVariable String name) {
         EmpStatus insertEmpStatus = new EmpStatus();
         insertEmpStatus.setEmpStatusName(EmpStatusInput);
+        insertEmpStatus.setCreate_date(new Date());
+        insertEmpStatus.setCreate_by(name);
         empStatusRepository.save(insertEmpStatus);
         return null;
     }
@@ -159,10 +172,12 @@ public class GetToComboboxController {
     }
 
 
-    @PostMapping(path = "/insertGender/{genderInput}")
-    public Gender insertGender(@PathVariable String genderInput) {
+    @PostMapping(path = "/insertGender/{genderInput}/{name}")
+    public Gender insertGender(@PathVariable String genderInput,@PathVariable String name) {
         Gender insertGender = new Gender();
         insertGender.setGenderName(genderInput);
+        insertGender.setCreate_date(new Date());
+        insertGender.setCreate_by(name);
         genderRepository.save(insertGender);
         return null;
     }
@@ -174,10 +189,12 @@ public class GetToComboboxController {
     }
 
 
-    @PostMapping(path = "/insertPrefix/{prefixInput}")
-    public Prefix insertPrefix(@PathVariable String prefixInput) {
+    @PostMapping(path = "/insertPrefix/{prefixInput}/{name}")
+    public Prefix insertPrefix(@PathVariable String prefixInput,@PathVariable String name) {
         Prefix insertPrefix = new Prefix();
         insertPrefix.setPrefixName(prefixInput);
+        insertPrefix.setCreate_date(new Date());
+        insertPrefix.setCreate_by(name);
         prefixRepository.save(insertPrefix);
         return null;
     }
@@ -189,11 +206,13 @@ public class GetToComboboxController {
     }
 
 
-    @PostMapping(path = "/insertMasterAttendance/{masterAttendance_year}/{masterAttendance_leaveDay}")
-    public MasterAttendance insertMasterAttendance(@PathVariable int masterAttendance_year,@PathVariable int masterAttendance_leaveDay) {
+    @PostMapping(path = "/insertMasterAttendance/{masterAttendance_year}/{masterAttendance_leaveDay}/{name}")
+    public MasterAttendance insertMasterAttendance(@PathVariable int masterAttendance_year,@PathVariable int masterAttendance_leaveDay,@PathVariable String name) {
         MasterAttendance insertMasterAttendance = new MasterAttendance();
         insertMasterAttendance.setYear(masterAttendance_year);
         insertMasterAttendance.setDayLeave(masterAttendance_leaveDay);
+        insertMasterAttendance.setCreate_date(new Date());
+        insertMasterAttendance.setCreate_by(name);
         masterAttendanceRepository.save(insertMasterAttendance);
         return insertMasterAttendance;
     }
@@ -203,10 +222,12 @@ public class GetToComboboxController {
         masterAttendanceRepository.delete(deleteMasterAttendance);
         return null;
     }
-    @PostMapping(path = "/editmasterAttendance/{masterAttendanceID}/{dayLeave}")
-    public MasterAttendance editmasterAttendance(@PathVariable long masterAttendanceID,@PathVariable int dayLeave) {
+    @PostMapping(path = "/editmasterAttendance/{masterAttendanceID}/{dayLeave}/{name}")
+    public MasterAttendance editmasterAttendance(@PathVariable long masterAttendanceID,@PathVariable int dayLeave,@PathVariable String name) {
         MasterAttendance editmasterAttendance = masterAttendanceRepository.findById(masterAttendanceID).get();
         editmasterAttendance.setDayLeave(dayLeave);
+        editmasterAttendance.setUpdate_date(new Date());
+        editmasterAttendance.setUpdate_by(name);
         masterAttendanceRepository.save(editmasterAttendance);
         return editmasterAttendance;
     }

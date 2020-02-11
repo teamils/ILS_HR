@@ -247,20 +247,98 @@ export class AttendanceComponent implements OnInit {
     return this.totalTime;
   }
 
- CheckDoublyLeaves_HalfDay(leaveType:any,startDate:any,startTime:any,endTime:any){
-    for(let i of this.leaves2){
-      if(i.leaveStatus!='Cancel'){
-        //console.log(i);
-        startDate = this.datepipe.transform(startDate, 'dd-MM-yyyy')
-        if(leaveType==i.leaveTypeForAllDay.leaveTypeForAlldayName && startDate==i.startDateForAllDay && startDate==i.endDateForAllDay && startTime==i.startTime && endTime==i.endTime ){
-            return 0;
+  CheckDoublyLeaves_HalfDay(leaveType:any,startDate:any,startTime:any,endTime:any,labelLeaveHalfDay:any){
+    let arr = [] ;
+    let leaveStatus;
+    for(let i = 0 ; i < this.leaves2.length ; i++){
+      leaveStatus = this.leaves2[i].leaveStatus;
+      let dateResult = new Date(this.leaves2[i].startDateForAllDay.substring(6,10)+'-'+this.leaves2[i].startDateForAllDay.substring(3,5)+'-'+this.leaves2[i].startDateForAllDay.substring(0,2));
+      if(leaveStatus != 'Cancel'){
+        for(let j = 0 ; j <  this.leaves2[i].diffDay ; j++){
+            if(j == 0){
+              dateResult.setDate(dateResult.getDate()+0);
+            }else{
+              dateResult.setDate(dateResult.getDate()+1);
+            }
+            let dates = this.datepipe.transform(dateResult, 'dd-MM-yyyy')
+            //console.log(this.leaves2[i].labelLeaveHalfDay);
+            arr.push(dates+'%'+this.leaves2[i].labelLeaveHalfDay);
         }
       }
     }
-    return 1;
+
+  let startdateResult = this.datepipe.transform(startDate, 'dd-MM-yyyy');
+
+    if(labelLeaveHalfDay=='ครึ่งวันเช้า'){
+      let checkLeaves = 0;
+      for(let i = 0 ; i < arr.length ; i++){
+        var arrSplitted = arr[i].split("%");
+        var labelSplitted = arrSplitted[1].split(" ");
+        if(arrSplitted[0] == startdateResult){
+          if(labelSplitted[1]=='ว')
+            checkLeaves = 1;
+          else if(arrSplitted[1] == 'ครึ่งวันเช้า')
+            checkLeaves = 1;
+        }
+      }
+      if(checkLeaves == 1)
+        return 1;
+      else
+        return 0;
+    }
+    else if(labelLeaveHalfDay=='ครึ่งวันบ่าย'){
+      let checkLeaves = 0;
+      for(let i = 0 ; i < arr.length ; i++){
+        var arrSplitted = arr[i].split("%");
+        var labelSplitted = arrSplitted[1].split(" ");
+        if(arrSplitted[0] == startdateResult){
+          if(labelSplitted[1]=='ว')
+            checkLeaves = 1;
+          else if(arrSplitted[1] == 'ครึ่งวันบ่าย')
+            checkLeaves = 1;
+        }
+      }
+      if(checkLeaves == 1)
+        return 1;
+      else
+        return 0;
+    }
+    else{
+      let arr2=[]
+      for(let i = 0 ; i < this.leaves2.length ; i++){
+        //console.log(this.leaves2[i]);
+        if(this.datepipe.transform(startDate, 'dd-MM-yyyy') == this.leaves2[i].startDateForAllDay){
+            arr2.push(this.leaves2[i]);
+        }
+      }
+      console.log(arr2);
+      for(let i of arr2){
+        console.log(i.labelLeaveHalfDay);
+        var Splitted = i.labelLeaveHalfDay.split(" ");
+        console.log(Splitted);
+        if(Splitted[1] == 'ว'){
+            return 1;
+        }
+        else if(i.labelLeaveHalfDay == 'ครึ่งวันเช้า'){
+            return 1;
+        }
+        else if(i.labelLeaveHalfDay == 'ครึ่งวันบ่าย'){
+            return 1;
+        }
+      }
+
+
+
+
+
+    }
+
+
   }
   SubmitData(){ // Half Day
-        let totalTime = this.CalculateLeaveTime();
+   let CheckDoublyLeaves_HalfDay = this.CheckDoublyLeaves_HalfDay(this.leaveTypeSelect,this.startDate,this.startTimeSelect,this.endTimeSelect,this.labelLeaveHalfDay);
+     if(CheckDoublyLeaves_HalfDay==1) alert("วันที่และเวลา ที่คุณเลือกมีการลาแล้ว กรุณาตรวจสอบอีกครั้ง!"); else  alert("ลาได้");
+        /*let totalTime = this.CalculateLeaveTime();
         this.CalculateLeaveDate(this.startDate,this.startDate);
         this.Checktheleave(this.table.leaID,this.leaveTypeSelect);
           if(this.labelLeaveHalfDay=='ชั่วโมง') {this.statusLabelLeaveHalfDay=1;this.statusLabelLeaveHalfDay2=1;}
@@ -272,13 +350,13 @@ export class AttendanceComponent implements OnInit {
         else if(this.totalHour<0 || (this.totalHour==0&&this.totalMinute<=0)) alert("กรุณาเลือกเวลาให้ถูกต้อง");
         else if(this.startDate == null) alert("กรุณาเลือกวันลา");
         else if(this.reason == null) alert("กรุณากรอกเหตุผล");
-        else if(this.diffDay>this.leavetatelAll.BalanceDay && this.leavetatelAll.BalanceDay != 0 ){
+        else if(this.diffDay>this.leavetatelAll.BalanceDay && this.leavetatelAll.BalanceDay > 0 ){
             this.diff = this.diffDay-this.leavetatelAll.BalanceDay;
             alert("*คุณมีวัน"+this.leaveTypeSelect+" = "+this.leavetatelAll.BalanceDay+"ชั่วโมง\n"+"หากคุณต้องการ"+this.leaveTypeSelect+" "+totalTime+"ชั่วโมง คุณต้องคีย์ลา "+this.leavetatelAll.BalanceDay+"ชั่วโมง หนึ่งครั้งและ "+totalTime+"ชั่วโมง อีกหนึ่งครั้ง!");
         }
         else{
-            let CheckDoublyLeaves_HalfDay = this.CheckDoublyLeaves_HalfDay(this.leaveTypeSelect,this.startDate,this.startTimeSelect,this.endTimeSelect);
-            if(CheckDoublyLeaves_HalfDay==0) alert("วันที่และเวลา ที่คุณเลือกมีการลาแล้ว กรุณาตรวจสอบอีกครั้ง!");
+            let CheckDoublyLeaves_HalfDay = this.CheckDoublyLeaves_HalfDay(this.leaveTypeSelect,this.startDate,this.startTimeSelect,this.endTimeSelect,this.labelLeaveHalfDay);
+            if(CheckDoublyLeaves_HalfDay==1) alert("วันที่และเวลา ที่คุณเลือกมีการลาแล้ว กรุณาตรวจสอบอีกครั้ง!");
             else{
               this.http.post(API1  +'/SaveLeaveHalfDay/'+ this.table.leaID +'/'+ this.leaveTypeSelect
                               +'/'+ this.labelLeaveHalfDay +'/'+ this.startDate  +'/'+ this.reason +'/'+
@@ -303,22 +381,43 @@ export class AttendanceComponent implements OnInit {
                                       );
               this.x=true;
             }
-        }
+        }*/
   }
 
-  CheckDoublyLeaves_Fullday(leaveType:any,startDate:any,endDate:any){
-    for(let i of this.leaves2){
-      if(i.leaveStatus!='Cancel'){
-        //console.log(i);
-        startDate = this.datepipe.transform(startDate, 'dd-MM-yyyy')
-        endDate = this.datepipe.transform(endDate, 'dd-MM-yyyy')
-        if(leaveType==i.leaveTypeForAllDay.leaveTypeForAlldayName && startDate==i.startDateForAllDay && endDate==i.endDateForAllDay ){
-            return 0;
+ CheckDoublyLeaves_Fullday(leaveType:any,startDate:any,endDate:any){
+    let arr = [] ;
+    let leaveStatus;
+    for(let i = 0 ; i < this.leaves2.length ; i++){
+      leaveStatus = this.leaves2[i].leaveStatus;
+      let dateResult = new Date(this.leaves2[i].startDateForAllDay.substring(6,10)+'-'+this.leaves2[i].startDateForAllDay.substring(3,5)+'-'+this.leaves2[i].startDateForAllDay.substring(0,2));
+      if(leaveStatus != 'Cancel'){
+        for(let j = 0 ; j <  this.leaves2[i].diffDay ; j++){
+            if(j == 0){
+              dateResult.setDate(dateResult.getDate()+0);
+            }else{
+              dateResult.setDate(dateResult.getDate()+1);
+            }
+            let dates = this.datepipe.transform(dateResult, 'dd-MM-yyyy')
+            arr.push(dates);
         }
       }
     }
-    return 1;
-  }
+    let startdateResult = this.datepipe.transform(startDate, 'dd-MM-yyyy');
+    let enddateResult = this.datepipe.transform(endDate, 'dd-MM-yyyy');
+    let checkLeaves = 0;
+    for(let i = 0 ; i < arr.length ; i++){
+      if( arr[i] == startdateResult || arr[i] == enddateResult){
+        checkLeaves = 1;
+      }
+    }
+    if(checkLeaves == 1){
+      return 0;
+    }
+    else{
+      return 1;
+    }
+
+ }
 
   SubmitData2(){ //Full day
         this.statusLabelLeaveHalfDay2=2;
@@ -333,9 +432,9 @@ export class AttendanceComponent implements OnInit {
         else if(this.startDate2 == null) alert("กรุณาเลือกวันลา");
         else if(this.endDate2 == null) alert("กรุณาเลือกวันสิ้นสุดการลา");
         else if(this.reason2 == null) alert("กรุณากรอกเหตุผล");
-        else if(this.diffDay>this.leavetatelAll.BalanceDay && this.leavetatelAll.BalanceDay != 0 ){
+        else if(this.diffDay>this.leavetatelAll.BalanceDay && this.leavetatelAll.BalanceDay > 0 ){
             this.diff = this.diffDay-this.leavetatelAll.BalanceDay;
-            alert("*คุณมีวัน"+this.leaveTypeSelect2+" = "+this.leavetatelAll.BalanceDay+"วัน\n"+"หากคุณต้องการ"+this.leaveTypeSelect2+" "+this.diffDay+"วัน คุณต้องคีย์ลา "+this.leavetatelAll.BalanceDay+"วัน หนึ่งครั้งและ "+this.diff+"วัน อีกหนึ่งครั้ง!");
+            alert("*คุณมีวัน"+this.leaveTypeSelect2+"ที่ได้รับค่าจ้าง = "+this.leavetatelAll.BalanceDay+"วัน\n"+"หากคุณต้องการ"+this.leaveTypeSelect2+" "+this.diffDay+"วัน คุณต้องคีย์ลา "+this.leavetatelAll.BalanceDay+"วัน หนึ่งครั้งและ "+this.diff+"วัน อีกหนึ่งครั้ง!");
         }
         else{
             let CheckDoublyLeaves_Fullday = this.CheckDoublyLeaves_Fullday(this.leaveTypeSelect2,this.startDate2,this.endDate2);

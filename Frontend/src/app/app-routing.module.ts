@@ -14,6 +14,7 @@ import { ApproveByManagerComponent } from './approve-by-manager/approve-by-manag
 import { AddDataComboboxComponent } from './add-data-combobox/add-data-combobox.component';
 import { DcManagerComponent } from './dc-manager/dc-manager.component';
 import { ReportComponent } from './report/report.component';
+import { ReportEmployeeMasterComponent } from './report-employee-master/report-employee-master.component';
 
     const routes: Routes = [
        { path: '', redirectTo: '/HR-ADMIN', pathMatch: 'full' },
@@ -31,6 +32,7 @@ import { ReportComponent } from './report/report.component';
        { path: 'add-user-role', component: AddUserroleComponent },
        { path: 'dc-manager', component: DcManagerComponent },
        { path: 'report', component: ReportComponent },
+       { path: 'report-employee-master', component: ReportEmployeeMasterComponent },
     ];
 
 @NgModule({

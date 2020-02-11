@@ -104,10 +104,11 @@
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="/newheader" (click)="callReport()" *ngIf="(logouts == 'true' ? false : true) && (this.role10 == true)">Report</a>
+              <a routerLink="/newheader" (click)="callReport()" *ngIf="(logouts == 'true' ? false : true) && (this.role11 == true)">Report Attendance</a>
+              <a routerLink="/newheader" (click)="callReportEmployeeMaster()" *ngIf="(logouts == 'true' ? false : true) && (this.role12 == true)">Report Employee Master</a>
             </mat-expansion-panel>
 
-            <mat-expansion-panel class="BG_Sidenav" *ngIf="(logouts == 'true' ? false : true) && (this.role11 == true)">
+            <mat-expansion-panel class="BG_Sidenav" *ngIf="(logouts == 'true' ? false : true) && (this.role13 == true)">
               <mat-expansion-panel-header>
                 <mat-label class="dd">
                   <mat-icon matSuffix>settings_applications</mat-icon>
@@ -115,9 +116,9 @@
                 </mat-label>
               </mat-expansion-panel-header>
               <hr/>
-              <a routerLink="/newheader" (click)="callAddDepartmentRole()" *ngIf="(logouts == 'true' ? false : true) && (this.role12 == true)">Add Approve Role</a>
-              <a routerLink="/newheader" (click)="callAddDataCombobox()" *ngIf="(logouts == 'true' ? false : true) && (this.role13 == true)">Add Data</a>
-              <a routerLink="/newheader" (click)="callAddUserRole()" *ngIf="(logouts == 'true' ? false : true) && (this.role14 == true)">Add User Role</a>
+              <a routerLink="/newheader" (click)="callAddDepartmentRole()" *ngIf="(logouts == 'true' ? false : true) && (this.role14 == true)">Add Approve Role</a>
+              <a routerLink="/newheader" (click)="callAddDataCombobox()" *ngIf="(logouts == 'true' ? false : true) && (this.role15 == true)">Add Data</a>
+              <a routerLink="/newheader" (click)="callAddUserRole()" *ngIf="(logouts == 'true' ? false : true) && (this.role16 == true)">Add User Role</a>
             </mat-expansion-panel>
           </mat-accordion>
         </div> <!-- ข้างๆๆๆๆ -->
@@ -142,6 +143,7 @@
           <app-add-userrole *ngIf="selectAddUserRole == 'true' ? true : false"></app-add-userrole>
           <app-dc-manager  *ngIf="selectDcManager == 'true' ? true : false"></app-dc-manager>
           <app-report *ngIf="selectReport == 'true' ? true : false"></app-report>
+          <app-report-employee-master *ngIf="selectReportEmployeeMaster == 'true' ? true : false"></app-report-employee-master>
       </div>
     </mat-sidenav-content>
 

@@ -23,11 +23,13 @@ export class HomeComponent implements OnInit {
     userRole : Array<any>;
     masterRole: Array<any>;
 
-    RoleEmployee = [4, 5, 10];
-    RoleManager = [4, 5, 8, 10];
-    RoleSupervisor = [4, 5, 7, 10];
-    RoleHR_ADMIN = [1, 2, 3, 4, 6, 10, 11, 13];
-    RoleDcManager = [9, 10];
+    nameInLogin = sessionStorage.getItem('nameInLogin');
+
+    RoleEmployee = [4, 5, 10, 11];
+    RoleManager = [4, 5, 8, 10, 11];
+    RoleSupervisor = [4, 5, 7, 10, 11];
+    RoleHR_ADMIN = [1, 2, 3, 4, 6, 10, 11, 12, 15];
+    RoleDcManager = [9, 10, 11];
 
     hide:any;
     id : String = null;
@@ -74,7 +76,7 @@ export class HomeComponent implements OnInit {
         else{
               this.service.getUserPassword(id,NewPassword).subscribe(data => {
                 if(data == null){
-                    alert("UserID and password not complete");
+                    alert("Invalid username or password !!");
                     this.progressBar=false;
                 }
                 else if(data != null){
@@ -89,6 +91,7 @@ export class HomeComponent implements OnInit {
                         sessionStorage.setItem('loginstatus', 'true');
                         sessionStorage.setItem('empId', this.table.leaID);
                         sessionStorage.setItem('empCode', this.table.empCode);
+                        sessionStorage.setItem('nameInLogin', this.table.fName+" "+this.table.lName);
                         sessionStorage.setItem('fName', this.table.fName);
                         sessionStorage.setItem('lName', this.table.lName);
                         sessionStorage.setItem('departmentIDLogin', data.departmentid.departmentID);
@@ -103,7 +106,7 @@ export class HomeComponent implements OnInit {
                             if(data.length==0){
                               if(this.table.rolestatus == "ADMIN"){
                                 for(let i=1;i<=this.masterRole.length;i++){
-                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ i ,{})
+                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ i +'/'+ this.nameInLogin ,{})
                                     .subscribe(data => {
                                         console.log(i," InsertUserRole is successfull");
                                         this.router.navigate(['newheader']);
@@ -112,7 +115,7 @@ export class HomeComponent implements OnInit {
                               }
                               else if(this.table.rolestatus == "EMPLOYEE"){
                                 for(let i=0;i<this.RoleEmployee.length;i++){
-                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleEmployee[i] ,{})
+                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleEmployee[i] +'/'+ this.nameInLogin ,{})
                                     .subscribe(data => {
                                         console.log(this.RoleEmployee[i]," InsertUserRole is successfull");
                                         this.router.navigate(['newheader']);
@@ -121,7 +124,7 @@ export class HomeComponent implements OnInit {
                               }
                               else if(this.table.rolestatus == "MANAGER"){
                                 for(let i=0;i<this.RoleManager.length;i++){
-                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleManager[i] ,{})
+                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleManager[i] +'/'+ this.nameInLogin ,{})
                                     .subscribe(data => {
                                         console.log(this.RoleManager[i]," InsertUserRole is successfull");
                                         this.router.navigate(['newheader']);
@@ -130,7 +133,7 @@ export class HomeComponent implements OnInit {
                               }
                               else if(this.table.rolestatus == "SUPERVISOR"){
                                 for(let i=0;i<this.RoleSupervisor.length;i++){
-                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleSupervisor[i] ,{})
+                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleSupervisor[i] +'/'+ this.nameInLogin ,{})
                                     .subscribe(data => {
                                         console.log(this.RoleSupervisor[i]," InsertUserRole is successfull");
                                         this.router.navigate(['newheader']);
@@ -139,7 +142,7 @@ export class HomeComponent implements OnInit {
                               }
                               else if(this.table.rolestatus == "HR-ADMIN"){
                                 for(let i=0;i<this.RoleHR_ADMIN.length;i++){
-                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleHR_ADMIN[i] ,{})
+                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleHR_ADMIN[i] +'/'+ this.nameInLogin ,{})
                                     .subscribe(data => {
                                         console.log(this.RoleHR_ADMIN[i]," InsertUserRole is successfull");
                                         this.router.navigate(['newheader']);
@@ -148,7 +151,7 @@ export class HomeComponent implements OnInit {
                               }
                               else if(this.table.rolestatus == "DC-MANAGER"){
                                 for(let i=0;i<this.RoleDcManager.length;i++){
-                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleDcManager[i] ,{})
+                                    this.http.post(API1 + '/insertUserRole/' + this.table.leaID +'/'+ this.RoleDcManager[i] +'/'+ this.nameInLogin ,{})
                                     .subscribe(data => {
                                         console.log(this.RoleDcManager[i]," InsertUserRole is successfull");
                                         this.router.navigate(['newheader']);

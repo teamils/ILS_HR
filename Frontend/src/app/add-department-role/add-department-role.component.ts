@@ -45,6 +45,7 @@ export class AddDepartmentRoleComponent implements OnInit {
   dataSearch='';
   toppings:Array<any>;
   progressBar=false;
+  nameInLogin = sessionStorage.getItem('nameInLogin');
 
   constructor(private service:ServiceService,
               private router:Router,
@@ -105,7 +106,7 @@ export class AddDepartmentRoleComponent implements OnInit {
                               this.progressBar = false;
                           }
                           else{
-                              this.http.post(API1 + '/insertDataDepartmentRole/' + this.employeeMasterID +'/'+ this.toppings[i].departmentID ,{})
+                              this.http.post(API1 + '/insertDataDepartmentRole/' + this.employeeMasterID +'/'+ this.toppings[i].departmentID +'/'+ this.nameInLogin,{})
                                 .subscribe(
                                     data => {
                                         console.log(data);
