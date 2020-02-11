@@ -94,8 +94,11 @@ export class NewheaderComponent implements OnInit {
                           this.mobileQuery = media.matchMedia('(max-width: 600px)');
                           this._mobileQueryListener = () => changeDetectorRef.detectChanges();
                           this.mobileQuery.addListener(this._mobileQueryListener);
-
-                  if(this.roleStatusInLogin != 'DC-MANAGER'){
+                  if(this.roleStatusInLogin == 'HR-ADMIN'){
+                      sessionStorage.setItem('selectAttendanceDate', 'true');
+                      this.selectAttendanceDate =  sessionStorage.getItem('selectAttendanceDate');
+                  }
+                  else if(this.roleStatusInLogin != 'DC-MANAGER'){
                       sessionStorage.setItem('selectAttendance', 'true');
                       this.selectAttendance =  sessionStorage.getItem('selectAttendance');
                   }
@@ -278,8 +281,12 @@ export class NewheaderComponent implements OnInit {
               this.role12 = true;
             else if(this.userRoles[i].masterRoleID.id == 13)
               this.role13 = true;
-            else
+            else if(this.userRoles[i].masterRoleID.id == 14)
               this.role14 = true;
+            else if(this.userRoles[i].masterRoleID.id == 15)
+              this.role15 = true;
+            else
+              this.role16 = true;
         }
         this.open=true;
       }
