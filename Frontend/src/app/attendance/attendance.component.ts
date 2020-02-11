@@ -237,7 +237,7 @@ export class AttendanceComponent implements OnInit {
       this.http.post(API1  +/Time/+ this.startTimeSelect +'/'+ this.endTimeSelect ,{})
                         .subscribe(
                                        data => {
-                                            console.log(data);
+                                       //     console.log(data);
                                             this.totalTime = data;
                                             return data;
                                        },
@@ -262,77 +262,43 @@ export class AttendanceComponent implements OnInit {
             }
             let dates = this.datepipe.transform(dateResult, 'dd-MM-yyyy')
             //console.log(this.leaves2[i].labelLeaveHalfDay);
-            arr.push(dates+'%'+this.leaves2[i].labelLeaveHalfDay);
+            arr.push(dates+'%'+this.leaves2[i].labelLeaveHalfDay+'%'+this.leaves2[i].startTime+'%'+this.leaves2[i].endTime);
         }
       }
     }
 
-  let startdateResult = this.datepipe.transform(startDate, 'dd-MM-yyyy');
+    let startdateResult = this.datepipe.transform(startDate, 'dd-MM-yyyy');
 
-    if(labelLeaveHalfDay=='ครึ่งวันเช้า'){
-      let checkLeaves = 0;
-      for(let i = 0 ; i < arr.length ; i++){
-        var arrSplitted = arr[i].split("%");
-        var labelSplitted = arrSplitted[1].split(" ");
-        if(arrSplitted[0] == startdateResult){
-          if(labelSplitted[1]=='ว')
-            checkLeaves = 1;
-          else if(arrSplitted[1] == 'ครึ่งวันเช้า')
-            checkLeaves = 1;
-        }
+    let spliteddate = [] ;
+    let splitedleaves = [] ;
+    let checkDateReserved  = 0 ;
+    let arrayTime = [] ;
+
+    for(let i = 0 ; i < arr.length ; i++){
+       spliteddate = arr[i].split("%");
+      if(spliteddate[0] == startdateResult){
+          splitedleaves = arr[i].split("%");
+          if(splitedleaves[1].split(" ")[1] == "ว"){
+            return 1 ;
+          }else{
+             for(let l = parseInt(splitedleaves[2].split(":")[0] + splitedleaves[2].split(":")[1]) + 1 ; l <= parseInt(splitedleaves[3].split(":")[0] + splitedleaves[3].split(":")[1]) - 1; l++){
+                arrayTime.push(l);
+             }
+          }
       }
-      if(checkLeaves == 1)
-        return 1;
-      else
-        return 0;
     }
-    else if(labelLeaveHalfDay=='ครึ่งวันบ่าย'){
-      let checkLeaves = 0;
-      for(let i = 0 ; i < arr.length ; i++){
-        var arrSplitted = arr[i].split("%");
-        var labelSplitted = arrSplitted[1].split(" ");
-        if(arrSplitted[0] == startdateResult){
-          if(labelSplitted[1]=='ว')
-            checkLeaves = 1;
-          else if(arrSplitted[1] == 'ครึ่งวันบ่าย')
-            checkLeaves = 1;
-        }
-      }
-      if(checkLeaves == 1)
-        return 1;
-      else
-        return 0;
-    }
-    else{
-      let arr2=[]
-      for(let i = 0 ; i < this.leaves2.length ; i++){
-        //console.log(this.leaves2[i]);
-        if(this.datepipe.transform(startDate, 'dd-MM-yyyy') == this.leaves2[i].startDateForAllDay){
-            arr2.push(this.leaves2[i]);
-        }
-      }
-      console.log(arr2);
-      for(let i of arr2){
-        console.log(i.labelLeaveHalfDay);
-        var Splitted = i.labelLeaveHalfDay.split(" ");
-        console.log(Splitted);
-        if(Splitted[1] == 'ว'){
-            return 1;
-        }
-        else if(i.labelLeaveHalfDay == 'ครึ่งวันเช้า'){
-            return 1;
-        }
-        else if(i.labelLeaveHalfDay == 'ครึ่งวันบ่าย'){
-            return 1;
-        }
-      }
 
-
-
+    for(let i = parseInt(startTime.split(":")[0] + startTime.split(":")[1])  ; i <= parseInt(endTime.split(":")[0] + endTime.split(":")[1]) ; i++){
+        for(let j = 0 ; j < arrayTime.length ; j++){
+            if(arrayTime[j] == i){
+                return 1 ;
+            }
+        }
 
 
     }
 
+    return 0 ;
 
   }
   SubmitData(){ // Half Day
