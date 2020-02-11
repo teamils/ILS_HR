@@ -302,9 +302,7 @@ export class AttendanceComponent implements OnInit {
 
   }
   SubmitData(){ // Half Day
-   let CheckDoublyLeaves_HalfDay = this.CheckDoublyLeaves_HalfDay(this.leaveTypeSelect,this.startDate,this.startTimeSelect,this.endTimeSelect,this.labelLeaveHalfDay);
-     if(CheckDoublyLeaves_HalfDay==1) alert("วันที่และเวลา ที่คุณเลือกมีการลาแล้ว กรุณาตรวจสอบอีกครั้ง!"); else  alert("ลาได้");
-        /*let totalTime = this.CalculateLeaveTime();
+        let totalTime = this.CalculateLeaveTime();
         this.CalculateLeaveDate(this.startDate,this.startDate);
         this.Checktheleave(this.table.leaID,this.leaveTypeSelect);
           if(this.labelLeaveHalfDay=='ชั่วโมง') {this.statusLabelLeaveHalfDay=1;this.statusLabelLeaveHalfDay2=1;}
@@ -347,7 +345,7 @@ export class AttendanceComponent implements OnInit {
                                       );
               this.x=true;
             }
-        }*/
+        }
   }
 
  CheckDoublyLeaves_Fullday(leaveType:any,startDate:any,endDate:any){
