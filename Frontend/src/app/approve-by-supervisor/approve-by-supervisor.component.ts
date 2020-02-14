@@ -59,7 +59,8 @@ export class ApproveBySupervisorComponent implements OnInit {
   hide=false;
   leaveTypeSearch;
   leaveStatusSearch;
-  codeAndName;
+  codeAndName=null;
+  searchStatus=false;
 //------------------------
   displayedColumns: string[] = ['number','employeeCode', 'name','department','date', 'leaveType','startDate', 'endDate','total','reason', /*'approvedBySupervisor', 'approvedByManager',*/'leaveStatus','approve','notApprove'];
   dataSource = new MatTableDataSource<Emp>(this.leaves);
@@ -104,6 +105,7 @@ export class ApproveBySupervisorComponent implements OnInit {
           this.leaveTypeForAlldays = data;
           //console.table(this.leaveTypeForAlldays);
       });
+    this.searchStatus=false;
   }
   SplitCreateDate(date:any){
     var DateSplitted = date.split("T");
@@ -180,6 +182,8 @@ export class ApproveBySupervisorComponent implements OnInit {
   }
 
   SetLeaves(data:any){
+        if(data.length == 0) this.searchStatus=true;
+        else this.searchStatus=false;
                 this.progressBar = false;
                 this.leaves = data;
                 this.dataSource.data = this.leaves;
@@ -194,6 +198,7 @@ export class ApproveBySupervisorComponent implements OnInit {
   SearchLeaveData(){
     this.progressBar = true;
     this.ngOnDestroy();
+    if(this.codeAndName == '') this.codeAndName = null;
     if(this.startDateSearch == null && this.endDateSearch == null){
       this.http.get(API1+'/SearchLeaveInApproveSupByLeaveTypeLeaveStatusCodeName/' + this.empId +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch +'/'+ this.codeAndName,{})
                                .subscribe(data => {

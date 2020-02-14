@@ -150,11 +150,17 @@ export class EmployeeAddComponent implements OnInit {
     }
 
     SubmitData(){
-      this.CalculateLeaveDate(this.BirthDateSelect,new Date());
-       if(this.subtractYear < 18){
+       this.CheckEmpCode();
+       this.CalculateLeaveDate(this.BirthDateSelect,new Date());
+       if(this.checkStatus == false){
+          alert("รหัสพนักงานซ้ำ!!");
+       }
+       else if(this.subtractYear < 18){
           alert("ต้องมีอายุ 18ปีบริบูรณ์");
         }
-       else if(this.employeeMasterCustomerCode == null || this.prefixSelect == null || this.empMasterFirstName == null
+       else if(this.employeeMasterCustomerCode == null
+       || this.prefixSelect == null
+       || this.empMasterFirstName == null
         || this.empMasterLastName == null
          || this.genderSelect == null
           || this.BirthDateSelect == null || this.personID == null
@@ -199,9 +205,15 @@ export class EmployeeAddComponent implements OnInit {
 
     }
 
-
-
-
-
+    checkStatus=false;
+    CheckEmpCode(){
+      this.service.getSearchEmployeeForAttendance(this.employeeMasterCustomerCode).subscribe(data => {
+          //console.log('EmployeeCode == ',data);
+          if(data!=null){
+              this.checkStatus = false;
+          }
+          else this.checkStatus = true;
+      });
+    }
 
 }

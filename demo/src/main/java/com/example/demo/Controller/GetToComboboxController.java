@@ -216,7 +216,7 @@ public class GetToComboboxController {
         masterAttendanceRepository.save(insertMasterAttendance);
         return insertMasterAttendance;
     }
-    @DeleteMapping("/deleteMasterAttendance//{masterAttendanceID}")
+    @DeleteMapping("/deleteMasterAttendance/{masterAttendanceID}")
     public MasterAttendance deleteMasterAttendance(@PathVariable long masterAttendanceID) {
         MasterAttendance deleteMasterAttendance = masterAttendanceRepository.findById(masterAttendanceID).get();
         masterAttendanceRepository.delete(deleteMasterAttendance);

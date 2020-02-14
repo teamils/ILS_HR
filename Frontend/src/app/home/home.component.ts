@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
     RoleEmployee = [4, 5, 10, 11];
     RoleManager = [4, 5, 8, 10, 11];
     RoleSupervisor = [4, 5, 7, 10, 11];
-    RoleHR_ADMIN = [1, 2, 3, 4, 6, 10, 11, 12, 15];
+    RoleHR_ADMIN = [1, 2, 3, 4, 6, 10, 11, 12, 13, 15];
     RoleDcManager = [9, 10, 11];
 
     hide:any;
@@ -48,7 +48,9 @@ export class HomeComponent implements OnInit {
       sumDate : '',
       rolestatus : '',
     };
-
+  checkLogin = false;
+  checkUsername = false;
+  checkPassword = false;
   constructor(private router:Router,
             private route:ActivatedRoute ,
             public dialog: MatDialog,
@@ -59,25 +61,34 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
           this.service.getMasterRole().subscribe(data => {
-          this.masterRole = data;
-          //console.log('masterRole == ',this.masterRole);
-      });
+            this.masterRole = data;
+            //console.log('masterRole == ',this.masterRole);
+          });
     }
 
     login(id,NewPassword){
-        if(this.id == null){
-            alert("Please enter username");
+        if(this.id == null || (this.id == null && this.NewPassword != null) || (this.id == null && this.NewPassword == null)){
+            //alert("Please enter username");
             this.progressBar=false;
+            this.checkUsername = true;
+            this.checkPassword = false;
+            this.checkLogin = false;
         }
-        else if(this.NewPassword == null){
-            alert("Please enter password");
+        else if(this.NewPassword == null || (this.id != null && this.NewPassword == null)){
+            //alert("Please enter password");
+            this.checkPassword = true;
             this.progressBar=false;
+            this.checkUsername = false;
+            this.checkLogin = false;
         }
         else{
               this.service.getUserPassword(id,NewPassword).subscribe(data => {
                 if(data == null){
-                    alert("Invalid username or password !!");
+                    this.checkLogin = true;
+                    //alert("Invalid username or password !!");
                     this.progressBar=false;
+                    this.checkUsername = false;
+                    this.checkPassword = false;
                 }
                 else if(data != null){
                     if(data.maritalStatus=="ยังปฏิบัติงานอยู่"){

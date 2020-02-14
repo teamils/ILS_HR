@@ -64,8 +64,8 @@ export class ServiceService {
   getshowLeavesToNotComplete():Observable<any>{
       return this.http.get(API1+'/showLeavesToNotComplete',{})
   }
-  getSearchEmployeeForAttendance(employeeMasterID:String): Observable<any>{
-      return this.http.get(API1+'/SearchEmployeeForAttendance/'+employeeMasterID,{})
+  getSearchEmployeeForAttendance(empCode:String): Observable<any>{
+      return this.http.get(API1+'/SearchEmployeeForAttendance/'+empCode,{})
   }
   getSearchEmployeeForAttendance2(id:String): Observable<any>{
       return this.http.get(API1+'/SearchEmployeeForAttendance2/'+id,{})
@@ -211,6 +211,18 @@ getLeavesHRADMIN(leaveTypeSearch : string , leaveStatusSearch : string , departm
 getLeavesHRADMINHavedate(leaveTypeSearch : string , leaveStatusSearch : string , departmentSelect:string ,
   leavePayment:string , dataSearch:string,datestart:string , dateend:string):Observable<any>{
     return this.http.get(API1+'/getLeavesHRADMINHavedate/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
+    +'/'+leavePayment+'/'+dataSearch+'/'+datestart+'/'+dateend,{})
+  }
+
+getLeavesADMIN(leaveTypeSearch : string , leaveStatusSearch : string , departmentSelect:string ,
+  leavePayment:string , dataSearch:string):Observable<any>{
+    return this.http.get(API1+'/getLeavesADMIN/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
+    +'/'+leavePayment+'/'+dataSearch,{})
+  }
+
+getLeavesADMINHavedate(leaveTypeSearch : string , leaveStatusSearch : string , departmentSelect:string ,
+  leavePayment:string , dataSearch:string,datestart:string , dateend:string):Observable<any>{
+    return this.http.get(API1+'/getLeavesADMINHaveDate/'+leaveTypeSearch+'/'+leaveStatusSearch+'/'+departmentSelect
     +'/'+leavePayment+'/'+dataSearch+'/'+datestart+'/'+dateend,{})
   }
 

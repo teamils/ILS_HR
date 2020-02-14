@@ -29,6 +29,13 @@ export class EmployeeEditComponent implements OnInit {
         nowDate = new Date();
         employee: Array<any>;
         empID : null;
+
+        RoleEmployee = [4, 5, 10, 11];
+        RoleManager = [4, 5, 8, 10, 11];
+        RoleSupervisor = [4, 5, 7, 10, 11];
+        RoleHR_ADMIN = [1, 2, 3, 4, 6, 10, 11, 12, 13, 15];
+        RoleDcManager = [9, 10, 11];
+
         NewemployeeMasterID : null;
         NewemployeeMasterCustomerCode: string;
         Newprefix : string;
@@ -61,12 +68,15 @@ export class EmployeeEditComponent implements OnInit {
         gender:Array<any>;
         prefix: Array<any>;
         empStatus: Array<any>;
+        masterRole: Array<any>;
         NewRoleStatus: string;
         dis;
         select:any;
         empId = sessionStorage.getItem('empId');
         fName = sessionStorage.getItem('fName');
         lName = sessionStorage.getItem('lName');
+        nameInLogin = sessionStorage.getItem('nameInLogin');
+        roleStatusInLogin = sessionStorage.getItem('roleStatusInLogin');
       constructor(public dialogRef: MatDialogRef<EmployeeEditComponent>
                       ,hangeDetectorRef: ChangeDetectorRef
                       ,media: MediaMatcher
@@ -122,12 +132,89 @@ export class EmployeeEditComponent implements OnInit {
                this.empStatus = data;
                //console.log('empStatus == ',this.empStatus);
                  });
-
-         // console.log(this.data);
-
+        this.service.getMasterRole().subscribe(data => {
+               this.masterRole = data;
+               //console.log('masterRole == ',this.masterRole);
+                 });
+      }
+      AddUserRole(){
+         this.service.getUserRoles(this.NewemployeeMasterID).subscribe(data => {
+                              //this.userRole = data;
+                              //console.log('userRole -> ',this.userRole);
+                              if(data.length==0){
+                                if(this.NewRoleStatus == "ADMIN"){
+                                  for(let i=1;i<=this.masterRole.length;i++){
+                                      this.http.post(API1 + '/insertUserRole/' + this.NewemployeeMasterID +'/'+ i +'/'+ this.nameInLogin ,{})
+                                      .subscribe(data => {
+                                          console.log(i," InsertUserRole is successfull");
+                                      });
+                                  }
+                                }
+                                else if(this.NewRoleStatus == "EMPLOYEE"){
+                                  for(let i=0;i<this.RoleEmployee.length;i++){
+                                      this.http.post(API1 + '/insertUserRole/' + this.NewemployeeMasterID +'/'+ this.RoleEmployee[i] +'/'+ this.nameInLogin ,{})
+                                      .subscribe(data => {
+                                          console.log(this.RoleEmployee[i]," InsertUserRole is successfull");
+                                      });
+                                  }
+                                }
+                                else if(this.NewRoleStatus == "MANAGER"){
+                                  for(let i=0;i<this.RoleManager.length;i++){
+                                      this.http.post(API1 + '/insertUserRole/' + this.NewemployeeMasterID +'/'+ this.RoleManager[i] +'/'+ this.nameInLogin ,{})
+                                      .subscribe(data => {
+                                          console.log(this.RoleManager[i]," InsertUserRole is successfull");
+                                      });
+                                  }
+                                }
+                                else if(this.NewRoleStatus == "SUPERVISOR"){
+                                  for(let i=0;i<this.RoleSupervisor.length;i++){
+                                      this.http.post(API1 + '/insertUserRole/' + this.NewemployeeMasterID +'/'+ this.RoleSupervisor[i] +'/'+ this.nameInLogin ,{})
+                                      .subscribe(data => {
+                                          console.log(this.RoleSupervisor[i]," InsertUserRole is successfull");
+                                      });
+                                  }
+                                }
+                                else if(this.NewRoleStatus == "HR-ADMIN"){
+                                  for(let i=0;i<this.RoleHR_ADMIN.length;i++){
+                                      this.http.post(API1 + '/insertUserRole/' + this.NewemployeeMasterID +'/'+ this.RoleHR_ADMIN[i] +'/'+ this.nameInLogin ,{})
+                                      .subscribe(data => {
+                                          console.log(this.RoleHR_ADMIN[i]," InsertUserRole is successfull");
+                                      });
+                                  }
+                                }
+                                else if(this.NewRoleStatus == "DC-MANAGER"){
+                                  for(let i=0;i<this.RoleDcManager.length;i++){
+                                      this.http.post(API1 + '/insertUserRole/' + this.NewemployeeMasterID +'/'+ this.RoleDcManager[i] +'/'+ this.nameInLogin ,{})
+                                      .subscribe(data => {
+                                          console.log(this.RoleDcManager[i]," InsertUserRole is successfull");
+                                      });
+                                  }
+                                }
+                              }
+         });
+      }
+      DelectRoleStatus(){
+            this.service.getUserRoles(this.NewemployeeMasterID).subscribe(data => {
+                if(data.length!=0){
+                  for(let i of data){
+                      this.http.delete(API1 + '/DeleteUserRole/' + i.id ,{}).subscribe(
+                        data => {
+                          console.log('DeleteUserRole is successful');
+                        },
+                        error => {
+                          console.log('Error', error);
+                        });
+                  }
+                }
+            });
       }
 
       EditEmployee(){
+         for(let i of this.employee){
+          if(i.roleStatus != this.NewRoleStatus){
+            this.DelectRoleStatus();
+          }
+         }
            this.select = {
               NewempEmail:this.NewempEmail ,
               NewempAddressReal:this.NewempAddressReal,
@@ -139,13 +226,14 @@ export class EmployeeEditComponent implements OnInit {
                                                     +'/'+ this.NewmaritalStatus +'/'+ this.NewemployeeMasterBirthDate +'/'+ this.NewemployeeMasterPersonID
                                                     +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewemployeeMasterStartDate +'/'+ this.NewemployeePosition +'/'+ this.NewemployeeDepartment
                                                     +'/'+ this.NewemployeeType +'/'+ this.Neweducation +'/'+ this.Newbank +'/'+ this.NewbankNumber
-                                                    +'/'+ this.Newpassword +'/'+ this.fName +'/'+ this.lName , JSON.stringify(this.select),{
+                                                    +'/'+ this.Newpassword +'/'+ this.fName +'/'+ this.lName +'/'+ this.NewRoleStatus , JSON.stringify(this.select),{
                                                       headers: {"Content-Type": "application/json"}
                                                     })
                                    .subscribe(
                                        data => {
+                                          this.AddUserRole();
                                            console.log('EditEmployee is successful');
-                                           alert("Edit Success!");
+                                           alert("EditEmployee is successful!");
                                             this.BackupEmployeeMaster();
                                             sessionStorage.setItem('links', 'employeeMaster');
                                            window.location.reload(true);

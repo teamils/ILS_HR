@@ -167,7 +167,7 @@ public class LeavesController {
         leaves2.setStartTime("08:00");
         leaves2.setEndTime("17:00");
         leaves2.setReasonForAllDay(reason2);
-        leaves2.setLabelLeaveHalfDay(diffDay + " ว ัน");
+        leaves2.setLabelLeaveHalfDay(diffDay + " วัน");
         leaves2.setDiffDay(diffDay);
         leaves2.setConfirmByHR("Pending");
         leaves2.setIsActiveAttendance("1");
@@ -201,7 +201,7 @@ public class LeavesController {
     public Leaves leaves(@PathVariable Long leavesID,@PathVariable String reason) {
         Leaves leaves = leavesRepository.findById(leavesID).get();
         leaves.setReasonNotApprove(reason);
-        leaves.setLeaveStatus("c");
+        leaves.setLeaveStatus("Cancel");
         leavesRepository.save(leaves);
         return leaves;
     }
@@ -228,6 +228,7 @@ public class LeavesController {
         Leaves notApproveBySupervisor = leavesRepository.findById(leavesID).get();
         notApproveBySupervisor.setApprovedBySupervisor("Not approve");
         notApproveBySupervisor.setLeaveStatus("Not approve");
+        notApproveBySupervisor.setApprovedByManager("");
         notApproveBySupervisor.setReasonNotApprove(reasonNotapprove);
         leavesRepository.save(notApproveBySupervisor);
         return notApproveBySupervisor;

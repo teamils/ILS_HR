@@ -26,7 +26,9 @@
 
        <!-- <p align="center"><font color="black" class="font">ILS HUMAN RESOURCES</font></p> -->
         <img style="margin-left : 32%" src="http://www.ils.co.th/wp-content/themes/ils/images/logo.png" alt="ILS"/>
-
+        <p align="center" style="border: 2pt solid red ; width:70%; margin-left:15%; background-color: red; color:white;" *ngIf="this.checkLogin == true"><b>Invalid username or password !!</b></p>
+        <p align="center" style="border: 2pt solid red ; width:70%; margin-left:15%; background-color: red; color:white;" *ngIf="this.checkUsername == true"><b>Please enter username !!</b></p>
+        <p align="center" style="border: 2pt solid red ; width:70%; margin-left:15%; background-color: red; color:white;" *ngIf="this.checkPassword == true"><b>Please enter password !!</b></p>
         <mat-form-field appearance="outline" style="width:100%;">
           <mat-label>Enter your username</mat-label>
           <input matInput placeholder="username" [(ngModel)]="id">

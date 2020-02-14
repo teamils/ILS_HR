@@ -163,6 +163,7 @@ export class DcManagerComponent implements OnInit {
   }
 
   SetLeaves(data:any){
+              if(data.length == 0) alert("ไม่พบข้อมูล!");
                 this.progressBar = false;
                 this.leaves = data;
                 this.dataSource.data = this.leaves;

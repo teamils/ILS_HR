@@ -10,7 +10,7 @@
             <mat-grid-tile>
                <div class="card3">
                  <mat-form-field style="width:100%">
-                   <input matInput #x  placeholder="รหัสพนักงาน" required [(ngModel)]="employeeMasterCustomerCode">
+                   <input matInput #x  placeholder="รหัสพนักงาน" required [(ngModel)]="employeeMasterCustomerCode" (ngModelChange)="CheckEmpCode()">
                    <mat-hint align="end">{{x.value.length}}</mat-hint>
                    <mat-icon matSuffix>perm_identity</mat-icon>
                  </mat-form-field>
@@ -25,12 +25,12 @@
                  </mat-form-field>
                  <!--F_NAME-->
                  <mat-form-field  style="width:100%" >
-                   <input matInput placeholder="ชื่อ"  autocomplete="off" required [(ngModel)]="empMasterFirstName">
+                   <input matInput placeholder="ชื่อ"  autocomplete="off" required [(ngModel)]="empMasterFirstName" >
                    <mat-icon matSuffix>perm_identity</mat-icon>
                  </mat-form-field>
                  <!--L_NAME-->
                  <mat-form-field style="width:100%">
-                   <input matInput placeholder="นามสกุล"  autocomplete="off" required [(ngModel)]="empMasterLastName">
+                   <input matInput placeholder="นามสกุล"  autocomplete="off" required [(ngModel)]="empMasterLastName" >
                    <mat-icon matSuffix>perm_identity</mat-icon>
                  </mat-form-field>
                </div>

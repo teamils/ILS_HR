@@ -56,4 +56,11 @@ public class UserRolesController {
         return userRole;
     }
 
+    @DeleteMapping("/DeleteUserRole/{userRoleID}")
+    public UserRole DeleteUserRole(@PathVariable long userRoleID) {
+        UserRole DeleteUserRole = userRolesRepository.findById(userRoleID).get();
+        userRolesRepository.delete(DeleteUserRole);
+        return null;
+    }
+
 }

@@ -282,4 +282,57 @@ public class ReportController {
 
         return this.reportRepository.getLeavesHRADMINHaveDate(leaveTypeSearch,leaveStatusSearch,departmentSelect,leavePayment,dataSearch,datestart,dateend);
     }
+
+
+    @GetMapping("/getLeavesADMIN/{leaveTypeSearch}/{leaveStatusSearch}/{departmentSelect}/{leavePayment}/{dataSearch}")
+    public Iterable<Leaves> getLeavesADMIN(@PathVariable String leaveTypeSearch
+            ,@PathVariable String leaveStatusSearch, @PathVariable String departmentSelect
+            , @PathVariable String leavePayment,@PathVariable String dataSearch) {
+
+
+        if(leaveTypeSearch.equals("undefined")){
+            leaveTypeSearch = "";
+        }
+        if(leaveStatusSearch.equals("undefined")){
+            leaveStatusSearch = "";
+        }
+        if(departmentSelect.equals("undefined")){
+            departmentSelect = "";
+        }
+        if(leavePayment.equals("undefined")){
+            leavePayment = "";
+        }
+        if(dataSearch.equals("undefined")){
+            dataSearch = "";
+        }
+
+        return this.reportRepository.getLeavesADMIN(leaveTypeSearch,leaveStatusSearch,departmentSelect,leavePayment,dataSearch);
+    }
+
+
+    @GetMapping("/getLeavesADMINHaveDate/{leaveTypeSearch}/{leaveStatusSearch}/{departmentSelect}/{leavePayment}/{dataSearch}/{datestart}/{dateend}")
+    public Iterable<Leaves> getLeavesADMINHaveDate(@PathVariable String leaveTypeSearch
+            ,@PathVariable String leaveStatusSearch, @PathVariable String departmentSelect
+            , @PathVariable String leavePayment,@PathVariable String dataSearch
+            , @PathVariable String datestart,@PathVariable String dateend) {
+
+
+        if(leaveTypeSearch.equals("undefined")){
+            leaveTypeSearch = "";
+        }
+        if(leaveStatusSearch.equals("undefined")){
+            leaveStatusSearch = "";
+        }
+        if(departmentSelect.equals("undefined")){
+            departmentSelect = "";
+        }
+        if(leavePayment.equals("undefined")){
+            leavePayment = "";
+        }
+        if(dataSearch.equals("undefined")){
+            dataSearch = "";
+        }
+
+        return this.reportRepository.getLeavesADMINHaveDate(leaveTypeSearch,leaveStatusSearch,departmentSelect,leavePayment,dataSearch,datestart,dateend);
+    }
 }

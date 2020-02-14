@@ -131,7 +131,7 @@ public class EmployeeMasterController {
             "/{NewemployeeMasterLastName}/{NewemployeeMasterNickName}/{NewemployeeMasterGender}/{NewmaritalStatus}" +
             "/{NewemployeeMasterBirthDate}/{NewemployeeMasterPersonID}/{NewemployeeMasterTel1}" +
             "/{NewemployeeMasterStartDate}/{NewemployeePosition}/{NewemployeeDepartment}/{NewemployeeType}" +
-            "/{Neweducation}/{Newbank}/{NewbankNumber}/{Newpassword}/{fName}/{lName}") // Edit Employee
+            "/{Neweducation}/{Newbank}/{NewbankNumber}/{Newpassword}/{fName}/{lName}/{NewRoleStatus}") // Edit Employee
     public EmployeeMaster employeeMaster(@RequestBody Map<String,String> body,@PathVariable Long NewemployeeMasterID, @PathVariable String NewemployeeMasterCustomerCode,
                                          @PathVariable String Newprefix, @PathVariable String NewemployeeMasterFirstName,
                                          @PathVariable String NewemployeeMasterLastName, @PathVariable String NewemployeeMasterNickName,
@@ -141,7 +141,7 @@ public class EmployeeMasterController {
                                          @PathVariable String NewemployeePosition, @PathVariable String NewemployeeDepartment,
                                          @PathVariable String NewemployeeType, @PathVariable String Neweducation, @PathVariable String Newbank,
                                          @PathVariable String NewbankNumber,@PathVariable String Newpassword,
-                                         @PathVariable String fName ,@PathVariable String lName) throws ParseException {
+                                         @PathVariable String fName ,@PathVariable String lName,@PathVariable String NewRoleStatus) throws ParseException {
         Department department = departmentRepository.findByDepartmentName(NewemployeeDepartment);
         EmployeeMaster employeeMaster2 = employeeMasterRepository.findById(NewemployeeMasterID).get();
 
@@ -220,10 +220,10 @@ public class EmployeeMasterController {
         employeeMaster2.setBank(Newbank);
         employeeMaster2.setBankNumber(NewbankNumber);
         employeeMaster2.setPassword(Newpassword);
+        employeeMaster2.setRoleStatus(NewRoleStatus);
         employeeMasterRepository.save(employeeMaster2);
         return employeeMaster2;
     }
-
 
     @PostMapping(path = "/deleteEmployee/{NewemployeeMasterID}/{NewIsActive}") //Delete Employee
     public EmployeeMaster employeeMaster(@PathVariable Long NewemployeeMasterID,@PathVariable String NewIsActive) {

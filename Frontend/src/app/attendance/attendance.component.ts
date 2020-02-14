@@ -113,6 +113,7 @@ export class AttendanceComponent implements OnInit {
   hide=false;
   leaveTypeSearch;
   leaveStatusSearch;
+  searchStatus=false;
 //------------------------
   displayedColumns2: string[] = ['number','date','leaveType','startDate','endDate2','total', 'reason', /*'approvedBySupervisor', 'approvedByManager',*/'reasonNotApprove','isPayment','leaveStatus','del'];
   dataSource2 = new MatTableDataSource<leave2>(this.leaves2);
@@ -137,7 +138,7 @@ export class AttendanceComponent implements OnInit {
   ngOnInit() {
       var CDate = new Date(this.startDateInLogin);
       this.CalculateStartWorkDate(CDate,new Date());
-
+      this.searchStatus=false;
       this.x=true;
       this.service.getleaveTypeForAlldays().subscribe(data => {
         this.leaveTypeForAlldays = data;
@@ -278,7 +279,7 @@ export class AttendanceComponent implements OnInit {
        spliteddate = arr[i].split("%");
       if(spliteddate[0] == startdateResult){
           splitedleaves = arr[i].split("%");
-          if(splitedleaves[1].split(" ")[1] == "ว"){
+          if(splitedleaves[1].split(" ")[1] == "วัน"){
             return 1 ;
           }else{
              for(let l = parseInt(splitedleaves[2].split(":")[0] + splitedleaves[2].split(":")[1]) + 1 ; l <= parseInt(splitedleaves[3].split(":")[0] + splitedleaves[3].split(":")[1]) - 1; l++){
@@ -302,6 +303,7 @@ export class AttendanceComponent implements OnInit {
 
   }
   SubmitData(){ // Half Day
+        this.searchStatus=false;
         let totalTime = this.CalculateLeaveTime();
         this.CalculateLeaveDate(this.startDate,this.startDate);
         this.Checktheleave(this.table.leaID,this.leaveTypeSelect);
@@ -384,6 +386,7 @@ export class AttendanceComponent implements OnInit {
  }
 
   SubmitData2(){ //Full day
+        this.searchStatus=false;
         this.statusLabelLeaveHalfDay2=2;
         this.CalculateLeaveDate(this.startDate2,this.endDate2);
         this.Checktheleave(this.table.leaID,this.leaveTypeSelect2);
@@ -668,17 +671,20 @@ export class AttendanceComponent implements OnInit {
     }
 
     SetLeaves(data:any){
-      //console.log(data);
-      this.leaves2 = data;
-      //console.log('getShowLeaves2 -> ', this.leaves2);
-      this.dataSource2.data = this.leaves2;
-      this.dataSource2.paginator = this.paginator;
-      for(let i of this.leaves2){
-        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-        i.createDate =  this.SplitCreateDate(i.createDate);
-      }
-      this.ngOnDestroy();
+       if(data.length == 0) this.searchStatus=true;
+       else this.searchStatus=false;
+          //console.log(data);
+          this.leaves2 = data;
+          //console.log('getShowLeaves2 -> ', this.leaves2);
+          this.dataSource2.data = this.leaves2;
+          this.dataSource2.paginator = this.paginator;
+          for(let i of this.leaves2){
+            i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+            i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+            i.createDate =  this.SplitCreateDate(i.createDate);
+          }
+        this.ngOnDestroy();
+
     }
     ShowSearchLeaveData(){
       this.hide = !this.hide;
@@ -724,6 +730,7 @@ export interface DialogData {
   leavesNumbersid;
   employeeMasterid;
   diffDay;
+  isPayment;
 }
 @Component({
     selector: 'attendanceDelete',
@@ -736,12 +743,14 @@ export interface DialogData {
     leavesNumbersID;
     diffDay;
     roleStatus;
+    isPayment;
     constructor(public dialogRef: MatDialogRef<AttendanceCancelDialog> , public service:ServiceService,@Inject(MAT_DIALOG_DATA)  public data: DialogData,private http: HttpClient){
           dialogRef.disableClose = true;
         this.leavesID = this.data.leavesID;
         this.leavesNumbersID = data.leavesNumbersid.leavesNumbersID;
         this.diffDay = data.diffDay;
         this.roleStatus = data.employeeMasterid.roleStatus;
+        this.isPayment = data.isPayment;
         console.log(data.diffDay);
     }
 
@@ -768,6 +777,7 @@ export interface DialogData {
     }
 
     CalculateLeaveNumberBack(){
+      if(this.isPayment == 'payment'){
         this.http.post(API1 + '/CalculateLeaveNumberBack/' + this.leavesNumbersID +'/'+ this.diffDay +'/'+ this.leavesID,{})
                                        .subscribe(
                                            data => {
@@ -778,7 +788,7 @@ export interface DialogData {
                                                console.log('Error', error);
                                            }
                                         );
-
+      }
     }
 
 

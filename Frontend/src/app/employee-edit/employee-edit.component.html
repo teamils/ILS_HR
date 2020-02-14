@@ -177,6 +177,19 @@
         <mat-hint align="end">{{AccountNo.value?.length || 0}}/10</mat-hint>
         <mat-icon matSuffix>monetization_on</mat-icon>
       </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline" *ngIf="this.roleStatusInLogin == 'ADMIN'?true:false">
+        <mat-label>User Role</mat-label>
+        <mat-select  [(ngModel)]="NewRoleStatus">
+          <mat-option value="MANAGER">MANAGER</mat-option>
+          <mat-option value="EMPLOYEE">EMPLOYEE</mat-option>
+          <mat-option value="HR-ADMIN">HR-ADMIN</mat-option>
+          <mat-option value="SUPERVISOR">SUPERVISOR</mat-option>
+          <mat-option value="ADMIN">ADMIN</mat-option>
+          <mat-option value="DC MANAGER">DC MANAGER</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>account_circle</mat-icon>
+      </mat-form-field>
     </div>
     <hr>
     <div align="center">

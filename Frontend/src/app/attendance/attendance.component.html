@@ -196,6 +196,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
   </table>
+<p align="center" style="border: 1pt solid green ; width:70%; margin-left:15%; background-color: white; color:black;" *ngIf="this.searchStatus == true"><b>ไม่มีข้อมูล !!</b></p>
 <mat-paginator [pageSizeOptions]="[15, 30, 50, 100]"></mat-paginator>
 <mat-card>
   <p style="color:red"><font size="2.5px">

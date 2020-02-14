@@ -74,7 +74,8 @@ export class AttendanceDataComponent implements OnInit {
   leaveStatusSearch;
   leavePayment;
   departmentSearch;
-  codeAndName;
+  codeAndName=null;
+  searchStatus=false;
 //------------------------
   displayedColumns: string[] = ['number','employeeCode', 'name','position','department'/*,'employeeType'*/,'date', 'leaveType','startDate', 'endDate','total','reason', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','isPayment','leaveStatus','confirm','del'/*,'edit'*/];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
@@ -117,7 +118,7 @@ export class AttendanceDataComponent implements OnInit {
           //console.table(this.leaveTypeForAlldays);
         });
         this.dataSource.paginator = this.paginator;
-
+      this.searchStatus=false;
   }
   onlyOdds = (d: Date): boolean => {
     const day = d.getDay();
@@ -235,6 +236,8 @@ export class AttendanceDataComponent implements OnInit {
       }
   }
   SetLeaves(data:any){
+       if(data.length == 0) this.searchStatus=true;
+       else this.searchStatus=false;
                 this.progressBar = false;
                 this.leaves = data;
                 this.dataSource.data = this.leaves;
@@ -248,6 +251,7 @@ export class AttendanceDataComponent implements OnInit {
   SearchLeaveData(){
     this.progressBar = true;
     this.ngOnDestroy();
+    if(this.codeAndName == '') this.codeAndName = null;
     if(this.startDateSearch == null && this.endDateSearch == null){
       this.http.get(API1+'/SearchLeaveByDepartmentLeaveTypeLeaveStatusIspaymentCodeandName' +'/'+ this.departmentSearch +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch +'/'+ this.leavePayment +'/'+ this.codeAndName,{})
                                .subscribe(data => {
@@ -406,7 +410,7 @@ export interface EditPaymentDialogData {
                 this.test='ชั่วโมง';
                 this.statusLabelLeaveHalfDay = 1;
               }
-              else if(this.splitted[1]=='ว'){
+              else if(this.splitted[1]=='วัน'){
                 this.test='วัน';
                 this.statusLabelLeaveHalfDay = 2;
               }

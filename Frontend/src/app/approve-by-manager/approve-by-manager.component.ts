@@ -48,7 +48,8 @@ export class ApproveByManagerComponent implements OnInit {
   hide=false;
   leaveTypeSearch;
   leaveStatusSearch;
-  codeAndName;
+  codeAndName=null;
+  searchStatus=false;
 //------------------------
   empId = sessionStorage.getItem('empId');
   firstNameOnLogin = sessionStorage.getItem('fName');
@@ -92,6 +93,7 @@ export class ApproveByManagerComponent implements OnInit {
           this.leaveTypeForAlldays = data;
           //console.table(this.leaveTypeForAlldays);
       });
+    this.searchStatus=false;
   }
   SplitCreateDate(date:any){
     var DateSplitted = date.split("T");
@@ -139,6 +141,8 @@ export class ApproveByManagerComponent implements OnInit {
   }
 
   SetLeaves(data:any){
+          if(data.length == 0) this.searchStatus=true;
+          else this.searchStatus=false;
                 this.progressBar = false;
                 this.leaves = data;
                 this.dataSource.data = this.leaves;
@@ -153,6 +157,7 @@ export class ApproveByManagerComponent implements OnInit {
   SearchLeaveData(){
     this.progressBar = true;
     this.ngOnDestroy();
+    if(this.codeAndName == '') this.codeAndName = null;
     if(this.startDateSearch == null && this.endDateSearch == null){
       this.http.get(API1+'/SearchLeaveInApproveManagerByLeaveTypeLeaveStatusCodeName/' + this.empId +'/'+ this.leaveTypeSearch +'/'+ this.leaveStatusSearch +'/'+ this.codeAndName,{})
                                .subscribe(data => {

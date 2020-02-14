@@ -38,6 +38,7 @@ export class ReportEmployeeMasterComponent  {
   positionSelect;
   employeeType:Array<any>;
   employeeTypeSelect;
+  searchStatus=false;
 
   displayedColumns: string[] = ['number','empCodeID','empFristName','empLastName','Gender','Tel1','StartDate','Position','Department','empType'];
   dataSource = new MatTableDataSource<Emp>(this.employee);
@@ -67,15 +68,19 @@ export class ReportEmployeeMasterComponent  {
                this.employeeType = data;
                //console.log('employeeType == ',this.employeeType);
         });
-
+      this.searchStatus=false;
   }
   SetEmployee(data:any){
-                this.progressBar = false;
-                this.employee = data;
-                this.dataSource.data = this.employee;
-                this.dataSource.paginator = this.paginator;
+       if(data.length == 0) this.searchStatus=true;
+       else this.searchStatus=false;
+
+       this.progressBar = false;
+       this.employee = data;
+       this.dataSource.data = this.employee;
+       this.dataSource.paginator = this.paginator;
   }
   clickSearch(){
+      if(this.dataSearch == '') this.dataSearch = null;
       this.http.get(API1+'/SearchEmployeeInReport/' +  this.dataSearch  +'/'+ this.genderSelect +'/'+ this.departmentSelect +'/'+ this.positionSelect +'/'+ this.employeeTypeSelect,{})
                                .subscribe(data => {
                                   this.SetEmployee(data);
@@ -85,34 +90,36 @@ export class ReportEmployeeMasterComponent  {
   }
 
   exportexcel(): void{
-        let dataemployee : any[] = [];
-        for(let i = 0 ; i < this.employee.length ; i++){
-            dataemployee.push({
-              สำดับ : i+1,
-              รหัสพนักงาน : this.employee[i].employeeMasterCustomerCode,
-              คำนำหน้า : this.employee[i].prefix,
-              ชื่อ : this.employee[i].employeeMasterFirstName,
-              นามสกุล : this.employee[i].employeeMasterLastName,
-              ชื่อเล่น : this.employee[i].employeeMasterNickName,
-              เพศ : this.employee[i].employeeMasterGender,
-              รหัสประจำตัวประชาชน : this.employee[i].employeeMasterPersonID,
-              วันเกิด : this.employee[i].employeeMasterBirthDate,
-              เลขบัญชี : this.employee[i].bankNumber,
-              ธนาคาร : this.employee[i].bank,
-              ตำเเหน่ง : this.employee[i].employeePosition,
-              เเผนก : this.employee[i].departmentid.departmentName,
-              สถานะทำงาน : this.employee[i].maritalStatus,
-              วันเริ่มงาน : this.employee[i].employeeMasterStartDate,
-              เบอร์โทร : this.employee[i].employeeMasterTel1,
-              อีเมล : this.employee[i].empEmail,
-              ที่อยู่ตามบัตรประชาชน : this.employee[i].empAddressReal,
-              ที่อยู่ปัจจุบัน : this.employee[i].empAddressPerson,
-              ผู้ที่ติดต่อในกรณีฉุกเฉิน : this.employee[i].emergencyContact,
-              ประเภทการทำงาน : this.employee[i].employeeType,
-              วุฒิการศึกษา : this.employee[i].education,
-            });
+        if(this.employee.length != 0){
+          let dataemployee : any[] = [];
+          for(let i = 0 ; i < this.employee.length ; i++){
+              dataemployee.push({
+                สำดับ : i+1,
+                รหัสพนักงาน : this.employee[i].employeeMasterCustomerCode,
+                คำนำหน้า : this.employee[i].prefix,
+                ชื่อ : this.employee[i].employeeMasterFirstName,
+                นามสกุล : this.employee[i].employeeMasterLastName,
+                ชื่อเล่น : this.employee[i].employeeMasterNickName,
+                เพศ : this.employee[i].employeeMasterGender,
+                รหัสประจำตัวประชาชน : this.employee[i].employeeMasterPersonID,
+                วันเกิด : this.employee[i].employeeMasterBirthDate,
+                เลขบัญชี : this.employee[i].bankNumber,
+                ธนาคาร : this.employee[i].bank,
+                ตำเเหน่ง : this.employee[i].employeePosition,
+                เเผนก : this.employee[i].departmentid.departmentName,
+                สถานะทำงาน : this.employee[i].maritalStatus,
+                วันเริ่มงาน : this.employee[i].employeeMasterStartDate,
+                เบอร์โทร : this.employee[i].employeeMasterTel1,
+                อีเมล : this.employee[i].empEmail,
+                ที่อยู่ตามบัตรประชาชน : this.employee[i].empAddressReal,
+                ที่อยู่ปัจจุบัน : this.employee[i].empAddressPerson,
+                ผู้ที่ติดต่อในกรณีฉุกเฉิน : this.employee[i].emergencyContact,
+                ประเภทการทำงาน : this.employee[i].employeeType,
+                วุฒิการศึกษา : this.employee[i].education,
+              });
+          }
+          this.excelService.exportAsExcelFile(dataemployee, 'Data-Employee');
         }
-        this.excelService.exportAsExcelFile(dataemployee, 'Data-Employee');
   }
 
 

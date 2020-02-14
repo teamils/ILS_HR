@@ -43,7 +43,7 @@ export class ReportComponent implements OnInit {
   leaveStatusSearch;
   departmentSelect;
   leavePayment;
-
+  searchStatus=false;
   dataSearch;
   roleStatusInLogin = sessionStorage.getItem('roleStatusInLogin');
   displayedColumns: string[] = ['number','employeeCode', 'name','position','department'/*,'employeeType'*/,'date', 'leaveType','startDate', 'endDate','total','reason', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','isPayment','leaveStatus'];
@@ -60,6 +60,7 @@ export class ReportComponent implements OnInit {
              private excelService:ExcelService) { }
 
   ngOnInit() {
+      this.searchStatus=false;
       this.service.getleaveTypeForAlldays().subscribe(data => {
         this.leaveType = data;
         //console.table(this.leaveType);
@@ -87,14 +88,16 @@ clickSearch(){
               this.service.getLeavesManager(sessionStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
                  this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
                      this.showTable = data;
-                     console.table(this.showTable);
-                     this.dataSource.data = this.showTable;
-                     this.dataSource.paginator = this.paginator;
-                      for(let i of this.showTable){
-                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-                        i.createDate =  this.SplitCreateDate(i.createDate);
-                      }
+                     if(this.showTable.length == 0) this.searchStatus=true;
+                     else this.searchStatus=false;
+                       console.table(this.showTable);
+                       this.dataSource.data = this.showTable;
+                       this.dataSource.paginator = this.paginator;
+                        for(let i of this.showTable){
+                          i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                          i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                          i.createDate =  this.SplitCreateDate(i.createDate);
+                        }
                       this.progressBar = false;
                });
       }
@@ -105,14 +108,16 @@ clickSearch(){
               this.service.getLeavesManagerHavedate(sessionStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
                  this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
                      this.showTable = data;
-                     console.table(this.showTable);
-                     this.dataSource.data = this.showTable;
-                     this.dataSource.paginator = this.paginator;
-                      for(let i of this.showTable){
-                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
-                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
-                        i.createDate =  this.SplitCreateDate(i.createDate);
-                      }
+                     if(this.showTable.length == 0) this.searchStatus=true;
+                     else this.searchStatus=false;
+                       console.table(this.showTable);
+                       this.dataSource.data = this.showTable;
+                       this.dataSource.paginator = this.paginator;
+                        for(let i of this.showTable){
+                          i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                          i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                          i.createDate =  this.SplitCreateDate(i.createDate);
+                        }
                       this.progressBar = false;
                });
       }
@@ -127,6 +132,8 @@ clickSearch(){
               this.service.getLeavesSupervisor(sessionStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
                  this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
                      this.showTable = data;
+                     if(this.showTable.length == 0) this.searchStatus=true;
+                     else this.searchStatus=false;
                      console.table(this.showTable);
                      this.dataSource.data = this.showTable;
                      this.dataSource.paginator = this.paginator;
@@ -146,6 +153,8 @@ clickSearch(){
           this.service.getLeavesSupervisorHaveDate(sessionStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
                  this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
                      this.showTable = data;
+                     if(this.showTable.length == 0) this.searchStatus=true;
+                     else this.searchStatus=false;
                      console.table(this.showTable);
                      this.dataSource.data = this.showTable;
                      this.dataSource.paginator = this.paginator;
@@ -169,6 +178,8 @@ clickSearch(){
              this.service.getLeavesEmployeeNoDate(sessionStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
              this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
                  this.showTable = data;
+                     if(this.showTable.length == 0) this.searchStatus=true;
+                     else this.searchStatus=false;
                  console.table(this.showTable);
                      this.dataSource.data = this.showTable;
                      this.dataSource.paginator = this.paginator;
@@ -187,6 +198,8 @@ clickSearch(){
                 this.service.getLeavesEmployeeHaveDate(sessionStorage.getItem('empId') , this.leaveTypeSearch , this.leaveStatusSearch ,
                  this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
                      this.showTable = data;
+                     if(this.showTable.length == 0) this.searchStatus=true;
+                     else this.searchStatus=false;
                      console.table(this.showTable);
                      this.dataSource.data = this.showTable;
                      this.dataSource.paginator = this.paginator;
@@ -212,6 +225,8 @@ clickSearch(){
               this.service.getLeavesDCManager( this.leaveTypeSearch , this.leaveStatusSearch ,
                    this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
                     this.showTable = data;
+                     if(this.showTable.length == 0) this.searchStatus=true;
+                     else this.searchStatus=false;
                    console.table(this.showTable);
                      this.dataSource.data = this.showTable;
                      this.dataSource.paginator = this.paginator;
@@ -231,6 +246,8 @@ clickSearch(){
                 this.service.getLeavesDCManagerHavedate(this.leaveTypeSearch , this.leaveStatusSearch ,
                  this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
                      this.showTable = data;
+                     if(this.showTable.length == 0) this.searchStatus=true;
+                     else this.searchStatus=false;
                      console.table(this.showTable);
                      this.dataSource.data = this.showTable;
                      this.dataSource.paginator = this.paginator;
@@ -253,6 +270,8 @@ clickSearch(){
               this.service.getLeavesHRADMIN( this.leaveTypeSearch , this.leaveStatusSearch ,
                    this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
                     this.showTable = data;
+                     if(this.showTable.length == 0) this.searchStatus=true;
+                     else this.searchStatus=false;
                    console.table(this.showTable);
                      this.dataSource.data = this.showTable;
                      this.dataSource.paginator = this.paginator;
@@ -272,6 +291,53 @@ clickSearch(){
               this.service.getLeavesHRADMINHavedate(this.leaveTypeSearch , this.leaveStatusSearch ,
                  this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
                      this.showTable = data;
+                     if(this.showTable.length == 0) this.searchStatus=true;
+                     else this.searchStatus=false;
+                     console.table(this.showTable);
+                     this.dataSource.data = this.showTable;
+                     this.dataSource.paginator = this.paginator;
+                      for(let i of this.showTable){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        i.createDate =  this.SplitCreateDate(i.createDate);
+                      }
+                      this.progressBar = false;
+               });
+
+          }
+    }else if(statususer == 'ADMIN'){
+
+          if(this.startDateSearch == undefined || this.endDateSearch == undefined){ //ถ้าไม่ใส่วันที่
+              if(this.dataSearch == ''){
+                  this.dataSearch=undefined;
+              }
+
+              this.service.getLeavesADMIN( this.leaveTypeSearch , this.leaveStatusSearch ,
+                   this.departmentSelect , this.leavePayment,this.dataSearch).subscribe(data => {
+                    this.showTable = data;
+                     if(this.showTable.length == 0) this.searchStatus=true;
+                     else this.searchStatus=false;
+                   console.table(this.showTable);
+                     this.dataSource.data = this.showTable;
+                     this.dataSource.paginator = this.paginator;
+                      for(let i of this.showTable){
+                        i.startDateForAllDay = this.SplitDate(i.startDateForAllDay);
+                        i.endDateForAllDay = this.SplitDate(i.endDateForAllDay);
+                        i.createDate =  this.SplitCreateDate(i.createDate);
+                      }
+                      this.progressBar = false;
+               });
+
+          }else{ //ถ้าใส่วันที่
+                if(this.dataSearch == ''){
+                  this.dataSearch=undefined;
+              }
+
+              this.service.getLeavesADMINHavedate(this.leaveTypeSearch , this.leaveStatusSearch ,
+                 this.departmentSelect , this.leavePayment,this.dataSearch,this.datepipe.transform(this.startDateSearch, 'yyyy-MM-dd'),this.datepipe.transform(this.endDateSearch, 'yyyy-MM-dd')).subscribe(data => {
+                     this.showTable = data;
+                     if(this.showTable.length == 0) this.searchStatus=true;
+                     else this.searchStatus=false;
                      console.table(this.showTable);
                      this.dataSource.data = this.showTable;
                      this.dataSource.paginator = this.paginator;
@@ -300,27 +366,29 @@ clickSearch(){
   }
 
 exportexcel(){
-    let dataleave : any[] = [];
-        for(let i = 0 ; i < this.showTable.length ; i++){
-            dataleave.push({
-              สำดับ : i+1,
-              ชื่อ_สกุล : this.showTable[i].employeeMasterid.employeeMasterFirstName+"  "+this.showTable[i].employeeMasterid.employeeMasterLastName,
-              ตำแหน่ง : this.showTable[i].employeeMasterid.employeePosition,
-              แผนก : this.showTable[i].employeeMasterid.departmentid.departmentName,
-              วันที่เขียนใบลา : this.showTable[i].createDate,
-              วันที่เริ่มลา : this.showTable[i].startDateForAllDay+" "+this.showTable[i].startTime,
-              ลาถึงวันที่ : this.showTable[i].endDateForAllDay+" "+this.showTable[i].endTime,
-              ประเภทการลา : this.showTable[i].leaveTypeForAllDay.leaveTypeForAlldayName,
-              ระยะเวลาที่ลา : this.showTable[i].labelLeaveHalfDay,
-              เหตุผล : this.showTable[i].reasonForAllDay,
-              หัวหน้างานอนุมัติ : this.showTable[i].approvedBySupervisor,
-              ผู้จัดการอนุมัติ : this.showTable[i].approvedByManager,
-              HR_ยืนยัน : this.showTable[i].confirmByHR,
-              จ่ายเงิน : this.showTable[i].isPayment,
-              สถานะการลา : this.showTable[i].leaveStatus,
-            });
-        }
-        this.excelService.exportAsExcelFile(dataleave, 'Dataleave');
+    if(this.showTable.length != 0){
+      let dataleave : any[] = [];
+          for(let i = 0 ; i < this.showTable.length ; i++){
+              dataleave.push({
+                สำดับ : i+1,
+                ชื่อ_สกุล : this.showTable[i].employeeMasterid.employeeMasterFirstName+"  "+this.showTable[i].employeeMasterid.employeeMasterLastName,
+                ตำแหน่ง : this.showTable[i].employeeMasterid.employeePosition,
+                แผนก : this.showTable[i].employeeMasterid.departmentid.departmentName,
+                วันที่เขียนใบลา : this.showTable[i].createDate,
+                วันที่เริ่มลา : this.showTable[i].startDateForAllDay+" "+this.showTable[i].startTime,
+                ลาถึงวันที่ : this.showTable[i].endDateForAllDay+" "+this.showTable[i].endTime,
+                ประเภทการลา : this.showTable[i].leaveTypeForAllDay.leaveTypeForAlldayName,
+                ระยะเวลาที่ลา : this.showTable[i].labelLeaveHalfDay,
+                เหตุผล : this.showTable[i].reasonForAllDay,
+                หัวหน้างานอนุมัติ : this.showTable[i].approvedBySupervisor,
+                ผู้จัดการอนุมัติ : this.showTable[i].approvedByManager,
+                HR_ยืนยัน : this.showTable[i].confirmByHR,
+                จ่ายเงิน : this.showTable[i].isPayment,
+                สถานะการลา : this.showTable[i].leaveStatus,
+              });
+          }
+          this.excelService.exportAsExcelFile(dataleave, 'Dataleave');
+    }
 }
 
 
