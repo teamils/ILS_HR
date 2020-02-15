@@ -170,7 +170,7 @@ public class EmployeeMasterController {
         }else{
 
 
-            birthdatesplit[0] = String.valueOf(Integer.parseInt(birthdatesplit[0]) + 543);
+            birthdatesplit[0] = String.valueOf(Integer.parseInt(birthdatesplit[0])+ 543);
              bd = birthdatesplit[0] + "-"+birthdatesplit[1]+"-" +birthdatesplit[2];
 
         }
@@ -187,7 +187,7 @@ public class EmployeeMasterController {
              sd = startdatesplit[3] + "-"+startdatesplit[1]+"-" +startdatesplit[2];
         }else{
 
-            startdatesplit[0] = String.valueOf(Integer.parseInt(startdatesplit[0]) + 543);
+            startdatesplit[0] = String.valueOf(Integer.parseInt(startdatesplit[0])+ 543);
              sd = startdatesplit[0] + "-"+startdatesplit[1]+"-" +startdatesplit[2];
 
         }

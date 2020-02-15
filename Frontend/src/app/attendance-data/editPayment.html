@@ -1,5 +1,5 @@
   <p align="center">คุณ {{employeeMasterFirstName}} {{employeeMasterLastName}}</p>
-  <p align="center">มี{{leaveTypeForAllDay}}คงเหลือ : {{balanceDay}} วัน</p>
+  <p align="center">เดิมมี{{leaveTypeForAllDay}}คงเหลือ : {{balanceDay+diffDay2}} วัน</p>
   <p align="center">ต้องการ{{leaveTypeForAllDay}} : {{diffShowFrontend}} {{test}}</p>
 <mat-radio-group [(ngModel)]="isPayments" style="align:center">
   <mat-radio-button value="payment">Payment</mat-radio-button>

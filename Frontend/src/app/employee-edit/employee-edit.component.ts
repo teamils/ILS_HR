@@ -210,6 +210,8 @@ export class EmployeeEditComponent implements OnInit {
       }
 
       EditEmployee(){
+      console.log(this.NewemployeeMasterBirthDate);
+      console.log(this.NewemployeeMasterStartDate);
          for(let i of this.employee){
           if(i.roleStatus != this.NewRoleStatus){
             this.DelectRoleStatus();
