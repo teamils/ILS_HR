@@ -8,7 +8,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import org.springframework.scheduling.annotation.Scheduled;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -18,6 +25,7 @@ public class LeavesNumbersController {
     @Autowired private LeavesRepository leavesRepository;
     @Autowired private LeaveTypeForAlldayRepository leaveTypeForAlldayRepository;
     @Autowired private MasterAttendanceRepository masterAttendanceRepository;
+     private LeavesNumbers leavesNumbers;
 
     @PostMapping(path = "/saveleaveNumber/{empId}/{sumDay_365}/{leaveTypeForAlldaysLength}/{fName}/{lName}") //saveleaveNumber Set Default
     public LeavesNumbers leavesNumbers(@PathVariable Long empId,@PathVariable int sumDay_365,
@@ -126,6 +134,45 @@ public class LeavesNumbersController {
         leaves.setLeaveStatus("Cancel");
         leavesRepository.save(leaves);
         return leaves;
+    }
+
+    //@Scheduled(fixedRate = 1000)
+    public void updateLeaveNumberToNextYear(){
+        LocalDateTime date = LocalDateTime.now();
+        //System.out.println(date);
+        int day = date.getDayOfMonth();
+        int month = date.getMonthValue();
+        int year = date.getYear();
+        int hour = date.getHour();
+        int minute = date.getMinute();
+        int second = date.getSecond();
+        System.out.println(day+"-"+month+"-"+year+" "+hour+":"+minute+":"+second);
+
+
+        if(day==18 && month==2 && hour==11 && minute==1 && second==0){
+            long id = 1 ;
+            LeaveTypeForAllday leaveTypeForAllday1 = leaveTypeForAlldayRepository.findById(id).get();
+            leavesNumbersRepository.resetleaveNumber1(leaveTypeForAllday1.getDefaultLeaveDay());// ลากิจ , ลาไปงานศพ
+        }
+        if(day==18 && month==2 && hour==11 && minute==1 && second==1){
+            long id = 5 ;
+            LeaveTypeForAllday leaveTypeForAllday5 = leaveTypeForAlldayRepository.findById(id).get();
+            leavesNumbersRepository.resetleaveNumber5(leaveTypeForAllday5.getDefaultLeaveDay());// ลาป่วย
+        }
+        if(day==18 && month==2 && hour==11 && minute==1 && second==2){
+            long id = 2 ;
+            LeaveTypeForAllday leaveTypeForAllday2 = leaveTypeForAlldayRepository.findById(id).get();
+            leavesNumbersRepository.resetleaveNumber2(leaveTypeForAllday2.getDefaultLeaveDay());// ลาป่วย
+        }
+        if(day==18 && month==2 && hour==11 && minute==1 && second==3){
+            long id = 8 ;
+            LeaveTypeForAllday leaveTypeForAllday8 = leaveTypeForAlldayRepository.findById(id).get();
+            leavesNumbersRepository.resetleaveNumber8(leaveTypeForAllday8.getDefaultLeaveDay());// ลาคลอด
+        }
+
+        List<LeavesNumbers> leavesNumbersList = leavesNumbersRepository.findAll().stream().collect(Collectors.toList());
+
+
     }
 
 

@@ -54,9 +54,9 @@
       &nbsp;
       <mat-form-field appearance="outline">
         <mat-label>วัน/เดือน/ปี เกิด</mat-label>
-        <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="วัน/เดือน/ปี เกิด"  [(ngModel)]="NewemployeeMasterBirthDate">
+        <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="วัน/เดือน/ปี เกิด" required autocomplete="off" [(ngModel)]="NewemployeeMasterBirthDate" readonly>
         <mat-datepicker-toggle matSuffix [for]="BirthDate" ></mat-datepicker-toggle>
-        <mat-datepicker #BirthDate></mat-datepicker>
+        <mat-datepicker touchUi #BirthDate></mat-datepicker>
       </mat-form-field>
       &nbsp;
       <mat-form-field  appearance="outline">
@@ -68,12 +68,11 @@
         </mat-select>
         <mat-icon matSuffix>perm_identity</mat-icon>
       </mat-form-field>
-      <!-- &nbsp;
+     &nbsp;
        <mat-form-field appearance="outline">
          <mat-label>Password</mat-label>
-         <input matInput #password  type="password"  [(ngModel)]="Newpassword">
-         <mat-icon matSuffix>visibility_off</mat-icon>
-       </mat-form-field> -->
+         <input matInput #password  type="text"  [(ngModel)]="Newpassword" disabled>
+       </mat-form-field>
     <hr>
       <mat-form-field  appearance="outline">
         <mat-label>รหัสประจำตัวประชาชน</mat-label>
@@ -97,9 +96,9 @@
       &nbsp;
       <mat-form-field appearance="outline">
         <mat-label>วัน/เดือน/ปี เริ่มงาน</mat-label>
-        <input matInput [matDatepicker]="startwork"  [(ngModel)]="NewemployeeMasterStartDate">
+        <input matInput [matDatepicker]="startwork" hintLabel="" placeholder="วัน/เดือน/ปี เริ่มงาน" required autocomplete="off" [(ngModel)]="NewemployeeMasterStartDate" readonly>
         <mat-datepicker-toggle matSuffix [for]="startwork" ></mat-datepicker-toggle>
-        <mat-datepicker #startwork></mat-datepicker>
+        <mat-datepicker touchUi #startwork></mat-datepicker>
       </mat-form-field>
       &nbsp;
       <mat-form-field appearance="outline">

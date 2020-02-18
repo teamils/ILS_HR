@@ -210,6 +210,9 @@ public interface ReportRepository extends JpaRepository<Leaves,Long> {
             "where l.employee_masterid_employee_masterid = e.employee_masterid\n" +
             "and l.start_date_for_all_day between :datestart and :dateend\n"+
             "and e.role_status <> 'manager'\n"+
+            "and l.leave_status <> 'Pending'\n"+
+            "and l.leave_status <> 'Not approved'\n"+
+            "and l.leave_status <> 'Waiting approve'\n"+
             "and l.is_active_attendance=1\n" +
             "and e.is_active=1\n" +
             "and l.leave_type_for_all_day_leave_type_for_alldayid like :leaveTypeSearch%\n" +
@@ -231,6 +234,9 @@ public interface ReportRepository extends JpaRepository<Leaves,Long> {
             "where l.employee_masterid_employee_masterid = e.employee_masterid\n" +
             "and l.is_active_attendance=1\n" +
             "and e.is_active=1\n" +
+            "and l.leave_status <> 'Pending'\n"+
+            "and l.leave_status <> 'Not approved'\n"+
+            "and l.leave_status <> 'Waiting approve'\n"+
             "and l.leave_type_for_all_day_leave_type_for_alldayid like :leaveTypeSearch%\n" +
             "and l.leave_status like :leaveStatusSearch% \n"+
             "and l.departmentid like :departmentSelect% \n"+

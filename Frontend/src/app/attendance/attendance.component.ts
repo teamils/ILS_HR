@@ -567,6 +567,7 @@ export class AttendanceComponent implements OnInit {
       //  console.log('date2-->\n',date2);
       // console.log('Leave Day =>',diffDay2);
 
+      if(this.leaveTypeSelect2 == 'ลากิจ' || this.leaveTypeSelect2 == 'ลาพักร้อน'){
         let testdate = new Date(parseInt(date1.getMonth()+1)+'/'+date1.toString().slice(8,10)+'/'+date1.toString().slice(11,15));
         for(let i = 0 ; i < diffDay2 ; i++){
             if(i == 0)
@@ -581,7 +582,10 @@ export class AttendanceComponent implements OnInit {
           }
         }
         this.diffDay = index;
-        console.log('Leave Day =>',this.diffDay);
+      }
+      else this.diffDay = diffDay2;
+
+      console.log('Leave Day =>',this.diffDay);
     }
 
     sortEggsInNest(a, b) {

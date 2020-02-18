@@ -18,7 +18,7 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
     Leaves findByemployeeMasterid(EmployeeMaster employeeMasterid);
 //***********************************************  date attendance *******************************************//
     //getLeaves 1คน //show ของ user นั้นๆ
-    @Query(value = "SELECT * FROM leaves WHERE employee_masterid_employee_masterid = :employeeCode2 and is_active_attendance='1' ",nativeQuery = true)
+    @Query(value = "SELECT * FROM leaves WHERE employee_masterid_employee_masterid = :employeeCode2 and is_active_attendance='1' order by create_date DESC",nativeQuery = true)
     Collection<Leaves> getLeaves2(@Param("employeeCode2") String employeeCode2 );
 
     //Search leave by leaveType and leaveStatus
@@ -54,6 +54,9 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "and (e.employee_master_customer_code like :codeAndName% or e.employee_master_first_name like :codeAndName% or e.employee_master_last_name like :codeAndName%)\n" +
             "and is_active_attendance='1'\n" +
             "and is_active='1'\n" +
+            "and l.leave_status <> 'Pending'\n"+
+            "and l.leave_status <> 'Not approved'\n"+
+            "and l.leave_status <> 'Waiting approve'\n"+
             "and l.employee_masterid_employee_masterid = e.employee_masterid \n" +
             "and e.role_status <> 'MANAGER'",nativeQuery = true)
     Collection<Leaves> SearchLeaveByDepartmentLeaveTypeLeaveStatusIspaymentCodeandName(@Param("departmentID") String departmentID,@Param("leaveTypeID") String leaveTypeID,@Param("leaveStatus") String leaveStatus,@Param("isPayment") String isPayment,@Param("codeAndName") String codeAndName);
@@ -68,6 +71,9 @@ public interface LeavesRepository extends JpaRepository<Leaves,Long>{
             "and (e.employee_master_customer_code like :codeAndName% or e.employee_master_first_name like :codeAndName% or e.employee_master_last_name like :codeAndName%)\n" +
             "and is_active_attendance='1'\n" +
             "and is_active='1'\n" +
+            "and l.leave_status <> 'Pending'\n"+
+            "and l.leave_status <> 'Not approved'\n"+
+            "and l.leave_status <> 'Waiting approve'\n"+
             "and l.employee_masterid_employee_masterid = e.employee_masterid \n" +
             "and e.role_status <> 'MANAGER'",nativeQuery = true)
     Collection<Leaves> SearchLeaveByStartDateToStartDate2AndAll(@Param("startDate") String startDate,@Param("startDate2") String startDate2,@Param("departmentID") String departmentID,@Param("leaveTypeID") String leaveTypeID,@Param("leaveStatus") String leaveStatus,@Param("isPayment") String isPayment,@Param("codeAndName") String codeAndName);

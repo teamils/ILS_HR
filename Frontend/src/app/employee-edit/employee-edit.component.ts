@@ -98,7 +98,7 @@ export class EmployeeEditComponent implements OnInit {
         this.service.getemployee1person(this.empID).subscribe(data => {
             this.employee = data;
             this.addValue(data);
-            //console.log('employee in edit -> ',this.employee);
+            console.log('employee in edit -> ',this.employee);
         });
         this.service.getBank().subscribe(data => {
                this.NewBank = data;
@@ -236,7 +236,7 @@ export class EmployeeEditComponent implements OnInit {
                                           this.AddUserRole();
                                            console.log('EditEmployee is successful');
                                            alert("EditEmployee is successful!");
-                                            this.BackupEmployeeMaster();
+                                            this.BackupEmployeeMasterOld();
                                             sessionStorage.setItem('links', 'employeeMaster');
                                            window.location.reload(true);
 
@@ -247,6 +247,32 @@ export class EmployeeEditComponent implements OnInit {
                                     );
       }
 
+      BackupEmployeeMasterOld(){
+          for(let i of this.employee){
+            this.select = {
+                NewempEmail:i.empEmail ,
+                NewempAddressReal:i.empAddressReal,
+                NewempAddressPerson:i.empAddressPerson,
+                NewemergencyContact: i.emergencyContact,
+            };
+            this.http.post(API1 + '/BackupEmployeeMaster/' + i.employeeMasterID +'/'+ i.employeeMasterCustomerCode +'/'+ i.prefix  +'/'+ i.employeeMasterFirstName
+                                                    +'/'+ i.employeeMasterLastName +'/'+ i.employeeMasterNickName +'/'+ i.employeeMasterGender
+                                                    +'/'+ i.maritalStatus +'/'+ i.employeeMasterBirthDate +'/'+ i.employeeMasterPersonID
+                                                    +'/'+ i.employeeMasterTel1 +'/'+ i.employeeMasterStartDate +'/'+ i.employeePosition +'/'+ i.departmentid.departmentName
+                                                    +'/'+ i.employeeType +'/'+ i.education +'/'+ i.bank +'/'+ i.bankNumber +'/'+ i.password
+                                                    +'/'+ this.fName +'/'+ this.lName +'/'+ i.roleStatus, JSON.stringify(this.select),{
+                                                      headers: {"Content-Type": "application/json"}
+                                                    })
+                                   .subscribe(
+                                       data => {
+                                           console.log('BackupEmployeeMasterOld is successful');
+                                       },
+                                       error => {
+                                           console.log('Error', error);
+                                       }
+                                    );
+          }
+    }
     BackupEmployeeMaster(){
             this.select = {
                 NewempEmail:this.NewempEmail ,

@@ -159,7 +159,7 @@ public class EmployeeMasterController {
 
         if(birthdatesplit.length !=3 ){
             birthdatesplit = NewemployeeMasterBirthDate.split(" ");
-            birthdatesplit[3] = String.valueOf(Integer.parseInt(birthdatesplit[3]) + 543);
+            birthdatesplit[3] = String.valueOf(Integer.parseInt(birthdatesplit[3]));
             if(birthdatesplit[1].equals("Jan")){birthdatesplit[1]="01";}else if(birthdatesplit[1].equals("Feb")){birthdatesplit[1]="02";}
             if(birthdatesplit[1].equals("Mar")){birthdatesplit[1]="03";}else if(birthdatesplit[1].equals("Apr")){birthdatesplit[1]="04";}
             if(birthdatesplit[1].equals("May")){birthdatesplit[1]="05";}else if(birthdatesplit[1].equals("Jun")){birthdatesplit[1]="06";}
@@ -169,15 +169,14 @@ public class EmployeeMasterController {
              bd = birthdatesplit[3] + "-"+birthdatesplit[1]+"-" +birthdatesplit[2];
         }else{
 
-
-            birthdatesplit[0] = String.valueOf(Integer.parseInt(birthdatesplit[0])+ 543);
+            birthdatesplit[0] = String.valueOf(Integer.parseInt(birthdatesplit[0]));
              bd = birthdatesplit[0] + "-"+birthdatesplit[1]+"-" +birthdatesplit[2];
 
         }
 
         if(startdatesplit.length !=3 ){
             startdatesplit = NewemployeeMasterStartDate.split(" ");
-            startdatesplit[3] = String.valueOf(Integer.parseInt(startdatesplit[3]) + 543);
+            startdatesplit[3] = String.valueOf(Integer.parseInt(startdatesplit[3]));
             if(startdatesplit[1].equals("Jan")){startdatesplit[1]="01";}else if(startdatesplit[1].equals("Feb")){startdatesplit[1]="02";}
             if(startdatesplit[1].equals("Mar")){startdatesplit[1]="03";}else if(startdatesplit[1].equals("Apr")){startdatesplit[1]="04";}
             if(startdatesplit[1].equals("May")){startdatesplit[1]="05";}else if(startdatesplit[1].equals("Jun")){startdatesplit[1]="06";}
@@ -187,7 +186,7 @@ public class EmployeeMasterController {
              sd = startdatesplit[3] + "-"+startdatesplit[1]+"-" +startdatesplit[2];
         }else{
 
-            startdatesplit[0] = String.valueOf(Integer.parseInt(startdatesplit[0])+ 543);
+            startdatesplit[0] = String.valueOf(Integer.parseInt(startdatesplit[0]));
              sd = startdatesplit[0] + "-"+startdatesplit[1]+"-" +startdatesplit[2];
 
         }

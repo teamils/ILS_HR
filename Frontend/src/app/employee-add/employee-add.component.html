@@ -55,7 +55,7 @@
 
 
                 <mat-form-field style="width :100%">
-                  <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="วัน/เดือน/ปี เกิด" required autocomplete="off" [(ngModel)]="BirthDateSelect">
+                  <input matInput [matDatepicker]="BirthDate" hintLabel="" placeholder="วัน/เดือน/ปี เกิด" required autocomplete="off" [(ngModel)]="BirthDateSelect" readonly>
                   <mat-datepicker-toggle matSuffix [for]="BirthDate" ></mat-datepicker-toggle>
                   <mat-datepicker touchUi #BirthDate></mat-datepicker>
                 </mat-form-field>
@@ -128,7 +128,7 @@
               <div class="card2">
                 <!--StartWork-->
                 <mat-form-field style="width :100%">
-                  <input matInput [matDatepicker]="startwork" hintLabel="" placeholder="วัน/เดือน/ปี เริ่มงาน" required [(ngModel)]="startWorks">
+                  <input matInput [matDatepicker]="startwork" hintLabel="" placeholder="วัน/เดือน/ปี เริ่มงาน" required [(ngModel)]="startWorks" readonly>
                   <mat-datepicker-toggle matSuffix [for]="startwork"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #startwork></mat-datepicker>
                 </mat-form-field>
