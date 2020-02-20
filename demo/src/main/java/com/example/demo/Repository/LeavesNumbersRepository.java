@@ -13,7 +13,7 @@ import java.util.Collection;
 
 @Repository
 public interface LeavesNumbersRepository extends JpaRepository<LeavesNumbers,Long>{
-        LeavesNumbers findByEmployeeMasteridAndLeavesNumbersID(Long employeeMasterid,Long leavesNumbersID);
+        LeavesNumbers findByEmployeeMasteridAndLeavesNumbersID(int employeeMasterid,int leavesNumbersID);
 
 
         @Query(value = "select * from leaves_numbers where employee_masterid = :employeeID",nativeQuery = true)
@@ -29,12 +29,12 @@ public interface LeavesNumbersRepository extends JpaRepository<LeavesNumbers,Lon
 
         @Query(value = "UPDATE leaves_numbers\n" +
                 "SET balance_day = :getDay , compound_day = 0 , diff_day = 0 , get_day = :getDay ,used_day=0\n" +
-                "WHERE leave_typeid = 1 or leave_typeid = 5",nativeQuery = true)
+                "WHERE leave_typeid = 1",nativeQuery = true)
         Collection<LeavesNumbers> resetleaveNumber1(@Param("getDay") double getDay);
 
         @Query(value = "UPDATE leaves_numbers\n" +
                 "SET balance_day = :getDay , compound_day = 0 , diff_day = 0 , get_day = :getDay ,used_day=0\n" +
-                "WHERE leave_typeid = 1 or leave_typeid = 5",nativeQuery = true)
+                "WHERE leave_typeid = 5",nativeQuery = true)
         Collection<LeavesNumbers> resetleaveNumber5(@Param("getDay") double getDay);
 
         @Query(value = "UPDATE leaves_numbers\n" +
@@ -46,6 +46,14 @@ public interface LeavesNumbersRepository extends JpaRepository<LeavesNumbers,Lon
                 "SET balance_day = :getDay , compound_day = 0 , diff_day = 0 , get_day = :getDay ,used_day=0\n" +
                 "WHERE leave_typeid = 8",nativeQuery = true)
         Collection<LeavesNumbers> resetleaveNumber8(@Param("getDay") double getDay);
+
+        @Query(value = "UPDATE leaves_numbers\n" +
+                "SET get_day = :getDay, used_day=0, balance_day = :balanceDay, compound_day = 0, diff_day = 0 \n" +
+                "WHERE leave_typeid = 3 and employee_masterid = :empID",nativeQuery = true)
+        Collection<LeavesNumbers> resetleaveNumber3InJanuary(@Param("getDay") double getDay,
+                                                             @Param("balanceDay") double balanceDay,
+                                                             @Param("empID") long empID);
+
 
 
 

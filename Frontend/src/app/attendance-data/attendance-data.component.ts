@@ -14,6 +14,7 @@ import { AttendanceComponent } from '../attendance/attendance.component';
 import { ExcelService } from '../excel.service';
 import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
 import { DatePipe } from '@angular/common';
+import { AttendanceShowLeavenumberComponent } from '../attendance-show-leavenumber/attendance-show-leavenumber.component';
 
 export interface PeriodicElement {
   leavesID: any;
@@ -66,6 +67,7 @@ export class AttendanceDataComponent implements OnInit {
   firstNameOnLogin = sessionStorage.getItem('fName');
   lastNameOnLogin  = sessionStorage.getItem('lName');
   empId = sessionStorage.getItem('empId');
+  roleStatusInLogin = sessionStorage.getItem('roleStatusInLogin');
 //------Search------------
   startDateSearch;
   endDateSearch;
@@ -77,7 +79,7 @@ export class AttendanceDataComponent implements OnInit {
   codeAndName=null;
   searchStatus=false;
 //------------------------
-  displayedColumns: string[] = ['number','employeeCode', 'name','position','department'/*,'employeeType'*/,'date', 'leaveType','startDate', 'endDate','total','reason', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','isPayment','leaveStatus','confirm','del'/*,'edit'*/];
+  displayedColumns: string[] = ['number','employeeCode', 'name','position','department'/*,'employeeType'*/,'date', 'leaveType','startDate', 'endDate','total','reason', 'approvedBySupervisor', 'approvedByManager','reasonNotApprove','isPayment','leaveStatus','confirm','del','leaveNumber'];
   dataSource = new MatTableDataSource<PeriodicElement>(this.leaves);
   @ViewChild(MatPaginator, {static : true}) paginator : MatPaginator;
 
@@ -270,6 +272,14 @@ export class AttendanceDataComponent implements OnInit {
     }
   }
 
+  ShowLeaveNumberDailog(row : any){
+            const dialogRef = this.dialog.open(AttendanceShowLeavenumberComponent, {
+                  width: 'auto;',
+                  height:'auto;',
+                  data: row,
+            });
+  }
+
 }
 
 
@@ -362,7 +372,7 @@ export interface EditPaymentDialogData {
     selector: 'editPayment',
     templateUrl: 'editPayment.html',
   })
-  export class EditPaymentDialog {
+export class EditPaymentDialog {
     empId = sessionStorage.getItem('empId');
     firstNameOnLogin = sessionStorage.getItem('fName');
     lastNameOnLogin  = sessionStorage.getItem('lName');
@@ -476,6 +486,4 @@ export interface EditPaymentDialogData {
 
     }
 
-
-
-  }
+}

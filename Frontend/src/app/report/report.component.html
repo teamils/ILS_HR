@@ -28,10 +28,10 @@
     <mat-form-field hintLabel="" >
       <mat-select placeholder="สถานะ" [(ngModel)]="leaveStatusSearch" >
         <mat-option>---none---</mat-option>
-        <mat-option value="Pending">Pending</mat-option>
-        <mat-option value="Waiting approve">Waiting approve</mat-option>
+        <mat-option value="Pending" *ngIf="roleStatusInLogin=='HR-ADMIN'?false:true">Pending</mat-option>
+        <mat-option value="Waiting approve" *ngIf="roleStatusInLogin=='HR-ADMIN'?false:true">Waiting approve</mat-option>
         <mat-option value="Approve">Approve</mat-option>
-        <mat-option value="Not approve">Not approve</mat-option>
+        <mat-option value="Not approve" *ngIf="roleStatusInLogin=='HR-ADMIN'?false:true">Not approve</mat-option>
         <mat-option value="Complete">Complete</mat-option>
         <mat-option value="Cancel">Cancel</mat-option>
       </mat-select>

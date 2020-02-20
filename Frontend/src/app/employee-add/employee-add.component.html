@@ -223,8 +223,8 @@
             <div align="center">
                 <mat-form-field appearance="outline" style="width:30%;">
                   <mat-label>Select your role</mat-label>
-                  <mat-select [(ngModel)]="role_statusSelect" required>
-                    <mat-option *ngFor="let role of role_status" [value]="role.roleStatusName">
+                  <mat-select [(ngModel)]="role_statusSelect" required >
+                    <mat-option *ngFor="let role of role_status" [value]="role.roleStatusName" [disabled]="role.roleStatusName=='ADMIN'?(roleStatusInLogin!='ADMIN'?true:false):false || role.roleStatusName=='DC MANAGER'?(roleStatusInLogin!='ADMIN'?true:false):false ">
                       {{role.roleStatusName}}
                     </mat-option>
                   </mat-select>

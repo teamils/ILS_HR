@@ -210,20 +210,19 @@ export class EmployeeEditComponent implements OnInit {
       }
 
       EditEmployee(){
-      console.log(this.NewemployeeMasterBirthDate);
-      console.log(this.NewemployeeMasterStartDate);
          for(let i of this.employee){
           if(i.roleStatus != this.NewRoleStatus){
             this.DelectRoleStatus();
           }
+          console.log(i);
          }
-           this.select = {
+         this.select = {
               NewempEmail:this.NewempEmail ,
               NewempAddressReal:this.NewempAddressReal,
               NewempAddressPerson:this.NewempAddressPerson,
               NewemergencyContact: this.NewemergencyContact,
-            };
-           this.http.post(API1 + '/editemployee/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
+         };
+         this.http.post(API1 + '/editemployee/' + this.NewemployeeMasterID +'/'+ this.NewemployeeMasterCustomerCode +'/'+ this.Newprefix  +'/'+ this.NewemployeeMasterFirstName
                                                     +'/'+ this.NewemployeeMasterLastName +'/'+ this.NewemployeeMasterNickName +'/'+ this.NewemployeeMasterGender
                                                     +'/'+ this.NewmaritalStatus +'/'+ this.NewemployeeMasterBirthDate +'/'+ this.NewemployeeMasterPersonID
                                                     +'/'+ this.NewemployeeMasterTel1 +'/'+ this.NewemployeeMasterStartDate +'/'+ this.NewemployeePosition +'/'+ this.NewemployeeDepartment

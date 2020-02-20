@@ -9,6 +9,9 @@ import { HttpClient} from '@angular/common/http';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import { API1 } from '../app.component';
 
+export interface DialogData {
+  employeeMasterid;
+}
 @Component({
   selector: 'app-attendance-show-leavenumber',
   templateUrl: './attendance-show-leavenumber.component.html',
@@ -28,19 +31,23 @@ export class AttendanceShowLeavenumberComponent implements OnInit {
                       ,private router:Router
                       ,private route:ActivatedRoute
                       ,private service:ServiceService
-                      ,private http: HttpClient) { }
+                      ,private http: HttpClient
+                      ,@Inject(MAT_DIALOG_DATA)  public data: DialogData) { }
 
   ngOnInit() {
-      this.service.getShowLeavesNumber(this.empId).subscribe(data => {
-          this.leaveNumber = data;
-          //console.log('SaveLeaveNumber -> ',this.leaveNumber);
-      });
-      this.service.getShowLeaves2(this.empId).subscribe(data => {
-          this.leave = data;
-          //console.log('leave -> ',this.leave);
-      });
 
-
+      if(this.data == null){
+        this.service.getShowLeavesNumber(this.empId).subscribe(data => {
+            this.leaveNumber = data;
+            //console.log('SaveLeaveNumber -> ',this.leaveNumber);
+        });
+      }
+      else {
+        this.service.getShowLeavesNumber(this.data.employeeMasterid.employeeMasterID).subscribe(data => {
+            this.leaveNumber = data;
+            //console.log('SaveLeaveNumber -> ',this.leaveNumber);
+        });
+      }
 
   }
 

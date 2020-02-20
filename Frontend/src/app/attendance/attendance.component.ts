@@ -316,9 +316,14 @@ export class AttendanceComponent implements OnInit {
         else if(this.totalHour<0 || (this.totalHour==0&&this.totalMinute<=0)) alert("กรุณาเลือกเวลาให้ถูกต้อง");
         else if(this.startDate == null) alert("กรุณาเลือกวันลา");
         else if(this.reason == null) alert("กรุณากรอกเหตุผล");
-        else if(this.diffDay>this.leavetatelAll.BalanceDay && this.leavetatelAll.BalanceDay > 0 ){
-            this.diff = this.diffDay-this.leavetatelAll.BalanceDay;
-            alert("*คุณมีวัน"+this.leaveTypeSelect+" = "+this.leavetatelAll.BalanceDay+"ชั่วโมง\n"+"หากคุณต้องการ"+this.leaveTypeSelect+" "+totalTime+"ชั่วโมง คุณต้องคีย์ลา "+this.leavetatelAll.BalanceDay+"ชั่วโมง หนึ่งครั้งและ "+totalTime+"ชั่วโมง อีกหนึ่งครั้ง!");
+        else if((this.totalTime/8)>this.leavetatelAll.BalanceDay && this.leavetatelAll.BalanceDay > 0 && this.leaveTypeSelect!='ลาพักร้อน'){
+            this.diff = (this.totalTime/8)-this.leavetatelAll.BalanceDay;
+            alert("*คุณมีวัน"+this.leaveTypeSelect+"ที่ได้รับค่าจ้าง = "+this.leavetatelAll.BalanceDay+"วัน\n"+"หากคุณต้องการ"+this.leaveTypeSelect+" "+totalTime+"ชั่วโมง คุณต้องคีย์ลา "+this.leavetatelAll.BalanceDay+"วัน หนึ่งครั้งและ "+this.diff+"วัน อีกหนึ่งครั้ง!\n"
+            +"1 ชั่วโมง = 0.125 วัน\n"+"2 ชั่วโมง = 0.25 วัน\n"+"3 ชั่วโมง = 0.375 วัน\n"+"4 ชั่วโมง = 0.5 วัน\n"+"5 ชั่วโมง = 0.625 วัน\n"+"6 ชั่วโมง = 0.75 วัน\n"+"7 ชั่วโมง = 0.875 วัน\n"+"8 ชั่วโมง = 1 วัน");
+        }
+        else if((this.totalTime/8)>this.leavetatelAll.BalanceDay && this.leavetatelAll.BalanceDay > 0 && this.leaveTypeSelect=='ลาพักร้อน'){
+            alert("*คุณมีวัน"+this.leaveTypeSelect+"คงเหลือ "+this.leavetatelAll.BalanceDay+" วัน\n"
+            +"1 ชั่วโมง = 0.125 วัน\n"+"2 ชั่วโมง = 0.25 วัน\n"+"3 ชั่วโมง = 0.375 วัน\n"+"4 ชั่วโมง = 0.5 วัน\n"+"5 ชั่วโมง = 0.625 วัน\n"+"6 ชั่วโมง = 0.75 วัน\n"+"7 ชั่วโมง = 0.875 วัน\n"+"8 ชั่วโมง = 1 วัน");
         }
         else{
             let CheckDoublyLeaves_HalfDay = this.CheckDoublyLeaves_HalfDay(this.leaveTypeSelect,this.startDate,this.startTimeSelect,this.endTimeSelect,this.labelLeaveHalfDay);
@@ -399,9 +404,12 @@ export class AttendanceComponent implements OnInit {
         else if(this.startDate2 == null) alert("กรุณาเลือกวันลา");
         else if(this.endDate2 == null) alert("กรุณาเลือกวันสิ้นสุดการลา");
         else if(this.reason2 == null) alert("กรุณากรอกเหตุผล");
-        else if(this.diffDay>this.leavetatelAll.BalanceDay && this.leavetatelAll.BalanceDay > 0 ){
+        else if(this.diffDay>this.leavetatelAll.BalanceDay && this.leavetatelAll.BalanceDay > 0 && this.leaveTypeSelect2 != 'ลาพักร้อน'){
             this.diff = this.diffDay-this.leavetatelAll.BalanceDay;
             alert("*คุณมีวัน"+this.leaveTypeSelect2+"ที่ได้รับค่าจ้าง = "+this.leavetatelAll.BalanceDay+"วัน\n"+"หากคุณต้องการ"+this.leaveTypeSelect2+" "+this.diffDay+"วัน คุณต้องคีย์ลา "+this.leavetatelAll.BalanceDay+"วัน หนึ่งครั้งและ "+this.diff+"วัน อีกหนึ่งครั้ง!");
+        }
+        else if(this.diffDay>this.leavetatelAll.BalanceDay && this.leavetatelAll.BalanceDay > 0 && this.leaveTypeSelect2 == 'ลาพักร้อน'){
+            alert("*คุณมีวัน"+this.leaveTypeSelect2+"คงเหลือ "+this.leavetatelAll.BalanceDay+"วัน");
         }
         else{
             let CheckDoublyLeaves_Fullday = this.CheckDoublyLeaves_Fullday(this.leaveTypeSelect2,this.startDate2,this.endDate2);
@@ -551,10 +559,11 @@ export class AttendanceComponent implements OnInit {
             });
             //this.RefreshTable();
     }
-    ShowLeaveNumberDailog(){
+    ShowLeaveNumberDailog(row : any){
             const dialogRef = this.dialog.open(AttendanceShowLeavenumberComponent, {
                   width: 'auto;',
                   height:'auto;',
+                  data: row,
             });
             //this.RefreshTable();
     }

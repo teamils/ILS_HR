@@ -101,6 +101,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  <p align="center" style="border: 1pt solid green ; width:70%; margin-left:15%; background-color: white; color:black;" *ngIf="this.searchStatus == true"><b>ไม่มีข้อมูล !!</b></p>
 </div>
 <mat-paginator [pageSizeOptions]="[15, 30, 50, 100,1000]" showFirstLastButtons ></mat-paginator>
 

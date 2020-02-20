@@ -76,6 +76,7 @@ export class EmployeeAddComponent implements OnInit {
   empId = sessionStorage.getItem('empId');
   fName = sessionStorage.getItem('fName');
   lName = sessionStorage.getItem('lName');
+  roleStatusInLogin = sessionStorage.getItem('roleStatusInLogin');
 
     constructor(private route:ActivatedRoute ,
             public dialog: MatDialog,

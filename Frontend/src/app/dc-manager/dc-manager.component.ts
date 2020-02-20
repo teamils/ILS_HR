@@ -69,6 +69,7 @@ export class DcManagerComponent implements OnInit {
   hide=false;
   leaveTypeSearch;
   codeAndName;
+  searchStatus=false;
 //------------------------
   firstNameOnLogin = sessionStorage.getItem('fName');
   lastNameOnLogin  = sessionStorage.getItem('lName');
@@ -94,6 +95,7 @@ export class DcManagerComponent implements OnInit {
 
   ngOnInit() {
     this.progressBar = true;
+    this.searchStatus=false;
         this.interval3 = setInterval(() => {
           this.service.getLeaveAtManager().subscribe(data => {
                 this.progressBar = false;
@@ -163,7 +165,8 @@ export class DcManagerComponent implements OnInit {
   }
 
   SetLeaves(data:any){
-              if(data.length == 0) alert("ไม่พบข้อมูล!");
+       if(data.length == 0) this.searchStatus=true;
+       else this.searchStatus=false;
                 this.progressBar = false;
                 this.leaves = data;
                 this.dataSource.data = this.leaves;

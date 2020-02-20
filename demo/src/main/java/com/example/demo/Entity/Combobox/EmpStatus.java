@@ -17,8 +17,8 @@ import java.util.Date;
 @EqualsAndHashCode
 public class EmpStatus {
     @Id
-    @SequenceGenerator(name = "EmpStatus_seq", sequenceName = "EmpStatus_seq",initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EmpStatus_seq")
+    @SequenceGenerator(name = "emp_status_seq", sequenceName = "emp_status_seq",initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "emp_status_seq")
     private Long empStatusID;
     private String empStatusName;
     private Date create_date;

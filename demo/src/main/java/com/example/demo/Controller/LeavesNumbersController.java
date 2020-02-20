@@ -6,13 +6,9 @@ import com.example.demo.Repository.ComboboxRepository.LeaveTypeForAlldayReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -136,8 +132,8 @@ public class LeavesNumbersController {
         return leaves;
     }
 
-    //@Scheduled(fixedRate = 1000)
-    public void updateLeaveNumberToNextYear(){
+    @Scheduled(fixedRate = 1000)
+    public void updateLeaveNumberToNextYear() {
         LocalDateTime date = LocalDateTime.now();
         //System.out.println(date);
         int day = date.getDayOfMonth();
@@ -146,34 +142,64 @@ public class LeavesNumbersController {
         int hour = date.getHour();
         int minute = date.getMinute();
         int second = date.getSecond();
-        System.out.println(day+"-"+month+"-"+year+" "+hour+":"+minute+":"+second);
+        //System.out.println(day + "-" + month + "-" + year + " " + hour + ":" + minute + ":" + second);
 
+        int dayReset = 1;
+        int monthReset = 1;
+        int hourReset = 0;
+        int minuteReset = 1;
+        int secondReset = 0;
 
-        if(day==18 && month==2 && hour==11 && minute==1 && second==0){
-            long id = 1 ;
+        if (day == dayReset && month == monthReset && hour == hourReset && minute == minuteReset && second == secondReset++) {
+            long id = 1;
             LeaveTypeForAllday leaveTypeForAllday1 = leaveTypeForAlldayRepository.findById(id).get();
             leavesNumbersRepository.resetleaveNumber1(leaveTypeForAllday1.getDefaultLeaveDay());// ลากิจ , ลาไปงานศพ
         }
-        if(day==18 && month==2 && hour==11 && minute==1 && second==1){
-            long id = 5 ;
+        if (day == dayReset && month == monthReset && hour == hourReset && minute == minuteReset && second == secondReset++) {
+            long id = 5;
             LeaveTypeForAllday leaveTypeForAllday5 = leaveTypeForAlldayRepository.findById(id).get();
             leavesNumbersRepository.resetleaveNumber5(leaveTypeForAllday5.getDefaultLeaveDay());// ลาป่วย
         }
-        if(day==18 && month==2 && hour==11 && minute==1 && second==2){
-            long id = 2 ;
+        if (day == dayReset && month == monthReset && hour == hourReset && minute == minuteReset && second == secondReset++) {
+            long id = 2;
             LeaveTypeForAllday leaveTypeForAllday2 = leaveTypeForAlldayRepository.findById(id).get();
             leavesNumbersRepository.resetleaveNumber2(leaveTypeForAllday2.getDefaultLeaveDay());// ลาป่วย
         }
-        if(day==18 && month==2 && hour==11 && minute==1 && second==3){
-            long id = 8 ;
+        if (day == dayReset && month == monthReset && hour == hourReset && minute == minuteReset && second == secondReset++) {
+            long id = 8;
             LeaveTypeForAllday leaveTypeForAllday8 = leaveTypeForAlldayRepository.findById(id).get();
             leavesNumbersRepository.resetleaveNumber8(leaveTypeForAllday8.getDefaultLeaveDay());// ลาคลอด
         }
 
-        List<LeavesNumbers> leavesNumbersList = leavesNumbersRepository.findAll().stream().collect(Collectors.toList());
+        List<LeavesNumbers> leavesNumbersList = leavesNumbersRepository.findAll().stream()
+                .filter(this::getleaveType)
+                .collect(Collectors.toList());
+        LeavesNumbers[] itemsArray = new LeavesNumbers[leavesNumbersList.size()];
+        itemsArray = leavesNumbersList.toArray(itemsArray);
+        double balanceDay;
+        for (int i = 0; i < itemsArray.length; i++) {
+            balanceDay = itemsArray[i].getGetDay() + itemsArray[i].getCompoundDay();
 
-
+            if (day == dayReset && month == monthReset && hour == hourReset && minute == minuteReset && second == secondReset++) {
+                leavesNumbersRepository.resetleaveNumber3InJanuary(itemsArray[i].getGetDay(), balanceDay, itemsArray[i].getEmployeeMasterid().getEmployeeMasterID());
+            }
+            else if(day == 1 && month == 4 && hour == 0 && minute == 1 && second == secondReset++){
+                if(itemsArray[i].getBalanceDay() < itemsArray[i].getGetDay()){
+                    leavesNumbersRepository.resetleaveNumber3InJanuary(itemsArray[i].getGetDay(), itemsArray[i].getBalanceDay(), itemsArray[i].getEmployeeMasterid().getEmployeeMasterID());
+                }
+                else{
+                    leavesNumbersRepository.resetleaveNumber3InJanuary(itemsArray[i].getGetDay(), itemsArray[i].getGetDay(), itemsArray[i].getEmployeeMasterid().getEmployeeMasterID());
+                }
+            }
+            if(secondReset >= 60){
+                secondReset = secondReset/60;
+                minuteReset++;
+            }
+        }
     }
 
+    private boolean getleaveType(LeavesNumbers leavesNumbers) {
+        return leavesNumbers.getLeaveTypeid().getLeaveTypeForAlldayName().equals("ลาพักร้อน");
+    }
 
 }
