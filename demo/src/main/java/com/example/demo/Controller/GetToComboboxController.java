@@ -25,10 +25,16 @@ public class GetToComboboxController {
     @Autowired private EmpStatusRepository empStatusRepository;
     @Autowired private MasterAttendanceRepository masterAttendanceRepository;
 
-    @GetMapping(path = "/department")
+    /*@GetMapping(path = "/department")
     public Iterable<Department> departments() {
         return departmentRepository.findAll().stream().collect(Collectors.toList());
+    }*/
+
+    @GetMapping(path = "/department")
+    public Iterable<Department> departments() {
+        return this.departmentRepository.getDepartmentOrderByName();
     }
+
     @GetMapping(path = "/roleStatus")
     public Iterable<RoleStatus> roleStatuses() {
         return roleStatusRepository.findAll().stream().collect(Collectors.toList());
