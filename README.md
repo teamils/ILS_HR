@@ -55,6 +55,20 @@ spring.datasource.password= <<-- Your Password
 > spring.jpa.hibernate.ddl-auto = update
 
 > #server.port=8000
+----------------------------------------------------------
+> spring.mail.host = smtp.gmail.com
+
+> spring.mail.username = dikinakub6509@gmail.com
+
+> spring.mail.password = 0806814388
+
+> spring.mail.properties.mail.smtp.auth = true
+
+> spring.mail.properties.mail.smtp.socketFactory.port = 465
+
+> spring.mail.properties.mail.smtp.socketFactory.class = javax.net.ssl.SSLSocketFactory
+
+> spring.mail.properties.mail.smtp.socketFactory.fallback = false
 
 ### H2 Database
 
